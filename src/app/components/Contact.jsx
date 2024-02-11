@@ -26,7 +26,17 @@ export default function Contact() {
     };
 
     const response = await fetch(endpoint, options);
-    const resData = await response.json();
+    if (!response.ok) {
+      console.error(`Error: ${response.status}`);
+      return;
+    }
+
+    try {
+      const resData = await response.json();
+      console.log(resData);
+    } catch (error) {
+      console.error("Error parsing response:", error);
+    }
 
     if (response.status === 200) {
       console.log("Message sent.");
