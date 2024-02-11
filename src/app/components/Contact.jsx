@@ -1,6 +1,5 @@
 "use client";
 import React, { useState } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGithub, faLinkedin } from "@fortawesome/free-brands-svg-icons";
@@ -42,10 +41,10 @@ export default function Contact() {
     >
       <div className="bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-yellow-500 to-transparent rounded-full h-80 w-80 z-0 blur-lg absolute top-3/4 -left-4 transform -translate-x-1/2 -translate-1/2"></div>
       <div className="z-10">
-        <h5 className="text-xl font-bold text-yellow-500 my-2">
+        <h5 className="text-3xl font-bold text-yellow-500 my-2">
           Let's Connect
         </h5>
-        <p className="text-[#ADB7BE] mb-4 max-w-md">
+        <p className="text-white text-semibold-lg lg:text-xl mb-4 max-w-md">
           I'm currently looking for new opportunities, my inbox is always open.
           Whether you have a question or just want to say hi, I'll try my best
           to get back to you!
@@ -67,7 +66,7 @@ export default function Contact() {
       </div>
       <div>
         {emailSubmitted ? (
-          <p className="text-green-500 text-sm mt-2">
+          <p className="text-green-500 text-xl mt-2">
             Email sent successfully!
           </p>
         ) : (
@@ -75,7 +74,7 @@ export default function Contact() {
             <div className="mb-6">
               <label
                 htmlFor="email"
-                className="text-white block mb-2 text-sm font-medium"
+                className="text-white block mb-2 text-xl font-medium"
               >
                 Your email
               </label>
@@ -84,14 +83,14 @@ export default function Contact() {
                 type="email"
                 id="email"
                 required
-                className="bg-gray-700 border border-gray-600 placeholder-gray-500 text-white text-sm rounded-lg block w-full p-2.5"
+                className="bg-gray-800 border border-gray-600 placeholder-gray-500 text-white text-xl rounded-lg block w-full p-2.5"
                 placeholder="example@email.com"
               />
             </div>
             <div className="mb-6">
               <label
                 htmlFor="subject"
-                className="text-white block text-sm mb-2 font-medium"
+                className="text-white block text-xl mb-2 font-medium"
               >
                 Subject
               </label>
@@ -100,14 +99,14 @@ export default function Contact() {
                 type="text"
                 id="subject"
                 required
-                className="bg-gray-700 border border-gray-600 placeholder-gray-500 text-white text-sm rounded-lg block w-full p-2.5"
+                className="bg-gray-800 border border-gray-600 placeholder-gray-500 text-white text-xl rounded-lg block w-full p-2.5"
                 placeholder="Topic goes here"
               />
             </div>
             <div className="mb-6">
               <label
                 htmlFor="message"
-                className="text-white block text-sm mb-2 font-medium"
+                className="text-white block text-xl mb-2 font-medium"
               >
                 Message
               </label>
@@ -115,13 +114,13 @@ export default function Contact() {
                 name="message"
                 id="message"
                 required
-                className="bg-gray-700 border border-gray-600 placeholder-gray-500 text-white text-sm rounded-lg block w-full p-2.5"
+                className="bg-gray-800 border border-gray-600 placeholder-gray-500 text-white text-xl rounded-lg block w-full p-2.5"
                 placeholder="Your message goes here"
               ></textarea>
             </div>
             <button
               type="submit"
-              className="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded"
+              className="bg-yellow-500 hover:bg-yellow-600 text-black font-bold py-2 px-4 rounded"
             >
               Send
             </button>
