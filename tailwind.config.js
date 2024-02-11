@@ -1,18 +1,81 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
-    './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
-    './src/components/**/*.{js,ts,jsx,tsx,mdx}',
-    './src/app/**/*.{js,ts,jsx,tsx,mdx}',
+    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
     extend: {
+      colors: {
+        black: {
+          DEFAULT: "#000000",
+          100: "#000000",
+          200: "#000000",
+          300: "#000000",
+          400: "#000000",
+          500: "#000000",
+          600: "#333333",
+          700: "#666666",
+          800: "#999999",
+          900: "#cccccc",
+        },
+        onyx: {
+          DEFAULT: "#363946",
+          100: "#0b0b0e",
+          200: "#15161c",
+          300: "#202229",
+          400: "#2b2d37",
+          500: "#363946",
+          600: "#575c71",
+          700: "#7c819a",
+          800: "#a7abbc",
+          900: "#d3d5dd",
+        },
+        dim_gray: {
+          DEFAULT: "#696773",
+          100: "#151517",
+          200: "#2a292e",
+          300: "#3f3e46",
+          400: "#54525d",
+          500: "#696773",
+          600: "#868492",
+          700: "#a4a3ad",
+          800: "#c3c1c8",
+          900: "#e1e0e4",
+        },
+        cadet_gray: {
+          DEFAULT: "#819595",
+          100: "#1a1f1f",
+          200: "#333d3d",
+          300: "#4d5c5c",
+          400: "#667a7a",
+          500: "#819595",
+          600: "#9babab",
+          700: "#b4c0c0",
+          800: "#cdd5d5",
+          900: "#e6eaea",
+        },
+        ash_gray: {
+          DEFAULT: "#b1b6a6",
+          100: "#24261f",
+          200: "#484c3e",
+          300: "#6c725e",
+          400: "#8f967f",
+          500: "#b1b6a6",
+          600: "#c0c4b7",
+          700: "#d0d3c9",
+          800: "#e0e2db",
+          900: "#eff0ed",
+        },
+      },
       backgroundImage: {
-        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'gradient-conic':
-          'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
+        "gradient-conic":
+          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
     },
   },
+
   plugins: [],
-}
+};
