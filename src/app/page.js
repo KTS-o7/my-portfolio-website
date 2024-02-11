@@ -1,19 +1,23 @@
 // pages/index.js
 
 import Navbar from "./components/Navbar";
-import Hero from "./components/Hero";
-import About from "./components/About";
-import Projects from "./components/Projects";
-import Contact from "./components/Contact";
+import HeroSection from "./components/Hero";
+import AboutSection from "./components/About";
+import ProjectsSection from "./components/Projects";
+import EmailSection from "./components/Contact";
+import Footer from "./components/Footer";
 
 export default function Home() {
   return (
-    <div>
+    <main className="flex min-h-screen flex-col bg-black">
       <Navbar />
-      <Hero />
-      <About />
-      <Projects />
-      <Contact />
-    </div>
+      <div className="container mt-24 mx-auto px-12 py-4">
+        <HeroSection />
+        <AboutSection />
+        <ProjectsSection />
+        <EmailSection />
+      </div>
+      <Footer />
+    </main>
   );
 }
