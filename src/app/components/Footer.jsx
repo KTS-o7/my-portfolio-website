@@ -13,7 +13,7 @@ const Footer = () => {
             krishna.tejaswi@shenthar.com
           </a>
         </span>
-        <p className="text-gray-300"> That's all folks!</p>
+        <p className="text-gray-300"> That&apos;s all folks!</p>
       </div>
     </footer>
   );
