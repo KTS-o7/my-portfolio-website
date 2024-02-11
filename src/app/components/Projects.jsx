@@ -7,7 +7,7 @@ const projectsData = [
     id: 1,
     name: "Project 1",
     description: "This is a brief description of Project 1.",
-    image: "/vercel.svg",
+    image: "/next.svg",
     github: "https://github.com/yourusername/project1",
     tag: ["All", "Software"],
   },
@@ -18,6 +18,22 @@ const projectsData = [
     image: "/next.svg",
     github: "https://github.com/yourusername/project2",
     tag: ["All", "Hardware"],
+  },
+  {
+    id: 3,
+    name: "Project 3",
+    description: "This is a brief description of Project 3.",
+    image: "/next.svg",
+    github: "https://github.com/yourusername/project3",
+    tag: ["All", "Hardware"],
+  },
+  {
+    id: 4,
+    name: "Project 4",
+    description: "This is a brief description of Project 4.",
+    image: "/next.svg",
+    github: "https://github.com/yourusername/project4",
+    tag: ["All", "Software"],
   },
   // Add more projects as needed
 ];
@@ -39,37 +55,36 @@ export default function Projects() {
     initial: { y: 50, opacity: 0 },
     animate: { y: 0, opacity: 1 },
   };
-
   return (
     <section id="projects" className="py-12 px-4 bg-black text-white">
       <h2 className="text-4xl mb-8 text-center font-semibold">Projects</h2>
       <div className="text-white flex flex-row justify-center items-center gap-2 py-6">
         <button
           onClick={() => handleTagChange("All")}
-          className={`px-3 py-2 rounded-md text-sm font-medium ${
+          className={`px-3 py-2 rounded-md text-base font-lg lg:text-2xl ${
             tag === "All"
-              ? "text-white bg-yellow-500"
-              : "text-yellow-500 bg-white"
+              ? "text-black bg-yellow-500"
+              : "text-yellow-500 bg-black"
           }`}
         >
           All
         </button>
         <button
           onClick={() => handleTagChange("Software")}
-          className={`px-3 py-2 rounded-md text-sm font-medium ${
+          className={`px-3 py-2 rounded-md text-base font-lg lg:text-2xl ${
             tag === "Software"
-              ? "text-white bg-yellow-500"
-              : "text-yellow-500 bg-white"
+              ? "text-black bg-yellow-500"
+              : "text-yellow-500 bg-black"
           }`}
         >
           Software
         </button>
         <button
           onClick={() => handleTagChange("Hardware")}
-          className={`px-3 py-2 rounded-md text-sm font-medium ${
+          className={`px-3 py-2 rounded-md text-base font-lg lg:text-2xl ${
             tag === "Hardware"
-              ? "text-white bg-yellow-500"
-              : "text-yellow-500 bg-white"
+              ? "text-black bg-yellow-500"
+              : "text-yellow-500 bg-black"
           }`}
         >
           Hardware
@@ -84,17 +99,19 @@ export default function Projects() {
             animate={isInView ? "animate" : "initial"}
             transition={{ duration: 0.3, delay: index * 0.4 }}
           >
-            <div className="rounded-lg shadow-lg overflow-hidden bg-gray-700">
+            <div className="rounded-lg shadow-lg overflow-hidden">
               <img
                 className="w-full h-56 object-cover"
                 src={project.image}
                 alt={project.name}
               />
-              <div className="p-6">
+              <div className="p-6 bg-gray-800">
                 <h2 className="text-2xl font-bold mb-2 text-yellow-500">
                   {project.name}
                 </h2>
-                <p className="text-gray-300">{project.description}</p>
+                <p className="text-gray-300 text-lg lg:text-xl">
+                  {project.description}
+                </p>
                 <div className="mt-4">
                   <a
                     href={project.github}

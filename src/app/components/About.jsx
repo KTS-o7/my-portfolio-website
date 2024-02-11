@@ -7,10 +7,12 @@ const TAB_DATA = [
     title: "Skills",
     id: "skills",
     content: (
-      <ul className="list-disc pl-2 text-gray-300">
+      <ul className="list-disc pl-5 text-gray-300 text-lg lg:text-2xl">
+        <li>Python</li>
+        <li>C++</li>
+        <li>SQL</li>
+        <li>JavaScript</li>
         <li>React</li>
-        <li>Node.js</li>
-        <li>Next.js</li>
       </ul>
     ),
   },
@@ -18,9 +20,9 @@ const TAB_DATA = [
     title: "Education",
     id: "education",
     content: (
-      <ul className="list-disc pl-2 text-gray-300">
-        <li>Bachelor's in Computer Science - XYZ University</li>
-        <li>Masters in Web Development - ABC Institute</li>
+      <ul className="list-disc pl-5 text-gray-300 text-lg lg:text-2xl">
+        <li>CS Engineering - RVCE, Bangalore</li>
+        <li> GPA 9.50 </li>
       </ul>
     ),
   },
@@ -28,9 +30,9 @@ const TAB_DATA = [
     title: "Certifications",
     id: "certifications",
     content: (
-      <ul className="list-disc pl-2 text-gray-300">
-        <li>Full Stack Web Development - Code Academy</li>
-        <li>Advanced JavaScript - Udemy</li>
+      <ul className="list-disc pl-5 text-gray-300 text-lg lg:text-2xl">
+        <li>DataScience for Engineers,NPTEL</li>
+        <li>Google Professional Cloud Developer</li>
       </ul>
     ),
   },
@@ -54,7 +56,7 @@ export default function About() {
         />
         <div className="mt-4 md:mt-0 text-left flex flex-col h-full">
           <h2 className="text-4xl font-bold text-yellow-500 mb-4">About Me</h2>
-          <p className="text-base lg:text-lg text-gray-300">
+          <p className="text-lg lg:text-2xl text-gray-300">
             I'm a web developer with a passion for coding and problem-solving. I
             specialize in building high-quality websites and applications using
             modern technologies like React, Node.js, and Next.js.
@@ -64,7 +66,7 @@ export default function About() {
               <button
                 key={data.id}
                 onClick={() => handleTabChange(data.id)}
-                className={`mr-4 ${
+                className={`mr-4 text-lg lg:text-2xl ${
                   tab === data.id ? "text-yellow-500" : "text-gray-500"
                 }`}
               >
@@ -72,7 +74,7 @@ export default function About() {
               </button>
             ))}
           </div>
-          <div className="mt-8">
+          <div className="mt-8 ">
             {TAB_DATA.find((t) => t.id === tab).content}
           </div>
         </div>
