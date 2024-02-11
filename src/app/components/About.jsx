@@ -57,9 +57,10 @@ export default function About() {
         <div className="mt-4 md:mt-0 text-left flex flex-col h-full">
           <h2 className="text-4xl font-bold text-yellow-500 mb-4">About Me</h2>
           <p className="text-lg lg:text-2xl text-gray-300">
-            I'm a web developer with a passion for coding and problem-solving. I
-            specialize in building high-quality websites and applications using
-            modern technologies like React, Node.js, and Next.js.
+            I&apos;m a web developer with a passion for coding and
+            problem-solving. I specialize in building high-quality websites and
+            applications using modern technologies like React, Node.js, and
+            Next.js.
           </p>
           <div className="flex flex-row justify-start mt-8">
             {TAB_DATA.map((data) => (
