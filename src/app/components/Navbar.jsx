@@ -32,7 +32,7 @@ export default function Navbar() {
           href={"/"}
           className="text-2xl md:text-5xl text-yellow-500 font-semibold"
         >
-          LOGO
+          KTS
         </Link>
         <div className="mobile-menu block md:hidden">
           {!navbarOpen ? (
@@ -73,7 +73,7 @@ export default function Navbar() {
               <a
                 key={index}
                 href={link.path}
-                className="text-white block px-3 py-2 rounded-md text-base font-medium"
+                className="text-white block px-3 py-2 rounded-md text-lg font-medium lg:text-xl"
               >
                 {link.title}
               </a>
