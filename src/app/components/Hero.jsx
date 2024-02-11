@@ -34,19 +34,19 @@ export default function Hero() {
               className="text-white"
             />
           </h1>
-          <p className="text-gray-300 text-base sm:text-lg mb-6 lg:text-xl">
+          <p className="text-gray-300 text-base sm:text-lg mb-6 lg:text-xl font-semibold ">
             I'm a web developer with a passion for coding and problem-solving.
           </p>
           <div>
             <Link
               href="/#contact"
-              className="px-6 inline-block py-3 w-full sm:w-fit rounded-full mr-4 bg-yellow-500 hover:bg-yellow-600 text-white font-bold"
+              className="px-6 inline-block py-3 w-full sm:w-fit rounded-full mr-4 bg-yellow-500 hover:bg-yellow-600 text-black font-bold"
             >
               Contact Me
             </Link>
             <Link
-              href="/"
-              className="px-1 inline-block py-1 w-full sm:w-fit rounded-full bg-yellow-500 hover:bg-yellow-600 text-white mt-3"
+              href="https://drive.google.com/file/d/1Wfy66DsabcxvpNhZE2u1R0o9zj9VFHhX/view?usp=sharing"
+              className="px-1 inline-block py-1 w-full sm:w-fit rounded-full bg-yellow-500 hover:bg-yellow-600 text-black font-bold mt-3"
             >
               <span className="block rounded-full px-5 py-2">Download CV</span>
             </Link>
