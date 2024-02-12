@@ -5,36 +5,30 @@ import { motion, useInView } from "framer-motion";
 const projectsData = [
   {
     id: 1,
-    name: "Project 1",
-    description: "This is a brief description of Project 1.",
-    image: "./Images/li.svg",
-    github: "https://github.com/yourusername/project1",
+    name: "Portfolio-GPT",
+    description: "This is a portfolio website created using LLMs only",
+    image: "./proj/website.png",
+    github: "https://github.com/KTS-o7/my-portfolio-website",
     tag: ["All", "Software"],
   },
   {
     id: 2,
-    name: "Project 2",
-    description: "This is a brief description of Project 2.",
-    image: "./Images/li.svg",
-    github: "https://github.com/yourusername/project2",
+    name: "RV Board",
+    description:
+      "Protyping Board for RVCE students using LPC2148 ARM7 microcontroller.",
+    image: "./proj/rvboard.png",
+    github: "https://github.com/KTS-o7/RV_Board",
     tag: ["All", "Hardware"],
   },
   {
     id: 3,
-    name: "Project 3",
-    description: "This is a brief description of Project 3.",
-    image: "./Images/li.svg",
-    github: "https://github.com/yourusername/project3",
-    tag: ["All", "Hardware"],
-  },
-  {
-    id: 4,
-    name: "Project 4",
-    description: "This is a brief description of Project 4.",
-    image: "./Images/li.svg",
-    github: "https://github.com/yourusername/project4",
+    name: "QuantQuips",
+    description: "Langchain based backtesting, algotrading and analytics.",
+    image: "./proj/Qq.png",
+    github: "https://github.com/KTS-o7/QuantQuips",
     tag: ["All", "Software"],
   },
+
   // Add more projects as needed
 ];
 
