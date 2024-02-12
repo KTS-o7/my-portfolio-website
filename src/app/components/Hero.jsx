@@ -61,7 +61,7 @@ export default function Hero() {
         >
           <div className="rounded-full bg-gray-700 w-[250px] h-[250px] lg:w-[400px] lg:h-[400px] relative overflow-hidden">
             <Image
-              src="https://source.unsplash.com/random/300x300"
+              src="/heroImg.png"
               alt="Profile photo"
               layout="fill"
               objectFit="cover"
