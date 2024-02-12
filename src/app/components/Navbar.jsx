@@ -57,7 +57,7 @@ export default function Navbar() {
               <li key={index}>
                 <a
                   href={link.path}
-                  className="text-white hover:bg-yellow-500 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition duration-300"
+                  className="text-white hover:bg-yellow-500 hover:text-black px-3 py-2 rounded-md text-md font-medium transition duration-300"
                 >
                   {link.title}
                 </a>

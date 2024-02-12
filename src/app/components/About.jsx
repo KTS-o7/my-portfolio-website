@@ -10,8 +10,8 @@ const TAB_DATA = [
       <ul className="list-disc pl-5 text-gray-300 text-lg lg:text-2xl">
         <li>Python</li>
         <li>C++</li>
+        <li>Langchain</li>
         <li>SQL</li>
-        <li>JavaScript</li>
         <li>React</li>
       </ul>
     ),
@@ -23,6 +23,8 @@ const TAB_DATA = [
       <ul className="list-disc pl-5 text-gray-300 text-lg lg:text-2xl">
         <li>CS Engineering - RVCE, Bangalore</li>
         <li> GPA 9.50 </li>
+        <li> Algorithms </li>
+        <li> DBMS </li>
       </ul>
     ),
   },
@@ -32,7 +34,7 @@ const TAB_DATA = [
     content: (
       <ul className="list-disc pl-5 text-gray-300 text-lg lg:text-2xl">
         <li>DataScience for Engineers,NPTEL</li>
-        <li>Google Professional Cloud Developer</li>
+        <li>Python for Everybody specialization</li>
       </ul>
     ),
   },
@@ -49,7 +51,7 @@ export default function About() {
     <section className="bg-black-500 text-onyx" id="about">
       <div className="md:grid md:grid-cols-2 gap-8 items-center py-8 px-4 xl:gap-16 sm:py-16 xl:px-16">
         <Image
-          src="/li.svg"
+          src="/Images/carbon.png"
           alt="Your Name"
           width={500}
           height={500}
@@ -57,10 +59,10 @@ export default function About() {
         <div className="mt-4 md:mt-0 text-left flex flex-col h-full">
           <h2 className="text-4xl font-bold text-yellow-500 mb-4">About Me</h2>
           <p className="text-lg lg:text-2xl text-gray-300">
-            I&apos;m a web developer with a passion for coding and
-            problem-solving. I specialize in building high-quality websites and
-            applications using modern technologies like React, Node.js, and
-            Next.js.
+            I&apos;m a developer with a passion for coding and problem-solving.
+            I specialize in building high-quality software solutions and
+            applications using modern technologies like Langchain, Streamlit,
+            and Next.js.
           </p>
           <div className="flex flex-row justify-start mt-8">
             {TAB_DATA.map((data) => (
