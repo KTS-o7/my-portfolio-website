@@ -6,42 +6,18 @@ import { faGithub, faLinkedin } from "@fortawesome/free-brands-svg-icons";
 
 export default function Contact() {
   const [emailSubmitted, setEmailSubmitted] = useState(false);
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     const data = {
       email: e.target.email.value,
       subject: e.target.subject.value,
       message: e.target.message.value,
     };
-    const JSONdata = JSON.stringify(data);
-    const endpoint = "/api/send";
-
-    const options = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSONdata,
-    };
-
-    const response = await fetch(endpoint, options);
-    if (!response.ok) {
-      console.error(`Error: ${response.status}`);
-      return;
-    }
-
-    try {
-      const resData = await response.json();
-      console.log(resData);
-    } catch (error) {
-      console.error("Error parsing response:", error);
-    }
-
-    if (response.status === 200) {
-      console.log("Message sent.");
-      setEmailSubmitted(true);
-    }
+    console.log("Form data:", data);
+    setIsModalVisible(true);
+    setEmailSubmitted(true);
   };
 
   return (
@@ -135,6 +111,15 @@ export default function Contact() {
               Send
             </button>
           </form>
+        )}
+        {isModalVisible && (
+          <div className="modal">
+            <div className="modal-content">
+              
+              <p>Your form was submitted successfully.</p>
+              <button className="bg-yellow-500 hover:bg-yellow-600 text-black font-bold py-2 px-4 rounded" onClick={() => setIsModalVisible(false)}>Close</button>
+            </div>
+          </div>
         )}
       </div>
     </section>
