@@ -35,8 +35,7 @@ export default function Hero() {
             />
           </h1>
           <p className="text-gray-300 text-base sm:text-lg mb-6 lg:text-xl font-semibold ">
-            I&apos;m a web developer with a passion for coding and
-            problem-solving.
+            I&apos;m a developer with a passion for coding and problem-solving.
           </p>
           <div>
             <Link
