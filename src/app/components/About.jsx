@@ -49,7 +49,7 @@ export default function About() {
     <section className="bg-black-500 text-onyx" id="about">
       <div className="md:grid md:grid-cols-2 gap-8 items-center py-8 px-4 xl:gap-16 sm:py-16 xl:px-16">
         <Image
-          src="https://source.unsplash.com/random/300x300"
+          src="/li.svg"
           alt="Your Name"
           width={500}
           height={500}
