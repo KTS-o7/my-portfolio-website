@@ -37,6 +37,9 @@ export default function Hero() {
           <p className="text-gray-300 text-base sm:text-lg mb-6 lg:text-xl font-semibold ">
             I&apos;m a developer with a passion for coding and problem-solving.
           </p>
+          <p className="text-gray-300 text-base sm:text-lg mb-6 lg:text-xl font-semibold">
+            President of Coding Club RVCE
+          </p>
           <div>
             <Link
               href="/#contact"

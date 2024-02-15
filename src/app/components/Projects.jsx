@@ -13,12 +13,12 @@ const projectsData = [
   },
   {
     id: 2,
-    name: "RV Board",
+    name: "Better Bing Image Downloader",
     description:
-      "Protyping Board for RVCE students using LPC2148 ARM7 microcontroller.",
-    image: "./proj/rvboard.png",
-    github: "https://github.com/KTS-o7/RV_Board",
-    tag: ["All", "Hardware"],
+      "Python library to download images from Bing in bulk for Machine learning.",
+    image: "./proj/bingScrape.png",
+    github: "https://github.com/KTS-o7/better_bing_image_downloader",
+    tag: ["All", "Software"],
   },
   {
     id: 3,
@@ -28,7 +28,15 @@ const projectsData = [
     github: "https://github.com/KTS-o7/QuantQuips",
     tag: ["All", "Software"],
   },
-
+  {
+    id: 4,
+    name: "RV Board",
+    description:
+      "Protyping Board for RVCE students using LPC2148 ARM7 microcontroller.",
+    image: "./proj/rvboard.png",
+    github: "https://github.com/KTS-o7/RV_Board",
+    tag: ["All", "Hardware"],
+  },
   // Add more projects as needed
 ];
 

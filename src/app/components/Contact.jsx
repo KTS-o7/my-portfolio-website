@@ -115,9 +115,13 @@ export default function Contact() {
         {isModalVisible && (
           <div className="modal">
             <div className="modal-content">
-              
               <p>Your form was submitted successfully.</p>
-              <button className="bg-yellow-500 hover:bg-yellow-600 text-black font-bold py-2 px-4 rounded" onClick={() => setIsModalVisible(false)}>Close</button>
+              <button
+                className="bg-yellow-500 hover:bg-yellow-600 text-black font-bold py-2 px-4 rounded"
+                onClick={() => setIsModalVisible(false)}
+              >
+                Close
+              </button>
             </div>
           </div>
         )}
