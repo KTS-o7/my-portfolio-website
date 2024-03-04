@@ -18,12 +18,12 @@ export default function Hero() {
           <h1 className="text-yellow-500 mb-4 text-4xl sm:text-5xl lg:text-8xl lg:leading-normal font-extrabold">
             Welcome to My Portfolio
           </h1>
-          <h1 className=" mb-4 text-4xl sm:text-5xl lg:text-8xl lg:leading-normal font-extrabold">
+          <h1 className=" mb-4 text-4xl sm:text-2xl lg:text-8xl lg:leading-normal font-extrabold">
             <TypeAnimation
               sequence={[
                 "KTS-o7",
                 1000,
-                "Python Developer",
+                "Developer",
                 1000,
                 "Problem Solver",
                 1000,
@@ -48,7 +48,7 @@ export default function Hero() {
               Contact Me
             </Link>
             <Link
-              href="https://drive.google.com/file/d/1Wfy66DsabcxvpNhZE2u1R0o9zj9VFHhX/view?usp=sharing"
+              href="https://drive.google.com/file/d/1oxmvlLVVMBtA-GA50sitNZKWfGuE4wir/view?usp=drive_link"
               className="px-1 inline-block py-1 w-full sm:w-fit rounded-full bg-yellow-500 hover:bg-yellow-600 text-black font-bold mt-3"
             >
               <span className="block rounded-full px-5 py-2">Download CV</span>
