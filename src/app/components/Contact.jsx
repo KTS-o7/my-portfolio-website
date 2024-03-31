@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGithub, faLinkedin } from "@fortawesome/free-brands-svg-icons";
+import emailjs from "emailjs-com";
 
 export default function Contact() {
   const [emailSubmitted, setEmailSubmitted] = useState(false);
@@ -10,16 +11,22 @@ export default function Contact() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const data = {
-      email: e.target.email.value,
-      subject: e.target.subject.value,
-      message: e.target.message.value,
-    };
-    console.log("Form data:", data);
-    setIsModalVisible(true);
-    setEmailSubmitted(true);
-  };
+    const { email, subject, message } = e.target.elements;
 
+    const serviceId = process.env.EMAILJS_SERVICE_ID;
+    const templateId = process.env.EMAILJS_TEMPLATE_ID;
+    const publicKey = process.env.EMAILJS_PUBLIC_KEY;
+
+    emailjs.sendForm(serviceId, templateId, e.target, publicKey).then(
+      (result) => {
+        console.log("Email sent successfully!", result.text);
+        setEmailSubmitted(true);
+      },
+      (error) => {
+        console.error("An error occurred while sending the email:", error.text);
+      }
+    );
+  };
   return (
     <section
       id="contact"
@@ -71,6 +78,22 @@ export default function Contact() {
                 required
                 className="bg-gray-800 border border-gray-600 placeholder-gray-500 text-white text-xl rounded-lg block w-full p-2.5"
                 placeholder="example@email.com"
+              />
+            </div>
+            <div className="mb-6">
+              <label
+                htmlFor="subject"
+                className="text-white block text-xl mb-2 font-medium"
+              >
+                Name
+              </label>
+              <input
+                name="name"
+                type="text"
+                id="name"
+                required
+                className="bg-gray-800 border border-gray-600 placeholder-gray-500 text-white text-xl rounded-lg block w-full p-2.5"
+                placeholder="Your name please !"
               />
             </div>
             <div className="mb-6">
