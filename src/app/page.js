@@ -1,17 +1,18 @@
 "use client";
 // pages/index.js
-import { useEffect } from 'react';
+import { useEffect } from "react";
 import Navbar from "./components/Navbar";
 import HeroSection from "./components/Hero";
 import AboutSection from "./components/About";
 import ProjectsSection from "./components/Projects";
 import EmailSection from "./components/Contact";
 import Footer from "./components/Footer";
-
+import { Analytics } from "@vercel/analytics/react";
 export default function Home() {
   useEffect(() => {
-    if (typeof window !== 'undefined') { // Ensure this code block runs only in the browser
-      const SmoothScroll = require('smooth-scroll');
+    if (typeof window !== "undefined") {
+      // Ensure this code block runs only in the browser
+      const SmoothScroll = require("smooth-scroll");
       new SmoothScroll('a[href*="#"]', {
         speed: 500,
         speedAsDuration: true,
@@ -37,6 +38,7 @@ export default function Home() {
         </section>
       </div>
       <Footer />
+      <Analytics />
     </main>
   );
 }
