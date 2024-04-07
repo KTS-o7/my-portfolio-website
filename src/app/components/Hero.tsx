@@ -1,11 +1,11 @@
 "use client";
-import React from "react";
+import React, { FC } from "react";
 import Image from "next/legacy/image";
 import { TypeAnimation } from "react-type-animation";
 import { motion } from "framer-motion";
 import Link from "next/link";
 
-export default function Hero() {
+const Hero: FC = () => {
   return (
     <section className="bg-black-500 lg:py-16">
       <div className="grid grid-cols-1 sm:grid-cols-12">
@@ -67,10 +67,12 @@ export default function Hero() {
               alt="Profile photo"
               layout="fill"
               objectFit="cover"
+              priority={true}
             />
           </div>
         </motion.div>
       </div>
     </section>
   );
-}
+};
+export default Hero;

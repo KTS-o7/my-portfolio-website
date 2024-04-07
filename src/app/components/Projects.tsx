@@ -1,8 +1,17 @@
 "use client";
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, FC } from "react";
 import { motion, useInView } from "framer-motion";
 
-const projectsData = [
+interface ProjectData {
+  id: number;
+  name: string;
+  description: string;
+  image: string;
+  github: string;
+  tag: string[];
+}
+
+const projectsData: ProjectData[] = [
   {
     id: 1,
     name: "Portfolio-GPT",
@@ -40,7 +49,7 @@ const projectsData = [
   // Add more projects as needed
 ];
 
-export default function Projects() {
+const Projects: FC = () => {
   const [tag, setTag] = useState("All");
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true });
@@ -129,4 +138,6 @@ export default function Projects() {
       </ul>
     </section>
   );
-}
+};
+
+export default Projects;

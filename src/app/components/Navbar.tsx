@@ -1,9 +1,15 @@
 "use client";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useState, FC } from "react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/solid";
 
-const navLinks = [
+
+interface NAVLINK {
+  title: string;
+  path: string;
+}
+
+const navLinks: NAVLINK[] = [
   {
     title: "Home",
     path: "#",
@@ -22,7 +28,7 @@ const navLinks = [
   },
 ];
 
-export default function Navbar() {
+const Navbar: FC = () => {
   const [navbarOpen, setIsOpen] = useState(false);
 
   return (
@@ -83,4 +89,5 @@ export default function Navbar() {
       )}
     </nav>
   );
-}
+};
+export default Navbar;
