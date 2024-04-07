@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, FC } from "react";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGithub, faLinkedin } from "@fortawesome/free-brands-svg-icons";
@@ -9,7 +9,7 @@ const serviceId = process.env.EMAILJS_SERVICE_ID;
 const templateId = process.env.EMAILJS_TEMPLATE_ID;
 const publicKey = process.env.EMAILJS_PUBLIC_KEY;
 
-export default function Contact() {
+const Contact: FC = () => {
   const [emailSubmitted, setEmailSubmitted] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
 
@@ -151,4 +151,6 @@ export default function Contact() {
       </div>
     </section>
   );
-}
+};
+
+export default Contact;

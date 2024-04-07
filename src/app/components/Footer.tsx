@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-const Footer = () => {
+const Footer:React.FC = () => {
   return (
     <footer className="footer border z-10 border-t-gray-600 border-l-transparent border-r-transparent bg-black-500 text-white">
       <div className="container p-12 flex justify-between">
