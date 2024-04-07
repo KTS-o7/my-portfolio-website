@@ -1,8 +1,13 @@
-"use client";
-import React, { useState } from "react";
+import React, { useState, ReactElement } from "react";
 import Image from "next/legacy/image";
 
-const TAB_DATA = [
+
+interface TabData {
+  title: string;
+  id: string;
+  content: ReactElement;
+}
+const TAB_DATA: TabData[] = [
   {
     title: "Skills",
     id: "skills",
