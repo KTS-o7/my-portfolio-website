@@ -1,7 +1,6 @@
 import React, { useState, ReactElement } from "react";
 import Image from "next/legacy/image";
 
-
 interface TabData {
   title: string;
   id: string;
@@ -38,8 +37,9 @@ const TAB_DATA: TabData[] = [
     id: "certifications",
     content: (
       <ul className="list-disc pl-5 text-gray-300 text-lg lg:text-2xl">
-        <li>DataScience for Engineers,NPTEL</li>
-        <li>Python for Everybody specialization</li>
+        <li>Introduction to Soft Computing, NPTEL</li>
+        <li>Datascience for Engineers, NPTEL</li>
+        <li>Python for Everybody specialization, Coursera</li>
       </ul>
     ),
   },
@@ -67,7 +67,8 @@ export default function About() {
             I&apos;m a developer with a passion for coding and problem-solving.
             I specialize in building high-quality software solutions and
             applications using modern technologies like Langchain, Streamlit,
-            and Next.js.
+            and Next.js. I have obtained Gold+Elite Certification in Soft
+            Computing and Data Science, offered by NPTEL.
           </p>
           <div className="flex flex-row justify-start mt-8">
             {TAB_DATA.map((data) => (
