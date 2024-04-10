@@ -7,7 +7,7 @@ interface ProjectData {
   name: string;
   description: string;
   image: string;
-  github: string;
+  link: string;
   tag: string[];
 }
 
@@ -17,7 +17,7 @@ const projectsData: ProjectData[] = [
     name: "Portfolio-GPT",
     description: "This is a portfolio website created using LLMs only",
     image: "./proj/website.png",
-    github: "https://github.com/KTS-o7/my-portfolio-website",
+    link: "https://github.com/KTS-o7/my-portfolio-website",
     tag: ["All", "Software"],
   },
   {
@@ -26,7 +26,7 @@ const projectsData: ProjectData[] = [
     description:
       "Python library to download images from Bing in bulk for Machine learning.",
     image: "./proj/bingScrape.png",
-    github: "https://github.com/KTS-o7/better_bing_image_downloader",
+    link: "https://github.com/KTS-o7/better_bing_image_downloader",
     tag: ["All", "Software"],
   },
   {
@@ -34,7 +34,7 @@ const projectsData: ProjectData[] = [
     name: "QuantQuips",
     description: "Langchain based backtesting, algotrading and analytics.",
     image: "./proj/Qq.png",
-    github: "https://github.com/KTS-o7/QuantQuips",
+    link: "https://github.com/KTS-o7/QuantQuips",
     tag: ["All", "Software"],
   },
   {
@@ -43,7 +43,7 @@ const projectsData: ProjectData[] = [
     description:
       "Protyping Board for RVCE students using LPC2148 ARM7 microcontroller.",
     image: "./proj/rvboard.png",
-    github: "https://github.com/KTS-o7/RV_Board",
+    link: "https://github.com/KTS-o7/RV_Board",
     tag: ["All", "Hardware"],
   },
   {
@@ -51,9 +51,26 @@ const projectsData: ProjectData[] = [
     name: "Algorithmic-fusion-for-Lung-scan-classification",
     description:
       "Fusion of CNN algorithms for Multiple Lung Disease Classification.",
-    image: "./proj/cnn.png",
-    github:
-      "https://github.com/KTS-o7/Algorithmic-fusion-for-Lung-scan-classification",
+    image: "./publication/cnn.png",
+    link: "https://github.com/KTS-o7/Algorithmic-fusion-for-Lung-scan-classification",
+    tag: ["All", "Publication"],
+  },
+  {
+    id: 6,
+    name: "HandWrittenTripSheet OCR",
+    description:
+      "OCR for handwritten TripSheet using EasyOCR and RegEx. Increased accuracy by 40%",
+    image: "./publication/ieeeTrip.png",
+    link: "https://ieeexplore.ieee.org/document/10170030",
+    tag: ["All", "Publication"],
+  },
+  {
+    id: 7,
+    name: "Evaluation of filters in CT and Xray images of Lungs classification",
+    description:
+      "A study on the effect of filters on the classification of CT and Xray images of Lungs.",
+    image: "./publication/q3.png",
+    link: "https://ijeecs.iaescore.com/index.php/IJEECS/article/view/34975/18055",
     tag: ["All", "Publication"],
   },
   // Add more projects as needed
@@ -78,7 +95,9 @@ const Projects: FC = () => {
   };
   return (
     <section id="projects" className="py-12 px-4 bg-black text-white">
-      <h2 className="text-4xl mb-8 text-center font-semibold">Projects</h2>
+      <h2 className="text-4xl mb-8 text-center font-semibold">
+        Projects and Publications
+      </h2>
       <div className="text-white flex flex-row justify-center items-center gap-2 py-6">
         <button
           onClick={() => handleTagChange("All")}
@@ -145,10 +164,10 @@ const Projects: FC = () => {
                 </p>
                 <div className="mt-4">
                   <a
-                    href={project.github}
+                    href={project.link}
                     className="text-yellow-500 hover:underline"
                   >
-                    View on GitHub
+                    Click Me to Explore !
                   </a>
                 </div>
               </div>
