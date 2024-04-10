@@ -38,7 +38,26 @@ const Hero: FC = () => {
             I&apos;m a developer with a passion for coding and problem-solving.
           </p>
           <p className="text-gray-300 text-base sm:text-lg mb-6 lg:text-xl font-semibold">
-            President of Coding Club RVCE
+            President of Coding Club RVCE, Junior @ Dept of CSE,RVCE.
+          </p>
+          <p className="text-gray-300 text-base sm:text-lg mb-6 lg:text-xl">
+            As a Computer Science and Engineering student from Bangalore, India,
+            I am a passionate learner and innovator, with a keen interest in
+            cutting-edge technologies such as Langchain, Ollama, Generative AI,
+            JavaScript, Next.js, and machine learning libraries like PyTorch.
+            With a solid foundation in Python and C++, I am not only proficient
+            in programming but also adept at exploring and mastering new
+            technologies. My journey is a testament to my dedication to
+            continuous learning and my ability to adapt to the rapidly evolving
+            landscape of technology. My portfolio showcases a range of{" "}
+            <Link
+              href="/#projects"
+              className="bg-yellow-500 hover:bg-yellow-600 text-black font-bold"
+            >
+              projects
+            </Link>{" "}
+            that reflect my versatility and commitment to innovation, making me
+            a valuable asset to any team.
           </p>
           <div>
             <Link
