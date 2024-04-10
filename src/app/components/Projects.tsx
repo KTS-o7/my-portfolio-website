@@ -46,6 +46,16 @@ const projectsData: ProjectData[] = [
     github: "https://github.com/KTS-o7/RV_Board",
     tag: ["All", "Hardware"],
   },
+  {
+    id: 5,
+    name: "Algorithmic-fusion-for-Lung-scan-classification",
+    description:
+      "Fusion of CNN algorithms for Multiple Lung Disease Classification.",
+    image: "./proj/cnn.png",
+    github:
+      "https://github.com/KTS-o7/Algorithmic-fusion-for-Lung-scan-classification",
+    tag: ["All", "Publication"],
+  },
   // Add more projects as needed
 ];
 
@@ -99,6 +109,16 @@ const Projects: FC = () => {
           }`}
         >
           Hardware
+        </button>
+        <button
+          onClick={() => handleTagChange("Publication")}
+          className={`px-3 py-2 rounded-md text-base font-lg lg:text-2xl ${
+            tag === "Publication"
+              ? "text-black bg-yellow-500"
+              : "text-yellow-500 bg-black"
+          }`}
+        >
+          Publication
         </button>
       </div>
       <ul ref={ref} className="grid md:grid-cols-3 gap-8 md:gap-12">
