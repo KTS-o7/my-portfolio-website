@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useRef, FC } from "react";
 import { motion, useInView } from "framer-motion";
+import Image from "next/image";
 
 interface ProjectData {
   id: number;
@@ -16,7 +17,7 @@ const projectsData: ProjectData[] = [
     id: 1,
     name: "Portfolio-GPT",
     description: "This is a portfolio website created using LLMs only",
-    image: "./proj/website.png",
+    image: "/proj/website.png",
     link: "https://github.com/KTS-o7/my-portfolio-website",
     tag: ["All", "Software"],
   },
@@ -25,7 +26,7 @@ const projectsData: ProjectData[] = [
     name: "Better Bing Image Downloader",
     description:
       "Python library to download images from Bing in bulk for Machine learning.",
-    image: "./proj/bingScrape.png",
+    image: "/proj/bingScrape.png",
     link: "https://github.com/KTS-o7/better_bing_image_downloader",
     tag: ["All", "Software"],
   },
@@ -33,7 +34,7 @@ const projectsData: ProjectData[] = [
     id: 3,
     name: "QuantQuips",
     description: "Langchain based backtesting, algotrading and analytics.",
-    image: "./proj/Qq.png",
+    image: "/proj/Qq.png",
     link: "https://github.com/KTS-o7/QuantQuips",
     tag: ["All", "Software"],
   },
@@ -42,7 +43,7 @@ const projectsData: ProjectData[] = [
     name: "RV Board",
     description:
       "Protyping Board for RVCE students using LPC2148 ARM7 microcontroller.",
-    image: "./proj/rvboard.png",
+    image: "/proj/rvboard.png",
     link: "https://github.com/KTS-o7/RV_Board",
     tag: ["All", "Hardware"],
   },
@@ -51,7 +52,7 @@ const projectsData: ProjectData[] = [
     name: "Algorithmic-fusion-for-Lung-scan-classification",
     description:
       "Fusion of CNN algorithms for Multiple Lung Disease Classification.",
-    image: "./publication/cnn.png",
+    image: "/publication/cnn.png",
     link: "https://github.com/KTS-o7/Algorithmic-fusion-for-Lung-scan-classification",
     tag: ["All", "Publication"],
   },
@@ -60,7 +61,7 @@ const projectsData: ProjectData[] = [
     name: "HandWrittenTripSheet OCR",
     description:
       "OCR for handwritten TripSheet using EasyOCR and RegEx. Increased accuracy by 40%",
-    image: "./publication/ieeeTrip.png",
+    image: "/publication/ieeeTrip.png",
     link: "https://ieeexplore.ieee.org/document/10170030",
     tag: ["All", "Publication"],
   },
@@ -69,7 +70,7 @@ const projectsData: ProjectData[] = [
     name: "Evaluation of filters in CT and Xray images of Lungs classification",
     description:
       "A study on the effect of filters on the classification of CT and Xray images of Lungs.",
-    image: "./publication/q3.png",
+    image: "/publication/q3.png",
     link: "https://ijeecs.iaescore.com/index.php/IJEECS/article/view/34975/18055",
     tag: ["All", "Publication"],
   },
@@ -150,10 +151,14 @@ const Projects: FC = () => {
             transition={{ duration: 0.3, delay: index * 0.4 }}
           >
             <div className="rounded-lg shadow-lg overflow-hidden">
-              <img
+              {/* Adjusted Image component */}
+              <Image
                 className="w-full h-56 object-cover"
                 src={project.image}
                 alt={project.name}
+                width={500} // Example width, adjust as needed
+                height={300} // Example height, adjust as needed
+                layout="full" // Maintains aspect ratio
               />
               <div className="p-6 bg-gray-800">
                 <h2 className="text-2xl font-bold mb-2 text-yellow-500">
