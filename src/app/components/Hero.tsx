@@ -31,7 +31,7 @@ const Hero: FC = () => {
               wrapper="span"
               speed={50}
               repeat={Infinity}
-              className="text-white"
+              className="text-gray-300"
             />
           </h1>
           <p className="text-gray-300 text-base sm:text-lg mb-6 lg:text-xl font-semibold ">
@@ -43,38 +43,43 @@ const Hero: FC = () => {
           <p className="text-gray-300 text-base sm:text-lg mb-6 lg:text-xl">
             As a Computer Science and Engineering student from Bangalore, India,
             I am a passionate learner and innovator, with a keen interest in
-            cutting-edge technologies such as Langchain, Ollama, Generative AI,
-            JavaScript, Next.js, and machine learning libraries like PyTorch.
-            With a solid foundation in Python and C++, I am not only proficient
-            in programming but also adept at exploring and mastering new
-            technologies. My journey is a testament to my dedication to
-            continuous learning and my ability to adapt to the rapidly evolving
-            landscape of technology. My portfolio showcases a range of{" "}
+            cutting-edge technologies such as{" "}
+            <span className="text-yellow-500">
+              Langchain, Ollama, Generative AI, JavaScript, Next.js, and machine
+              learning libraries like PyTorch
+            </span>
+            . With a solid foundation in{" "}
+            <span className="text-yellow-500">Python and C++</span>, I am not
+            only proficient in programming but also adept at exploring and
+            mastering new technologies. My journey is a testament to my
+            dedication to continuous learning and my ability to adapt to the
+            rapidly evolving landscape of technology. My portfolio showcases a
+            range of
             <Link
               href="/#projects"
-              className="bg-yellow-500 hover:bg-yellow-600 text-black font-bold"
+              className="text-yellow-500 hover:text-black hover:bg-yellow-500 font-bold px-2 py-2 rounded"
             >
               projects
-            </Link>{" "}
+            </Link>
             that reflect my versatility and commitment to innovation, making me
             a valuable asset to any team.
           </p>
           <div>
             <Link
               href="/#contact"
-              className="px-6 inline-block py-3 w-full sm:w-fit rounded-full mr-4 bg-yellow-500 hover:bg-yellow-600 text-black font-bold"
+              className="px-6 inline-block py-4 mx-3 my-3 w-full sm:w-fit rounded-full mr-4 bg-yellow-500 hover:bg-yellow-600 text-black font-bold"
             >
               Contact Me
             </Link>
             <Link
               href="https://drive.google.com/file/d/1oxmvlLVVMBtA-GA50sitNZKWfGuE4wir/view?usp=drive_link"
-              className="px-6 inline-block py-3 w-full sm:w-fit rounded-full mr-4 bg-yellow-500 hover:bg-yellow-600 text-black font-bold"
+              className="px-6 inline-block py-4 mx-3 my-3 w-full sm:w-fit rounded-full mr-4 bg-yellow-500 hover:bg-yellow-600 text-black font-bold"
             >
               Download CV
             </Link>
             <Link
               href="https://kts-o7.github.io/"
-              className="px-6 inline-block py-3 w-full sm:w-fit rounded-full mr-4 bg-yellow-500 hover:bg-yellow-600 text-black font-bold"
+              className="px-6 inline-block py-4 mx-3 my-3 w-full sm:w-fit rounded-full mr-4 bg-yellow-500 hover:bg-yellow-600 text-black font-bold"
             >
               BlogPost
             </Link>

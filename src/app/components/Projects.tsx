@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useRef, FC } from "react";
 import { motion, useInView } from "framer-motion";
-import Image from "next/image";
+import Image from "next/legacy/image";
 
 interface ProjectData {
   id: number;
@@ -16,7 +16,8 @@ const projectsData: ProjectData[] = [
   {
     id: 1,
     name: "Portfolio-GPT",
-    description: "This is a portfolio website created using LLMs only",
+    description:
+      "This is a portfolio website created using LLMs only. Allowed to iterate the design quickly.",
     image: "/proj/website.png",
     link: "https://github.com/KTS-o7/my-portfolio-website",
     tag: ["All", "Software"],
@@ -25,7 +26,7 @@ const projectsData: ProjectData[] = [
     id: 2,
     name: "Better Bing Image Downloader",
     description:
-      "Python library to download images from Bing in bulk for Machine learning.",
+      "Python library to download images from Bing in bulk for Machine learning. 20+ Stars, Now availabe as a CLI tool.",
     image: "/proj/bingScrape.png",
     link: "https://github.com/KTS-o7/better_bing_image_downloader",
     tag: ["All", "Software"],
@@ -33,7 +34,8 @@ const projectsData: ProjectData[] = [
   {
     id: 3,
     name: "QuantQuips",
-    description: "Langchain based backtesting, algotrading and analytics.",
+    description:
+      "Langchain based backtesting, algotrading and analytics. Appreciated by judges from JPMC.",
     image: "/proj/Qq.png",
     link: "https://github.com/KTS-o7/QuantQuips",
     tag: ["All", "Software"],
@@ -42,7 +44,7 @@ const projectsData: ProjectData[] = [
     id: 4,
     name: "RV Board",
     description:
-      "Protyping Board for RVCE students using LPC2148 ARM7 microcontroller.",
+      "Protyping Board for RVCE students using LPC2148 ARM7 microcontroller. Drivers developed in Assembly, Embedded C",
     image: "/proj/rvboard.png",
     link: "https://github.com/KTS-o7/RV_Board",
     tag: ["All", "Hardware"],
@@ -95,7 +97,7 @@ const Projects: FC = () => {
     animate: { y: 0, opacity: 1 },
   };
   return (
-    <section id="projects" className="py-12 px-4 bg-black text-white">
+    <section id="projects" className="py-12 px-4 bg-black text-gray-200">
       <h2 className="text-4xl mb-8 text-center font-semibold">
         Projects and Publications
       </h2>
@@ -151,14 +153,13 @@ const Projects: FC = () => {
             transition={{ duration: 0.3, delay: index * 0.4 }}
           >
             <div className="rounded-lg shadow-lg overflow-hidden">
-              {/* Adjusted Image component */}
               <Image
                 className="w-full h-56 object-cover"
                 src={project.image}
                 alt={project.name}
                 width={500} // Example width, adjust as needed
                 height={300} // Example height, adjust as needed
-                layout="full" // Maintains aspect ratio
+                //layout="full" // Maintains aspect ratio
               />
               <div className="p-6 bg-gray-800">
                 <h2 className="text-2xl font-bold mb-2 text-yellow-500">

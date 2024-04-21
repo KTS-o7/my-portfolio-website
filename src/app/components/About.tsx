@@ -62,7 +62,7 @@ export default function About() {
           height={500}
         />
         <div className="mt-4 md:mt-0 text-left flex flex-col h-full">
-          <h2 className="text-4xl font-bold text-yellow-500 mb-4">About Me</h2>
+          <h2 className="text-4xl font-bold text-gray-300 mb-4">About Me</h2>
           <p className="text-lg lg:text-2xl text-gray-300">
             I&apos;m a developer with a passion for coding and problem-solving.
             I specialize in building high-quality software solutions and
@@ -75,7 +75,7 @@ export default function About() {
               <button
                 key={data.id}
                 onClick={() => handleTabChange(data.id)}
-                className={`mr-4 text-lg lg:text-2xl ${
+                className={`mr-4 font-bold text-lg lg:text-2xl ${
                   tab === data.id ? "text-yellow-500" : "text-gray-500"
                 }`}
               >
