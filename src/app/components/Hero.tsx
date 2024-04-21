@@ -68,9 +68,15 @@ const Hero: FC = () => {
             </Link>
             <Link
               href="https://drive.google.com/file/d/1oxmvlLVVMBtA-GA50sitNZKWfGuE4wir/view?usp=drive_link"
-              className="px-1 inline-block py-1 w-full sm:w-fit rounded-full bg-yellow-500 hover:bg-yellow-600 text-black font-bold mt-3"
+              className="px-6 inline-block py-3 w-full sm:w-fit rounded-full mr-4 bg-yellow-500 hover:bg-yellow-600 text-black font-bold"
             >
-              <span className="block rounded-full px-5 py-2">Download CV</span>
+              Download CV
+            </Link>
+            <Link
+              href="https://kts-o7.github.io/"
+              className="px-6 inline-block py-3 w-full sm:w-fit rounded-full mr-4 bg-yellow-500 hover:bg-yellow-600 text-black font-bold"
+            >
+              BlogPost
             </Link>
           </div>
         </motion.div>
