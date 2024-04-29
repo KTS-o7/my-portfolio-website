@@ -3,7 +3,6 @@ import Link from "next/link";
 import React, { useState, FC } from "react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/solid";
 
-
 interface NAVLINK {
   title: string;
   path: string;
@@ -25,6 +24,10 @@ const navLinks: NAVLINK[] = [
   {
     title: "Contact",
     path: "#contact",
+  },
+  {
+    title: "LinkTree",
+    path: "https://kts-o7.github.io/",
   },
 ];
 
