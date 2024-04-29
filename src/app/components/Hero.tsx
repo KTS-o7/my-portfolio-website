@@ -78,7 +78,7 @@ const Hero: FC = () => {
               Download CV
             </Link>
             <Link
-              href="https://kts-o7.github.io/"
+              href="https://kts-o7.github.io/blog/"
               className="px-6 inline-block py-4 mx-3 my-3 w-full sm:w-fit rounded-full mr-4 bg-yellow-500 hover:bg-yellow-600 text-black font-bold"
             >
               BlogPost
