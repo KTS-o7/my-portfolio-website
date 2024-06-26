@@ -14,7 +14,7 @@ export default function Home() {
     if (typeof window !== "undefined") {
       // Ensure this code block runs only in the browser
       const SmoothScroll = require("smooth-scroll");
-      new SmoothScroll('a[href*="#"]', {
+      let scroll = new SmoothScroll('a[href*="#"]', {
         speed: 500,
         speedAsDuration: true,
       });
