@@ -4,10 +4,6 @@ import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGithub, faLinkedin } from "@fortawesome/free-brands-svg-icons";
 import emailjs from "emailjs-com";
-require("dotenv").config();
-const serviceId = process.env.EMAILJS_SERVICE_ID;
-const templateId = process.env.EMAILJS_TEMPLATE_ID;
-const publicKey = process.env.EMAILJS_PUBLIC_KEY;
 
 const Contact: FC = () => {
   const [emailSubmitted, setEmailSubmitted] = useState(false);
@@ -15,10 +11,9 @@ const Contact: FC = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const { email, subject, message } = e.target.elements;
-
+    //const { email, subject, message } = e.target.elements;
     emailjs
-      .sendForm("service_kts", "template_kts", e.target, "DisfCMucuf_pVpl_o")
+      .sendForm("service_kts", "template_kts", e.target, "WJtWKpUuqJ2IktWC3")
       .then((result) => {
         console.log("Email sent successfully!", result.status, result.text);
         setEmailSubmitted(true);
