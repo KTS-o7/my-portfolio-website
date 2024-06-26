@@ -32,7 +32,7 @@ const Contact: FC = () => {
         <h5 className="text-3xl font-bold text-yellow-500 my-2">
           Let&apos;s Connect
         </h5>
-        <p className="text-white text-semibold-lg lg:text-xl mb-4 max-w-md">
+        <p className="text-gray-300 text-semibold-lg lg:text-xl mb-4 max-w-md">
           I&apos;m currently looking for new opportunities, my inbox is always
           open. Whether you have a question or just want to say hi, I&apos;ll
           try my best to get back to you!
@@ -135,7 +135,7 @@ const Contact: FC = () => {
             <div className="modal-content">
               <p>Your form was submitted successfully.</p>
               <button
-                className="bg-yellow-500 hover:bg-yellow-600 text-black font-bold py-2 px-4 rounded"
+                className="bg-yellow-300 hover:bg-yellow-600 text-black font-bold py-2 px-4 rounded"
                 onClick={() => setIsModalVisible(false)}
               >
                 Close
