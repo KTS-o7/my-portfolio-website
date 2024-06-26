@@ -54,12 +54,13 @@ export default function About() {
 
   return (
     <section className="bg-black-500 text-onyx" id="about">
-      <div className="md:grid md:grid-cols-2 gap-8 items-center py-8 px-4 xl:gap-16 sm:py-16 xl:px-16">
+      <div className="md:grid md:grid-cols-2 gap-8 items-center py-8 px-4 xl:gap-16 sm:py-16 xl:px-16 rou">
         <Image
-          src="/Images/carbon.png"
+          src="/Images/3dlaptop.jpg"
           alt="Your Name"
           width={500}
           height={500}
+          className="rounded-3xl"
         />
         <div className="mt-4 md:mt-0 text-left flex flex-col h-full">
           <h2 className="text-4xl font-bold text-gray-300 mb-4">About Me</h2>
