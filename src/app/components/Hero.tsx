@@ -38,14 +38,14 @@ const Hero: FC = () => {
             I&apos;m a developer with a passion for coding and problem-solving.
           </p>
           <p className="text-gray-300 text-base sm:text-lg mb-6 lg:text-xl font-semibold">
-            President of Coding Club RVCE, Junior @ Dept of CSE,RVCE.
+            Senior Core Member @ Coding Club RVCE, Senior @ Dept of CSE,RVCE.
           </p>
           <p className="text-gray-300 text-base sm:text-lg mb-6 lg:text-xl">
             As a Computer Science and Engineering student from Bangalore, India,
             I am a passionate learner and innovator, with a keen interest in
             cutting-edge technologies such as{" "}
             <span className="text-yellow-500">
-              Langchain, Ollama, Generative AI, JavaScript, Next.js, and machine
+              Mirascope, Groq, Ollama, Generative AI, JavaScript, Next.js, and machine
               learning libraries like PyTorch
             </span>
             . With a solid foundation in{" "}

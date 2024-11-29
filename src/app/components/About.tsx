@@ -26,7 +26,8 @@ const TAB_DATA: TabData[] = [
     content: (
       <ul className="list-disc pl-5 text-gray-300 text-lg lg:text-2xl">
         <li>CS Engineering - RVCE, Bangalore</li>
-        <li> GPA 9.50 </li>
+        <li> GPA 9.20 </li>
+        <li>ML Development</li>
         <li> Algorithms </li>
         <li> DBMS </li>
       </ul>
