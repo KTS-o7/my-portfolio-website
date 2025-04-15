@@ -188,7 +188,7 @@ export default function About() {
             className="mt-6 md:mt-0"
           >
             <h3 className="text-xl sm:text-2xl font-bold text-gray-300 mb-3 sm:mb-4">
-              Hello there! I'm a{" "}
+              Hello there! I&apos;m a{" "}
               <span className="text-yellow-500">passionate developer</span>
             </h3>
             <p className="text-gray-300 mb-4 sm:mb-6 text-sm sm:text-base">

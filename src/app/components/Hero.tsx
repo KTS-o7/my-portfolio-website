@@ -23,7 +23,7 @@ const Hero: FC = () => {
             Welcome to My Portfolio
           </h1>
           <h2 className="mb-4 sm:mb-6 text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold">
-            <span className="text-gray-300">I'm </span>
+            <span className="text-gray-300">I&apos;m </span>
             <TypeAnimation
               sequence={[
                 "KTS-o7",
@@ -48,7 +48,7 @@ const Hero: FC = () => {
           </p>
           <p className="text-gray-400 text-sm sm:text-base md:text-lg mb-6 sm:mb-8 lg:text-xl max-w-3xl">
             As a Computer Science and Engineering student from Bangalore, India,
-            I'm passionate about{" "}
+            I&apos;m passionate about{" "}
             <span className="text-yellow-500 font-medium">
               Mirascope, Groq, Ollama, Generative AI
             </span>

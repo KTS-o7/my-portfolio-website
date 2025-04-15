@@ -257,8 +257,8 @@ const Contact: FC = () => {
                     Message Sent!
                   </h3>
                   <p className="text-gray-300 mb-5 sm:mb-6 text-sm sm:text-base">
-                    Thank you for reaching out. I'll get back to you as soon as
-                    possible.
+                    Thank you for reaching out. I&apos;ll get back to you as
+                    soon as possible.
                   </p>
                   <button
                     onClick={() => setEmailSubmitted(false)}
