@@ -4,22 +4,91 @@ import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGithub, faLinkedin } from "@fortawesome/free-brands-svg-icons";
 import emailjs from "emailjs-com";
+import DOMPurify from "dompurify";
+
+interface FormErrors {
+  email?: string;
+  name?: string;
+  subject?: string;
+  message?: string;
+  submission?: string;
+}
 
 const Contact: FC = () => {
   const [emailSubmitted, setEmailSubmitted] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [formErrors, setFormErrors] = useState<FormErrors>({});
 
-  const handleSubmit = (e) => {
+  const validateForm = (formData: FormData): FormErrors => {
+    const errors: FormErrors = {};
+
+    // Email validation
+    if (
+      !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(
+        formData.get("email") as string
+      )
+    ) {
+      errors.email = "Please enter a valid email address";
+    }
+
+    // Name validation - alphanumeric with spaces
+    if (!/^[a-zA-Z0-9 ]{5,50}$/.test(formData.get("name") as string)) {
+      errors.name = "Name should be 5-50 characters (letters, numbers, spaces)";
+    }
+
+    // Subject validation - reasonable limit and format
+    if (!/^[a-zA-Z0-9 .,!?-]{5,200}$/.test(formData.get("subject") as string)) {
+      errors.subject = "Subject should be 5-200 characters";
+    }
+
+    // Message - reasonable limit
+    const message = formData.get("message") as string;
+    if (message.length < 5 || message.length > 1000) {
+      errors.message = "Message should be 5-1000 characters";
+    }
+
+    return errors;
+  };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    //const { email, subject, message } = e.target.elements;
+
+    const formData = new FormData(e.currentTarget);
+    const errors = validateForm(formData);
+
+    if (Object.keys(errors).length > 0) {
+      setFormErrors(errors);
+      return;
+    }
+
+    // Sanitize form data before submission
+    const sanitizedFormData = {
+      email: DOMPurify.sanitize(formData.get("email") as string),
+      name: DOMPurify.sanitize(formData.get("name") as string),
+      subject: DOMPurify.sanitize(formData.get("subject") as string),
+      message: DOMPurify.sanitize(formData.get("message") as string),
+    };
+
+    // Create a fresh sanitized template parameters object for emailjs
+    const templateParams = {
+      email: sanitizedFormData.email,
+      name: sanitizedFormData.name,
+      subject: sanitizedFormData.subject,
+      message: sanitizedFormData.message,
+    };
+
     emailjs
-      .sendForm("service_kts", "template_kts", e.target, "WJtWKpUuqJ2IktWC3")
+      .send("service_kts", "template_kts", templateParams, "WJtWKpUuqJ2IktWC3")
       .then((result) => {
         console.log("Email sent successfully!", result.status, result.text);
         setEmailSubmitted(true);
+        setFormErrors({});
       })
       .catch((error) => {
         console.error("An error occurred while sending the email:", error.text);
+        setFormErrors({
+          submission: "Failed to send email. Please try again later.",
+        });
       });
   };
   return (
@@ -71,13 +140,17 @@ const Contact: FC = () => {
                 type="email"
                 id="email"
                 required
+                maxLength={100}
                 className="bg-gray-800 border border-gray-600 placeholder-gray-500 text-white text-xl rounded-lg block w-full p-2.5"
                 placeholder="example@email.com"
               />
+              {formErrors.email && (
+                <p className="text-red-500 text-sm mt-1">{formErrors.email}</p>
+              )}
             </div>
             <div className="mb-6">
               <label
-                htmlFor="subject"
+                htmlFor="name"
                 className="text-white block text-xl mb-2 font-medium"
               >
                 Name
@@ -87,9 +160,13 @@ const Contact: FC = () => {
                 type="text"
                 id="name"
                 required
+                maxLength={50}
                 className="bg-gray-800 border border-gray-600 placeholder-gray-500 text-white text-xl rounded-lg block w-full p-2.5"
                 placeholder="Your name please !"
               />
+              {formErrors.name && (
+                <p className="text-red-500 text-sm mt-1">{formErrors.name}</p>
+              )}
             </div>
             <div className="mb-6">
               <label
@@ -103,9 +180,15 @@ const Contact: FC = () => {
                 type="text"
                 id="subject"
                 required
+                maxLength={100}
                 className="bg-gray-800 border border-gray-600 placeholder-gray-500 text-white text-xl rounded-lg block w-full p-2.5"
                 placeholder="Topic goes here"
               />
+              {formErrors.subject && (
+                <p className="text-red-500 text-sm mt-1">
+                  {formErrors.subject}
+                </p>
+              )}
             </div>
             <div className="mb-6">
               <label
@@ -118,10 +201,21 @@ const Contact: FC = () => {
                 name="message"
                 id="message"
                 required
+                maxLength={1000}
                 className="bg-gray-800 border border-gray-600 placeholder-gray-500 text-white text-xl rounded-lg block w-full p-2.5"
                 placeholder="Your message goes here"
               ></textarea>
+              {formErrors.message && (
+                <p className="text-red-500 text-sm mt-1">
+                  {formErrors.message}
+                </p>
+              )}
             </div>
+            {formErrors.submission && (
+              <p className="text-red-500 text-sm mb-4">
+                {formErrors.submission}
+              </p>
+            )}
             <button
               type="submit"
               className="bg-yellow-500 hover:bg-yellow-600 text-black font-bold py-2 px-4 rounded"
