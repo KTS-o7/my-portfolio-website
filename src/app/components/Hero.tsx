@@ -7,98 +7,100 @@ import Link from "next/link";
 
 const Hero: FC = () => {
   return (
-    <section className="bg-black-500 lg:py-16">
-      <div className="grid grid-cols-1 sm:grid-cols-12">
+    <section className="bg-black-500 py-12 sm:py-16 md:py-20 lg:py-32 relative overflow-hidden">
+      {/* Yellow accent gradient in background */}
+      <div className="absolute -top-24 -right-24 w-64 sm:w-96 h-64 sm:h-96 bg-yellow-500 rounded-full opacity-20 blur-3xl"></div>
+      <div className="absolute -bottom-24 -left-24 w-64 sm:w-96 h-64 sm:h-96 bg-yellow-500 rounded-full opacity-10 blur-3xl"></div>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 grid grid-cols-1 sm:grid-cols-12 gap-8 sm:gap-12 items-center">
         <motion.div
-          initial={{ opacity: 0, scale: 0.5 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.5 }}
-          className="col-span-8 place-self-center text-center sm:text-left justify-self-start"
+          initial={{ opacity: 0, y: 100 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="col-span-full sm:col-span-7 md:col-span-8 place-self-center text-center sm:text-left justify-self-start"
         >
-          <h1 className="text-yellow-500 mb-4 text-4xl sm:text-5xl lg:text-8xl lg:leading-normal font-extrabold">
+          <h1 className="text-yellow-500 mb-3 sm:mb-4 text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-extrabold leading-tight">
             Welcome to My Portfolio
           </h1>
-          <h1 className=" mb-4 text-4xl sm:text-2xl lg:text-8xl lg:leading-normal font-extrabold">
+          <h2 className="mb-4 sm:mb-6 text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold">
+            <span className="text-gray-300">I&apos;m </span>
             <TypeAnimation
               sequence={[
                 "KTS-o7",
                 1000,
-                "Developer",
+                "a Developer",
                 1000,
-                "Problem Solver",
+                "a Problem Solver",
                 1000,
               ]}
               wrapper="span"
               speed={50}
               repeat={Infinity}
-              className="text-gray-300"
+              className="text-yellow-400"
             />
-          </h1>
-          <p className="text-gray-300 text-base sm:text-lg mb-6 lg:text-xl font-semibold ">
-            I&apos;m a developer with a passion for coding and problem-solving.
+          </h2>
+          <p className="text-gray-300 text-sm sm:text-base md:text-lg mb-4 sm:mb-6 lg:text-xl max-w-2xl">
+            SDE Intern @ RingCentral India | Senior Core Member @ Coding Club
+            RVCE | Senior @ Dept of CSE, RVCE.
+            <br className="hidden sm:block" />A passionate developer
+            specializing in Generative AI, Langchain, Python, and modern web
+            technologies.
           </p>
-          <p className="text-gray-300 text-base sm:text-lg mb-6 lg:text-xl font-semibold">
-            Senior Core Member @ Coding Club RVCE, Senior @ Dept of CSE,RVCE.
-          </p>
-          <p className="text-gray-300 text-base sm:text-lg mb-6 lg:text-xl">
+          <p className="text-gray-400 text-sm sm:text-base md:text-lg mb-6 sm:mb-8 lg:text-xl max-w-3xl">
             As a Computer Science and Engineering student from Bangalore, India,
-            I am a passionate learner and innovator, with a keen interest in
-            cutting-edge technologies such as{" "}
-            <span className="text-yellow-500">
-              Mirascope, Groq, Ollama, Generative AI, JavaScript, Next.js, and machine
-              learning libraries like PyTorch
+            I&apos;m passionate about{" "}
+            <span className="text-yellow-500 font-medium">
+              Mirascope, Groq, Ollama, Generative AI
             </span>
-            . With a solid foundation in{" "}
-            <span className="text-yellow-500">Python and C++</span>, I am not
-            only proficient in programming but also adept at exploring and
-            mastering new technologies. My journey is a testament to my
-            dedication to continuous learning and my ability to adapt to the
-            rapidly evolving landscape of technology. My portfolio showcases a
-            range of
-            <Link
-              href="/#projects"
-              className="text-yellow-500 hover:text-black hover:bg-yellow-500 font-bold px-2 py-2 rounded"
-            >
-              projects
-            </Link>
-            that reflect my versatility and commitment to innovation, making me
-            a valuable asset to any team.
+            , and modern web development with{" "}
+            <span className="text-yellow-500 font-medium">Next.js</span>. My
+            expertise in{" "}
+            <span className="text-yellow-500 font-medium">Python and C++</span>{" "}
+            allows me to build innovative solutions across different domains.
           </p>
-          <div>
-            <Link
-              href="/#contact"
-              className="px-6 inline-block py-4 mx-3 my-3 w-full sm:w-fit rounded-full mr-4 bg-yellow-500 hover:bg-yellow-600 text-black font-bold"
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center sm:justify-start relative z-0">
+            <a
+              href="#contact"
+              className="px-6 sm:px-8 py-2.5 sm:py-3 rounded-full bg-yellow-500 hover:bg-yellow-400 text-black font-bold transition-all shadow-lg hover:shadow-yellow-500/20 text-center cursor-pointer text-sm sm:text-base"
             >
               Contact Me
-            </Link>
+            </a>
             <Link
               href="https://drive.google.com/file/d/1oxmvlLVVMBtA-GA50sitNZKWfGuE4wir/view?usp=drive_link"
-              className="px-6 inline-block py-4 mx-3 my-3 w-full sm:w-fit rounded-full mr-4 bg-yellow-500 hover:bg-yellow-600 text-black font-bold"
+              className="px-6 sm:px-8 py-2.5 sm:py-3 rounded-full border-2 border-yellow-500 hover:bg-yellow-500/10 text-yellow-500 font-bold transition-all text-sm sm:text-base"
+              target="_blank"
+              rel="noopener noreferrer"
             >
               Download CV
             </Link>
             <Link
               href="https://kts-o7.github.io/blog/"
-              className="px-6 inline-block py-4 mx-3 my-3 w-full sm:w-fit rounded-full mr-4 bg-yellow-500 hover:bg-yellow-600 text-black font-bold"
+              className="px-6 sm:px-8 py-2.5 sm:py-3 rounded-full border-2 border-gray-600 hover:border-yellow-500 hover:bg-yellow-500/10 text-gray-300 hover:text-yellow-500 font-bold transition-all text-sm sm:text-base"
+              target="_blank"
+              rel="noopener noreferrer"
             >
-              BlogPost
+              Read Blog
             </Link>
           </div>
         </motion.div>
         <motion.div
           initial={{ opacity: 0, scale: 0.5 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.5 }}
-          className="col-span-4 place-self-center mt-4 lg:mt-0"
+          transition={{ duration: 1, delay: 0.3, ease: "easeOut" }}
+          className="col-span-full sm:col-span-5 md:col-span-4 place-self-center mt-8 sm:mt-4 lg:mt-0"
         >
-          <div className="rounded-full bg-gray-700 w-[250px] h-[250px] lg:w-[400px] lg:h-[400px] relative overflow-hidden">
-            <Image
-              src="/heroImg.png"
-              alt="Profile photo"
-              layout="fill"
-              objectFit="cover"
-              priority={true}
-            />
+          <div className="relative">
+            <div className="absolute -inset-1 rounded-full bg-gradient-to-r from-yellow-500 to-yellow-300 opacity-70 blur-sm"></div>
+            <div className="rounded-full bg-gray-800 w-[200px] h-[200px] sm:w-[250px] sm:h-[250px] lg:w-[350px] lg:h-[350px] relative overflow-hidden border-4 border-gray-700">
+              <Image
+                src="/Hero.png"
+                alt="Profile photo"
+                layout="fill"
+                objectFit="cover"
+                priority={true}
+                className="hover:scale-105 transition-all duration-500"
+              />
+            </div>
           </div>
         </motion.div>
       </div>

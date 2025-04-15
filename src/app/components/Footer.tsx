@@ -1,26 +1,22 @@
 "use client";
 import React from "react";
+import Link from "next/link";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faGithub, faLinkedin } from "@fortawesome/free-brands-svg-icons";
+
 const Footer: React.FC = () => {
   return (
-    <footer className="footer border z-10 border-t-gray-600 border-l-transparent border-r-transparent bg-black-500 text-white">
-      <div className="container p-12 flex justify-between">
-        <span>
-          Contact Me<span className="mx-2"> </span>
-          <a
-            href="mailto:krishna.tejaswi@shenthar.com"
-            className="text-yellow-500 hover:text-black hover:bg-yellow-500  px-1 py-1 rounded"
-          >
-            krishna.tejaswi@shenthar.com
-          </a>
-          <span className="mx-2"> </span>
-          <a
-            href="tel:+917760951918"
-            className="text-yellow-500 hover:text-black hover:bg-yellow-500  px-1 py-1 rounded"
-          >
-            +91 (776)095-1918
-          </a>
-        </span>
-        <p className="text-gray-300"> That&apos;s all folks!</p>
+    <footer className="relative z-10 bg-black text-white border-t border-gray-800">
+      <div className=" max-w-7xl mx-auto py-8 sm:py-12 px-4 sm:px-6">
+        <div className="border-t border-gray-800 mt-6 sm:mt-4 pt-6 sm:pt-8 flex flex-col md:flex-row justify-between items-center">
+          <p className="text-gray-400 text-xs sm:text-sm">
+            &copy; 2024 Krishnatejaswi S. All rights reserved.
+          </p>
+          <p className="text-gray-500 text-xs sm:text-sm mt-2 md:mt-0">
+            Built with <span className="text-yellow-500">♥</span> using Next.js
+            & Tailwind CSS
+          </p>
+        </div>
       </div>
     </footer>
   );
