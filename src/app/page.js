@@ -10,6 +10,7 @@ import Footer from "./components/Footer";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { LazyMotion, domAnimation } from "framer-motion";
+import { ThemeToggle } from "./components/ui/ThemeToggle";
 
 export default function Home() {
   useEffect(() => {
@@ -60,7 +61,7 @@ export default function Home() {
 
   return (
     <LazyMotion features={domAnimation}>
-      <main className="flex min-h-screen flex-col bg-black">
+      <main className="flex min-h-screen flex-col bg-background transition-colors duration-300">
         <Navbar />
         <div className="container mt-24 mx-auto px-4 sm:px-8 md:px-12 py-4">
           <section id="hero" className="scroll-mt-24">
@@ -77,6 +78,7 @@ export default function Home() {
           </section>
         </div>
         <Footer />
+        <ThemeToggle />
         <Analytics />
         <SpeedInsights />
       </main>

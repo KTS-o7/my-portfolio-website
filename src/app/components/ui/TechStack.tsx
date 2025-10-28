@@ -15,7 +15,7 @@ export const TechStack = () => {
     const scrollContainer = scrollRef.current;
     if (!scrollContainer) return;
 
-    const scrollSpeed = 0.5;
+    const scrollSpeed = 0.3;
 
     const animate = () => {
       if (!isPaused && !isDraggingRef.current) {
@@ -78,7 +78,7 @@ export const TechStack = () => {
 
   return (
     <div className="w-full overflow-hidden py-8 sm:py-12">
-      <h3 className="text-2xl sm:text-3xl font-bold text-center mb-8 bg-clip-text text-transparent bg-gradient-to-r from-yellow-500 to-yellow-300">
+      <h3 className="text-2xl sm:text-3xl font-bold text-center mb-8 bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary">
         {techData.title}
       </h3>
       
@@ -97,7 +97,7 @@ export const TechStack = () => {
             key={`${tech.name}-${index}`}
             className="flex-shrink-0 group cursor-pointer"
           >
-            <div className="glass-morphism px-6 py-4 rounded-xl border border-gray-800 hover:border-yellow-500/50 transition-all duration-300 min-w-[140px] sm:min-w-[160px] text-center hover:scale-105 box-shadow-glow">
+            <div className="glass-morphism px-6 py-4 rounded-xl border border-text-tertiary hover:border-primary/50 transition-all duration-300 min-w-[140px] sm:min-w-[160px] text-center hover:scale-105 box-shadow-glow">
               <div className="flex items-center justify-center h-12 sm:h-14 mb-3 group-hover:scale-110 transition-transform duration-300">
                 <img
                   src={tech.logo}
@@ -108,7 +108,7 @@ export const TechStack = () => {
                   }}
                 />
               </div>
-              <p className="text-gray-300 text-sm sm:text-base font-medium group-hover:text-yellow-400 transition-colors">
+              <p className="text-text-secondary text-sm sm:text-base font-medium group-hover:text-primary transition-colors">
                 {tech.name}
               </p>
             </div>
@@ -116,7 +116,7 @@ export const TechStack = () => {
         ))}
       </div>
       
-      <p className="text-center text-gray-500 text-xs sm:text-sm mt-4">
+      <p className="text-center text-text-tertiary text-xs sm:text-sm mt-4">
         Hover to pause • Click and drag to scroll
       </p>
     </div>

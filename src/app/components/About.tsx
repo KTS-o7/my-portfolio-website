@@ -22,10 +22,10 @@ export default function About() {
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.3, delay: index * 0.03 }}
-                className="flex items-center gap-2 text-gray-300 p-3 rounded-lg bg-gray-800/30 border border-gray-700/50 hover:bg-yellow-500/10 hover:border-yellow-500/50 transition-all group cursor-pointer"
+                className="flex items-center gap-2 text-text-secondary p-3 rounded-lg bg-surface border border-text-tertiary hover:bg-primary/10 hover:border-primary/50 transition-all group cursor-pointer"
               >
-                <span className="h-2 w-2 rounded-full bg-yellow-500 group-hover:scale-150 transition-transform flex-shrink-0"></span>
-                <span className="group-hover:text-yellow-400 transition-colors text-sm">{skill}</span>
+                <span className="h-2 w-2 rounded-full bg-primary group-hover:scale-150 transition-transform flex-shrink-0"></span>
+                <span className="group-hover:text-primary transition-colors text-sm">{skill}</span>
               </motion.li>
             ))}
           </ul>
@@ -39,13 +39,13 @@ export default function About() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: index * 0.1 }}
-                className="p-4 rounded-lg bg-gray-800/30 border border-gray-700/50 hover:border-yellow-500/50 transition-all"
+                className="p-4 rounded-lg bg-surface border border-text-tertiary hover:border-primary/50 transition-all"
               >
-                <h4 className="text-yellow-500 font-semibold text-lg mb-2">{edu.degree}</h4>
-                <p className="text-gray-300 mb-1">{edu.institution}</p>
+                <h4 className="text-primary font-semibold text-lg mb-2">{edu.degree}</h4>
+                <p className="text-text-secondary mb-1">{edu.institution}</p>
                 <div className="flex flex-wrap gap-3 items-center text-sm">
-                  <span className="text-gray-400 bg-gray-900/50 px-3 py-1 rounded-full">GPA {edu.gpa}</span>
-                  <span className="text-gray-400">{edu.period}</span>
+                  <span className="text-text-tertiary bg-background px-3 py-1 rounded-full">GPA {edu.gpa}</span>
+                  <span className="text-text-tertiary">{edu.period}</span>
                 </div>
               </motion.div>
             ))}
@@ -53,12 +53,12 @@ export default function About() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: 0.3 }}
-              className="p-4 rounded-lg bg-gray-800/30 border border-gray-700/50"
+              className="p-4 rounded-lg bg-surface border border-text-tertiary"
             >
-              <h4 className="text-yellow-500 font-semibold text-lg mb-3">Specializations</h4>
+              <h4 className="text-primary font-semibold text-lg mb-3">Specializations</h4>
               <div className="flex flex-wrap gap-2">
                 {aboutData.specializations.map((spec, index) => (
-                  <span key={index} className="text-gray-300 bg-gray-900/50 px-3 py-1.5 rounded-full text-sm border border-gray-700">
+                  <span key={index} className="text-text-secondary bg-background px-3 py-1.5 rounded-full text-sm border border-text-tertiary">
                     {spec}
                   </span>
                 ))}
@@ -75,10 +75,10 @@ export default function About() {
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.3, delay: index * 0.05 }}
-                className="flex items-start gap-3 p-3 rounded-lg bg-gray-800/30 border border-gray-700/50 hover:bg-yellow-500/5 hover:border-yellow-500/50 transition-all group"
+                className="flex items-start gap-3 p-3 rounded-lg bg-surface border border-text-tertiary hover:bg-primary/5 hover:border-primary/50 transition-all group"
               >
                 <svg
-                  className="h-5 w-5 text-yellow-500 mt-0.5 shrink-0 group-hover:scale-110 transition-transform"
+                  className="h-5 w-5 text-primary mt-0.5 shrink-0 group-hover:scale-110 transition-transform"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -90,7 +90,7 @@ export default function About() {
                     d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
                   />
                 </svg>
-                <span className="text-gray-300 text-sm group-hover:text-yellow-400 transition-colors">{cert}</span>
+                <span className="text-text-secondary text-sm group-hover:text-primary transition-colors">{cert}</span>
               </motion.div>
             ))}
           </div>
@@ -102,20 +102,20 @@ export default function About() {
 
   return (
     <section
-      className="bg-black-500 text-onyx py-12 sm:py-16 md:py-20 relative overflow-hidden"
+      className="bg-background py-12 sm:py-16 md:py-20 relative overflow-hidden"
       id="about"
     >
       {/* Background elements */}
-      <div className="absolute top-20 right-10 w-40 sm:w-60 h-40 sm:h-60 bg-yellow-500 rounded-full opacity-5 blur-3xl animate-pulse-slow"></div>
-      <div className="absolute bottom-20 left-10 w-40 sm:w-60 h-40 sm:h-60 bg-yellow-500 rounded-full opacity-5 blur-3xl animate-pulse-slow"></div>
+      <div className="absolute top-20 right-10 w-40 sm:w-60 h-40 sm:h-60 bg-primary rounded-full opacity-5 blur-3xl animate-pulse-slow"></div>
+      <div className="absolute bottom-20 left-10 w-40 sm:w-60 h-40 sm:h-60 bg-primary rounded-full opacity-5 blur-3xl animate-pulse-slow"></div>
       
       <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
         <TextReveal>
           <div className="text-center mb-10 sm:mb-16">
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-yellow-500 to-yellow-300 text-shadow-glow">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary text-shadow-glow">
               About Me
             </h2>
-            <div className="w-24 h-1 bg-yellow-500 mx-auto"></div>
+            <div className="w-24 h-1 bg-primary mx-auto"></div>
           </div>
         </TextReveal>
 
@@ -127,23 +127,23 @@ export default function About() {
             transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
             className="lg:col-span-1"
           >
-            <div className="glass-morphism p-6 rounded-xl border border-gray-800 box-shadow-glow h-full">
-              <h3 className="text-xl sm:text-2xl font-bold text-gray-300 mb-4">
+            <div className="glass-morphism p-6 rounded-xl border border-text-tertiary box-shadow-glow h-full">
+              <h3 className="text-xl sm:text-2xl font-bold text-text-primary mb-4">
                 {aboutData.title.split("passionate developer")[0]}
-                <span className="text-yellow-500">passionate developer</span>
+                <span className="text-primary">passionate developer</span>
               </h3>
-              <p className="text-gray-300 mb-4 text-sm sm:text-base leading-relaxed">
+              <p className="text-text-secondary mb-4 text-sm sm:text-base leading-relaxed">
                 {aboutData.description.primary}
               </p>
-              <p className="text-gray-400 text-sm sm:text-base leading-relaxed">
+              <p className="text-text-tertiary text-sm sm:text-base leading-relaxed">
                 {aboutData.description.secondary}
               </p>
               
               {/* Decorative element */}
               <div className="mt-6 flex items-center gap-2">
-                <div className="h-1 w-12 bg-yellow-500 rounded-full"></div>
-                <div className="h-1 w-8 bg-yellow-500/50 rounded-full"></div>
-                <div className="h-1 w-4 bg-yellow-500/30 rounded-full"></div>
+                <div className="h-1 w-12 bg-primary rounded-full"></div>
+                <div className="h-1 w-8 bg-primary/50 rounded-full"></div>
+                <div className="h-1 w-4 bg-primary/30 rounded-full"></div>
               </div>
             </div>
           </motion.div>
@@ -155,16 +155,16 @@ export default function About() {
             transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
             className="lg:col-span-2"
           >
-            <div className="glass-morphism p-6 rounded-xl shadow-lg border border-gray-800 box-shadow-glow">
-              <div className="flex flex-wrap justify-start gap-3 sm:gap-4 mb-6 pb-4 border-b border-gray-800">
+            <div className="glass-morphism p-6 rounded-xl shadow-lg border border-text-tertiary box-shadow-glow">
+              <div className="flex flex-wrap justify-start gap-3 sm:gap-4 mb-6 pb-4 border-b border-text-tertiary">
                 {["skills", "education", "certifications"].map((tabId) => (
                   <button
                     key={tabId}
                     onClick={() => handleTabChange(tabId)}
                     className={`font-medium text-base sm:text-lg transition-all whitespace-nowrap relative mobile-touch-optimized px-4 py-2 rounded-lg ${
                       tab === tabId
-                        ? "text-yellow-500 bg-yellow-500/10"
-                        : "text-gray-500 hover:text-gray-300 hover:bg-gray-800/50"
+                        ? "text-primary bg-primary/10"
+                        : "text-text-tertiary hover:text-text-secondary hover:bg-surface"
                     }`}
                   >
                     {tabId.charAt(0).toUpperCase() + tabId.slice(1)}

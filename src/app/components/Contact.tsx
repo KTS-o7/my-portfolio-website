@@ -108,22 +108,22 @@ const Contact: FC = () => {
   return (
     <section
       id="contact"
-      className="py-12 sm:py-16 md:py-20 px-4 sm:px-6 bg-gray-900 relative scroll-mt-20 overflow-hidden"
+      className="py-12 sm:py-16 md:py-20 px-4 sm:px-6 bg-surface relative scroll-mt-20 overflow-hidden"
     >
       {/* Background elements */}
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden">
-        <div className="absolute -bottom-24 right-0 w-64 sm:w-96 h-64 sm:h-96 bg-yellow-500 rounded-full opacity-5 blur-3xl animate-pulse-slow"></div>
-        <div className="absolute top-24 -left-24 w-48 sm:w-72 h-48 sm:h-72 bg-yellow-500 rounded-full opacity-5 blur-3xl animate-pulse-slow"></div>
-        <div className="absolute top-1/2 left-1/2 w-40 sm:w-60 h-40 sm:h-60 bg-yellow-500 rounded-full opacity-5 blur-3xl animate-pulse-slow"></div>
+        <div className="absolute -bottom-24 right-0 w-64 sm:w-96 h-64 sm:h-96 bg-primary rounded-full opacity-5 blur-3xl animate-pulse-slow"></div>
+        <div className="absolute top-24 -left-24 w-48 sm:w-72 h-48 sm:h-72 bg-primary rounded-full opacity-5 blur-3xl animate-pulse-slow"></div>
+        <div className="absolute top-1/2 left-1/2 w-40 sm:w-60 h-40 sm:h-60 bg-primary rounded-full opacity-5 blur-3xl animate-pulse-slow"></div>
       </div>
 
       <div className="max-w-7xl mx-auto relative z-10">
         <TextReveal>
           <div className="text-center mb-10 sm:mb-16">
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-yellow-500 to-yellow-300 text-shadow-glow">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary text-shadow-glow">
               Get In Touch
             </h2>
-            <div className="w-24 h-1 bg-yellow-500 mx-auto"></div>
+            <div className="w-24 h-1 bg-primary mx-auto"></div>
           </div>
         </TextReveal>
 
@@ -133,20 +133,20 @@ const Contact: FC = () => {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-            className="glass-morphism p-5 sm:p-8 rounded-2xl border border-gray-800 shadow-xl box-shadow-glow"
+            className="glass-morphism p-5 sm:p-8 rounded-2xl border border-text-tertiary shadow-xl box-shadow-glow"
           >
-            <h3 className="text-xl sm:text-2xl font-bold text-yellow-500 mb-4 sm:mb-6">
+            <h3 className="text-xl sm:text-2xl font-bold text-primary mb-4 sm:mb-6">
               Let&apos;s Connect
             </h3>
-            <p className="text-gray-300 mb-6 sm:mb-8 text-sm sm:text-base">
+            <p className="text-text-secondary mb-6 sm:mb-8 text-sm sm:text-base">
               {contactData.description}
             </p>
 
             <div className="space-y-4 sm:space-y-6 mb-6 sm:mb-8">
               <div className="flex items-start">
-                <div className="bg-yellow-500/10 p-2 sm:p-3 rounded-lg mr-3 sm:mr-4">
+                <div className="bg-primary/10 p-2 sm:p-3 rounded-lg mr-3 sm:mr-4">
                   <svg
-                    className="h-5 w-5 sm:h-6 sm:w-6 text-yellow-500"
+                    className="h-5 w-5 sm:h-6 sm:w-6 text-primary"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -160,12 +160,12 @@ const Contact: FC = () => {
                   </svg>
                 </div>
                 <div>
-                  <h4 className="text-base sm:text-lg font-medium text-gray-200">
+                  <h4 className="text-base sm:text-lg font-medium text-text-primary">
                     Email
                   </h4>
                   <a
                     href={`mailto:${contactData.email}`}
-                    className="text-gray-400 hover:text-yellow-500 transition-colors text-sm sm:text-base"
+                    className="text-text-tertiary hover:text-primary transition-colors text-sm sm:text-base"
                   >
                     {contactData.email}
                   </a>
@@ -173,9 +173,9 @@ const Contact: FC = () => {
               </div>
 
               <div className="flex items-start">
-                <div className="bg-yellow-500/10 p-2 sm:p-3 rounded-lg mr-3 sm:mr-4">
+                <div className="bg-primary/10 p-2 sm:p-3 rounded-lg mr-3 sm:mr-4">
                   <svg
-                    className="h-5 w-5 sm:h-6 sm:w-6 text-yellow-500"
+                    className="h-5 w-5 sm:h-6 sm:w-6 text-primary"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -189,12 +189,12 @@ const Contact: FC = () => {
                   </svg>
                 </div>
                 <div>
-                  <h4 className="text-base sm:text-lg font-medium text-gray-200">
+                  <h4 className="text-base sm:text-lg font-medium text-text-primary">
                     Phone
                   </h4>
                   <a
                     href={`tel:${contactData.phone.link}`}
-                    className="text-gray-400 hover:text-yellow-500 transition-colors text-sm sm:text-base"
+                    className="text-text-tertiary hover:text-primary transition-colors text-sm sm:text-base"
                   >
                     {contactData.phone.display}
                   </a>
@@ -203,7 +203,7 @@ const Contact: FC = () => {
             </div>
 
             <div className="mt-6 sm:mt-8">
-              <h4 className="text-base sm:text-lg font-medium text-gray-200 mb-3 sm:mb-4">
+              <h4 className="text-base sm:text-lg font-medium text-text-primary mb-3 sm:mb-4">
                 Find me on
               </h4>
               <div className="flex space-x-3 sm:space-x-4">
@@ -212,7 +212,7 @@ const Contact: FC = () => {
                     key={index}
                     href={social.url}
                     target="_blank"
-                    className="bg-gray-800 hover:bg-yellow-500 p-2 sm:p-3 rounded-lg text-yellow-500 hover:text-black transition-all hover:scale-110 transform perspective-1000 hover:rotate-6 mobile-touch-optimized"
+                    className="bg-surface hover:bg-primary p-2 sm:p-3 rounded-lg text-primary hover:text-background transition-all hover:scale-110 transform perspective-1000 hover:rotate-6 mobile-touch-optimized"
                   >
                     <FontAwesomeIcon
                       icon={social.icon === "faGithub" ? faGithub : faLinkedin}
@@ -231,11 +231,11 @@ const Contact: FC = () => {
             transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
           >
             {emailSubmitted ? (
-              <div className="glass-morphism p-5 sm:p-8 rounded-2xl border border-gray-800 shadow-xl box-shadow-glow">
+              <div className="glass-morphism p-5 sm:p-8 rounded-2xl border border-text-tertiary shadow-xl box-shadow-glow">
                 <div className="text-center p-4 sm:p-6">
-                  <div className="inline-flex items-center justify-center w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-green-100 mb-4 sm:mb-6">
+                  <div className="inline-flex items-center justify-center w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-primary/20 mb-4 sm:mb-6">
                     <svg
-                      className="w-6 h-6 sm:w-8 sm:h-8 text-green-600"
+                      className="w-6 h-6 sm:w-8 sm:h-8 text-primary"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -248,24 +248,24 @@ const Contact: FC = () => {
                       ></path>
                     </svg>
                   </div>
-                  <h3 className="text-xl sm:text-2xl font-bold text-yellow-500 mb-2">
+                  <h3 className="text-xl sm:text-2xl font-bold text-primary mb-2">
                     Message Sent!
                   </h3>
-                  <p className="text-gray-300 mb-5 sm:mb-6 text-sm sm:text-base">
+                  <p className="text-text-secondary mb-5 sm:mb-6 text-sm sm:text-base">
                     Thank you for reaching out. I&apos;ll get back to you as
                     soon as possible.
                   </p>
                   <button
                     onClick={() => setEmailSubmitted(false)}
-                    className="px-5 sm:px-6 py-2.5 sm:py-3 bg-yellow-500 hover:bg-yellow-400 text-black font-medium rounded-lg transition-colors text-sm sm:text-base"
+                    className="px-5 sm:px-6 py-2.5 sm:py-3 bg-primary hover:bg-secondary text-background font-medium rounded-lg transition-colors text-sm sm:text-base"
                   >
                     Send Another Message
                   </button>
                 </div>
               </div>
             ) : (
-              <div className="glass-morphism p-5 sm:p-8 rounded-2xl border border-gray-800 shadow-xl box-shadow-glow">
-                <h3 className="text-xl sm:text-2xl font-bold text-yellow-500 mb-4 sm:mb-6">
+              <div className="glass-morphism p-5 sm:p-8 rounded-2xl border border-text-tertiary shadow-xl box-shadow-glow">
+                <h3 className="text-xl sm:text-2xl font-bold text-primary mb-4 sm:mb-6">
                   Send Me a Message
                 </h3>
                 <form
@@ -275,7 +275,7 @@ const Contact: FC = () => {
                   <div className="relative group">
                     <label
                       htmlFor="email"
-                      className="text-gray-300 block mb-1.5 sm:mb-2 font-medium text-sm sm:text-base transition-colors group-focus-within:text-yellow-500"
+                      className="text-text-secondary block mb-1.5 sm:mb-2 font-medium text-sm sm:text-base transition-colors group-focus-within:text-primary"
                     >
                       Your Email
                     </label>
@@ -285,7 +285,7 @@ const Contact: FC = () => {
                       id="email"
                       required
                       maxLength={100}
-                      className="w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-gray-800/50 border border-gray-700 focus:border-yellow-500 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500/50 transition-all text-sm sm:text-base backdrop-blur-sm hover:bg-gray-800/70"
+                      className="w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-surface border border-text-tertiary focus:border-primary text-text-primary rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all text-sm sm:text-base hover:bg-surface/70"
                       placeholder="example@email.com"
                     />
                     {formErrors.email && (
@@ -298,7 +298,7 @@ const Contact: FC = () => {
                   <div className="relative group">
                     <label
                       htmlFor="name"
-                      className="text-gray-300 block mb-1.5 sm:mb-2 font-medium text-sm sm:text-base transition-colors group-focus-within:text-yellow-500"
+                      className="text-text-secondary block mb-1.5 sm:mb-2 font-medium text-sm sm:text-base transition-colors group-focus-within:text-primary"
                     >
                       Your Name
                     </label>
@@ -308,7 +308,7 @@ const Contact: FC = () => {
                       id="name"
                       required
                       maxLength={50}
-                      className="w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-gray-800/50 border border-gray-700 focus:border-yellow-500 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500/50 transition-all text-sm sm:text-base backdrop-blur-sm hover:bg-gray-800/70"
+                      className="w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-surface border border-text-tertiary focus:border-primary text-text-primary rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all text-sm sm:text-base hover:bg-surface/70"
                       placeholder="Enter your name"
                     />
                     {formErrors.name && (
@@ -321,7 +321,7 @@ const Contact: FC = () => {
                   <div className="relative group">
                     <label
                       htmlFor="subject"
-                      className="text-gray-300 block mb-1.5 sm:mb-2 font-medium text-sm sm:text-base transition-colors group-focus-within:text-yellow-500"
+                      className="text-text-secondary block mb-1.5 sm:mb-2 font-medium text-sm sm:text-base transition-colors group-focus-within:text-primary"
                     >
                       Subject
                     </label>
@@ -331,7 +331,7 @@ const Contact: FC = () => {
                       id="subject"
                       required
                       maxLength={100}
-                      className="w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-gray-800/50 border border-gray-700 focus:border-yellow-500 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500/50 transition-all text-sm sm:text-base backdrop-blur-sm hover:bg-gray-800/70"
+                      className="w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-surface border border-text-tertiary focus:border-primary text-text-primary rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all text-sm sm:text-base hover:bg-surface/70"
                       placeholder="What is this about?"
                     />
                     {formErrors.subject && (
@@ -344,7 +344,7 @@ const Contact: FC = () => {
                   <div className="relative group">
                     <label
                       htmlFor="message"
-                      className="text-gray-300 block mb-1.5 sm:mb-2 font-medium text-sm sm:text-base transition-colors group-focus-within:text-yellow-500"
+                      className="text-text-secondary block mb-1.5 sm:mb-2 font-medium text-sm sm:text-base transition-colors group-focus-within:text-primary"
                     >
                       Message
                     </label>
@@ -354,7 +354,7 @@ const Contact: FC = () => {
                       required
                       maxLength={1000}
                       rows={4}
-                      className="w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-gray-800/50 border border-gray-700 focus:border-yellow-500 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500/50 transition-all text-sm sm:text-base backdrop-blur-sm hover:bg-gray-800/70 resize-none"
+                      className="w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-surface border border-text-tertiary focus:border-primary text-text-primary rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all text-sm sm:text-base hover:bg-surface/70 resize-none"
                       placeholder="Your message here..."
                     ></textarea>
                     {formErrors.message && (
@@ -377,8 +377,8 @@ const Contact: FC = () => {
                     disabled={isSubmitting}
                     className={`w-full px-5 sm:px-6 py-2.5 sm:py-3 rounded-lg font-medium text-sm sm:text-lg transition-all ${
                       isSubmitting
-                        ? "bg-gray-700 text-gray-300 cursor-not-allowed"
-                        : "bg-yellow-500 hover:bg-yellow-400 text-black shadow-lg hover:shadow-yellow-500/20"
+                        ? "bg-surface text-text-tertiary cursor-not-allowed"
+                        : "bg-primary hover:bg-secondary text-background shadow-lg hover:shadow-primary/20"
                     }`}
                   >
                     {isSubmitting ? (
