@@ -1,0 +1,47 @@
+{
+  "image": "/Hero.png",
+  "title": "Welcome to My Portfolio",
+  "name": "KTS-o7",
+  "roles": [
+    "a Developer",
+    "a Problem Solver"
+  ],
+  "roleAnimationDelay": 1000,
+  "shortDescription": "SDE Intern @ RingCentral India | Senior Core Member @ Coding Club RVCE | Senior @ Dept of CSE, RVCE.",
+  "shortDescriptionLine2": "A passionate developer specializing in Generative AI, Langchain, Python, and modern web technologies.",
+  "detailedDescription": {
+    "intro": "As a Computer Science and Engineering student from Bangalore, India, I'm passionate about",
+    "technologies": [
+      "Mirascope",
+      "Groq",
+      "Ollama",
+      "Generative AI"
+    ],
+    "webDev": "Next.js",
+    "languages": [
+      "Python",
+      "C++"
+    ],
+    "outro": "allows me to build innovative solutions across different domains."
+  },
+  "buttons": [
+    {
+      "text": "Contact Me",
+      "link": "#contact",
+      "type": "primary"
+    },
+    {
+      "text": "Download CV",
+      "link": "https://drive.google.com/file/d/1oxmvlLVVMBtA-GA50sitNZKWfGuE4wir/view?usp=drive_link",
+      "type": "secondary",
+      "external": true
+    },
+    {
+      "text": "Read Blog",
+      "link": "https://kts-o7.github.io/blog/",
+      "type": "tertiary",
+      "external": true
+    }
+  ]
+}
+
