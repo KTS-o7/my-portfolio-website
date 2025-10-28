@@ -6,6 +6,7 @@ import { faGithub, faLinkedin } from "@fortawesome/free-brands-svg-icons";
 import emailjs from "emailjs-com";
 import DOMPurify from "dompurify";
 import { motion } from "framer-motion";
+import contactData from "@/data/contact.json";
 
 interface FormErrors {
   email?: string;
@@ -82,7 +83,12 @@ const Contact: FC = () => {
     };
 
     emailjs
-      .send("service_kts", "template_kts", templateParams, "WJtWKpUuqJ2IktWC3")
+      .send(
+        contactData.emailJS.serviceId,
+        contactData.emailJS.templateId,
+        templateParams,
+        contactData.emailJS.publicKey
+      )
       .then((result) => {
         console.log("Email sent successfully!", result.status, result.text);
         setEmailSubmitted(true);
@@ -135,9 +141,7 @@ const Contact: FC = () => {
               Let&apos;s Connect
             </h3>
             <p className="text-gray-300 mb-6 sm:mb-8 text-sm sm:text-base">
-              I&apos;m currently looking for new opportunities, my inbox is
-              always open. Whether you have a question or just want to say hi,
-              I&apos;ll try my best to get back to you!
+              {contactData.description}
             </p>
 
             <div className="space-y-4 sm:space-y-6 mb-6 sm:mb-8">
@@ -162,10 +166,10 @@ const Contact: FC = () => {
                     Email
                   </h4>
                   <a
-                    href="mailto:krishna.tejaswi@shenthar.com"
+                    href={`mailto:${contactData.email}`}
                     className="text-gray-400 hover:text-yellow-500 transition-colors text-sm sm:text-base"
                   >
-                    krishna.tejaswi@shenthar.com
+                    {contactData.email}
                   </a>
                 </div>
               </div>
@@ -191,10 +195,10 @@ const Contact: FC = () => {
                     Phone
                   </h4>
                   <a
-                    href="tel:+917760951918"
+                    href={`tel:${contactData.phone.link}`}
                     className="text-gray-400 hover:text-yellow-500 transition-colors text-sm sm:text-base"
                   >
-                    +91 (776) 095-1918
+                    {contactData.phone.display}
                   </a>
                 </div>
               </div>
@@ -205,26 +209,19 @@ const Contact: FC = () => {
                 Find me on
               </h4>
               <div className="flex space-x-3 sm:space-x-4">
-                <Link
-                  href="https://www.github.com/KTS-o7/"
-                  target="_blank"
-                  className="bg-gray-800 hover:bg-gray-700 p-2 sm:p-3 rounded-lg text-yellow-500 transition-all hover:scale-110"
-                >
-                  <FontAwesomeIcon
-                    icon={faGithub}
-                    className="h-5 w-5 sm:h-6 sm:w-6"
-                  />
-                </Link>
-                <Link
-                  href="https://www.linkedin.com/in/krishnatejaswi-shenthar/"
-                  target="_blank"
-                  className="bg-gray-800 hover:bg-gray-700 p-2 sm:p-3 rounded-lg text-yellow-500 transition-all hover:scale-110"
-                >
-                  <FontAwesomeIcon
-                    icon={faLinkedin}
-                    className="h-5 w-5 sm:h-6 sm:w-6"
-                  />
-                </Link>
+                {contactData.socialMedia.map((social, index) => (
+                  <Link
+                    key={index}
+                    href={social.url}
+                    target="_blank"
+                    className="bg-gray-800 hover:bg-gray-700 p-2 sm:p-3 rounded-lg text-yellow-500 transition-all hover:scale-110"
+                  >
+                    <FontAwesomeIcon
+                      icon={social.icon === "faGithub" ? faGithub : faLinkedin}
+                      className="h-5 w-5 sm:h-6 sm:w-6"
+                    />
+                  </Link>
+                ))}
               </div>
             </div>
           </motion.div>
