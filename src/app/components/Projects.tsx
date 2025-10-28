@@ -36,22 +36,22 @@ const Projects: FC = () => {
   return (
     <section
       id="projects"
-      className="py-12 sm:py-16 md:py-20 px-4 sm:px-6 bg-black relative overflow-hidden"
+      className="py-12 sm:py-16 md:py-20 px-4 sm:px-6 bg-background relative overflow-hidden"
     >
       {/* Background accents */}
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden z-0">
-        <div className="absolute -top-20 -right-20 w-60 sm:w-80 h-60 sm:h-80 bg-yellow-500 rounded-full opacity-5 blur-3xl animate-pulse-slow"></div>
-        <div className="absolute bottom-40 left-10 w-40 sm:w-60 h-40 sm:h-60 bg-yellow-500 rounded-full opacity-5 blur-3xl animate-pulse-slow"></div>
-        <div className="absolute top-1/2 left-1/2 w-40 sm:w-60 h-40 sm:h-60 bg-yellow-500 rounded-full opacity-5 blur-3xl animate-pulse-slow"></div>
+        <div className="absolute -top-20 -right-20 w-60 sm:w-80 h-60 sm:h-80 bg-primary rounded-full opacity-5 blur-3xl animate-pulse-slow"></div>
+        <div className="absolute bottom-40 left-10 w-40 sm:w-60 h-40 sm:h-60 bg-primary rounded-full opacity-5 blur-3xl animate-pulse-slow"></div>
+        <div className="absolute top-1/2 left-1/2 w-40 sm:w-60 h-40 sm:h-60 bg-primary rounded-full opacity-5 blur-3xl animate-pulse-slow"></div>
       </div>
 
       <div className="max-w-7xl mx-auto relative z-10">
         <TextReveal>
           <div className="text-center mb-10 sm:mb-16">
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-yellow-500 to-yellow-300 text-shadow-glow">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary text-shadow-glow">
               Projects & Publications
             </h2>
-            <div className="w-24 h-1 bg-yellow-500 mx-auto"></div>
+            <div className="w-24 h-1 bg-primary mx-auto"></div>
           </div>
         </TextReveal>
 
@@ -62,8 +62,8 @@ const Projects: FC = () => {
               onClick={() => handleTagChange(category)}
               className={`px-3 sm:px-5 py-1.5 sm:py-2 rounded-full transition-all duration-300 text-sm sm:text-base font-medium mobile-touch-optimized ${
                 tag === category
-                  ? "bg-yellow-500 text-black shadow-lg shadow-yellow-500/30 scale-105"
-                  : "bg-gray-800 text-gray-300 hover:bg-gray-700 hover:scale-105"
+                  ? "bg-primary text-background shadow-lg shadow-primary/30 scale-105"
+                  : "bg-surface text-text-secondary hover:bg-primary/10 hover:scale-105"
               }`}
             >
               {category}
@@ -91,8 +91,8 @@ const Projects: FC = () => {
                   rel="noopener noreferrer"
                   className="h-full block group mobile-touch-optimized"
                 >
-                  <div className="bg-gray-900 rounded-xl overflow-hidden h-full border border-gray-800 hover:border-yellow-500/50 transition-all duration-500 relative">
-                    <div className="absolute inset-0 bg-gradient-to-br from-yellow-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                  <div className="bg-surface rounded-xl overflow-hidden h-full border border-text-tertiary hover:border-primary/50 transition-all duration-500 relative">
+                    <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                     
                     <div className="relative h-48 sm:h-56 overflow-hidden">
                       <Image
@@ -106,7 +106,7 @@ const Projects: FC = () => {
                       <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/50 to-transparent"></div>
 
                       <div className="absolute bottom-0 left-0 p-3 sm:p-4 w-full">
-                        <h3 className="text-lg sm:text-xl font-bold text-yellow-400 mb-1 group-hover:text-yellow-300 transition-colors">
+                        <h3 className="text-lg sm:text-xl font-bold text-primary mb-1 group-hover:text-secondary transition-colors">
                           {project.name}
                         </h3>
                         <div className="flex gap-1.5 sm:gap-2 flex-wrap">
@@ -115,7 +115,7 @@ const Projects: FC = () => {
                             .map((t, i) => (
                               <span
                                 key={i}
-                                className="text-xs text-white bg-gray-800 bg-opacity-80 px-2 py-0.5 sm:py-1 rounded-full backdrop-blur-sm"
+                                className="text-xs text-text-primary bg-surface bg-opacity-80 px-2 py-0.5 sm:py-1 rounded-full backdrop-blur-sm"
                               >
                                 {t}
                               </span>
@@ -125,10 +125,10 @@ const Projects: FC = () => {
                     </div>
 
                     <div className="p-4 sm:p-6">
-                      <p className="text-gray-300 mb-4 text-sm sm:text-base line-clamp-3">
+                      <p className="text-text-secondary mb-4 text-sm sm:text-base line-clamp-3">
                         {project.description}
                       </p>
-                      <span className="inline-flex items-center text-yellow-500 font-medium text-sm sm:text-base group-hover:text-yellow-400 transition-colors">
+                      <span className="inline-flex items-center text-primary font-medium text-sm sm:text-base group-hover:text-secondary transition-colors">
                         View Project
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
