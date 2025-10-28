@@ -104,7 +104,8 @@ export const TechStack = () => {
                   alt={tech.name}
                   className="h-full w-auto object-contain"
                   onError={(e) => {
-                    e.target.style.display = 'none';
+                    const target = e.target as HTMLImageElement;
+                    target.style.display = 'none';
                   }}
                 />
               </div>
