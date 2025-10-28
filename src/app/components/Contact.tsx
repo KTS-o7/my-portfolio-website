@@ -7,6 +7,7 @@ import emailjs from "emailjs-com";
 import DOMPurify from "dompurify";
 import { motion } from "framer-motion";
 import contactData from "@/data/contact.json";
+import { TextReveal } from "./ui/TextReveal";
 
 interface FormErrors {
   email?: string;
@@ -107,27 +108,24 @@ const Contact: FC = () => {
   return (
     <section
       id="contact"
-      className="py-12 sm:py-16 md:py-20 px-4 sm:px-6 bg-gray-900 relative scroll-mt-20"
+      className="py-12 sm:py-16 md:py-20 px-4 sm:px-6 bg-gray-900 relative scroll-mt-20 overflow-hidden"
     >
       {/* Background elements */}
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden">
-        <div className="absolute -bottom-24 right-0 w-64 sm:w-96 h-64 sm:h-96 bg-yellow-500 rounded-full opacity-5 blur-3xl"></div>
-        <div className="absolute top-24 -left-24 w-48 sm:w-72 h-48 sm:h-72 bg-yellow-500 rounded-full opacity-5 blur-3xl"></div>
+        <div className="absolute -bottom-24 right-0 w-64 sm:w-96 h-64 sm:h-96 bg-yellow-500 rounded-full opacity-5 blur-3xl animate-pulse-slow"></div>
+        <div className="absolute top-24 -left-24 w-48 sm:w-72 h-48 sm:h-72 bg-yellow-500 rounded-full opacity-5 blur-3xl animate-pulse-slow"></div>
+        <div className="absolute top-1/2 left-1/2 w-40 sm:w-60 h-40 sm:h-60 bg-yellow-500 rounded-full opacity-5 blur-3xl animate-pulse-slow"></div>
       </div>
 
       <div className="max-w-7xl mx-auto relative z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 100 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          className="text-center mb-10 sm:mb-16"
-        >
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-yellow-500 to-yellow-300">
-            Get In Touch
-          </h2>
-          <div className="w-24 h-1 bg-yellow-500 mx-auto"></div>
-        </motion.div>
+        <TextReveal>
+          <div className="text-center mb-10 sm:mb-16">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-yellow-500 to-yellow-300 text-shadow-glow">
+              Get In Touch
+            </h2>
+            <div className="w-24 h-1 bg-yellow-500 mx-auto"></div>
+          </div>
+        </TextReveal>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-start">
           <motion.div
@@ -135,7 +133,7 @@ const Contact: FC = () => {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-            className="bg-black bg-opacity-40 backdrop-blur-sm p-5 sm:p-8 rounded-2xl border border-gray-800 shadow-xl"
+            className="glass-morphism p-5 sm:p-8 rounded-2xl border border-gray-800 shadow-xl box-shadow-glow"
           >
             <h3 className="text-xl sm:text-2xl font-bold text-yellow-500 mb-4 sm:mb-6">
               Let&apos;s Connect
@@ -214,7 +212,7 @@ const Contact: FC = () => {
                     key={index}
                     href={social.url}
                     target="_blank"
-                    className="bg-gray-800 hover:bg-gray-700 p-2 sm:p-3 rounded-lg text-yellow-500 transition-all hover:scale-110"
+                    className="bg-gray-800 hover:bg-yellow-500 p-2 sm:p-3 rounded-lg text-yellow-500 hover:text-black transition-all hover:scale-110 transform perspective-1000 hover:rotate-6 mobile-touch-optimized"
                   >
                     <FontAwesomeIcon
                       icon={social.icon === "faGithub" ? faGithub : faLinkedin}
@@ -233,7 +231,7 @@ const Contact: FC = () => {
             transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
           >
             {emailSubmitted ? (
-              <div className="bg-black bg-opacity-40 backdrop-blur-sm p-5 sm:p-8 rounded-2xl border border-gray-800 shadow-xl">
+              <div className="glass-morphism p-5 sm:p-8 rounded-2xl border border-gray-800 shadow-xl box-shadow-glow">
                 <div className="text-center p-4 sm:p-6">
                   <div className="inline-flex items-center justify-center w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-green-100 mb-4 sm:mb-6">
                     <svg
@@ -266,7 +264,7 @@ const Contact: FC = () => {
                 </div>
               </div>
             ) : (
-              <div className="bg-black bg-opacity-40 backdrop-blur-sm p-5 sm:p-8 rounded-2xl border border-gray-800 shadow-xl">
+              <div className="glass-morphism p-5 sm:p-8 rounded-2xl border border-gray-800 shadow-xl box-shadow-glow">
                 <h3 className="text-xl sm:text-2xl font-bold text-yellow-500 mb-4 sm:mb-6">
                   Send Me a Message
                 </h3>
@@ -274,10 +272,10 @@ const Contact: FC = () => {
                   className="space-y-4 sm:space-y-6"
                   onSubmit={handleSubmit}
                 >
-                  <div>
+                  <div className="relative group">
                     <label
                       htmlFor="email"
-                      className="text-gray-300 block mb-1.5 sm:mb-2 font-medium text-sm sm:text-base"
+                      className="text-gray-300 block mb-1.5 sm:mb-2 font-medium text-sm sm:text-base transition-colors group-focus-within:text-yellow-500"
                     >
                       Your Email
                     </label>
@@ -287,7 +285,7 @@ const Contact: FC = () => {
                       id="email"
                       required
                       maxLength={100}
-                      className="w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-gray-800 border border-gray-700 focus:border-yellow-500 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500/50 transition-colors text-sm sm:text-base"
+                      className="w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-gray-800/50 border border-gray-700 focus:border-yellow-500 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500/50 transition-all text-sm sm:text-base backdrop-blur-sm hover:bg-gray-800/70"
                       placeholder="example@email.com"
                     />
                     {formErrors.email && (
@@ -297,10 +295,10 @@ const Contact: FC = () => {
                     )}
                   </div>
 
-                  <div>
+                  <div className="relative group">
                     <label
                       htmlFor="name"
-                      className="text-gray-300 block mb-1.5 sm:mb-2 font-medium text-sm sm:text-base"
+                      className="text-gray-300 block mb-1.5 sm:mb-2 font-medium text-sm sm:text-base transition-colors group-focus-within:text-yellow-500"
                     >
                       Your Name
                     </label>
@@ -310,7 +308,7 @@ const Contact: FC = () => {
                       id="name"
                       required
                       maxLength={50}
-                      className="w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-gray-800 border border-gray-700 focus:border-yellow-500 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500/50 transition-colors text-sm sm:text-base"
+                      className="w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-gray-800/50 border border-gray-700 focus:border-yellow-500 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500/50 transition-all text-sm sm:text-base backdrop-blur-sm hover:bg-gray-800/70"
                       placeholder="Enter your name"
                     />
                     {formErrors.name && (
@@ -320,10 +318,10 @@ const Contact: FC = () => {
                     )}
                   </div>
 
-                  <div>
+                  <div className="relative group">
                     <label
                       htmlFor="subject"
-                      className="text-gray-300 block mb-1.5 sm:mb-2 font-medium text-sm sm:text-base"
+                      className="text-gray-300 block mb-1.5 sm:mb-2 font-medium text-sm sm:text-base transition-colors group-focus-within:text-yellow-500"
                     >
                       Subject
                     </label>
@@ -333,7 +331,7 @@ const Contact: FC = () => {
                       id="subject"
                       required
                       maxLength={100}
-                      className="w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-gray-800 border border-gray-700 focus:border-yellow-500 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500/50 transition-colors text-sm sm:text-base"
+                      className="w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-gray-800/50 border border-gray-700 focus:border-yellow-500 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500/50 transition-all text-sm sm:text-base backdrop-blur-sm hover:bg-gray-800/70"
                       placeholder="What is this about?"
                     />
                     {formErrors.subject && (
@@ -343,10 +341,10 @@ const Contact: FC = () => {
                     )}
                   </div>
 
-                  <div>
+                  <div className="relative group">
                     <label
                       htmlFor="message"
-                      className="text-gray-300 block mb-1.5 sm:mb-2 font-medium text-sm sm:text-base"
+                      className="text-gray-300 block mb-1.5 sm:mb-2 font-medium text-sm sm:text-base transition-colors group-focus-within:text-yellow-500"
                     >
                       Message
                     </label>
@@ -356,7 +354,7 @@ const Contact: FC = () => {
                       required
                       maxLength={1000}
                       rows={4}
-                      className="w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-gray-800 border border-gray-700 focus:border-yellow-500 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500/50 transition-colors text-sm sm:text-base"
+                      className="w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-gray-800/50 border border-gray-700 focus:border-yellow-500 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500/50 transition-all text-sm sm:text-base backdrop-blur-sm hover:bg-gray-800/70 resize-none"
                       placeholder="Your message here..."
                     ></textarea>
                     {formErrors.message && (

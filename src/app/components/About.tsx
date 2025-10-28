@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import Image from "next/legacy/image";
 import { motion } from "framer-motion";
 import aboutData from "@/data/about.json";
+import { TextReveal } from "./ui/TextReveal";
+import { TechStack } from "./ui/TechStack";
 
 export default function About() {
   const [tab, setTab] = useState("skills");
@@ -14,44 +15,70 @@ export default function About() {
     switch (tabId) {
       case "skills":
         return (
-          <ul className="grid grid-cols-1 xs:grid-cols-2 gap-3 sm:gap-4 pl-0 sm:pl-2">
+          <ul className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 pl-0">
             {aboutData.skills.map((skill, index) => (
-              <li key={index} className="flex items-center gap-2 text-gray-300">
-                <span className="h-2 w-2 rounded-full bg-yellow-500"></span>
-                {skill}
-              </li>
+              <motion.li
+                key={index}
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.3, delay: index * 0.03 }}
+                className="flex items-center gap-2 text-gray-300 p-3 rounded-lg bg-gray-800/30 border border-gray-700/50 hover:bg-yellow-500/10 hover:border-yellow-500/50 transition-all group cursor-pointer"
+              >
+                <span className="h-2 w-2 rounded-full bg-yellow-500 group-hover:scale-150 transition-transform flex-shrink-0"></span>
+                <span className="group-hover:text-yellow-400 transition-colors text-sm">{skill}</span>
+              </motion.li>
             ))}
           </ul>
         );
       case "education":
         return (
-          <ul className="space-y-4">
+          <div className="space-y-6">
             {aboutData.education.map((edu, index) => (
-              <li key={index}>
-                <div className="flex flex-col">
-                  <span className="text-yellow-500 font-medium">{edu.degree}</span>
-                  <span className="text-gray-300">{edu.institution} — GPA {edu.gpa}</span>
-                  <p className="text-gray-400 text-sm mt-1">{edu.period}</p>
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: index * 0.1 }}
+                className="p-4 rounded-lg bg-gray-800/30 border border-gray-700/50 hover:border-yellow-500/50 transition-all"
+              >
+                <h4 className="text-yellow-500 font-semibold text-lg mb-2">{edu.degree}</h4>
+                <p className="text-gray-300 mb-1">{edu.institution}</p>
+                <div className="flex flex-wrap gap-3 items-center text-sm">
+                  <span className="text-gray-400 bg-gray-900/50 px-3 py-1 rounded-full">GPA {edu.gpa}</span>
+                  <span className="text-gray-400">{edu.period}</span>
                 </div>
-              </li>
+              </motion.div>
             ))}
-            <li>
-              <div className="flex flex-col">
-                <span className="text-yellow-500 font-medium">Specializations</span>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, delay: 0.3 }}
+              className="p-4 rounded-lg bg-gray-800/30 border border-gray-700/50"
+            >
+              <h4 className="text-yellow-500 font-semibold text-lg mb-3">Specializations</h4>
+              <div className="flex flex-wrap gap-2">
                 {aboutData.specializations.map((spec, index) => (
-                  <span key={index} className="text-gray-300">{spec}</span>
+                  <span key={index} className="text-gray-300 bg-gray-900/50 px-3 py-1.5 rounded-full text-sm border border-gray-700">
+                    {spec}
+                  </span>
                 ))}
               </div>
-            </li>
-          </ul>
+            </motion.div>
+          </div>
         );
       case "certifications":
         return (
-          <ul className="space-y-2">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
             {aboutData.certifications.map((cert, index) => (
-              <li key={index} className="flex items-start gap-2">
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.3, delay: index * 0.05 }}
+                className="flex items-start gap-3 p-3 rounded-lg bg-gray-800/30 border border-gray-700/50 hover:bg-yellow-500/5 hover:border-yellow-500/50 transition-all group"
+              >
                 <svg
-                  className="h-5 w-5 text-yellow-500 mt-0.5 shrink-0"
+                  className="h-5 w-5 text-yellow-500 mt-0.5 shrink-0 group-hover:scale-110 transition-transform"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -63,10 +90,10 @@ export default function About() {
                     d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
                   />
                 </svg>
-                <span className="text-gray-300">{cert}</span>
-              </li>
+                <span className="text-gray-300 text-sm group-hover:text-yellow-400 transition-colors">{cert}</span>
+              </motion.div>
             ))}
-          </ul>
+          </div>
         );
       default:
         return null;
@@ -75,88 +102,92 @@ export default function About() {
 
   return (
     <section
-      className="bg-black-500 text-onyx py-12 sm:py-16 md:py-20"
+      className="bg-black-500 text-onyx py-12 sm:py-16 md:py-20 relative overflow-hidden"
       id="about"
     >
-      <div className="max-w-6xl mx-auto px-4 sm:px-6">
-        <motion.div
-          initial={{ opacity: 0, y: 100 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          className="text-center mb-10 sm:mb-16"
-        >
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-yellow-500 to-yellow-300">
-            About Me
-          </h2>
-          <div className="w-24 h-1 bg-yellow-500 mx-auto"></div>
-        </motion.div>
+      {/* Background elements */}
+      <div className="absolute top-20 right-10 w-40 sm:w-60 h-40 sm:h-60 bg-yellow-500 rounded-full opacity-5 blur-3xl animate-pulse-slow"></div>
+      <div className="absolute bottom-20 left-10 w-40 sm:w-60 h-40 sm:h-60 bg-yellow-500 rounded-full opacity-5 blur-3xl animate-pulse-slow"></div>
+      
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
+        <TextReveal>
+          <div className="text-center mb-10 sm:mb-16">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-yellow-500 to-yellow-300 text-shadow-glow">
+              About Me
+            </h2>
+            <div className="w-24 h-1 bg-yellow-500 mx-auto"></div>
+          </div>
+        </TextReveal>
 
-        <div className="md:grid md:grid-cols-2 gap-8 md:gap-12 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-10">
           <motion.div
-            initial={{ opacity: 0, x: -100 }}
+            initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-            className="mb-8 md:mb-0"
+            className="lg:col-span-1"
           >
-            <div className="relative">
-              <div className="absolute -inset-2 bg-gradient-to-r from-yellow-500 to-yellow-300 opacity-20 blur-xl rounded-3xl"></div>
-              <div className="relative">
-                <Image
-                  src={aboutData.image}
-                  alt="Profile Image"
-                  width={500}
-                  height={500}
-                  className="rounded-3xl shadow-lg"
-                />
+            <div className="glass-morphism p-6 rounded-xl border border-gray-800 box-shadow-glow h-full">
+              <h3 className="text-xl sm:text-2xl font-bold text-gray-300 mb-4">
+                {aboutData.title.split("passionate developer")[0]}
+                <span className="text-yellow-500">passionate developer</span>
+              </h3>
+              <p className="text-gray-300 mb-4 text-sm sm:text-base leading-relaxed">
+                {aboutData.description.primary}
+              </p>
+              <p className="text-gray-400 text-sm sm:text-base leading-relaxed">
+                {aboutData.description.secondary}
+              </p>
+              
+              {/* Decorative element */}
+              <div className="mt-6 flex items-center gap-2">
+                <div className="h-1 w-12 bg-yellow-500 rounded-full"></div>
+                <div className="h-1 w-8 bg-yellow-500/50 rounded-full"></div>
+                <div className="h-1 w-4 bg-yellow-500/30 rounded-full"></div>
               </div>
             </div>
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, x: 100 }}
+            initial={{ opacity: 0, x: 50 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
-            className="mt-6 md:mt-0"
+            className="lg:col-span-2"
           >
-            <h3 className="text-xl sm:text-2xl font-bold text-gray-300 mb-3 sm:mb-4">
-              {aboutData.title.split("passionate developer")[0]}
-              <span className="text-yellow-500">passionate developer</span>
-            </h3>
-            <p className="text-gray-300 mb-4 sm:mb-6 text-sm sm:text-base">
-              {aboutData.description.primary}
-            </p>
-            <p className="text-gray-400 mb-6 sm:mb-8 text-sm sm:text-base">
-              {aboutData.description.secondary}
-            </p>
-
-            <div className="bg-gray-900 p-4 sm:p-6 rounded-xl shadow-lg border border-gray-800">
-              <div className="flex flex-wrap justify-start space-x-4 sm:space-x-6 mb-4 sm:mb-6 border-b border-gray-800 pb-3 sm:pb-4 overflow-x-auto">
+            <div className="glass-morphism p-6 rounded-xl shadow-lg border border-gray-800 box-shadow-glow">
+              <div className="flex flex-wrap justify-start gap-3 sm:gap-4 mb-6 pb-4 border-b border-gray-800">
                 {["skills", "education", "certifications"].map((tabId) => (
                   <button
                     key={tabId}
                     onClick={() => handleTabChange(tabId)}
-                    className={`font-medium text-base sm:text-lg transition-colors whitespace-nowrap ${
+                    className={`font-medium text-base sm:text-lg transition-all whitespace-nowrap relative mobile-touch-optimized px-4 py-2 rounded-lg ${
                       tab === tabId
-                        ? "text-yellow-500"
-                        : "text-gray-500 hover:text-gray-300"
+                        ? "text-yellow-500 bg-yellow-500/10"
+                        : "text-gray-500 hover:text-gray-300 hover:bg-gray-800/50"
                     }`}
                   >
                     {tabId.charAt(0).toUpperCase() + tabId.slice(1)}
-                    {tab === tabId && (
-                      <div className="h-0.5 bg-yellow-500 w-full mt-1"></div>
-                    )}
                   </button>
                 ))}
               </div>
-              <div className="min-h-[180px] sm:min-h-[200px]">
+              <div className="min-h-[300px]">
                 {renderTabContent(tab)}
               </div>
             </div>
           </motion.div>
         </div>
+
+        {/* Tech Stack Scrolling Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, delay: 0.6, ease: "easeOut" }}
+          className="mt-12 sm:mt-16"
+        >
+          <TechStack />
+        </motion.div>
       </div>
     </section>
   );

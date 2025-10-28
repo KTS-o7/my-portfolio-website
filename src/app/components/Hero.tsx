@@ -5,6 +5,9 @@ import { TypeAnimation } from "react-type-animation";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import heroData from "@/data/hero.json";
+import { Spotlight } from "./ui/Spotlight";
+import { AnimatedGrid } from "./ui/AnimatedGrid";
+import { FloatingParticles } from "./ui/FloatingParticles";
 
 const Hero: FC = () => {
   const typeAnimationSequence = [];
@@ -14,19 +17,23 @@ const Hero: FC = () => {
   });
 
   return (
-    <section className="bg-black-500 py-12 sm:py-16 md:py-20 lg:py-32 relative overflow-hidden">
+    <section className="bg-black-500 py-12 sm:py-16 md:py-20 lg:py-32 relative overflow-hidden min-h-screen flex items-center">
+      <Spotlight />
+      <AnimatedGrid />
+      <FloatingParticles count={40} />
+      
       {/* Yellow accent gradient in background */}
       <div className="absolute -top-24 -right-24 w-64 sm:w-96 h-64 sm:h-96 bg-yellow-500 rounded-full opacity-20 blur-3xl"></div>
       <div className="absolute -bottom-24 -left-24 w-64 sm:w-96 h-64 sm:h-96 bg-yellow-500 rounded-full opacity-10 blur-3xl"></div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 grid grid-cols-1 sm:grid-cols-12 gap-8 sm:gap-12 items-center">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 grid grid-cols-1 sm:grid-cols-12 gap-8 sm:gap-12 items-center relative z-20">
         <motion.div
           initial={{ opacity: 0, y: 100 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
           className="col-span-full sm:col-span-7 md:col-span-8 place-self-center text-center sm:text-left justify-self-start"
         >
-          <h1 className="text-yellow-500 mb-3 sm:mb-4 text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-extrabold leading-tight">
+          <h1 className="text-yellow-500 mb-3 sm:mb-4 text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-extrabold leading-tight text-shadow-glow">
             {heroData.title}
           </h1>
           <h2 className="mb-4 sm:mb-6 text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold">
@@ -92,20 +99,27 @@ const Hero: FC = () => {
           transition={{ duration: 1, delay: 0.3, ease: "easeOut" }}
           className="col-span-full sm:col-span-5 md:col-span-4 place-self-center mt-8 sm:mt-4 lg:mt-0"
         >
-          <div className="relative">
-            <div className="absolute -inset-1 rounded-full bg-gradient-to-r from-yellow-500 to-yellow-300 opacity-70 blur-sm"></div>
-            <div className="rounded-full bg-gray-800 w-[200px] h-[200px] sm:w-[250px] sm:h-[250px] lg:w-[350px] lg:h-[350px] relative overflow-hidden border-4 border-gray-700">
+          <div className="relative group">
+            <div className="absolute -inset-1 rounded-full bg-gradient-to-r from-yellow-500 to-yellow-300 opacity-70 blur-sm group-hover:opacity-100 transition-opacity duration-500"></div>
+            <div className="rounded-full bg-gray-800 w-[200px] h-[200px] sm:w-[250px] sm:h-[250px] lg:w-[350px] lg:h-[350px] relative overflow-hidden border-4 border-gray-700 group-hover:border-yellow-500 transition-all duration-500 box-shadow-glow">
               <Image
                 src={heroData.image}
                 alt="Profile photo"
                 layout="fill"
                 objectFit="cover"
                 priority={true}
-                className="hover:scale-105 transition-all duration-500"
+                className="hover:scale-110 transition-all duration-700"
               />
             </div>
           </div>
         </motion.div>
+      </div>
+      
+      {/* Scroll indicator */}
+      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce hidden sm:block z-20">
+        <div className="w-6 h-10 border-2 border-yellow-500 rounded-full flex justify-center pt-2">
+          <div className="w-1 h-3 bg-yellow-500 rounded-full animate-pulse"></div>
+        </div>
       </div>
     </section>
   );

@@ -1,0 +1,96 @@
+{
+  "title": "Technologies I Work With",
+  "technologies": [
+    {
+      "name": "Python",
+      "logo": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg",
+      "color": "#3776AB"
+    },
+    {
+      "name": "JavaScript",
+      "logo": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg",
+      "color": "#F7DF1E"
+    },
+    {
+      "name": "React",
+      "logo": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg",
+      "color": "#61DAFB"
+    },
+    {
+      "name": "Next.js",
+      "logo": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg",
+      "color": "#000000"
+    },
+    {
+      "name": "Node.js",
+      "logo": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg",
+      "color": "#339933"
+    },
+    {
+      "name": "TypeScript",
+      "logo": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg",
+      "color": "#3178C6"
+    },
+    {
+      "name": "TailwindCSS",
+      "logo": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg",
+      "color": "#06B6D4"
+    },
+    {
+      "name": "Langchain",
+      "logo": "https://cdn.simpleicons.org/langchain/1C3C3C",
+      "color": "#1C3C3C"
+    },
+    {
+      "name": "Streamlit",
+      "logo": "https://cdn.simpleicons.org/streamlit/FF4B4B",
+      "color": "#FF4B4B"
+    },
+    {
+      "name": "SQL",
+      "logo": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg",
+      "color": "#4479A1"
+    },
+    {
+      "name": "C++",
+      "logo": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg",
+      "color": "#00599C"
+    },
+    {
+      "name": "Git",
+      "logo": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg",
+      "color": "#F05032"
+    },
+    {
+      "name": "Docker",
+      "logo": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg",
+      "color": "#2496ED"
+    },
+    {
+      "name": "AWS",
+      "logo": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original-wordmark.svg",
+      "color": "#FF9900"
+    },
+    {
+      "name": "MongoDB",
+      "logo": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg",
+      "color": "#47A248"
+    },
+    {
+      "name": "PostgreSQL",
+      "logo": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg",
+      "color": "#4169E1"
+    },
+    {
+      "name": "TensorFlow",
+      "logo": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tensorflow/tensorflow-original.svg",
+      "color": "#FF6F00"
+    },
+    {
+      "name": "FastAPI",
+      "logo": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/fastapi/fastapi-original.svg",
+      "color": "#009688"
+    }
+  ]
+}
+
