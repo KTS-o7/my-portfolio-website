@@ -1,0 +1,36 @@
+{
+  "image": "/Images/3dlaptop.jpg",
+  "title": "Hello there! I'm a passionate developer",
+  "description": {
+    "primary": "Currently working as a SDE Intern at RingCentral India. I specialize in building high-quality software solutions and applications using modern technologies like Langchain, Streamlit, and Next.js. I have obtained Gold+Elite Certification in Soft Computing and Data Science, offered by NPTEL.",
+    "secondary": "My focus is on creating efficient, scalable solutions to complex problems through innovative approaches and clean code."
+  },
+  "skills": [
+    "Python",
+    "C++",
+    "Langchain",
+    "Mirascope",
+    "SQL",
+    "React/Next.js",
+    "Machine Learning"
+  ],
+  "education": [
+    {
+      "degree": "CS Engineering",
+      "institution": "RVCE, Bangalore",
+      "gpa": "9.20",
+      "period": "2021 - 2025"
+    }
+  ],
+  "specializations": [
+    "ML Development",
+    "Algorithms",
+    "DBMS"
+  ],
+  "certifications": [
+    "Introduction to Soft Computing, NPTEL",
+    "Datascience for Engineers, NPTEL",
+    "Python for Everybody specialization, Coursera"
+  ]
+}
+

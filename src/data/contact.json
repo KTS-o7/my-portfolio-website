@@ -1,0 +1,26 @@
+{
+  "email": "krishna.tejaswi@shenthar.com",
+  "phone": {
+    "display": "+91 (776) 095-1918",
+    "link": "+917760951918"
+  },
+  "description": "I'm currently looking for new opportunities, my inbox is always open. Whether you have a question or just want to say hi, I'll try my best to get back to you!",
+  "socialMedia": [
+    {
+      "platform": "github",
+      "url": "https://www.github.com/KTS-o7/",
+      "icon": "faGithub"
+    },
+    {
+      "platform": "linkedin",
+      "url": "https://www.linkedin.com/in/krishnatejaswi-shenthar/",
+      "icon": "faLinkedin"
+    }
+  ],
+  "emailJS": {
+    "serviceId": "service_kts",
+    "templateId": "template_kts",
+    "publicKey": "WJtWKpUuqJ2IktWC3"
+  }
+}
+
