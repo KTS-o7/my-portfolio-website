@@ -1,13 +1,11 @@
 "use client";
 import React, { FC } from "react";
-import Image from "next/legacy/image";
-import { TypeAnimation } from "react-type-animation";
+import Image from "next/image";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import heroData from "@/data/hero.json";
 import { Spotlight } from "./ui/Spotlight";
 import { AnimatedGrid } from "./ui/AnimatedGrid";
-import { FloatingParticles } from "./ui/FloatingParticles";
 
 const Hero: FC = () => {
   const typeAnimationSequence = [];
@@ -17,108 +15,137 @@ const Hero: FC = () => {
   });
 
   return (
-    <section className="bg-background py-12 sm:py-16 md:py-20 lg:py-32 relative overflow-hidden min-h-screen flex items-center">
-      <Spotlight />
-      <AnimatedGrid />
-      <FloatingParticles count={40} />
-      
-      {/* Accent gradient in background */}
-      <div className="absolute -top-24 -right-24 w-64 sm:w-96 h-64 sm:h-96 bg-primary rounded-full opacity-20 blur-3xl"></div>
-      <div className="absolute -bottom-24 -left-24 w-64 sm:w-96 h-64 sm:h-96 bg-primary rounded-full opacity-10 blur-3xl"></div>
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 grid grid-cols-1 sm:grid-cols-12 gap-8 sm:gap-12 items-center relative z-20">
-        <motion.div
-          initial={{ opacity: 0, y: 100 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          className="col-span-full sm:col-span-7 md:col-span-8 place-self-center text-center sm:text-left justify-self-start"
-        >
-          <h1 className="text-primary mb-3 sm:mb-4 text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-extrabold leading-tight text-shadow-glow">
-            {heroData.title}
-          </h1>
-          <h2 className="mb-4 sm:mb-6 text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold">
-            <span className="text-text-secondary">I&apos;m </span>
-            <TypeAnimation
-              sequence={typeAnimationSequence}
-              wrapper="span"
-              speed={50}
-              repeat={Infinity}
-              className="text-secondary"
-            />
-          </h2>
-          <p className="text-text-secondary text-sm sm:text-base md:text-lg mb-4 sm:mb-6 lg:text-xl max-w-2xl">
-            {heroData.shortDescription}
-            <br className="hidden sm:block" />
-            {heroData.shortDescriptionLine2}
-          </p>
-          <p className="text-text-tertiary text-sm sm:text-base md:text-lg mb-6 sm:mb-8 lg:text-xl max-w-3xl">
-            {heroData.detailedDescription.intro}{" "}
-            <span className="text-primary font-medium">
-              {heroData.detailedDescription.technologies.join(", ")}
-            </span>
-            , and modern web development with{" "}
-            <span className="text-primary font-medium">
-              {heroData.detailedDescription.webDev}
-            </span>
-            . My expertise in{" "}
-            <span className="text-primary font-medium">
-              {heroData.detailedDescription.languages.join(" and ")}
-            </span>{" "}
-            {heroData.detailedDescription.outro}
-          </p>
-          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center sm:justify-start relative z-0">
-            {heroData.buttons.map((button, index) => {
-              const buttonClasses =
-                button.type === "primary"
-                  ? "px-6 sm:px-8 py-2.5 sm:py-3 rounded-full bg-primary hover:bg-secondary text-background font-bold transition-all shadow-lg hover:shadow-primary/20 text-center cursor-pointer text-sm sm:text-base"
-                  : button.type === "secondary"
-                  ? "px-6 sm:px-8 py-2.5 sm:py-3 rounded-full border-2 border-primary hover:bg-primary/10 text-primary font-bold transition-all text-sm sm:text-base"
-                  : "px-6 sm:px-8 py-2.5 sm:py-3 rounded-full border-2 border-text-tertiary hover:border-primary hover:bg-primary/10 text-text-secondary hover:text-primary font-bold transition-all text-sm sm:text-base";
-
-              return button.external ? (
-                <Link
-                  key={index}
-                  href={button.link}
-                  className={buttonClasses}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {button.text}
-                </Link>
-              ) : (
-                <a key={index} href={button.link} className={buttonClasses}>
-                  {button.text}
-                </a>
-              );
-            })}
-          </div>
-        </motion.div>
-        <motion.div
-          initial={{ opacity: 0, scale: 0.5 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1, delay: 0.3, ease: "easeOut" }}
-          className="col-span-full sm:col-span-5 md:col-span-4 place-self-center mt-8 sm:mt-4 lg:mt-0"
-        >
-          <div className="relative group">
-            <div className="absolute -inset-1 rounded-full bg-gradient-to-r from-primary to-secondary opacity-70 blur-sm group-hover:opacity-100 transition-opacity duration-500"></div>
-            <div className="rounded-full bg-surface w-[200px] h-[200px] sm:w-[250px] sm:h-[250px] lg:w-[350px] lg:h-[350px] relative overflow-hidden border-4 border-text-tertiary group-hover:border-primary transition-all duration-500 box-shadow-glow">
-              <Image
-                src={heroData.image}
-                alt="Profile photo"
-                layout="fill"
-                objectFit="cover"
-                priority={true}
-                className="hover:scale-110 transition-all duration-700"
-              />
-            </div>
-          </div>
-        </motion.div>
+    <section className="bg-background relative overflow-hidden min-h-screen flex items-center pt-20">
+      <div className="absolute inset-0 z-0">
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#121212_1px,transparent_1px),linear-gradient(to_bottom,#121212_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]"></div>
       </div>
-      
-      {/* Scroll indicator */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce hidden sm:block z-20">
-        <div className="w-6 h-10 border-2 border-primary rounded-full flex justify-center pt-2">
-          <div className="w-1 h-3 bg-primary rounded-full animate-pulse"></div>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 w-full relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+
+          {/* Left Column: Text Content */}
+          <motion.div
+            initial="hidden"
+            animate="visible"
+            variants={{
+              hidden: { opacity: 0 },
+              visible: {
+                opacity: 1,
+                transition: { staggerChildren: 0.1 }
+              },
+            }}
+            className="flex flex-col justify-center"
+          >
+            <motion.div
+              variants={{
+                hidden: { opacity: 0, x: -20 },
+                visible: { opacity: 1, x: 0 }
+              }}
+              className="flex items-center space-x-2 mb-6"
+            >
+              <div className="w-2 h-2 bg-primary rounded-full animate-pulse"></div>
+              <span className="text-primary font-mono text-sm tracking-widest uppercase">System Online</span>
+            </motion.div>
+
+            <motion.h1
+              variants={{
+                hidden: { opacity: 0, y: 20 },
+                visible: { opacity: 1, y: 0, transition: { duration: 0.5 } }
+              }}
+              className="text-6xl sm:text-7xl md:text-8xl font-black tracking-tighter text-white mb-6 leading-[0.9]"
+            >
+              FULL<br />
+              STACK<br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">ENGINEER</span>
+            </motion.h1>
+
+            <motion.div
+              variants={{
+                hidden: { opacity: 0, y: 20 },
+                visible: { opacity: 1, y: 0, transition: { duration: 0.5 } }
+              }}
+              className="border-l-2 border-primary/30 pl-6 mb-8"
+            >
+              <p className="text-text-secondary text-lg md:text-xl font-mono leading-relaxed">
+                Leading <span className="text-white font-bold">Compliance OS</span> at OnFinance.
+                <br />
+                Architecting secure, scalable infrastructure for the future of fintech.
+              </p>
+            </motion.div>
+
+            <motion.div
+              variants={{
+                hidden: { opacity: 0, y: 20 },
+                visible: { opacity: 1, y: 0, transition: { duration: 0.5 } }
+              }}
+              className="flex flex-wrap gap-4"
+            >
+              {heroData.buttons.map((button, index) => {
+                const isPrimary = button.type === "primary";
+                return button.external ? (
+                  <Link
+                    key={index}
+                    href={button.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`px-8 py-4 font-mono text-sm font-bold tracking-wider uppercase transition-all duration-300 ${isPrimary
+                      ? "bg-primary text-black hover:bg-white"
+                      : "border border-text-tertiary text-text-secondary hover:border-primary hover:text-primary"
+                      }`}
+                  >
+                    {button.text}
+                  </Link>
+                ) : (
+                  <a
+                    key={index}
+                    href={button.link}
+                    className={`px-8 py-4 font-mono text-sm font-bold tracking-wider uppercase transition-all duration-300 ${isPrimary
+                      ? "bg-primary text-black hover:bg-white"
+                      : "border border-text-tertiary text-text-secondary hover:border-primary hover:text-primary"
+                      }`}
+                  >
+                    {button.text}
+                  </a>
+                );
+              })}
+            </motion.div>
+          </motion.div>
+
+          {/* Right Column: Visual/Profile */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="relative hidden lg:block"
+          >
+            <div className="relative w-full aspect-square max-w-md mx-auto">
+              {/* Technical decorative elements */}
+              <div className="absolute inset-0 border border-text-tertiary/20 rounded-full"></div>
+              <div className="absolute inset-4 border border-text-tertiary/20 rounded-full border-dashed animate-[spin_60s_linear_infinite]"></div>
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="w-[300px] h-[300px] relative overflow-hidden rounded-full grayscale hover:grayscale-0 transition-all duration-500 border-2 border-primary/50">
+                  <Image
+                    src={heroData.image}
+                    alt="Profile"
+                    fill
+                    className="object-cover"
+                    priority
+                  />
+                </div>
+              </div>
+
+              {/* Floating tech badges */}
+              <div className="absolute top-0 right-10 bg-surface border border-text-tertiary/30 px-4 py-2 rounded-none">
+                <span className="text-primary font-mono text-xs">FastAPI</span>
+              </div>
+              <div className="absolute bottom-20 left-0 bg-surface border border-text-tertiary/30 px-4 py-2 rounded-none">
+                <span className="text-primary font-mono text-xs">LLMs</span>
+              </div>
+              <div className="absolute bottom-0 right-20 bg-surface border border-text-tertiary/30 px-4 py-2 rounded-none">
+                <span className="text-primary font-mono text-xs">Agentic AI</span>
+              </div>
+            </div>
+          </motion.div>
         </div>
       </div>
     </section>

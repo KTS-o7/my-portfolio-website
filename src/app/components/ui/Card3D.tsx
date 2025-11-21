@@ -42,7 +42,7 @@ export const Card3D = ({ children, className = "" }) => {
         onMouseMove={handleMouseMove}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
-        className={`preserve-3d transition-transform duration-300 ease-out ${className}`}
+        className={`preserve-3d transition-transform duration-300 ease-out h-full ${className}`}
         style={{
           transform: isHovering
             ? `rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`
