@@ -168,6 +168,20 @@ const Contact: FC = () => {
                     </a>
                   </div>
                 </div>
+
+                <div className="flex items-start gap-4 group">
+                  <div className="bg-primary/10 p-3 border border-primary/20 group-hover:bg-primary group-hover:text-black transition-colors">
+                    <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <h4 className="text-sm font-mono text-text-tertiary uppercase tracking-wider mb-1">Secure_Chat</h4>
+                    <a href={contactData.whatsapp.link} target="_blank" rel="noopener noreferrer" className="text-lg text-white hover:text-primary font-mono transition-colors">
+                      {contactData.whatsapp.display}
+                    </a>
+                  </div>
+                </div>
               </div>
 
               <div className="mt-12 pt-8 border-t border-text-tertiary/20">

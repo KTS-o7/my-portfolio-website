@@ -136,13 +136,13 @@ const Hero: FC = () => {
 
               {/* Floating tech badges */}
               <div className="absolute top-0 right-10 bg-surface border border-text-tertiary/30 px-4 py-2 rounded-none">
-                <span className="text-primary font-mono text-xs">REACT.JS</span>
+                <span className="text-primary font-mono text-xs">FastAPI</span>
               </div>
               <div className="absolute bottom-20 left-0 bg-surface border border-text-tertiary/30 px-4 py-2 rounded-none">
-                <span className="text-primary font-mono text-xs">NEXT.JS</span>
+                <span className="text-primary font-mono text-xs">LLMs</span>
               </div>
               <div className="absolute bottom-0 right-20 bg-surface border border-text-tertiary/30 px-4 py-2 rounded-none">
-                <span className="text-primary font-mono text-xs">NODE.JS</span>
+                <span className="text-primary font-mono text-xs">Agentic AI</span>
               </div>
             </div>
           </motion.div>
