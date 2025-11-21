@@ -6,18 +6,20 @@ import { faGithub, faLinkedin } from "@fortawesome/free-brands-svg-icons";
 
 const Footer: React.FC = () => {
   return (
-    <footer className="relative z-10 bg-background text-text-primary border-t border-text-tertiary overflow-hidden">
-      <div className="absolute top-0 left-1/2 w-40 sm:w-60 h-40 sm:h-60 bg-primary rounded-full opacity-5 blur-3xl animate-pulse-slow"></div>
-      
-      <div className="max-w-7xl mx-auto py-8 sm:py-12 px-4 sm:px-6 relative">
-        <div className="border-t border-text-tertiary mt-6 sm:mt-4 pt-6 sm:pt-8 flex flex-col md:flex-row justify-between items-center">
-          <p className="text-text-tertiary text-xs sm:text-sm">
-            &copy; 2024 Krishnatejaswi S. All rights reserved.
-          </p>
-          <p className="text-text-tertiary text-xs sm:text-sm mt-2 md:mt-0">
-            Built with <span className="text-primary animate-pulse">♥</span> using Next.js
-            & Tailwind CSS
-          </p>
+    <footer className="bg-background text-text-tertiary border-t border-text-tertiary/20 py-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col md:flex-row justify-between items-center gap-4">
+        <div className="font-mono text-xs uppercase tracking-widest">
+          <span className="text-primary mr-2">©</span>
+          2024 KTS_PORTFOLIO.SYSTEM
+        </div>
+
+        <div className="font-mono text-xs uppercase tracking-widest flex items-center gap-2">
+          <span>STATUS:</span>
+          <span className="text-primary animate-pulse">ONLINE</span>
+        </div>
+
+        <div className="font-mono text-xs text-text-tertiary/50">
+          V.2.0.4 [STABLE]
         </div>
       </div>
     </footer>

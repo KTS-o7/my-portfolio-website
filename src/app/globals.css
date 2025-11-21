@@ -4,9 +4,9 @@
 
 :root {
   --foreground-rgb: 255, 255, 255;
-  --background-start-rgb: 0, 0, 0;
-  --background-end-rgb: 0, 0, 0;
-  
+  --background-start-rgb: 5, 5, 5;
+  --background-end-rgb: 5, 5, 5;
+
   --color-primary: #FACC15;
   --color-secondary: #FDE047;
   --color-accent: #FBBF24;
@@ -21,7 +21,7 @@
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 255, 255, 255;
   --background-end-rgb: 240, 248, 255;
-  
+
   --color-primary: #3B82F6;
   --color-secondary: #60A5FA;
   --color-accent: #2563EB;
@@ -43,33 +43,20 @@ html {
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: rgb(var(--background-start-rgb));
+  color: #ffffff;
+  background-color: #050505;
+  background-image: radial-gradient(#333 1px, transparent 1px);
+  background-size: 40px 40px;
+  /* Technical Dot Grid */
   overflow-x: hidden;
-  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 ::selection {
-  background-color: var(--color-primary);
-  color: var(--color-background);
+  background-color: #FAFF00;
+  color: #000000;
 }
 
-::-webkit-scrollbar {
-  width: 10px;
-}
 
-::-webkit-scrollbar-track {
-  background: var(--color-surface);
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--color-primary);
-  border-radius: 5px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: var(--color-secondary);
-}
 
 @layer utilities {
   .perspective-1000 {
@@ -88,17 +75,7 @@ body {
     backface-visibility: hidden;
   }
 
-  .glass-morphism {
-    background: rgba(0, 0, 0, 0.4);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-  }
-
-  :root.light .glass-morphism {
-    background: rgba(255, 255, 255, 0.7);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-  }
+  /* Glassmorphism removed for minimal design */
 
   .text-shadow-glow {
     text-shadow: 0 0 20px var(--color-primary);
@@ -117,6 +94,7 @@ body {
       opacity: 0;
       transform: translateY(-10px);
     }
+
     to {
       opacity: 1;
       transform: translateY(0);
@@ -125,6 +103,7 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
+
   *,
   *::before,
   *::after {
@@ -138,7 +117,7 @@ body {
   body {
     font-size: 16px;
   }
-  
+
   .mobile-touch-optimized {
     -webkit-tap-highlight-color: transparent;
     touch-action: manipulation;

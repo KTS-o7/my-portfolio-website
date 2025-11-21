@@ -9,11 +9,11 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: "var(--color-primary)",
-        secondary: "var(--color-secondary)",
-        accent: "var(--color-accent)",
-        background: "var(--color-background)",
-        surface: "var(--color-surface)",
+        primary: "#FAFF00", // Safety Yellow
+        secondary: "#D4D900", // Darker Yellow
+        accent: "#FFFFFF", // White accent
+        background: "#050505", // Deep Black
+        surface: "#121212", // Rich Charcoal
         text: {
           primary: "var(--color-text-primary)",
           secondary: "var(--color-text-secondary)",
