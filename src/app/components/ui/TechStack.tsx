@@ -1,10 +1,11 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
 import techData from "@/data/technologies.json";
+import NextImage from "next/image";
 
 export const TechStack = () => {
-  const scrollRef = useRef(null);
-  const animationRef = useRef(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const animationRef = useRef<number | null>(null);
   const scrollPositionRef = useRef(0);
   const [isPaused, setIsPaused] = useState(false);
   const isDraggingRef = useRef(false);
@@ -20,16 +21,16 @@ export const TechStack = () => {
     const animate = () => {
       if (!isPaused && !isDraggingRef.current) {
         scrollPositionRef.current += scrollSpeed;
-        
+
         if (scrollPositionRef.current >= scrollContainer.scrollWidth / 2) {
           scrollPositionRef.current = 0;
         }
-        
+
         scrollContainer.scrollLeft = scrollPositionRef.current;
       } else if (!isDraggingRef.current) {
         scrollPositionRef.current = scrollContainer.scrollLeft;
       }
-      
+
       animationRef.current = requestAnimationFrame(animate);
     };
 
@@ -42,15 +43,16 @@ export const TechStack = () => {
     };
   }, [isPaused]);
 
-  const handleMouseDown = (e) => {
+  const handleMouseDown = (e: React.MouseEvent) => {
+    if (!scrollRef.current) return;
     isDraggingRef.current = true;
     startXRef.current = e.pageX - scrollRef.current.offsetLeft;
     scrollLeftRef.current = scrollRef.current.scrollLeft;
     scrollRef.current.style.cursor = "grabbing";
   };
 
-  const handleMouseMove = (e) => {
-    if (!isDraggingRef.current) return;
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isDraggingRef.current || !scrollRef.current) return;
     e.preventDefault();
     const x = e.pageX - scrollRef.current.offsetLeft;
     const walk = (x - startXRef.current) * 2;
@@ -59,12 +61,13 @@ export const TechStack = () => {
   };
 
   const handleMouseUp = () => {
+    if (!scrollRef.current) return;
     isDraggingRef.current = false;
     scrollRef.current.style.cursor = "grab";
   };
 
   const handleMouseLeave = () => {
-    if (isDraggingRef.current) {
+    if (isDraggingRef.current && scrollRef.current) {
       isDraggingRef.current = false;
       scrollRef.current.style.cursor = "grab";
     }
@@ -77,14 +80,18 @@ export const TechStack = () => {
   ];
 
   return (
-    <div className="w-full overflow-hidden py-8 sm:py-12">
-      <h3 className="text-2xl sm:text-3xl font-bold text-center mb-8 bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary">
-        {techData.title}
-      </h3>
-      
+    <div className="w-full overflow-hidden py-12 border-y border-text-tertiary/10 bg-black/20">
+      <div className="flex items-center justify-center gap-4 mb-10">
+        <div className="h-px w-12 bg-primary/30"></div>
+        <h3 className="text-xl font-mono font-bold text-white uppercase tracking-widest">
+          {techData.title}_
+        </h3>
+        <div className="h-px w-12 bg-primary/30"></div>
+      </div>
+
       <div
         ref={scrollRef}
-        className="flex gap-4 sm:gap-6 overflow-x-hidden py-4 select-none cursor-grab active:cursor-grabbing"
+        className="flex gap-px overflow-x-hidden py-4 select-none cursor-grab active:cursor-grabbing bg-text-tertiary/10"
         style={{ scrollBehavior: "auto" }}
         onMouseEnter={() => setIsPaused(true)}
         onMouseLeave={handleMouseLeave}
@@ -95,32 +102,38 @@ export const TechStack = () => {
         {duplicatedTechnologies.map((tech, index) => (
           <div
             key={`${tech.name}-${index}`}
-            className="flex-shrink-0 group cursor-pointer"
+            className="flex-shrink-0 group cursor-pointer bg-surface hover:bg-primary/10 transition-colors w-[160px] sm:w-[180px] h-[120px] flex flex-col items-center justify-center border-r border-text-tertiary/20 relative"
           >
-            <div className="glass-morphism px-6 py-4 rounded-xl border border-text-tertiary hover:border-primary/50 transition-all duration-300 min-w-[140px] sm:min-w-[160px] text-center hover:scale-105 box-shadow-glow">
-              <div className="flex items-center justify-center h-12 sm:h-14 mb-3 group-hover:scale-110 transition-transform duration-300">
-                <img
-                  src={tech.logo}
-                  alt={tech.name}
-                  className="h-full w-auto object-contain"
-                  onError={(e) => {
-                    const target = e.target as HTMLImageElement;
-                    target.style.display = 'none';
-                  }}
-                />
-              </div>
-              <p className="text-text-secondary text-sm sm:text-base font-medium group-hover:text-primary transition-colors">
-                {tech.name}
-              </p>
+            <div className="absolute top-2 right-2 text-[10px] font-mono text-text-tertiary opacity-50 group-hover:text-primary group-hover:opacity-100">
+              {(index + 1).toString().padStart(2, '0')}
             </div>
+
+            <div className="h-10 w-10 sm:h-12 sm:w-12 mb-4 grayscale group-hover:grayscale-0 transition-all duration-300 opacity-70 group-hover:opacity-100 group-hover:scale-110 relative">
+              <NextImage
+                src={tech.logo}
+                alt={tech.name}
+                fill
+                sizes="(max-width: 640px) 40px, 48px"
+                className="object-contain"
+                onError={(e) => {
+                  const target = e.target as HTMLImageElement;
+                  target.style.display = 'none';
+                }}
+              />
+            </div>
+            <p className="text-text-secondary text-xs font-mono uppercase tracking-wider group-hover:text-primary transition-colors">
+              {tech.name}
+            </p>
+
+            <div className="absolute bottom-0 left-0 w-full h-0.5 bg-primary transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
           </div>
         ))}
       </div>
-      
-      <p className="text-center text-text-tertiary text-xs sm:text-sm mt-4">
-        Hover to pause • Click and drag to scroll
-      </p>
+
+      <div className="flex justify-between items-center px-4 max-w-7xl mx-auto mt-4 text-[10px] font-mono text-text-tertiary uppercase tracking-widest">
+        <span>&lt; SCROLL_TO_NAVIGATE &gt;</span>
+        <span>TOTAL_NODES: {techData.technologies.length}</span>
+      </div>
     </div>
   );
 };
-

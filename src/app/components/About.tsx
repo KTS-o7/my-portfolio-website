@@ -15,17 +15,17 @@ export default function About() {
     switch (tabId) {
       case "skills":
         return (
-          <ul className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 pl-0">
+          <ul className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {aboutData.skills.map((skill, index) => (
               <motion.li
                 key={index}
-                initial={{ opacity: 0, scale: 0.8 }}
+                initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.3, delay: index * 0.03 }}
-                className="flex items-center gap-2 text-text-secondary p-3 rounded-lg bg-surface border border-text-tertiary hover:bg-primary/10 hover:border-primary/50 transition-all group cursor-pointer"
+                transition={{ duration: 0.2, delay: index * 0.02 }}
+                className="flex items-center gap-2 text-text-secondary p-2 border-l border-primary/30 hover:bg-primary/5 transition-all group cursor-default"
               >
-                <span className="h-2 w-2 rounded-full bg-primary group-hover:scale-150 transition-transform flex-shrink-0"></span>
-                <span className="group-hover:text-primary transition-colors text-sm">{skill}</span>
+                <span className="text-primary font-mono text-xs opacity-50 group-hover:opacity-100">&gt;</span>
+                <span className="font-mono text-sm uppercase tracking-wider group-hover:text-primary transition-colors">{skill}</span>
               </motion.li>
             ))}
           </ul>
@@ -36,29 +36,29 @@ export default function About() {
             {aboutData.education.map((edu, index) => (
               <motion.div
                 key={index}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, delay: index * 0.1 }}
-                className="p-4 rounded-lg bg-surface border border-text-tertiary hover:border-primary/50 transition-all"
+                initial={{ opacity: 0, x: -10 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.3, delay: index * 0.1 }}
+                className="border-l-2 border-text-tertiary pl-4 hover:border-primary transition-colors"
               >
-                <h4 className="text-primary font-semibold text-lg mb-2">{edu.degree}</h4>
-                <p className="text-text-secondary mb-1">{edu.institution}</p>
-                <div className="flex flex-wrap gap-3 items-center text-sm">
-                  <span className="text-text-tertiary bg-background px-3 py-1 rounded-full">GPA {edu.gpa}</span>
-                  <span className="text-text-tertiary">{edu.period}</span>
+                <h4 className="text-white font-bold text-lg font-mono uppercase">{edu.degree}</h4>
+                <p className="text-primary font-mono text-sm mb-2">{edu.institution}</p>
+                <div className="flex flex-wrap gap-4 text-xs font-mono text-text-tertiary uppercase tracking-widest">
+                  <span>GPA: {edu.gpa}</span>
+                  <span>{"//"} {edu.period}</span>
                 </div>
               </motion.div>
             ))}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, delay: 0.3 }}
-              className="p-4 rounded-lg bg-surface border border-text-tertiary"
+              initial={{ opacity: 0, x: -10 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.3, delay: 0.2 }}
+              className="mt-8 pt-6 border-t border-text-tertiary/20"
             >
-              <h4 className="text-primary font-semibold text-lg mb-3">Specializations</h4>
+              <h4 className="text-text-secondary font-mono text-sm uppercase tracking-widest mb-4">Specializations_</h4>
               <div className="flex flex-wrap gap-2">
                 {aboutData.specializations.map((spec, index) => (
-                  <span key={index} className="text-text-secondary bg-background px-3 py-1.5 rounded-full text-sm border border-text-tertiary">
+                  <span key={index} className="text-primary bg-primary/5 px-3 py-1 text-xs font-mono border border-primary/20">
                     {spec}
                   </span>
                 ))}
@@ -68,29 +68,17 @@ export default function About() {
         );
       case "certifications":
         return (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {aboutData.certifications.map((cert, index) => (
               <motion.div
                 key={index}
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
                 transition={{ duration: 0.3, delay: index * 0.05 }}
-                className="flex items-start gap-3 p-3 rounded-lg bg-surface border border-text-tertiary hover:bg-primary/5 hover:border-primary/50 transition-all group"
+                className="flex items-start gap-3 p-4 border border-text-tertiary/30 hover:border-primary/50 transition-all bg-surface/50"
               >
-                <svg
-                  className="h-5 w-5 text-primary mt-0.5 shrink-0 group-hover:scale-110 transition-transform"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                  />
-                </svg>
-                <span className="text-text-secondary text-sm group-hover:text-primary transition-colors">{cert}</span>
+                <div className="mt-1 w-2 h-2 bg-primary rounded-full animate-pulse"></div>
+                <span className="text-text-secondary font-mono text-sm uppercase tracking-wide">{cert}</span>
               </motion.div>
             ))}
           </div>
@@ -102,76 +90,83 @@ export default function About() {
 
   return (
     <section
-      className="bg-background py-12 sm:py-16 md:py-20 relative overflow-hidden"
+      className="bg-background py-20 sm:py-32 relative overflow-hidden border-t border-text-tertiary/10"
       id="about"
     >
-      {/* Background elements */}
-      <div className="absolute top-20 right-10 w-40 sm:w-60 h-40 sm:h-60 bg-primary rounded-full opacity-5 blur-3xl animate-pulse-slow"></div>
-      <div className="absolute bottom-20 left-10 w-40 sm:w-60 h-40 sm:h-60 bg-primary rounded-full opacity-5 blur-3xl animate-pulse-slow"></div>
-      
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
-        <TextReveal>
-          <div className="text-center mb-10 sm:mb-16">
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary text-shadow-glow">
-              About Me
-            </h2>
-            <div className="w-24 h-1 bg-primary mx-auto"></div>
-          </div>
-        </TextReveal>
-
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
+        <div className="mb-16 sm:mb-24">
           <motion.div
-            initial={{ opacity: 0, x: -50 }}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="flex items-end gap-4 mb-4"
+          >
+            <h2 className="text-5xl sm:text-7xl md:text-8xl font-black text-text-tertiary/20 uppercase tracking-tighter leading-none">
+              About
+            </h2>
+            <div className="h-px flex-grow bg-primary/30 mb-4"></div>
+            <span className="font-mono text-primary text-sm mb-4">SYS.INFO</span>
+          </motion.div>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
+          {/* Left Column: Bio */}
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-            className="lg:col-span-1"
+            transition={{ duration: 0.6 }}
+            className="lg:col-span-5"
           >
-            <div className="glass-morphism p-6 rounded-xl border border-text-tertiary box-shadow-glow h-full">
-              <h3 className="text-xl sm:text-2xl font-bold text-text-primary mb-4">
-                {aboutData.title.split("passionate developer")[0]}
-                <span className="text-primary">passionate developer</span>
+            <div className="border-l-2 border-primary pl-6 py-2">
+              <h3 className="text-2xl sm:text-3xl font-bold text-white mb-6 font-mono uppercase">
+                {aboutData.title}
               </h3>
-              <p className="text-text-secondary mb-4 text-sm sm:text-base leading-relaxed">
+              <p className="text-text-secondary mb-6 text-base sm:text-lg leading-relaxed font-light">
                 {aboutData.description.primary}
               </p>
-              <p className="text-text-tertiary text-sm sm:text-base leading-relaxed">
-                {aboutData.description.secondary}
+              <p className="text-text-tertiary text-sm sm:text-base leading-relaxed font-mono">
+                &gt; {aboutData.description.secondary}
               </p>
-              
-              {/* Decorative element */}
-              <div className="mt-6 flex items-center gap-2">
-                <div className="h-1 w-12 bg-primary rounded-full"></div>
-                <div className="h-1 w-8 bg-primary/50 rounded-full"></div>
-                <div className="h-1 w-4 bg-primary/30 rounded-full"></div>
+            </div>
+
+            {/* Decorative Tech Specs */}
+            <div className="mt-12 grid grid-cols-2 gap-4 border-t border-text-tertiary/20 pt-8">
+              <div>
+                <span className="block text-xs font-mono text-text-tertiary uppercase mb-1">Location</span>
+                <span className="text-white font-mono">Bangalore, IN</span>
+              </div>
+              <div>
+                <span className="block text-xs font-mono text-text-tertiary uppercase mb-1">Status</span>
+                <span className="text-primary font-mono animate-pulse">Available</span>
               </div>
             </div>
           </motion.div>
 
+          {/* Right Column: Tabs */}
           <motion.div
-            initial={{ opacity: 0, x: 50 }}
+            initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
-            className="lg:col-span-2"
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="lg:col-span-7"
           >
-            <div className="glass-morphism p-6 rounded-xl shadow-lg border border-text-tertiary box-shadow-glow">
-              <div className="flex flex-wrap justify-start gap-3 sm:gap-4 mb-6 pb-4 border-b border-text-tertiary">
+            <div className="bg-surface border border-text-tertiary/20 p-1">
+              <div className="flex border-b border-text-tertiary/20 bg-black/20">
                 {["skills", "education", "certifications"].map((tabId) => (
                   <button
                     key={tabId}
                     onClick={() => handleTabChange(tabId)}
-                    className={`font-medium text-base sm:text-lg transition-all whitespace-nowrap relative mobile-touch-optimized px-4 py-2 rounded-lg ${
-                      tab === tabId
-                        ? "text-primary bg-primary/10"
-                        : "text-text-tertiary hover:text-text-secondary hover:bg-surface"
-                    }`}
+                    className={`px-6 py-3 font-mono text-xs sm:text-sm uppercase tracking-widest transition-all ${tab === tabId
+                      ? "bg-primary text-black font-bold"
+                      : "text-text-tertiary hover:text-white hover:bg-white/5"
+                      }`}
                   >
-                    {tabId.charAt(0).toUpperCase() + tabId.slice(1)}
+                    {tabId}
                   </button>
                 ))}
               </div>
-              <div className="min-h-[300px]">
+              <div className="p-6 sm:p-8 min-h-[400px]">
                 {renderTabContent(tab)}
               </div>
             </div>
@@ -183,9 +178,13 @@ export default function About() {
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.6, ease: "easeOut" }}
-          className="mt-12 sm:mt-16"
+          transition={{ duration: 0.8, delay: 0.4 }}
+          className="mt-24 border-t border-text-tertiary/10 pt-12"
         >
+          <div className="flex items-center gap-4 mb-8">
+            <span className="text-primary font-mono text-xs uppercase tracking-widest">Stack_Trace</span>
+            <div className="h-px flex-grow bg-text-tertiary/20"></div>
+          </div>
           <TechStack />
         </motion.div>
       </div>
