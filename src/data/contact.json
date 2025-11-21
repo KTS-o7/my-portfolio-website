@@ -16,11 +16,6 @@
       "url": "https://www.linkedin.com/in/krishnatejaswi-shenthar/",
       "icon": "faLinkedin"
     }
-  ],
-  "emailJS": {
-    "serviceId": "service_kts",
-    "templateId": "template_kts",
-    "publicKey": "WJtWKpUuqJ2IktWC3"
-  }
+  ]
 }
 

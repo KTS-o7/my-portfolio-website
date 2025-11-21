@@ -36,35 +36,33 @@ const Projects: FC = () => {
   return (
     <section
       id="projects"
-      className="py-12 sm:py-16 md:py-20 px-4 sm:px-6 bg-background relative overflow-hidden"
+      className="py-20 sm:py-32 px-4 sm:px-6 bg-background relative overflow-hidden border-t border-text-tertiary/10"
     >
-      {/* Background accents */}
-      <div className="absolute top-0 left-0 w-full h-full overflow-hidden z-0">
-        <div className="absolute -top-20 -right-20 w-60 sm:w-80 h-60 sm:h-80 bg-primary rounded-full opacity-5 blur-3xl animate-pulse-slow"></div>
-        <div className="absolute bottom-40 left-10 w-40 sm:w-60 h-40 sm:h-60 bg-primary rounded-full opacity-5 blur-3xl animate-pulse-slow"></div>
-        <div className="absolute top-1/2 left-1/2 w-40 sm:w-60 h-40 sm:h-60 bg-primary rounded-full opacity-5 blur-3xl animate-pulse-slow"></div>
-      </div>
-
       <div className="max-w-7xl mx-auto relative z-10">
-        <TextReveal>
-          <div className="text-center mb-10 sm:mb-16">
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary text-shadow-glow">
-              Projects & Publications
+        <div className="mb-16 sm:mb-24">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="flex items-end gap-4 mb-4"
+          >
+            <h2 className="text-5xl sm:text-7xl md:text-8xl font-black text-text-tertiary/20 uppercase tracking-tighter leading-none">
+              Work
             </h2>
-            <div className="w-24 h-1 bg-primary mx-auto"></div>
-          </div>
-        </TextReveal>
+            <div className="h-px flex-grow bg-primary/30 mb-4"></div>
+            <span className="font-mono text-primary text-sm mb-4">BUILD.LOG</span>
+          </motion.div>
+        </div>
 
-        <div className="flex flex-wrap justify-center items-center gap-2 sm:gap-3 py-6 sm:py-8">
+        <div className="flex flex-wrap gap-2 mb-12">
           {projectsData.categories.map((category) => (
             <button
               key={category}
               onClick={() => handleTagChange(category)}
-              className={`px-3 sm:px-5 py-1.5 sm:py-2 rounded-full transition-all duration-300 text-sm sm:text-base font-medium mobile-touch-optimized ${
-                tag === category
-                  ? "bg-primary text-background shadow-lg shadow-primary/30 scale-105"
-                  : "bg-surface text-text-secondary hover:bg-primary/10 hover:scale-105"
-              }`}
+              className={`px-4 py-2 font-mono text-xs uppercase tracking-wider border transition-all ${tag === category
+                ? "bg-primary text-black border-primary font-bold"
+                : "bg-transparent text-text-tertiary border-text-tertiary/30 hover:border-primary hover:text-primary"
+                }`}
             >
               {category}
             </button>
@@ -73,7 +71,7 @@ const Projects: FC = () => {
 
         <ul
           ref={ref}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mt-6 sm:mt-8"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"
         >
           {filteredProjects.map((project, index) => (
             <motion.li
@@ -82,69 +80,76 @@ const Projects: FC = () => {
               initial="initial"
               animate={isInView ? "animate" : "initial"}
               transition={{ duration: 0.6, delay: index * 0.15 }}
-              className="relative z-0 h-full"
+              className="group"
             >
               <Card3D>
                 <a
                   href={project.link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="h-full block group mobile-touch-optimized"
+                  className="flex flex-col h-full bg-surface border border-text-tertiary/30 hover:border-primary transition-all duration-300 relative overflow-hidden"
                 >
-                  <div className="bg-surface rounded-xl overflow-hidden h-full border border-text-tertiary hover:border-primary/50 transition-all duration-500 relative">
-                    <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                    
-                    <div className="relative h-48 sm:h-56 overflow-hidden">
-                      <Image
-                        className="w-full object-cover transform group-hover:scale-110 transition-transform duration-700"
-                        src={project.image}
-                        alt={project.name}
-                        width={500}
-                        height={300}
-                        objectFit="cover"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/50 to-transparent"></div>
+                  {/* Technical overlay lines */}
+                  <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-primary opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                  <div className="absolute top-0 right-0 w-2 h-2 border-t border-r border-primary opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                  <div className="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-primary opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                  <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-primary opacity-0 group-hover:opacity-100 transition-opacity"></div>
 
-                      <div className="absolute bottom-0 left-0 p-3 sm:p-4 w-full">
-                        <h3 className="text-lg sm:text-xl font-bold text-primary mb-1 group-hover:text-secondary transition-colors">
-                          {project.name}
-                        </h3>
-                        <div className="flex gap-1.5 sm:gap-2 flex-wrap">
-                          {project.tag
-                            .filter((t) => t !== "All")
-                            .map((t, i) => (
-                              <span
-                                key={i}
-                                className="text-xs text-text-primary bg-surface bg-opacity-80 px-2 py-0.5 sm:py-1 rounded-full backdrop-blur-sm"
-                              >
-                                {t}
-                              </span>
-                            ))}
-                        </div>
-                      </div>
+                  <div className="relative h-48 flex-shrink-0 overflow-hidden border-b border-text-tertiary/30">
+                    <div className="absolute inset-0 bg-primary/20 mix-blend-overlay z-10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    <Image
+                      className="w-full h-full object-cover filter grayscale group-hover:grayscale-0 transition-all duration-500"
+                      src={project.image}
+                      alt={project.name}
+                      width={500}
+                      height={300}
+                      objectFit="cover"
+                    />
+                  </div>
+
+                  <div className="p-6 flex flex-col flex-grow">
+                    <div className="flex justify-between items-start mb-4">
+                      <h3 className="text-xl font-bold text-white font-mono uppercase group-hover:text-primary transition-colors">
+                        {project.name}
+                      </h3>
+                      <span className="text-xs font-mono text-primary border border-primary/30 px-2 py-1">
+                        v1.0
+                      </span>
                     </div>
 
-                    <div className="p-4 sm:p-6">
-                      <p className="text-text-secondary mb-4 text-sm sm:text-base line-clamp-3">
-                        {project.description}
-                      </p>
-                      <span className="inline-flex items-center text-primary font-medium text-sm sm:text-base group-hover:text-secondary transition-colors">
-                        View Project
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          className="h-4 w-4 sm:h-5 sm:w-5 ml-1 transform group-hover:translate-x-2 transition-transform duration-300"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M14 5l7 7m0 0l-7 7m7-7H3"
-                          />
-                        </svg>
-                      </span>
+                    <p className="text-text-secondary text-sm mb-6 font-mono line-clamp-3 flex-grow">
+                      {project.description}
+                    </p>
+
+                    <div className="flex flex-wrap gap-2 mb-6 mt-auto">
+                      {project.tag
+                        .filter((t) => t !== "All")
+                        .map((t, i) => (
+                          <span
+                            key={i}
+                            className="text-[10px] font-mono text-text-tertiary uppercase tracking-wider"
+                          >
+                            [{t}]
+                          </span>
+                        ))}
+                    </div>
+
+                    <div className="flex items-center text-primary font-mono text-xs uppercase tracking-widest group-hover:translate-x-2 transition-transform pt-4 border-t border-text-tertiary/10">
+                      <span>View_Source</span>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-4 w-4 ml-2"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M14 5l7 7m0 0l-7 7m7-7H3"
+                        />
+                      </svg>
                     </div>
                   </div>
                 </a>
