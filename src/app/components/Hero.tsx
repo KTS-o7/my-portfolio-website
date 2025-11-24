@@ -15,7 +15,7 @@ const Hero: FC = () => {
   });
 
   return (
-    <section className="bg-background relative overflow-hidden min-h-screen flex items-center pt-20">
+    <section id="home" className="bg-background relative overflow-hidden min-h-screen flex items-center pt-20">
       <div className="absolute inset-0 z-0">
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#121212_1px,transparent_1px),linear-gradient(to_bottom,#121212_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]"></div>
       </div>
@@ -52,7 +52,7 @@ const Hero: FC = () => {
                 hidden: { opacity: 0, y: 20 },
                 visible: { opacity: 1, y: 0, transition: { duration: 0.5 } }
               }}
-              className="text-6xl sm:text-7xl md:text-8xl font-black tracking-tighter text-white mb-6 leading-[0.9]"
+              className="text-6xl sm:text-7xl md:text-8xl font-black tracking-tighter text-gray-900 dark:text-white mb-6 leading-[0.9]"
             >
               FULL<br />
               STACK<br />
@@ -67,7 +67,7 @@ const Hero: FC = () => {
               className="border-l-2 border-primary/30 pl-6 mb-8"
             >
               <p className="text-text-secondary text-lg md:text-xl font-mono leading-relaxed">
-                Leading <span className="text-white font-bold">Compliance OS</span> at OnFinance.
+                Leading <span className="text-gray-900 dark:text-white font-bold">Compliance OS</span> at OnFinance.
                 <br />
                 Architecting secure, scalable infrastructure for the future of fintech.
               </p>

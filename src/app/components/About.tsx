@@ -41,7 +41,7 @@ export default function About() {
                 transition={{ duration: 0.3, delay: index * 0.1 }}
                 className="border-l-2 border-text-tertiary pl-4 hover:border-primary transition-colors"
               >
-                <h4 className="text-white font-bold text-lg font-mono uppercase">{edu.degree}</h4>
+                <h4 className="text-gray-900 dark:text-white font-bold text-lg font-mono uppercase">{edu.degree}</h4>
                 <p className="text-primary font-mono text-sm mb-2">{edu.institution}</p>
                 <div className="flex flex-wrap gap-4 text-xs font-mono text-text-tertiary uppercase tracking-widest">
                   <span>GPA: {edu.gpa}</span>
@@ -119,7 +119,7 @@ export default function About() {
             className="lg:col-span-5"
           >
             <div className="border-l-2 border-primary pl-6 py-2">
-              <h3 className="text-2xl sm:text-3xl font-bold text-white mb-6 font-mono uppercase">
+              <h3 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-6 font-mono uppercase">
                 {aboutData.title}
               </h3>
               <p className="text-text-secondary mb-6 text-base sm:text-lg leading-relaxed font-light">
@@ -134,7 +134,7 @@ export default function About() {
             <div className="mt-12 grid grid-cols-2 gap-4 border-t border-text-tertiary/20 pt-8">
               <div>
                 <span className="block text-xs font-mono text-text-tertiary uppercase mb-1">Location</span>
-                <span className="text-white font-mono">Bangalore, IN</span>
+                <span className="text-gray-900 dark:text-white font-mono">Bangalore, IN</span>
               </div>
               <div>
                 <span className="block text-xs font-mono text-text-tertiary uppercase mb-1">Status</span>
@@ -159,7 +159,7 @@ export default function About() {
                     onClick={() => handleTabChange(tabId)}
                     className={`px-6 py-3 font-mono text-xs sm:text-sm uppercase tracking-widest transition-all ${tab === tabId
                       ? "bg-primary text-black font-bold"
-                      : "text-text-tertiary hover:text-white hover:bg-white/5"
+                      : "text-text-tertiary hover:text-black dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5"
                       }`}
                   >
                     {tabId}

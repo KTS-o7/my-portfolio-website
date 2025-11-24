@@ -109,7 +109,7 @@ const Projects: FC = () => {
 
                   <div className="p-6 flex flex-col flex-grow">
                     <div className="flex justify-between items-start mb-4">
-                      <h3 className="text-xl font-bold text-white font-mono uppercase group-hover:text-primary transition-colors">
+                      <h3 className="text-xl font-bold text-blue-500 dark:text-white font-mono uppercase group-hover:text-primary transition-colors">
                         {project.name}
                       </h3>
                       <span className="text-xs font-mono text-primary border border-primary/30 px-2 py-1">

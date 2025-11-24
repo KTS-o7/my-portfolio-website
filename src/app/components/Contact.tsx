@@ -136,7 +136,7 @@ const Contact: FC = () => {
           >
             <div className="bg-surface border border-text-tertiary/30 p-6 sm:p-8 relative overflow-hidden">
               <div className="absolute top-0 left-0 w-full h-1 bg-primary"></div>
-              <h3 className="text-2xl font-bold text-white font-mono uppercase mb-8">
+              <h3 className="text-2xl font-bold text-gray-900 dark:text-white font-mono uppercase mb-8">
                 &gt; System_Channels
               </h3>
 
@@ -149,7 +149,7 @@ const Contact: FC = () => {
                   </div>
                   <div>
                     <h4 className="text-sm font-mono text-text-tertiary uppercase tracking-wider mb-1">Email_Protocol</h4>
-                    <a href={`mailto:${contactData.email}`} className="text-lg text-white hover:text-primary font-mono transition-colors">
+                    <a href={`mailto:${contactData.email}`} className="text-lg text-gray-900 dark:text-white hover:text-primary font-mono transition-colors">
                       {contactData.email}
                     </a>
                   </div>
@@ -163,7 +163,7 @@ const Contact: FC = () => {
                   </div>
                   <div>
                     <h4 className="text-sm font-mono text-text-tertiary uppercase tracking-wider mb-1">Voice_Link</h4>
-                    <a href={`tel:${contactData.phone.link}`} className="text-lg text-white hover:text-primary font-mono transition-colors">
+                    <a href={`tel:${contactData.phone.link}`} className="text-lg text-gray-900 dark:text-white hover:text-primary font-mono transition-colors">
                       {contactData.phone.display}
                     </a>
                   </div>
@@ -177,7 +177,7 @@ const Contact: FC = () => {
                   </div>
                   <div>
                     <h4 className="text-sm font-mono text-text-tertiary uppercase tracking-wider mb-1">Secure_Chat</h4>
-                    <a href={contactData.whatsapp.link} target="_blank" rel="noopener noreferrer" className="text-lg text-white hover:text-primary font-mono transition-colors">
+                    <a href={contactData.whatsapp.link} target="_blank" rel="noopener noreferrer" className="text-lg text-gray-900 dark:text-white hover:text-primary font-mono transition-colors">
                       {contactData.whatsapp.display}
                     </a>
                   </div>
@@ -241,7 +241,7 @@ const Contact: FC = () => {
                         type="text"
                         id="name"
                         required
-                        className="w-full bg-surface/50 border-b border-text-tertiary/50 focus:border-primary text-white font-mono py-2 px-3 focus:outline-none transition-colors"
+                        className="w-full bg-surface/50 border-b border-text-tertiary/50 focus:border-primary text-gray-900 dark:text-white font-mono py-2 px-3 focus:outline-none transition-colors"
                         placeholder="_"
                       />
                     </div>
@@ -253,7 +253,7 @@ const Contact: FC = () => {
                         type="email"
                         id="email"
                         required
-                        className="w-full bg-surface/50 border-b border-text-tertiary/50 focus:border-primary text-white font-mono py-2 px-3 focus:outline-none transition-colors"
+                        className="w-full bg-surface/50 border-b border-text-tertiary/50 focus:border-primary text-gray-900 dark:text-white font-mono py-2 px-3 focus:outline-none transition-colors"
                         placeholder="_"
                       />
                     </div>
@@ -265,7 +265,7 @@ const Contact: FC = () => {
                         type="text"
                         id="subject"
                         required
-                        className="w-full bg-surface/50 border-b border-text-tertiary/50 focus:border-primary text-white font-mono py-2 px-3 focus:outline-none transition-colors"
+                        className="w-full bg-surface/50 border-b border-text-tertiary/50 focus:border-primary text-gray-900 dark:text-white font-mono py-2 px-3 focus:outline-none transition-colors"
                         placeholder="_"
                       />
                     </div>
@@ -277,7 +277,7 @@ const Contact: FC = () => {
                         id="message"
                         required
                         rows={4}
-                        className="w-full bg-surface/50 border-b border-text-tertiary/50 focus:border-primary text-white font-mono py-2 px-3 focus:outline-none transition-colors resize-none"
+                        className="w-full bg-surface/50 border-b border-text-tertiary/50 focus:border-primary text-gray-900 dark:text-white font-mono py-2 px-3 focus:outline-none transition-colors resize-none"
                         placeholder="_"
                       ></textarea>
                     </div>
