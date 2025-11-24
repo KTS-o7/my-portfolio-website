@@ -7,11 +7,11 @@
   --background-start-rgb: 5, 5, 5;
   --background-end-rgb: 5, 5, 5;
 
-  --color-primary: #FACC15;
-  --color-secondary: #FDE047;
-  --color-accent: #FBBF24;
-  --color-background: #000000;
-  --color-surface: #1a1a1a;
+  --color-primary: #FAFF00;
+  --color-secondary: #D4D900;
+  --color-accent: #FFFFFF;
+  --color-background: #050505;
+  --color-surface: #121212;
   --color-text-primary: #F3F4F6;
   --color-text-secondary: #D1D5DB;
   --color-text-tertiary: #9CA3AF;
@@ -43,8 +43,8 @@ html {
 }
 
 body {
-  color: #ffffff;
-  background-color: #050505;
+  color: var(--color-text-primary);
+  background-color: var(--color-background);
   background-image: radial-gradient(#333 1px, transparent 1px);
   background-size: 40px 40px;
   /* Technical Dot Grid */
