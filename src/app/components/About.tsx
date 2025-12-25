@@ -25,7 +25,7 @@ export default function About() {
                 className="flex items-center gap-2 text-text-secondary p-2 border-l border-primary/30 hover:bg-primary/5 transition-all group cursor-default"
               >
                 <span className="text-primary font-mono text-xs opacity-50 group-hover:opacity-100">&gt;</span>
-                <span className="font-mono text-sm uppercase tracking-wider group-hover:text-primary transition-colors">{skill}</span>
+                <span className="font-mono text-[10px] sm:text-xs uppercase tracking-wider group-hover:text-primary transition-colors">{skill}</span>
               </motion.li>
             ))}
           </ul>
@@ -152,12 +152,12 @@ export default function About() {
             className="lg:col-span-7"
           >
             <div className="bg-surface border border-text-tertiary/20 p-1">
-              <div className="flex border-b border-text-tertiary/20 bg-black/20">
+              <div className="flex border-b border-text-tertiary/20 bg-black/20 overflow-x-auto no-scrollbar [mask-image:linear-gradient(to_right,black_85%,transparent)]">
                 {["skills", "education", "certifications"].map((tabId) => (
                   <button
                     key={tabId}
                     onClick={() => handleTabChange(tabId)}
-                    className={`px-6 py-3 font-mono text-xs sm:text-sm uppercase tracking-widest transition-all ${tab === tabId
+                    className={`px-6 py-3 font-mono text-xs sm:text-sm uppercase tracking-widest transition-all flex-shrink-0 ${tab === tabId
                       ? "bg-primary text-black font-bold"
                       : "text-text-tertiary hover:text-black dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5"
                       }`}
@@ -165,8 +165,10 @@ export default function About() {
                     {tabId}
                   </button>
                 ))}
+                {/* Visual spacer for end of list */}
+                <div className="w-12 flex-shrink-0 sm:hidden"></div>
               </div>
-              <div className="p-6 sm:p-8 min-h-[400px]">
+              <div className="p-4 sm:p-6 md:p-8 min-h-[400px]">
                 {renderTabContent(tab)}
               </div>
             </div>
@@ -188,6 +190,6 @@ export default function About() {
           <TechStack />
         </motion.div>
       </div>
-    </section>
+    </section >
   );
 }
