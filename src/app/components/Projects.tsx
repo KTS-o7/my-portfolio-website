@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useRef, FC } from "react";
 import { motion, useInView } from "framer-motion";
-import Image from "next/legacy/image";
+import Image from "next/image";
 import projectsData from "@/data/projects.json";
 import { Card3D } from "./ui/Card3D";
 import { TextReveal } from "./ui/TextReveal";
@@ -54,12 +54,12 @@ const Projects: FC = () => {
           </motion.div>
         </div>
 
-        <div className="flex flex-wrap gap-2 mb-12">
+        <div className="flex flex-nowrap overflow-x-auto no-scrollbar gap-2 mb-12 -mx-4 px-4 sm:mx-0 sm:px-0 sm:flex-wrap">
           {projectsData.categories.map((category) => (
             <button
               key={category}
               onClick={() => handleTagChange(category)}
-              className={`px-4 py-2 font-mono text-xs uppercase tracking-wider border transition-all ${tag === category
+              className={`px-4 py-3 min-h-[44px] flex-shrink-0 font-mono text-xs uppercase tracking-wider border transition-all ${tag === category
                 ? "bg-primary text-black border-primary font-bold"
                 : "bg-transparent text-text-tertiary border-text-tertiary/30 hover:border-primary hover:text-primary"
                 }`}
@@ -100,10 +100,9 @@ const Projects: FC = () => {
                     <Image
                       className="w-full h-full object-cover filter grayscale group-hover:grayscale-0 transition-all duration-500"
                       src={project.image}
-                      alt={project.name}
-                      width={500}
-                      height={300}
-                      objectFit="cover"
+                      alt={`Screenshot of ${project.name}`}
+                      fill
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     />
                   </div>
 

@@ -1,36 +1,42 @@
 {
   "image": "/Images/3dlaptop.jpg",
-  "title": "Hello there! I'm a passionate developer",
+  "title": "AI & Fullstack Engineer driving innovation",
   "description": {
-    "primary": "Currently working as a SDE Intern at RingCentral India. I specialize in building high-quality software solutions and applications using modern technologies like Langchain, Streamlit, and Next.js. I have obtained Gold+Elite Certification in Soft Computing and Data Science, offered by NPTEL.",
-    "secondary": "My focus is on creating efficient, scalable solutions to complex problems through innovative approaches and clean code."
+    "primary": "I am an AI and Fullstack Engineer at OnFinance AI, where I architect ComplianceOS—a platform delivering 1250+ hours/year savings on BFSI compliance automation. I specialize in engineering Agentic workflows using LangGraph and LiteLLM to handle millions of tokens of regulatory data efficiently.",
+    "secondary": "Previously, as an SDE Intern at RingCentral, I led the modernization of legacy interfaces to React and optimized application performance by 3x. My focus is on creating high-impact, scalable AI solutions for complex domains like fintech and compliance."
   },
   "skills": [
     "Python",
-    "C++",
-    "Langchain",
-    "Mirascope",
+    "FastAPI",
+    "LangGraph",
+    "LiteLLM",
+    "React",
+    "NextJS",
+    "AWS",
+    "MongoDB",
+    "PostgreSQL",
+    "Docker",
     "SQL",
-    "React/Next.js",
-    "Machine Learning"
+    "C++"
   ],
   "education": [
     {
-      "degree": "CS Engineering",
-      "institution": "RVCE, Bangalore",
-      "gpa": "9.20",
+      "degree": "BE Computer Science and Engineering",
+      "institution": "RV College of Engineering, Bangalore",
+      "gpa": "9.28",
       "period": "2021 - 2025"
     }
   ],
   "specializations": [
-    "ML Development",
-    "Algorithms",
-    "DBMS"
+    "Agentic AI",
+    "Fullstack Development",
+    "System Design",
+    "Cloud Infrastructure"
   ],
   "certifications": [
-    "Introduction to Soft Computing, NPTEL",
-    "Datascience for Engineers, NPTEL",
-    "Python for Everybody specialization, Coursera"
+    "Introduction to Soft Computing (Top 5%ile), NPTEL Gold",
+    "Data Science for Engineers (Top 1%ile), NPTEL Gold",
+    "Publication: Effect of Noise in Medical image analysis (IJEECS)",
+    "Publication: Handwritten Tripsheet Analysis (IEEE Xplore)"
   ]
 }
-
