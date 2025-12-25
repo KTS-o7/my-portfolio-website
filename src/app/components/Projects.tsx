@@ -54,19 +54,23 @@ const Projects: FC = () => {
           </motion.div>
         </div>
 
-        <div className="flex flex-nowrap overflow-x-auto no-scrollbar gap-2 mb-12 -mx-4 px-4 sm:mx-0 sm:px-0 sm:flex-wrap">
-          {projectsData.categories.map((category) => (
-            <button
-              key={category}
-              onClick={() => handleTagChange(category)}
-              className={`px-4 py-3 min-h-[44px] flex-shrink-0 font-mono text-xs uppercase tracking-wider border transition-all ${tag === category
-                ? "bg-primary text-black border-primary font-bold"
-                : "bg-transparent text-text-tertiary border-text-tertiary/30 hover:border-primary hover:text-primary"
-                }`}
-            >
-              {category}
-            </button>
-          ))}
+        <div className="relative mb-12">
+          <div className="flex flex-nowrap overflow-x-auto no-scrollbar gap-2 -mx-4 px-4 sm:mx-0 sm:px-0 sm:flex-wrap [mask-image:linear-gradient(to_right,black_85%,transparent)]">
+            {projectsData.categories.map((category) => (
+              <button
+                key={category}
+                onClick={() => handleTagChange(category)}
+                className={`px-4 py-3 min-h-[44px] flex-shrink-0 font-mono text-xs uppercase tracking-wider border transition-all ${tag === category
+                  ? "bg-primary text-black border-primary font-bold"
+                  : "bg-transparent text-text-tertiary border-text-tertiary/30 hover:border-primary hover:text-primary"
+                  }`}
+              >
+                {category}
+              </button>
+            ))}
+            {/* Visual spacer for end of list */}
+            <div className="w-12 flex-shrink-0 sm:hidden"></div>
+          </div>
         </div>
 
         <ul
@@ -107,13 +111,10 @@ const Projects: FC = () => {
                   </div>
 
                   <div className="p-6 flex flex-col flex-grow">
-                    <div className="flex justify-between items-start mb-4">
+                    <div className="mb-4">
                       <h3 className="text-xl font-bold text-blue-500 dark:text-white font-mono uppercase group-hover:text-primary transition-colors">
                         {project.name}
                       </h3>
-                      <span className="text-xs font-mono text-primary border border-primary/30 px-2 py-1">
-                        v1.0
-                      </span>
                     </div>
 
                     <p className="text-text-secondary text-sm mb-6 font-mono line-clamp-3 flex-grow">
