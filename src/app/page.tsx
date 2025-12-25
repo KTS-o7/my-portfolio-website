@@ -16,6 +16,8 @@ import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { LazyMotion, domAnimation } from "framer-motion";
 import { ThemeToggle } from "./components/ui/ThemeToggle";
+import { Cursor } from "./components/ui/Cursor";
+import { SystemScrollBar } from "./components/ui/SystemScrollBar";
 
 export default function Home() {
     useEffect(() => {
@@ -83,8 +85,11 @@ export default function Home() {
                         <EmailSection />
                     </section>
                 </div>
+
                 <Footer />
                 <ThemeToggle />
+                <Cursor />
+                <SystemScrollBar />
                 <Analytics />
                 <SpeedInsights />
             </main>

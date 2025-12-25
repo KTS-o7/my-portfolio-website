@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import heroData from "@/data/hero.json";
 import { Spotlight } from "./ui/Spotlight";
-import { AnimatedGrid } from "./ui/AnimatedGrid";
+import { ParticlesBackground } from "./ui/ParticlesBackground";
 
 const Hero: FC = () => {
   const typeAnimationSequence = [];
@@ -18,6 +18,7 @@ const Hero: FC = () => {
     <section id="home" className="bg-background relative overflow-hidden min-h-screen flex items-start pt-36 md:pt-48 pb-20">
       <div className="absolute inset-0 z-0">
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#121212_1px,transparent_1px),linear-gradient(to_bottom,#121212_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]"></div>
+        <ParticlesBackground />
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 w-full relative z-10">
@@ -46,6 +47,7 @@ const Hero: FC = () => {
               <div className="w-2 h-2 bg-primary rounded-full animate-pulse"></div>
               <span className="text-primary font-mono text-sm tracking-widest uppercase">System Online</span>
             </motion.div>
+
 
             <motion.h1
               variants={{
