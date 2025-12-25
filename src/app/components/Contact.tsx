@@ -241,9 +241,10 @@ const Contact: FC = () => {
                         type="text"
                         id="name"
                         required
-                        className="w-full bg-surface/50 border-b border-text-tertiary/50 focus:border-primary text-gray-900 dark:text-white font-mono py-2 px-3 focus:outline-none transition-colors"
+                        className={`w-full bg-surface/50 border-b ${formErrors.name ? 'border-red-500' : 'border-text-tertiary/50'} focus:border-primary text-gray-900 dark:text-white font-mono py-2 px-3 focus:outline-none transition-colors`}
                         placeholder="_"
                       />
+                      {formErrors.name && <p className="text-[10px] text-red-500 font-mono mt-1">{formErrors.name}</p>}
                     </div>
 
                     <div className="space-y-2">
@@ -253,9 +254,10 @@ const Contact: FC = () => {
                         type="email"
                         id="email"
                         required
-                        className="w-full bg-surface/50 border-b border-text-tertiary/50 focus:border-primary text-gray-900 dark:text-white font-mono py-2 px-3 focus:outline-none transition-colors"
+                        className={`w-full bg-surface/50 border-b ${formErrors.email ? 'border-red-500' : 'border-text-tertiary/50'} focus:border-primary text-gray-900 dark:text-white font-mono py-2 px-3 focus:outline-none transition-colors`}
                         placeholder="_"
                       />
+                      {formErrors.email && <p className="text-[10px] text-red-500 font-mono mt-1">{formErrors.email}</p>}
                     </div>
 
                     <div className="space-y-2">
@@ -265,9 +267,10 @@ const Contact: FC = () => {
                         type="text"
                         id="subject"
                         required
-                        className="w-full bg-surface/50 border-b border-text-tertiary/50 focus:border-primary text-gray-900 dark:text-white font-mono py-2 px-3 focus:outline-none transition-colors"
+                        className={`w-full bg-surface/50 border-b ${formErrors.subject ? 'border-red-500' : 'border-text-tertiary/50'} focus:border-primary text-gray-900 dark:text-white font-mono py-2 px-3 focus:outline-none transition-colors`}
                         placeholder="_"
                       />
+                      {formErrors.subject && <p className="text-[10px] text-red-500 font-mono mt-1">{formErrors.subject}</p>}
                     </div>
 
                     <div className="space-y-2">
@@ -277,9 +280,10 @@ const Contact: FC = () => {
                         id="message"
                         required
                         rows={4}
-                        className="w-full bg-surface/50 border-b border-text-tertiary/50 focus:border-primary text-gray-900 dark:text-white font-mono py-2 px-3 focus:outline-none transition-colors resize-none"
+                        className={`w-full bg-surface/50 border-b ${formErrors.message ? 'border-red-500' : 'border-text-tertiary/50'} focus:border-primary text-gray-900 dark:text-white font-mono py-2 px-3 focus:outline-none transition-colors resize-none`}
                         placeholder="_"
                       ></textarea>
+                      {formErrors.message && <p className="text-[10px] text-red-500 font-mono mt-1">{formErrors.message}</p>}
                     </div>
 
                     <button

@@ -34,13 +34,40 @@ const navLinks: NAVLINK[] = [
 const Navbar: FC = () => {
   const [navbarOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState("home");
 
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 50);
     };
+
+    // Intersection Observer for active section highlighting
+    const observerOptions = {
+      root: null,
+      rootMargin: "-100px 0px -60% 0px",
+      threshold: 0,
+    };
+
+    const observerCallback = (entries: IntersectionObserverEntry[]) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setActiveSection(entry.target.id);
+        }
+      });
+    };
+
+    const observer = new IntersectionObserver(observerCallback, observerOptions);
+    const sections = ["hero", "about", "projects", "contact"];
+    sections.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+
     window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      observer.disconnect();
+    };
   }, []);
 
   return (
@@ -48,11 +75,13 @@ const Navbar: FC = () => {
       className={`fixed mx-auto top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? "bg-background/90 border-b border-primary/20 backdrop-blur-sm" : "bg-transparent"
         }`}
       style={{ isolation: "isolate" }}
+      aria-label="Main Navigation"
     >
       <div className="max-w-7xl mx-auto flex items-center justify-between px-4 sm:px-6 py-3 sm:py-4">
         <Link
           href={"/"}
           className="text-xl sm:text-2xl font-mono font-bold tracking-tighter text-primary hover:text-accent transition-colors duration-300"
+          aria-label="KTS Portfolio Home"
         >
           KTS_PORTFOLIO
         </Link>
@@ -61,7 +90,8 @@ const Navbar: FC = () => {
           <button
             onClick={() => setIsOpen(!navbarOpen)}
             className="inline-flex items-center justify-center p-1.5 sm:p-2 rounded-md text-text-secondary hover:text-primary focus:outline-none transition-all duration-300 mobile-touch-optimized min-w-[44px] min-h-[44px]"
-            aria-label="Toggle menu"
+            aria-label={navbarOpen ? "Close menu" : "Open menu"}
+            aria-expanded={navbarOpen}
           >
             {!navbarOpen ? (
               <Bars3Icon className="h-6 w-6 sm:h-7 sm:w-7" />
@@ -72,17 +102,22 @@ const Navbar: FC = () => {
         </div>
 
         <div className="hidden md:flex md:items-center space-x-8">
-          {navLinks.map((link, index) => (
-            <Link
-              key={index}
-              href={link.path}
-              className="relative text-text-secondary font-mono text-sm hover:text-primary transition-all duration-300 uppercase tracking-widest group"
-            >
-              <span className="text-primary/50 mr-1">0{index + 1}.</span>
-              {link.title}
-              <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-primary transition-all duration-300 group-hover:w-full"></span>
-            </Link>
-          ))}
+          {navLinks.map((link, index) => {
+            const isActive = activeSection === link.path.substring(1) || (link.path === "#home" && activeSection === "hero");
+            return (
+              <Link
+                key={index}
+                href={link.path}
+                className={`relative font-mono text-sm transition-all duration-300 uppercase tracking-widest group ${isActive ? "text-primary" : "text-text-secondary hover:text-primary"
+                  }`}
+                aria-current={isActive ? "page" : undefined}
+              >
+                <span className={`mr-1 ${isActive ? "text-primary" : "text-primary/50"}`}>0{index + 1}.</span>
+                {link.title}
+                <span className={`absolute -bottom-1 left-0 h-[1px] bg-primary transition-all duration-300 ${isActive ? "w-full" : "w-0 group-hover:w-full"}`}></span>
+              </Link>
+            );
+          })}
         </div>
       </div>
 

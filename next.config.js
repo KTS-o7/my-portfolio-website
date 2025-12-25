@@ -17,6 +17,16 @@ const nextConfig = {
         hostname: "cdn.jsdelivr.net",
         pathname: "**",
       },
+      {
+        protocol: "https",
+        hostname: "raw.githubusercontent.com",
+        pathname: "**",
+      },
+      {
+        protocol: "https",
+        hostname: "logo.svgcdn.com",
+        pathname: "**",
+      },
     ],
     dangerouslyAllowSVG: true,
     contentDispositionType: 'attachment',

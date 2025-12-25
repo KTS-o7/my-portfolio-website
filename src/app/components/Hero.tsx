@@ -111,19 +111,19 @@ const Hero: FC = () => {
             </motion.div>
           </motion.div>
 
-          {/* Right Column: Visual/Profile */}
+          {/* Visual/Profile - Now shown on mobile above text */}
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="relative hidden lg:block"
+            className="relative order-first lg:order-last"
           >
-            <div className="relative w-full aspect-square max-w-md mx-auto">
+            <div className="relative w-full aspect-square max-w-[280px] sm:max-w-md mx-auto">
               {/* Technical decorative elements */}
               <div className="absolute inset-0 border border-text-tertiary/20 rounded-full"></div>
               <div className="absolute inset-4 border border-text-tertiary/20 rounded-full border-dashed animate-[spin_60s_linear_infinite]"></div>
               <div className="absolute inset-0 flex items-center justify-center">
-                <div className="w-[300px] h-[300px] relative overflow-hidden rounded-full grayscale hover:grayscale-0 transition-all duration-500 border-2 border-primary/50">
+                <div className="w-[200px] h-[200px] sm:w-[300px] sm:h-[300px] relative overflow-hidden rounded-full grayscale hover:grayscale-0 transition-all duration-500 border-2 border-primary/50">
                   <Image
                     src={heroData.image}
                     alt="Profile"
@@ -134,14 +134,14 @@ const Hero: FC = () => {
                 </div>
               </div>
 
-              {/* Floating tech badges */}
-              <div className="absolute top-0 right-10 bg-surface border border-text-tertiary/30 px-4 py-2 rounded-none">
+              {/* Floating tech badges - hidden on extra small screens for cleaner look */}
+              <div className="absolute top-0 right-10 bg-surface border border-text-tertiary/30 px-4 py-2 rounded-none hidden sm:block">
                 <span className="text-primary font-mono text-xs">FastAPI</span>
               </div>
-              <div className="absolute bottom-20 left-0 bg-surface border border-text-tertiary/30 px-4 py-2 rounded-none">
+              <div className="absolute bottom-20 left-0 bg-surface border border-text-tertiary/30 px-4 py-2 rounded-none hidden sm:block">
                 <span className="text-primary font-mono text-xs">LLMs</span>
               </div>
-              <div className="absolute bottom-0 right-20 bg-surface border border-text-tertiary/30 px-4 py-2 rounded-none">
+              <div className="absolute bottom-0 right-20 bg-surface border border-text-tertiary/30 px-4 py-2 rounded-none hidden sm:block">
                 <span className="text-primary font-mono text-xs">Agentic AI</span>
               </div>
             </div>

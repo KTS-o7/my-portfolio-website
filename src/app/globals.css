@@ -51,6 +51,11 @@ body {
   overflow-x: hidden;
 }
 
+:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 4px;
+}
+
 ::selection {
   background-color: #FAFF00;
   color: #000000;
@@ -87,6 +92,15 @@ body {
 
   .animate-fadeIn {
     animation: fadeIn 0.3s ease-in-out;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
   }
 
   @keyframes fadeIn {
