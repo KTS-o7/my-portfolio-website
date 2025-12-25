@@ -5,7 +5,10 @@ import type { Container, Engine } from "tsparticles-engine";
 import Particles from "react-tsparticles";
 import { loadSlim } from "tsparticles-slim";
 
+import { useTheme } from "@/app/context/ThemeContext";
+
 export const ParticlesBackground = () => {
+    const { theme } = useTheme();
     const particlesInit = useCallback(async (engine: Engine) => {
         await loadSlim(engine);
     }, []);
@@ -13,6 +16,8 @@ export const ParticlesBackground = () => {
     const particlesLoaded = useCallback(async (container: Container | undefined) => {
         // can log container if needed
     }, []);
+
+    const particleColor = theme === "light" ? "#3B82F6" : "#FAFF00"; // Blue for light mode, Yellow for dark mode
 
     return (
         <Particles
@@ -47,10 +52,10 @@ export const ParticlesBackground = () => {
                 },
                 particles: {
                     color: {
-                        value: "#FAFF00", // Primary yellow color
+                        value: particleColor, // Primary yellow color
                     },
                     links: {
-                        color: "#FAFF00",
+                        color: particleColor,
                         distance: 150,
                         enable: true,
                         opacity: 0.2, // Subtle links
