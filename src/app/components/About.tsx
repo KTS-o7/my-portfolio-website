@@ -4,10 +4,16 @@ import { motion } from "framer-motion";
 import aboutData from "@/data/about.json";
 import { TechStack } from "./ui/TechStack";
 
-export default function About() {
+export default function About({
+  showTopBorder = true,
+}: {
+  showTopBorder?: boolean;
+}) {
   return (
     <section
-      className="bg-background py-20 sm:py-28 relative overflow-hidden border-t border-text-tertiary/10 scroll-mt-24"
+      className={`bg-background py-20 sm:py-28 relative overflow-hidden scroll-mt-24 ${
+        showTopBorder ? "border-t border-text-tertiary/10" : ""
+      }`}
       id="about"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">

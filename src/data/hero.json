@@ -1,6 +1,6 @@
 {
   "image": "/Hero.png",
-  "name": "KRISHNATEJASWI SHENTHAR",
+  "name": "Krishna Tejaswi Shenthar",
   "kicker": "Backend systems • Python • Distributed/Cloud • LLM tooling",
   "headline": "I build backend systems that stay fast, observable, and boring in production.",
   "subhead": "Python-first engineer focused on reliable APIs, distributed workflows, and pragmatic LLM tooling (RAG, evals, orchestration).",
@@ -28,7 +28,7 @@
   ],
   "buttons": [
     {
-      "text": "See Selected Work",
+      "text": "Projects",
       "link": "#projects",
       "type": "primary",
       "external": false
@@ -40,8 +40,8 @@
       "external": true
     },
     {
-      "text": "Email",
-      "link": "#contact",
+      "text": "Experience",
+      "link": "#experience",
       "type": "secondary",
       "external": false
     },

@@ -22,13 +22,13 @@ const Hero: FC = () => {
             >
               <span className="pill w-fit">{heroData.kicker}</span>
 
-              <h1 className="mt-6 text-4xl sm:text-6xl md:text-7xl font-semibold tracking-tight leading-[1.02] text-text-primary">
+              <p className="mt-6 font-mono text-xs sm:text-sm uppercase tracking-widest text-text-tertiary">
                 {heroData.name}
-              </h1>
-
-              <p className="mt-6 text-xl sm:text-2xl text-text-primary leading-snug max-w-[56ch]">
-                {heroData.headline}
               </p>
+
+              <h1 className="mt-4 text-4xl sm:text-6xl md:text-7xl font-semibold tracking-tight leading-[1.02] text-text-primary max-w-[22ch]">
+                {heroData.headline}
+              </h1>
               <p className="mt-4 text-base sm:text-lg text-text-secondary leading-relaxed max-w-[70ch]">
                 {heroData.subhead}
               </p>
@@ -116,19 +116,19 @@ const Hero: FC = () => {
               className="surface-card p-5 mt-5"
             >
               <h2 className="font-mono text-xs uppercase tracking-widest text-text-tertiary">
-                System Sketch
+                How I Work
               </h2>
               <p className="mt-3 text-sm text-text-secondary leading-relaxed">
-                My work tends to look like this: clear interfaces, async
-                workflows, and observability you can trust.
+                I optimize for clarity and operational confidence — the kind you
+                feel at 2am.
               </p>
 
               <div className="mt-4 grid grid-cols-2 gap-3 text-sm">
                 {[
-                  "API contracts",
-                  "Queues & workers",
-                  "Postgres/data models",
-                  "Tracing & metrics",
+                  "Define contracts",
+                  "Design workflows",
+                  "Make it observable",
+                  "Ship + iterate",
                 ].map((item) => (
                   <div
                     key={item}

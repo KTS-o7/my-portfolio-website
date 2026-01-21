@@ -79,10 +79,10 @@ Contains contact information and social media links.
   - `platform`: Platform name
   - `url`: Profile URL
   - `icon`: Icon name ("faGithub" or "faLinkedin")
-- `emailJS`: EmailJS configuration
-  - `serviceId`: Your EmailJS service ID
-  - `templateId`: Your EmailJS template ID
-  - `publicKey`: Your EmailJS public key
+- EmailJS is configured via environment variables:
+  - `NEXT_PUBLIC_EMAILJS_SERVICE_ID`
+  - `NEXT_PUBLIC_EMAILJS_TEMPLATE_ID`
+  - `NEXT_PUBLIC_EMAILJS_PUBLIC_KEY`
 
 ## 🚀 Quick Start
 
@@ -134,4 +134,3 @@ Make sure your JSON is valid:
 - Check for matching brackets `{}` and `[]`
 
 You can use online JSON validators if needed!
-

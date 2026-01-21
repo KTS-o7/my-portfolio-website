@@ -2,37 +2,35 @@ import type { Metadata } from "next";
 import heroData from "@/data/hero.json";
 import Navbar from "@/app/components/Navbar";
 import Footer from "@/app/components/Footer";
-import Projects from "@/app/components/Projects";
+import Experience from "@/app/components/Experience";
 import { ThemeToggle } from "@/app/components/ui/ThemeToggle";
 
-const title = `Work & Projects | ${heroData.name}`;
+const title = `Experience | ${heroData.name}`;
 const description =
-  "Projects, publications, and end-to-end work (discovery → development → deployment).";
+  "Work experience and shipped outcomes — grouped by company, with linked case studies and supporting projects.";
 
 export const metadata: Metadata = {
   title,
   description,
-  alternates: { canonical: "/projects" },
+  alternates: { canonical: "/work" },
   openGraph: {
     title,
     description,
-    url: "/projects",
+    url: "/work",
     type: "website",
   },
 };
 
-export default function ProjectsPage() {
+export default function WorkIndexPage() {
   return (
     <main
       id="content"
       className="flex min-h-screen flex-col bg-background transition-colors duration-300"
     >
       <Navbar />
-      <h1 className="sr-only">Work and projects by {heroData.name}</h1>
       <div className="pt-24">
-        <Projects showTopBorder={false} />
+        <Experience showTopBorder={false} showSeeMore={false} />
       </div>
-
       <Footer />
       <ThemeToggle />
     </main>

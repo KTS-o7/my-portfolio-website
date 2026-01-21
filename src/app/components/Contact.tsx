@@ -16,11 +16,14 @@ interface FormErrors {
   submission?: string;
 }
 
-const Contact: FC = () => {
+const Contact: FC<{ showTopBorder?: boolean }> = ({ showTopBorder = true }) => {
   const formId = useId();
   const [emailSubmitted, setEmailSubmitted] = useState(false);
   const [formErrors, setFormErrors] = useState<FormErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const emailJsServiceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
+  const emailJsTemplateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID;
+  const emailJsPublicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
 
   const validateForm = (formData: FormData): FormErrors => {
     const errors: FormErrors = {};
@@ -69,21 +72,35 @@ const Contact: FC = () => {
       message: DOMPurify.sanitize(formData.get("message") as string),
     };
 
+    if (!emailJsServiceId || !emailJsTemplateId || !emailJsPublicKey) {
+      setFormErrors({
+        submission:
+          "Email is not configured. Add NEXT_PUBLIC_EMAILJS_SERVICE_ID, NEXT_PUBLIC_EMAILJS_TEMPLATE_ID, and NEXT_PUBLIC_EMAILJS_PUBLIC_KEY.",
+      });
+      setIsSubmitting(false);
+      return;
+    }
+
     emailjs
       .send(
-        "service_kts",
-        "template_12c4eap",
+        emailJsServiceId,
+        emailJsTemplateId,
         sanitizedFormData,
-        "x5mPMRuUfMt6x20y0",
+        emailJsPublicKey,
       )
       .then(() => {
         setEmailSubmitted(true);
         setFormErrors({});
         setIsSubmitting(false);
       })
-      .catch(() => {
+      .catch((error: unknown) => {
+        const message =
+          typeof error === "object" && error && "text" in error
+            ? String((error as { text?: unknown }).text)
+            : "Failed to send email. Please try again later.";
+
         setFormErrors({
-          submission: "Failed to send email. Please try again later.",
+          submission: message,
         });
         setIsSubmitting(false);
       });
@@ -92,7 +109,9 @@ const Contact: FC = () => {
   return (
     <section
       id="contact"
-      className="py-20 sm:py-28 px-4 sm:px-6 bg-background relative overflow-hidden border-t border-text-tertiary/10 scroll-mt-24"
+      className={`py-20 sm:py-28 px-4 sm:px-6 bg-background relative overflow-hidden scroll-mt-24 ${
+        showTopBorder ? "border-t border-text-tertiary/10" : ""
+      }`}
     >
       <div className="max-w-7xl mx-auto relative z-10">
         <motion.div

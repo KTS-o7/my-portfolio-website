@@ -9,6 +9,9 @@ const HeroSection = dynamic(() => import("./components/Hero"), {
   ssr: true,
   loading: () => <div className="min-h-screen bg-background" />,
 });
+const ExperienceSection = dynamic(() => import("./components/Experience"), {
+  ssr: true,
+});
 const AboutSection = dynamic(() => import("./components/About"), { ssr: true });
 const ProjectsSection = dynamic(() => import("./components/Projects"), {
   ssr: true,
@@ -41,8 +44,9 @@ export default function Home() {
         <SmoothScroll />
         <Navbar />
         <HeroSection />
-        <AboutSection />
+        <ExperienceSection condensed />
         <ProjectsSection />
+        <AboutSection />
         <EmailSection />
 
         <Footer />

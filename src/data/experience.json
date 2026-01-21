@@ -1,0 +1,61 @@
+{
+  "experience": [
+    {
+      "slug": "onfinance-ai",
+      "company": {
+        "name": "OnFinance AI",
+        "url": "https://www.onfinance.ai/company"
+      },
+      "role": "AI & Fullstack Engineer (founding-engineer equivalent)",
+      "type": "Full-time",
+      "location": "Bangalore, India",
+      "timeframe": "2024 — Present",
+      "summary": "Building ComplianceOS: compliance automation workflows + agentic analysis over large regulatory corpora.",
+      "highlights": [
+        "End-to-end ownership across discovery → architecture → production delivery",
+        "Agentic workflows with LangGraph + LiteLLM, built for reliability and observability",
+        "Reported impact: ~1250+ hours/year saved (internal estimate; varies by customer)"
+      ],
+      "skills": [
+        "Python",
+        "FastAPI",
+        "LangGraph",
+        "LiteLLM",
+        "PostgreSQL",
+        "AWS",
+        "Docker"
+      ],
+      "caseStudies": [
+        {
+          "title": "ComplianceOS (deep dive)",
+          "href": "/work/complianceos"
+        }
+      ],
+      "selectedProjectIds": []
+    },
+    {
+      "slug": "ringcentral",
+      "company": {
+        "name": "RingCentral",
+        "url": "https://www.ringcentral.com/"
+      },
+      "role": "SDE Intern",
+      "type": "Internship",
+      "location": "Bangalore, India",
+      "timeframe": "2023",
+      "summary": "Modernized legacy interfaces and improved app performance through targeted frontend and integration work.",
+      "highlights": [
+        "Led modernization of legacy UI to React",
+        "Improved application performance by ~3× (per internal measurement)"
+      ],
+      "skills": [
+        "React",
+        "TypeScript",
+        "Performance profiling",
+        "API integration"
+      ],
+      "caseStudies": [],
+      "selectedProjectIds": []
+    }
+  ]
+}
