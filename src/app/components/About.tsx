@@ -1,225 +1,147 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 import { motion } from "framer-motion";
 import aboutData from "@/data/about.json";
-import { TextReveal } from "./ui/TextReveal";
 import { TechStack } from "./ui/TechStack";
 
 export default function About() {
-  const [tab, setTab] = useState("skills");
-
-  const handleTabChange = (id) => {
-    setTab(id);
-  };
-
-  const renderTabContent = (tabId) => {
-    switch (tabId) {
-      case "skills":
-        return (
-          <ul className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            {aboutData.skills.map((skill, index) => (
-              <motion.li
-                key={index}
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.2, delay: index * 0.02 }}
-                className="flex items-center gap-2 text-text-secondary p-2 border-l border-primary/30 hover:bg-primary/5 transition-all group cursor-default"
-              >
-                <span className="text-primary font-mono text-xs opacity-50 group-hover:opacity-100">
-                  &gt;
-                </span>
-                <span className="font-mono text-[10px] sm:text-xs uppercase tracking-wider group-hover:text-primary transition-colors">
-                  {skill}
-                </span>
-              </motion.li>
-            ))}
-          </ul>
-        );
-      case "education":
-        return (
-          <div className="space-y-6">
-            {aboutData.education.map((edu, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, x: -10 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.3, delay: index * 0.1 }}
-                className="border-l-2 border-text-tertiary pl-4 hover:border-primary transition-colors"
-              >
-                <h4 className="text-gray-900 dark:text-white font-bold text-lg font-mono uppercase">
-                  {edu.degree}
-                </h4>
-                <p className="text-primary font-mono text-sm mb-2">
-                  {edu.institution}
-                </p>
-                <div className="flex flex-wrap gap-4 text-xs font-mono text-text-tertiary uppercase tracking-widest">
-                  <span>GPA: {edu.gpa}</span>
-                  <span>
-                    {"//"} {edu.period}
-                  </span>
-                </div>
-              </motion.div>
-            ))}
-            <motion.div
-              initial={{ opacity: 0, x: -10 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.3, delay: 0.2 }}
-              className="mt-8 pt-6 border-t border-text-tertiary/20"
-            >
-              <h4 className="text-text-secondary font-mono text-sm uppercase tracking-widest mb-4">
-                Specializations_
-              </h4>
-              <div className="flex flex-wrap gap-2">
-                {aboutData.specializations.map((spec, index) => (
-                  <span
-                    key={index}
-                    className="text-primary bg-primary/5 px-3 py-1 text-xs font-mono border border-primary/20"
-                  >
-                    {spec}
-                  </span>
-                ))}
-              </div>
-            </motion.div>
-          </div>
-        );
-      case "certifications":
-        return (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {aboutData.certifications.map((cert, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.3, delay: index * 0.05 }}
-                className="flex items-start gap-3 p-4 border border-text-tertiary/30 hover:border-primary/50 transition-all bg-surface/50"
-              >
-                <div className="mt-1 w-2 h-2 bg-primary rounded-full animate-pulse"></div>
-                <span className="text-text-secondary font-mono text-sm uppercase tracking-wide">
-                  {cert}
-                </span>
-              </motion.div>
-            ))}
-          </div>
-        );
-      default:
-        return null;
-    }
-  };
-
   return (
     <section
-      className="bg-background py-20 sm:py-32 relative overflow-hidden border-t border-text-tertiary/10 scroll-mt-24"
+      className="bg-background py-20 sm:py-28 relative overflow-hidden border-t border-text-tertiary/10 scroll-mt-24"
       id="about"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
-        <div className="mb-16 sm:mb-24">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="flex items-end gap-4 mb-4"
-          >
-            <h2 className="text-5xl sm:text-7xl md:text-8xl font-black text-text-tertiary/20 uppercase tracking-tighter leading-none">
-              About
-            </h2>
-            <div className="h-px flex-grow bg-primary/30 mb-4"></div>
-            <span className="font-mono text-primary text-sm mb-4">
-              SYS.INFO
-            </span>
-          </motion.div>
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
-          {/* Left Column: Bio */}
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="lg:col-span-5"
-          >
-            <div className="border-l-2 border-primary pl-6 py-2">
-              <h3 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-6 font-mono uppercase">
-                {aboutData.title}
-              </h3>
-              <p className="text-text-secondary mb-6 text-base sm:text-lg leading-relaxed font-light">
-                {aboutData.description.primary}
-              </p>
-              <p className="text-text-tertiary text-sm sm:text-base leading-relaxed font-mono">
-                &gt; {aboutData.description.secondary}
-              </p>
-            </div>
-
-            {/* Decorative Tech Specs */}
-            <div className="mt-12 grid grid-cols-2 gap-4 border-t border-text-tertiary/20 pt-8">
-              <div>
-                <span className="block text-xs font-mono text-text-tertiary uppercase mb-1">
-                  Location
-                </span>
-                <span className="text-gray-900 dark:text-white font-mono">
-                  {aboutData.location}
-                </span>
-              </div>
-              <div>
-                <span className="block text-xs font-mono text-text-tertiary uppercase mb-1">
-                  Status
-                </span>
-                <span className="text-primary font-mono animate-pulse">
-                  {aboutData.status}
-                </span>
-              </div>
-            </div>
-          </motion.div>
-
-          {/* Right Column: Tabs */}
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="lg:col-span-7"
-          >
-            <div className="bg-surface border border-text-tertiary/20 p-1">
-              <div className="flex border-b border-text-tertiary/20 bg-black/20 overflow-x-auto no-scrollbar [mask-image:linear-gradient(to_right,black_85%,transparent)]">
-                {["skills", "education", "certifications"].map((tabId) => (
-                  <button
-                    key={tabId}
-                    onClick={() => handleTabChange(tabId)}
-                    className={`px-6 py-3 font-mono text-xs sm:text-sm uppercase tracking-widest transition-all flex-shrink-0 ${
-                      tab === tabId
-                        ? "bg-primary text-black font-bold"
-                        : "text-text-tertiary hover:text-black dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5"
-                    }`}
-                  >
-                    {tabId}
-                  </button>
-                ))}
-                {/* Visual spacer for end of list */}
-                <div className="w-12 flex-shrink-0 sm:hidden"></div>
-              </div>
-              <div className="p-4 sm:p-6 md:p-8 min-h-[400px]">
-                {renderTabContent(tab)}
-              </div>
-            </div>
-          </motion.div>
-        </div>
-
-        {/* Tech Stack Scrolling Section */}
         <motion.div
-          initial={{ opacity: 0, y: 50 }}
+          initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.4 }}
-          className="mt-24 border-t border-text-tertiary/10 pt-12"
         >
-          <div className="flex items-center gap-4 mb-8">
-            <span className="text-primary font-mono text-xs uppercase tracking-widest">
-              Stack_Trace
-            </span>
-            <div className="h-px flex-grow bg-text-tertiary/20"></div>
-          </div>
-          <TechStack />
+          <span className="pill">About</span>
+          <h2 className="mt-6 text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight text-text-primary">
+            A backend engineer who ships with intent
+          </h2>
+          <p className="mt-4 text-text-secondary max-w-[72ch] leading-relaxed">
+            I care about systems that are easy to reason about: clear contracts,
+            predictable performance, and observability that tells the truth.
+          </p>
         </motion.div>
+
+        <div className="mt-10 grid grid-cols-1 lg:grid-cols-12 gap-6">
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="lg:col-span-7 surface-card p-6 sm:p-8"
+          >
+            <h3 className="text-xl sm:text-2xl font-semibold tracking-tight text-text-primary">
+              {aboutData.title}
+            </h3>
+            <div className="mt-4 space-y-4 text-text-secondary leading-relaxed">
+              <p>{aboutData.description.primary}</p>
+              <p className="text-text-tertiary">
+                {aboutData.description.secondary}
+              </p>
+            </div>
+
+            <dl className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="rounded-[14px] border border-[var(--border)] p-4">
+                <dt className="font-mono text-xs uppercase tracking-widest text-text-tertiary">
+                  Location
+                </dt>
+                <dd className="mt-2 text-text-primary">{aboutData.location}</dd>
+              </div>
+              <div className="rounded-[14px] border border-[var(--border)] p-4">
+                <dt className="font-mono text-xs uppercase tracking-widest text-text-tertiary">
+                  Availability
+                </dt>
+                <dd className="mt-2 text-text-primary">{aboutData.status}</dd>
+              </div>
+            </dl>
+          </motion.div>
+
+          <motion.aside
+            initial={{ opacity: 0, y: 12 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.05 }}
+            className="lg:col-span-5 space-y-6"
+          >
+            <div className="surface-card p-6">
+              <h3 className="font-mono text-xs uppercase tracking-widest text-text-tertiary">
+                Strengths
+              </h3>
+              <ul className="mt-4 space-y-2 text-text-secondary">
+                {aboutData.specializations.map((item) => (
+                  <li key={item} className="flex gap-3 leading-relaxed">
+                    <span className="mt-2 h-1.5 w-1.5 rounded-full bg-primary" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="surface-card p-6">
+              <h3 className="font-mono text-xs uppercase tracking-widest text-text-tertiary">
+                Toolbox
+              </h3>
+              <div className="mt-4 flex flex-wrap gap-2">
+                {aboutData.skills.slice(0, 14).map((skill) => (
+                  <span key={skill} className="pill">
+                    {skill}
+                  </span>
+                ))}
+              </div>
+              {aboutData.skills.length > 14 && (
+                <div className="mt-4 text-sm text-text-tertiary">
+                  + {aboutData.skills.length - 14} more in the full toolbox
+                  below.
+                </div>
+              )}
+            </div>
+
+            <div className="surface-card p-6">
+              <h3 className="font-mono text-xs uppercase tracking-widest text-text-tertiary">
+                Education & Credentials
+              </h3>
+              <div className="mt-4 space-y-4">
+                {(aboutData.education || []).map((edu) => (
+                  <div
+                    key={`${edu.degree}-${edu.institution}`}
+                    className="rounded-[14px] border border-[var(--border)] p-4"
+                  >
+                    <div className="text-text-primary font-medium">
+                      {edu.degree}
+                    </div>
+                    <div className="mt-1 text-text-secondary">
+                      {edu.institution}
+                    </div>
+                    <div className="mt-2 text-xs font-mono uppercase tracking-widest text-text-tertiary">
+                      {edu.period}
+                      {edu.gpa ? ` · GPA ${edu.gpa}` : ""}
+                    </div>
+                  </div>
+                ))}
+                {(aboutData.certifications || []).length > 0 && (
+                  <details className="rounded-[14px] border border-[var(--border)] p-4">
+                    <summary className="cursor-pointer text-text-secondary">
+                      Certifications & publications
+                    </summary>
+                    <ul className="mt-3 space-y-2 text-sm text-text-tertiary">
+                      {aboutData.certifications.map((cert) => (
+                        <li key={cert}>{cert}</li>
+                      ))}
+                    </ul>
+                  </details>
+                )}
+              </div>
+            </div>
+          </motion.aside>
+        </div>
+
+        <div className="mt-12">
+          <TechStack />
+        </div>
       </div>
     </section>
   );

@@ -1,36 +1,52 @@
 {
   "image": "/Hero.png",
-  "title": "Welcome to My Portfolio",
   "name": "KRISHNATEJASWI SHENTHAR",
-  "roles": [
-    "an AI Engineer",
-    "a Fullstack Developer",
-    "an Agentic AI Specialist"
-  ],
-  "roleAnimationDelay": 1000,
-  "shortDescription": "AI and Fullstack Engineer @ OnFinance AI | BE Computer Science @ RVCE",
-  "shortDescriptionLine2": "Architecting ComplianceOS and building Agentic workflows using LangGraph and LiteLLM.",
-  "detailedDescription": {
-    "intro": "As a Computer Science and Engineering graduate from Bangalore, India, I'm passionate about",
-    "technologies": ["LangGraph", "LiteLLM", "RAG", "Generative AI"],
-    "webDev": "Next.js",
-    "languages": ["Python", "C++"],
-    "outro": "allows me to build innovative solutions across different domains."
-  },
-  "buttons": [
+  "kicker": "Backend systems • Python • Distributed/Cloud • LLM tooling",
+  "headline": "I build backend systems that stay fast, observable, and boring in production.",
+  "subhead": "Python-first engineer focused on reliable APIs, distributed workflows, and pragmatic LLM tooling (RAG, evals, orchestration).",
+  "current": "Building ComplianceOS at OnFinance AI (fintech compliance automation).",
+  "roles": ["Backend Engineer", "Distributed Systems", "LLM Tooling Engineer"],
+  "shortDescription": "Backend systems engineer (Python • distributed/cloud) building production LLM tooling",
+  "shortDescriptionLine2": "I ship reliable APIs, workflows, and infra with strong observability and performance.",
+  "proofPoints": [
     {
-      "text": "Contact Me",
-      "link": "#contact",
-      "type": "primary"
+      "label": "Primary stack",
+      "value": "Python, FastAPI, Postgres"
     },
     {
-      "text": "Download CV",
+      "label": "Systems focus",
+      "value": "Performance, reliability, observability"
+    },
+    {
+      "label": "LLM tooling",
+      "value": "LangGraph, LiteLLM, RAG"
+    },
+    {
+      "label": "Delivery style",
+      "value": "End‑to‑end: design → deploy"
+    }
+  ],
+  "buttons": [
+    {
+      "text": "See Selected Work",
+      "link": "#projects",
+      "type": "primary",
+      "external": false
+    },
+    {
+      "text": "Resume",
       "link": "https://drive.google.com/file/d/1uy1w2prce_k-YD5bZrxUytEDXIXil6-2/view",
       "type": "secondary",
       "external": true
     },
     {
-      "text": "Read Blog",
+      "text": "Email",
+      "link": "#contact",
+      "type": "secondary",
+      "external": false
+    },
+    {
+      "text": "Writing",
       "link": "https://kts-o7.github.io/blog/",
       "type": "tertiary",
       "external": true

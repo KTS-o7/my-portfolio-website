@@ -20,8 +20,6 @@ const Footer = dynamic(() => import("./components/Footer"), { ssr: true });
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { ThemeToggle } from "./components/ui/ThemeToggle";
-import { Cursor } from "./components/ui/Cursor";
-import { SystemScrollBar } from "./components/ui/SystemScrollBar";
 
 export default function Home() {
   const siteUrl = getSiteUrl();
@@ -36,7 +34,10 @@ export default function Home() {
         strategy="beforeInteractive"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <main className="flex min-h-screen flex-col bg-background transition-colors duration-300">
+      <main
+        id="content"
+        className="flex min-h-screen flex-col bg-background transition-colors duration-300"
+      >
         <SmoothScroll />
         <Navbar />
         <HeroSection />
@@ -46,8 +47,6 @@ export default function Home() {
 
         <Footer />
         <ThemeToggle />
-        <Cursor />
-        <SystemScrollBar />
         <Analytics />
         <SpeedInsights />
       </main>

@@ -23,12 +23,12 @@ const navLinks: NAVLINK[] = [
     routePath: "/about",
   },
   {
-    title: "Work",
+    title: "Selected Work",
     homePath: "#projects",
     routePath: "/projects",
   },
   {
-    title: "Publications",
+    title: "Writing",
     homePath: "/publications",
     routePath: "/publications",
   },
@@ -38,7 +38,7 @@ const navLinks: NAVLINK[] = [
     routePath: "/contact",
   },
   {
-    title: "LinkTree",
+    title: "Links",
     homePath: "https://kts-o7.github.io/",
     routePath: "https://kts-o7.github.io/",
     external: true,
@@ -97,104 +97,106 @@ const Navbar: FC = () => {
   }, [isHome]);
 
   return (
-    <nav
-      className={`fixed mx-auto top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        scrolled
-          ? "bg-background/90 border-b border-primary/20 backdrop-blur-sm"
-          : "bg-transparent"
-      }`}
-      style={{ isolation: "isolate" }}
-      aria-label="Main Navigation"
-    >
-      <div className="max-w-7xl mx-auto flex items-center justify-between px-4 sm:px-6 py-3 sm:py-4">
-        <Link
-          href={"/"}
-          className="text-xl sm:text-2xl font-mono font-bold tracking-tighter text-primary hover:text-accent transition-colors duration-300"
-          aria-label="KTS Portfolio Home"
-        >
-          KTS_PORTFOLIO
-        </Link>
+    <>
+      <a href="#content" className="skip-link">
+        Skip to content
+      </a>
+      <nav
+        className={`fixed mx-auto top-0 left-0 right-0 z-50 transition-all duration-500 ${
+          scrolled
+            ? "bg-background/80 border-b border-text-tertiary/25 backdrop-blur-md"
+            : "bg-transparent"
+        }`}
+        style={{ isolation: "isolate" }}
+        aria-label="Main Navigation"
+      >
+        <div className="max-w-7xl mx-auto flex items-center justify-between px-4 sm:px-6 py-3 sm:py-4">
+          <Link href={"/"} className="group flex items-baseline gap-3">
+            <span className="inline-flex items-center justify-center h-9 w-9 rounded-full border border-text-tertiary/30 bg-surface/60 text-text-primary font-semibold">
+              K
+            </span>
+            <span className="flex flex-col leading-none">
+              <span className="text-base sm:text-lg font-semibold tracking-tight text-text-primary group-hover:text-primary transition-colors">
+                Krishna Shenthar
+              </span>
+              <span className="hidden sm:block text-[11px] font-mono uppercase tracking-widest text-text-tertiary">
+                Backend · Distributed · LLM tooling
+              </span>
+            </span>
+          </Link>
 
-        <div className="md:hidden">
-          <button
-            onClick={() => setIsOpen(!navbarOpen)}
-            className="inline-flex items-center justify-center p-1.5 sm:p-2 rounded-md text-text-secondary hover:text-primary focus:outline-none transition-all duration-300 mobile-touch-optimized min-w-[44px] min-h-[44px]"
-            aria-label={navbarOpen ? "Close menu" : "Open menu"}
-            aria-expanded={navbarOpen}
-          >
-            {!navbarOpen ? (
-              <Bars3Icon className="h-6 w-6 sm:h-7 sm:w-7" />
-            ) : (
-              <XMarkIcon className="h-6 w-6 sm:h-7 sm:w-7" />
-            )}
-          </button>
-        </div>
+          <div className="md:hidden">
+            <button
+              onClick={() => setIsOpen(!navbarOpen)}
+              className="inline-flex items-center justify-center p-2 rounded-full border border-text-tertiary/25 bg-surface/60 text-text-secondary hover:text-text-primary hover:border-text-tertiary/45 focus:outline-none transition-all duration-300 mobile-touch-optimized min-w-[44px] min-h-[44px]"
+              aria-label={navbarOpen ? "Close menu" : "Open menu"}
+              aria-expanded={navbarOpen}
+            >
+              {!navbarOpen ? (
+                <Bars3Icon className="h-6 w-6 sm:h-7 sm:w-7" />
+              ) : (
+                <XMarkIcon className="h-6 w-6 sm:h-7 sm:w-7" />
+              )}
+            </button>
+          </div>
 
-        <div className="hidden md:flex md:items-center space-x-8">
-          {navLinks.map((link, index) => {
-            const href = isHome ? link.homePath : link.routePath;
-
-            const isAnchor = href.startsWith("#");
-            const isActive = isHome
-              ? isAnchor && activeSection === href.substring(1)
-              : !link.external &&
-                (href === pathname ||
-                  (href === "/projects" &&
-                    (pathname.startsWith("/projects") ||
-                      pathname.startsWith("/work"))));
-
-            return (
-              <Link
-                key={index}
-                href={href}
-                target={link.external ? "_blank" : undefined}
-                rel={link.external ? "noopener noreferrer" : undefined}
-                className={`relative font-mono text-sm transition-all duration-300 uppercase tracking-widest group ${
-                  isActive
-                    ? "text-primary"
-                    : "text-text-secondary hover:text-primary"
-                }`}
-                aria-current={isActive ? "page" : undefined}
-              >
-                <span
-                  className={`mr-1 ${isActive ? "text-primary" : "text-primary/50"}`}
-                >
-                  0{index + 1}.
-                </span>
-                {link.title}
-                <span
-                  className={`absolute -bottom-1 left-0 h-[1px] bg-primary transition-all duration-300 ${isActive ? "w-full" : "w-0 group-hover:w-full"}`}
-                ></span>
-              </Link>
-            );
-          })}
-        </div>
-      </div>
-
-      {/* Mobile menu */}
-      {navbarOpen && (
-        <div className="md:hidden animate-fadeIn">
-          <div className="px-3 sm:px-4 py-2 sm:py-3 space-y-1.5 sm:space-y-2 bg-background border-b border-primary/20">
+          <div className="hidden md:flex md:items-center space-x-7">
             {navLinks.map((link, index) => {
               const href = isHome ? link.homePath : link.routePath;
+
+              const isAnchor = href.startsWith("#");
+              const isActive = isHome
+                ? isAnchor && activeSection === href.substring(1)
+                : !link.external &&
+                  (href === pathname ||
+                    (href === "/projects" &&
+                      (pathname.startsWith("/projects") ||
+                        pathname.startsWith("/work"))));
+
               return (
                 <Link
                   key={index}
                   href={href}
                   target={link.external ? "_blank" : undefined}
                   rel={link.external ? "noopener noreferrer" : undefined}
-                  className="block py-3 px-3 sm:px-4 text-text-secondary hover:bg-surface hover:text-primary font-mono text-base transition-all duration-300 mobile-touch-optimized min-h-[44px] flex items-center uppercase tracking-wider"
-                  onClick={() => setIsOpen(false)}
+                  className={`font-mono text-xs uppercase tracking-widest transition-colors link-underline ${
+                    isActive
+                      ? "text-text-primary"
+                      : "text-text-secondary hover:text-text-primary"
+                  }`}
+                  aria-current={isActive ? "page" : undefined}
                 >
-                  <span className="text-primary/50 mr-2">0{index + 1}.</span>
                   {link.title}
                 </Link>
               );
             })}
           </div>
         </div>
-      )}
-    </nav>
+
+        {/* Mobile menu */}
+        {navbarOpen && (
+          <div className="md:hidden animate-fadeIn">
+            <div className="px-3 sm:px-4 py-2 sm:py-3 space-y-1.5 sm:space-y-2 bg-background border-b border-text-tertiary/25">
+              {navLinks.map((link, index) => {
+                const href = isHome ? link.homePath : link.routePath;
+                return (
+                  <Link
+                    key={index}
+                    href={href}
+                    target={link.external ? "_blank" : undefined}
+                    rel={link.external ? "noopener noreferrer" : undefined}
+                    className="block py-3 px-3 sm:px-4 text-text-secondary hover:bg-surface hover:text-text-primary font-mono text-sm transition-all duration-300 mobile-touch-optimized min-h-[44px] flex items-center uppercase tracking-wider"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    {link.title}
+                  </Link>
+                );
+              })}
+            </div>
+          </div>
+        )}
+      </nav>
+    </>
   );
 };
 
