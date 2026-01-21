@@ -4,11 +4,8 @@ import React, { useEffect, useRef, useState } from "react";
 export const Spotlight = () => {
   const canvasRef = useRef(null);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    setIsVisible(true);
-    
     const handleMouseMove = (e) => {
       setMousePosition({ x: e.clientX, y: e.clientY });
     };
@@ -25,6 +22,7 @@ export const Spotlight = () => {
     if (!canvas) return;
 
     const ctx = canvas.getContext("2d");
+    if (!ctx) return;
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
@@ -37,7 +35,7 @@ export const Spotlight = () => {
         0,
         mousePosition.x,
         mousePosition.y,
-        300
+        300,
       );
 
       gradient.addColorStop(0, "rgba(250, 204, 21, 0.15)");
@@ -48,10 +46,8 @@ export const Spotlight = () => {
       ctx.fillRect(0, 0, canvas.width, canvas.height);
     };
 
-    if (isVisible) {
-      drawSpotlight();
-    }
-  }, [mousePosition, isVisible]);
+    drawSpotlight();
+  }, [mousePosition]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -69,9 +65,7 @@ export const Spotlight = () => {
   return (
     <canvas
       ref={canvasRef}
-      className="pointer-events-none fixed inset-0 z-10 opacity-0 transition-opacity duration-1000"
-      style={{ opacity: isVisible ? 1 : 0 }}
+      className="pointer-events-none fixed inset-0 z-10 opacity-100"
     />
   );
 };
-

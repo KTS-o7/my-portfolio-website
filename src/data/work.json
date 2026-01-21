@@ -1,0 +1,44 @@
+{
+  "work": [
+    {
+      "slug": "complianceos",
+      "title": "ComplianceOS",
+      "subtitle": "End-to-end compliance automation platform for BFSI workflows",
+      "company": {
+        "name": "OnFinance AI",
+        "url": "https://www.onfinance.ai/company"
+      },
+      "role": "AI & Fullstack Engineer (founding-engineer equivalent)",
+      "location": "Bangalore, India",
+      "openness": "Open to remote, relocation (good opportunities/comp).",
+      "summary": [
+        "I led the end-to-end build of ComplianceOS at OnFinance AI, from discovery and system design to delivery and iteration.",
+        "The platform automates compliance workflows and supports agentic analysis over large volumes of regulatory text."
+      ],
+      "highlights": [
+        "End-to-end ownership: discovery → requirements → architecture → development → deployment → iteration",
+        "Engineered agentic workflows using LangGraph + LiteLLM for regulatory reasoning and automation",
+        "Reported impact: ~1250+ hours/year saved via compliance automation (internal estimate; scope varies by customer)"
+      ],
+      "stack": [
+        "Python",
+        "LangGraph",
+        "LiteLLM",
+        "FastAPI",
+        "AWS",
+        "PostgreSQL",
+        "Docker"
+      ],
+      "links": [
+        {
+          "label": "OnFinance AI company/team page (evidence)",
+          "url": "https://www.onfinance.ai/company"
+        }
+      ],
+      "notes": [
+        "This page is intentionally high-level; sensitive implementation details are omitted.",
+        "Happy to discuss architecture, tradeoffs, and results in an interview."
+      ]
+    }
+  ]
+}

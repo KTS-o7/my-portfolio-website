@@ -25,7 +25,7 @@ const Projects: FC = () => {
   };
 
   const filteredProjects = projectsData.projects.filter((project) =>
-    project.tag.includes(tag)
+    project.tag.includes(tag),
   );
 
   const cardVariants = {
@@ -36,7 +36,7 @@ const Projects: FC = () => {
   return (
     <section
       id="projects"
-      className="py-20 sm:py-32 px-4 sm:px-6 bg-background relative overflow-hidden border-t border-text-tertiary/10"
+      className="py-20 sm:py-32 px-4 sm:px-6 bg-background relative overflow-hidden border-t border-text-tertiary/10 scroll-mt-24"
     >
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="mb-16 sm:mb-24">
@@ -50,7 +50,9 @@ const Projects: FC = () => {
               Work
             </h2>
             <div className="h-px flex-grow bg-primary/30 mb-4"></div>
-            <span className="font-mono text-primary text-sm mb-4">BUILD.LOG</span>
+            <span className="font-mono text-primary text-sm mb-4">
+              BUILD.LOG
+            </span>
           </motion.div>
         </div>
 
@@ -60,10 +62,11 @@ const Projects: FC = () => {
               <button
                 key={category}
                 onClick={() => handleTagChange(category)}
-                className={`px-4 py-3 min-h-[44px] flex-shrink-0 font-mono text-xs uppercase tracking-wider border transition-all ${tag === category
-                  ? "bg-primary text-black border-primary font-bold"
-                  : "bg-transparent text-text-tertiary border-text-tertiary/30 hover:border-primary hover:text-primary"
-                  }`}
+                className={`px-4 py-3 min-h-[44px] flex-shrink-0 font-mono text-xs uppercase tracking-wider border transition-all ${
+                  tag === category
+                    ? "bg-primary text-black border-primary font-bold"
+                    : "bg-transparent text-text-tertiary border-text-tertiary/30 hover:border-primary hover:text-primary"
+                }`}
               >
                 {category}
               </button>

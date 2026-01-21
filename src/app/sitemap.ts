@@ -11,7 +11,23 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified,
     },
     {
-      url: `${siteUrl}/llm.txt`,
+      url: `${siteUrl}/about`,
+      lastModified,
+    },
+    {
+      url: `${siteUrl}/projects`,
+      lastModified,
+    },
+    {
+      url: `${siteUrl}/publications`,
+      lastModified,
+    },
+    {
+      url: `${siteUrl}/contact`,
+      lastModified,
+    },
+    {
+      url: `${siteUrl}/work/complianceos`,
       lastModified,
     },
     {

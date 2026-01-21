@@ -35,12 +35,12 @@ export default function RootLayout({
         <link
           rel="alternate"
           type="text/plain"
-          href="/llm.txt"
+          href="/llms.txt"
           title="LLM profile"
         />
         <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
       </head>
-      <body className={inter.className}>
+      <body className={`${inter.className} antialiased`}>
         <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>

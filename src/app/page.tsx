@@ -39,20 +39,10 @@ export default function Home() {
       <main className="flex min-h-screen flex-col bg-background transition-colors duration-300">
         <SmoothScroll />
         <Navbar />
-        <div className="container mt-24 mx-auto px-4 sm:px-8 md:px-12 py-4">
-          <section id="hero" className="scroll-mt-24">
-            <HeroSection />
-          </section>
-          <section id="about" className="scroll-mt-24">
-            <AboutSection />
-          </section>
-          <section id="projects" className="scroll-mt-24">
-            <ProjectsSection />
-          </section>
-          <section id="contact" className="scroll-mt-24">
-            <EmailSection />
-          </section>
-        </div>
+        <HeroSection />
+        <AboutSection />
+        <ProjectsSection />
+        <EmailSection />
 
         <Footer />
         <ThemeToggle />

@@ -52,6 +52,16 @@ const Hero: FC = () => {
               </span>
             </motion.div>
 
+            <motion.p
+              variants={{
+                hidden: { opacity: 0, y: 10 },
+                visible: { opacity: 1, y: 0 },
+              }}
+              className="text-primary font-mono text-xs sm:text-sm md:text-base tracking-[0.22em] uppercase leading-relaxed mb-6 max-w-[32rem]"
+            >
+              {heroData.name}
+            </motion.p>
+
             <motion.h1
               variants={{
                 hidden: { opacity: 0, y: 20 },
@@ -59,9 +69,6 @@ const Hero: FC = () => {
               }}
               className="text-5xl sm:text-7xl md:text-8xl font-black tracking-tighter text-gray-900 dark:text-white mb-6 leading-[0.9]"
             >
-              <span className="block text-base sm:text-lg font-mono text-primary mb-2">
-                {heroData.name}
-              </span>
               FULL
               <br />
               STACK

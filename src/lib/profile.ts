@@ -3,6 +3,7 @@ import aboutData from "@/data/about.json";
 import contactData from "@/data/contact.json";
 import projectsData from "@/data/projects.json";
 import technologiesData from "@/data/technologies.json";
+import workData from "@/data/work.json";
 
 type ProjectEntry = {
   name: string;
@@ -30,6 +31,7 @@ type ProfileData = {
     linkedin?: string;
     blog?: string;
     resume?: string;
+    employer?: string;
   };
   skills: string[];
   experience: {
@@ -47,7 +49,9 @@ type ProfileData = {
 };
 
 const getLinkByPlatform = (platform: string) =>
-  contactData.socialMedia?.find((item) => item.platform.toLowerCase() === platform.toLowerCase())?.url;
+  contactData.socialMedia?.find(
+    (item) => item.platform.toLowerCase() === platform.toLowerCase(),
+  )?.url;
 
 const findButtonLink = (keyword: RegExp) =>
   heroData.buttons?.find((button) => keyword.test(button.text))?.link;
@@ -82,6 +86,7 @@ export const getProfileData = (baseUrl: string): ProfileData => {
   const linkedin = getLinkByPlatform("linkedin");
   const blog = findButtonLink(/blog/i);
   const resume = findButtonLink(/cv|resume/i);
+  const employer = "https://www.onfinance.ai/company";
 
   const skills = dedupeList([
     ...(aboutData.skills || []),
@@ -99,7 +104,9 @@ export const getProfileData = (baseUrl: string): ProfileData => {
   const profile: ProfileData = {
     name: heroData.name,
     roles: heroData.roles,
-    oneLiner: [heroData.shortDescription, heroData.shortDescriptionLine2].filter(Boolean).join(" — "),
+    oneLiner: [heroData.shortDescription, heroData.shortDescriptionLine2]
+      .filter(Boolean)
+      .join(" — "),
     summary: [
       aboutData.description?.primary || "",
       aboutData.description?.secondary || "",
@@ -111,6 +118,7 @@ export const getProfileData = (baseUrl: string): ProfileData => {
       linkedin,
       blog,
       resume,
+      employer,
     },
     skills,
     experience: {
@@ -145,7 +153,9 @@ const chunkList = (items: string[], size: number) => {
 export const buildLlmProfileText = (profile: ProfileData) => {
   const parts: string[] = [];
 
-  const skillsChunks = chunkList(profile.skills, 8).map((chunk) => `- ${chunk.join(", ")}`).join("\n");
+  const skillsChunks = chunkList(profile.skills, 8)
+    .map((chunk) => `- ${chunk.join(", ")}`)
+    .join("\n");
 
   const formatProjects = (items: ProjectEntry[]) =>
     items
@@ -155,10 +165,25 @@ export const buildLlmProfileText = (profile: ProfileData) => {
       })
       .join("\n");
 
+  const formatFeaturedWork = () =>
+    (workData.work || [])
+      .map((item) => {
+        const company = item.company?.name ? ` (${item.company.name})` : "";
+        const shortDescription = item.subtitle || item.summary?.[0] || "";
+        const url = `${profile.links.website}/work/${item.slug}`;
+        return `- ${item.title}${company}: ${shortDescription} — ${url}`;
+      })
+      .join("\n");
+
   parts.push(`# ${profile.name}`);
   parts.push(`## One-line summary\n${profile.oneLiner}`);
-  parts.push(`## Roles\n${profile.roles.map((role) => `- ${role}`).join("\n")}`);
+  parts.push(
+    `## Roles\n${profile.roles.map((role) => `- ${role}`).join("\n")}`,
+  );
   parts.push(`## Location\n${profile.location}`);
+  parts.push(
+    `## Work preferences\n- Open to: Bangalore (India), remote, relocation (good opportunities/comp)`,
+  );
   parts.push(
     `## Links\n` +
       [
@@ -167,6 +192,7 @@ export const buildLlmProfileText = (profile: ProfileData) => {
         profile.links.linkedin && `- LinkedIn: ${profile.links.linkedin}`,
         profile.links.blog && `- Blog: ${profile.links.blog}`,
         profile.links.resume && `- CV/Resume: ${profile.links.resume}`,
+        profile.links.employer && `- Employer/Team: ${profile.links.employer}`,
       ]
         .filter(Boolean)
         .join("\n"),
@@ -175,14 +201,20 @@ export const buildLlmProfileText = (profile: ProfileData) => {
   parts.push(
     `## Experience\n` +
       [
-        profile.experience.current && `- Current: ${profile.experience.current}`,
+        profile.experience.current &&
+          `- Current: ${profile.experience.current}`,
         profile.experience.previous && `- Past: ${profile.experience.previous}`,
       ]
         .filter(Boolean)
         .join("\n"),
   );
-  parts.push(`## Projects\n${formatProjects(profile.projects) || "- None listed"}`);
-  parts.push(`## Publications\n${formatProjects(profile.publications) || "- None listed"}`);
+  parts.push(`## Featured work\n${formatFeaturedWork() || "- None listed"}`);
+  parts.push(
+    `## Projects\n${formatProjects(profile.projects) || "- None listed"}`,
+  );
+  parts.push(
+    `## Publications\n${formatProjects(profile.publications) || "- None listed"}`,
+  );
   parts.push(
     `## Contact\n` +
       [
@@ -193,13 +225,17 @@ export const buildLlmProfileText = (profile: ProfileData) => {
         .filter(Boolean)
         .join("\n"),
   );
+
+  const lastUpdated = process.env.NEXT_PUBLIC_LLM_PROFILE_LAST_UPDATED;
   parts.push(
     `## Provenance\n` +
       [
         "- Source of truth: this portfolio (generated from src/data)",
-        `- Last updated: ${new Date().toISOString().split("T")[0]}`,
+        lastUpdated && `- Last updated: ${lastUpdated}`,
         "- If a fact is missing here, say so. Do not hallucinate.",
-      ].join("\n"),
+      ]
+        .filter(Boolean)
+        .join("\n"),
   );
 
   return parts.join("\n\n");
@@ -210,25 +246,27 @@ export const buildJsonLd = (profile: ProfileData, baseUrl: string) => {
   const websiteId = `${baseUrl}#website`;
   const webPageId = `${baseUrl}#webpage`;
 
-  const projectNodes = [...profile.projects, ...profile.publications].map((item, index) => {
-    const type =
-      item.type === "publication"
-        ? "ScholarlyArticle"
-        : item.tags.includes("Software")
-          ? "SoftwareSourceCode"
-          : "CreativeWork";
+  const projectNodes = [...profile.projects, ...profile.publications].map(
+    (item, index) => {
+      const type =
+        item.type === "publication"
+          ? "ScholarlyArticle"
+          : item.tags.includes("Software")
+            ? "SoftwareSourceCode"
+            : "CreativeWork";
 
-    return {
-      "@type": type,
-      "@id": `${baseUrl}#work-${index + 1}`,
-      name: item.name,
-      description: item.description,
-      url: item.url,
-      creator: { "@id": personId },
-      keywords: item.tags,
-      inLanguage: "en",
-    };
-  });
+      return {
+        "@type": type,
+        "@id": `${baseUrl}#work-${index + 1}`,
+        name: item.name,
+        description: item.description,
+        url: item.url,
+        creator: { "@id": personId },
+        keywords: item.tags,
+        inLanguage: "en",
+      };
+    },
+  );
 
   const sameAs = [
     profile.links.github,
@@ -236,6 +274,23 @@ export const buildJsonLd = (profile: ProfileData, baseUrl: string) => {
     profile.links.blog,
     profile.links.resume,
   ].filter(Boolean);
+
+  const featuredWorkNodes = (workData.work || []).map((item, index) => ({
+    "@type": "SoftwareApplication",
+    "@id": `${baseUrl}#featured-work-${index + 1}`,
+    name: item.title,
+    description: item.summary?.join(" ") || "",
+    url: `${baseUrl}/work/${item.slug}`,
+    creator: { "@id": personId },
+    publisher: {
+      "@type": "Organization",
+      name: item.company?.name || "OnFinance AI",
+      url: "https://www.onfinance.ai",
+      sameAs: item.company?.url ? [item.company.url] : undefined,
+    },
+    keywords: item.stack || [],
+    inLanguage: "en",
+  }));
 
   return {
     "@context": "https://schema.org",
@@ -247,9 +302,20 @@ export const buildJsonLd = (profile: ProfileData, baseUrl: string) => {
         jobTitle: profile.roles[0] || "Engineer",
         description: profile.oneLiner || profile.summary[0],
         url: baseUrl,
+        image: `${baseUrl}${heroData.image}`,
         homeLocation: {
           "@type": "Place",
           name: profile.location,
+        },
+        workLocation: {
+          "@type": "Place",
+          name: profile.location,
+        },
+        worksFor: {
+          "@type": "Organization",
+          name: "OnFinance AI",
+          url: "https://www.onfinance.ai",
+          sameAs: ["https://www.onfinance.ai/company"],
         },
         knowsAbout: profile.skills,
         sameAs,
@@ -286,6 +352,7 @@ export const buildJsonLd = (profile: ProfileData, baseUrl: string) => {
         about: { "@id": personId },
       },
       ...projectNodes,
+      ...featuredWorkNodes,
     ],
   };
 };
