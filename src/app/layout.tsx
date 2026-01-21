@@ -1,11 +1,8 @@
 import { Metadata } from "next";
-import { Inter } from "next/font/google";
 import heroData from "@/data/hero.json";
 import "./globals.css";
 import { ThemeProvider } from "./context/ThemeContext";
 import { getSiteUrl } from "@/lib/profile";
-
-const inter = Inter({ subsets: ["latin"] });
 
 const siteUrl = getSiteUrl();
 const description = [heroData.shortDescription, heroData.shortDescriptionLine2]
@@ -40,7 +37,7 @@ export default function RootLayout({
         />
         <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
       </head>
-      <body className={`${inter.className} antialiased`}>
+      <body className="antialiased">
         <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>

@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, FC } from "react";
+import React, { FC, useId, useState } from "react";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGithub, faLinkedin } from "@fortawesome/free-brands-svg-icons";
@@ -7,7 +7,6 @@ import emailjs from "@emailjs/browser";
 import DOMPurify from "dompurify";
 import { motion } from "framer-motion";
 import contactData from "@/data/contact.json";
-import { TextReveal } from "./ui/TextReveal";
 
 interface FormErrors {
   email?: string;
@@ -18,15 +17,14 @@ interface FormErrors {
 }
 
 const Contact: FC = () => {
+  const formId = useId();
   const [emailSubmitted, setEmailSubmitted] = useState(false);
-  const [isModalVisible, setIsModalVisible] = useState(false);
   const [formErrors, setFormErrors] = useState<FormErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const validateForm = (formData: FormData): FormErrors => {
     const errors: FormErrors = {};
 
-    // Email validation
     if (
       !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(
         formData.get("email") as string,
@@ -35,20 +33,17 @@ const Contact: FC = () => {
       errors.email = "Please enter a valid email address";
     }
 
-    // Name validation - alphanumeric with spaces
     if (!/^[a-zA-Z0-9 ]{5,50}$/.test(formData.get("name") as string)) {
-      errors.name = "Name should be 5-50 characters (letters, numbers, spaces)";
+      errors.name = "Name should be 5–50 characters (letters, numbers, spaces)";
     }
 
-    // Subject validation - reasonable limit and format
     if (!/^[a-zA-Z0-9 .,!?-]{5,200}$/.test(formData.get("subject") as string)) {
-      errors.subject = "Subject should be 5-200 characters";
+      errors.subject = "Subject should be 5–200 characters";
     }
 
-    // Message - reasonable limit
-    const message = formData.get("message") as string;
+    const message = (formData.get("message") as string) || "";
     if (message.length < 5 || message.length > 1000) {
-      errors.message = "Message should be 5-1000 characters";
+      errors.message = "Message should be 5–1000 characters";
     }
 
     return errors;
@@ -67,7 +62,6 @@ const Contact: FC = () => {
       return;
     }
 
-    // Sanitize form data before submission
     const sanitizedFormData = {
       email: DOMPurify.sanitize(formData.get("email") as string),
       name: DOMPurify.sanitize(formData.get("name") as string),
@@ -75,29 +69,19 @@ const Contact: FC = () => {
       message: DOMPurify.sanitize(formData.get("message") as string),
     };
 
-    // Create a fresh sanitized template parameters object for emailjs
-    const templateParams = {
-      email: sanitizedFormData.email,
-      name: sanitizedFormData.name,
-      subject: sanitizedFormData.subject,
-      message: sanitizedFormData.message,
-    };
-
     emailjs
       .send(
-        "service_kts", // TODO: Replace with your actual EmailJS Service ID
+        "service_kts",
         "template_12c4eap",
-        templateParams,
+        sanitizedFormData,
         "x5mPMRuUfMt6x20y0",
       )
-      .then((result) => {
-        console.log("Email sent successfully!", result.status, result.text);
+      .then(() => {
         setEmailSubmitted(true);
         setFormErrors({});
         setIsSubmitting(false);
       })
-      .catch((error) => {
-        console.error("An error occurred while sending the email:", error.text);
+      .catch(() => {
         setFormErrors({
           submission: "Failed to send email. Please try again later.",
         });
@@ -108,290 +92,277 @@ const Contact: FC = () => {
   return (
     <section
       id="contact"
-      className="py-20 sm:py-32 px-4 sm:px-6 bg-background relative overflow-hidden border-t border-text-tertiary/10 scroll-mt-24"
+      className="py-20 sm:py-28 px-4 sm:px-6 bg-background relative overflow-hidden border-t border-text-tertiary/10 scroll-mt-24"
     >
       <div className="max-w-7xl mx-auto relative z-10">
-        <div className="mb-16 sm:mb-24">
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+        >
+          <span className="pill">Contact</span>
+          <h2 className="mt-6 text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight text-text-primary">
+            Let’s build something reliable
+          </h2>
+          <p className="mt-4 text-text-secondary max-w-[72ch] leading-relaxed">
+            {contactData.description}
+          </p>
+        </motion.div>
+
+        <div className="mt-10 grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 12 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="flex items-end gap-4 mb-4"
+            transition={{ duration: 0.5 }}
+            className="lg:col-span-5 surface-card p-6 sm:p-8"
           >
-            <h2 className="text-5xl sm:text-7xl md:text-8xl font-black text-text-tertiary/20 uppercase tracking-tighter leading-none">
-              Contact
-            </h2>
-            <div className="h-px flex-grow bg-primary/30 mb-4"></div>
-            <span className="font-mono text-primary text-sm mb-4">
-              INIT_COMM
-            </span>
-          </motion.div>
-        </div>
+            <h3 className="font-mono text-xs uppercase tracking-widest text-text-tertiary">
+              Direct
+            </h3>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
-          {/* Left Column: System Status / Info */}
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            <div className="bg-surface border border-text-tertiary/30 p-6 sm:p-8 relative overflow-hidden">
-              <div className="absolute top-0 left-0 w-full h-1 bg-primary"></div>
-              <h3 className="text-2xl font-bold text-gray-900 dark:text-white font-mono uppercase mb-8">
-                &gt; System_Channels
+            <dl className="mt-5 space-y-4">
+              <div className="rounded-[14px] border border-[var(--border)] p-4">
+                <dt className="font-mono text-xs uppercase tracking-widest text-text-tertiary">
+                  Email
+                </dt>
+                <dd className="mt-2">
+                  <a
+                    href={`mailto:${contactData.email}`}
+                    className="text-text-primary link-underline"
+                  >
+                    {contactData.email}
+                  </a>
+                </dd>
+              </div>
+
+              <div className="rounded-[14px] border border-[var(--border)] p-4">
+                <dt className="font-mono text-xs uppercase tracking-widest text-text-tertiary">
+                  Phone
+                </dt>
+                <dd className="mt-2">
+                  <a
+                    href={`tel:${contactData.phone.link}`}
+                    className="text-text-primary link-underline"
+                  >
+                    {contactData.phone.display}
+                  </a>
+                </dd>
+              </div>
+
+              <div className="rounded-[14px] border border-[var(--border)] p-4">
+                <dt className="font-mono text-xs uppercase tracking-widest text-text-tertiary">
+                  WhatsApp
+                </dt>
+                <dd className="mt-2">
+                  <a
+                    href={contactData.whatsapp.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-text-primary link-underline"
+                  >
+                    {contactData.whatsapp.display}
+                  </a>
+                </dd>
+              </div>
+            </dl>
+
+            <div className="mt-8 pt-6 border-t border-text-tertiary/15">
+              <h3 className="font-mono text-xs uppercase tracking-widest text-text-tertiary">
+                Social
               </h3>
-
-              <div className="space-y-8">
-                <div className="flex items-start gap-4 group">
-                  <div className="bg-primary/10 p-3 border border-primary/20 group-hover:bg-primary group-hover:text-black transition-colors">
-                    <svg
-                      className="h-6 w-6"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                      />
-                    </svg>
-                  </div>
-                  <div>
-                    <h4 className="text-sm font-mono text-text-tertiary uppercase tracking-wider mb-1">
-                      Email_Protocol
-                    </h4>
-                    <a
-                      href={`mailto:${contactData.email}`}
-                      className="text-lg text-gray-900 dark:text-white hover:text-primary font-mono transition-colors"
-                    >
-                      {contactData.email}
-                    </a>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-4 group">
-                  <div className="bg-primary/10 p-3 border border-primary/20 group-hover:bg-primary group-hover:text-black transition-colors">
-                    <svg
-                      className="h-6 w-6"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
-                      />
-                    </svg>
-                  </div>
-                  <div>
-                    <h4 className="text-sm font-mono text-text-tertiary uppercase tracking-wider mb-1">
-                      Voice_Link
-                    </h4>
-                    <a
-                      href={`tel:${contactData.phone.link}`}
-                      className="text-lg text-gray-900 dark:text-white hover:text-primary font-mono transition-colors"
-                    >
-                      {contactData.phone.display}
-                    </a>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-4 group">
-                  <div className="bg-primary/10 p-3 border border-primary/20 group-hover:bg-primary group-hover:text-black transition-colors">
-                    <svg
-                      className="h-6 w-6"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
-                      />
-                    </svg>
-                  </div>
-                  <div>
-                    <h4 className="text-sm font-mono text-text-tertiary uppercase tracking-wider mb-1">
-                      Secure_Chat
-                    </h4>
-                    <a
-                      href={contactData.whatsapp.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-lg text-gray-900 dark:text-white hover:text-primary font-mono transition-colors"
-                    >
-                      {contactData.whatsapp.display}
-                    </a>
-                  </div>
-                </div>
-              </div>
-
-              <div className="mt-12 pt-8 border-t border-text-tertiary/20">
-                <h4 className="text-sm font-mono text-text-tertiary uppercase tracking-wider mb-4">
-                  External_Nodes
-                </h4>
-                <div className="flex gap-4">
-                  {contactData.socialMedia.map((social, index) => (
-                    <Link
-                      key={index}
-                      href={social.url}
-                      target="_blank"
-                      className="text-text-secondary hover:text-primary transition-colors"
-                    >
-                      <FontAwesomeIcon
-                        icon={
-                          social.icon === "faGithub" ? faGithub : faLinkedin
-                        }
-                        className="h-6 w-6"
-                      />
-                    </Link>
-                  ))}
-                </div>
+              <div className="mt-4 flex flex-wrap gap-3">
+                {contactData.socialMedia.map((social) => (
+                  <Link
+                    key={social.platform}
+                    href={social.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn btn-secondary"
+                  >
+                    <span className="sr-only">{social.platform}</span>
+                    <FontAwesomeIcon
+                      icon={social.icon === "faGithub" ? faGithub : faLinkedin}
+                      className="h-5 w-5"
+                    />
+                    <span className="capitalize">{social.platform}</span>
+                  </Link>
+                ))}
               </div>
             </div>
           </motion.div>
 
-          {/* Right Column: Terminal Form */}
           <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 12 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
+            transition={{ duration: 0.5, delay: 0.05 }}
+            className="lg:col-span-7 surface-card p-6 sm:p-8"
           >
-            <div className="bg-black border border-text-tertiary/30 p-1">
-              <div className="bg-surface border-b border-text-tertiary/30 px-4 py-2 flex items-center gap-2">
-                <div className="w-3 h-3 rounded-full bg-red-500"></div>
-                <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
-                <div className="w-3 h-3 rounded-full bg-green-500"></div>
-                <span className="ml-2 font-mono text-xs text-text-tertiary">
-                  user@portfolio:~/contact
-                </span>
-              </div>
+            <h3 className="text-xl font-semibold tracking-tight text-text-primary">
+              Send a message
+            </h3>
+            <p className="mt-2 text-text-tertiary text-sm">
+              If you prefer email, use the address on the left.
+            </p>
 
-              <div className="p-6 sm:p-8">
-                {emailSubmitted ? (
-                  <div className="text-center py-12">
-                    <div className="text-primary font-mono text-xl mb-4">
-                      &gt; Message_Sent_Successfully
-                    </div>
-                    <p className="text-text-secondary font-mono text-sm mb-8">
-                      Thank you for establishing connection.
-                    </p>
-                    <button
-                      onClick={() => setEmailSubmitted(false)}
-                      className="text-xs font-mono uppercase tracking-widest border-b border-primary text-primary hover:text-white hover:border-white transition-colors"
-                    >
-                      [Reset_Terminal]
-                    </button>
+            {emailSubmitted ? (
+              <div className="mt-8 rounded-[14px] border border-[var(--border)] p-6">
+                <div className="text-text-primary font-semibold">
+                  Message sent.
+                </div>
+                <p className="mt-2 text-text-secondary text-sm leading-relaxed">
+                  Thanks — I’ll reply as soon as I can.
+                </p>
+                <button
+                  onClick={() => setEmailSubmitted(false)}
+                  className="mt-6 btn btn-secondary"
+                  type="button"
+                >
+                  Send another
+                </button>
+              </div>
+            ) : (
+              <form className="mt-8 space-y-5" onSubmit={handleSubmit}>
+                {formErrors.submission && (
+                  <div
+                    className="rounded-[14px] border border-red-500/40 bg-red-500/10 p-4 text-sm text-text-secondary"
+                    role="alert"
+                  >
+                    {formErrors.submission}
                   </div>
-                ) : (
-                  <form className="space-y-6" onSubmit={handleSubmit}>
-                    <div className="space-y-2">
-                      <label
-                        htmlFor="name"
-                        className="block font-mono text-xs text-primary uppercase tracking-wider"
-                      >
-                        &gt; Enter_Name
-                      </label>
-                      <input
-                        name="name"
-                        type="text"
-                        id="name"
-                        required
-                        className={`w-full bg-surface/50 border-b ${formErrors.name ? "border-red-500" : "border-text-tertiary/50"} focus:border-primary text-gray-900 dark:text-white font-mono py-2 px-3 focus:outline-none transition-colors`}
-                        placeholder="_"
-                      />
-                      {formErrors.name && (
-                        <p className="text-[10px] text-red-500 font-mono mt-1">
-                          {formErrors.name}
-                        </p>
-                      )}
-                    </div>
-
-                    <div className="space-y-2">
-                      <label
-                        htmlFor="email"
-                        className="block font-mono text-xs text-primary uppercase tracking-wider"
-                      >
-                        &gt; Enter_Email
-                      </label>
-                      <input
-                        name="email"
-                        type="email"
-                        id="email"
-                        required
-                        className={`w-full bg-surface/50 border-b ${formErrors.email ? "border-red-500" : "border-text-tertiary/50"} focus:border-primary text-gray-900 dark:text-white font-mono py-2 px-3 focus:outline-none transition-colors`}
-                        placeholder="_"
-                      />
-                      {formErrors.email && (
-                        <p className="text-[10px] text-red-500 font-mono mt-1">
-                          {formErrors.email}
-                        </p>
-                      )}
-                    </div>
-
-                    <div className="space-y-2">
-                      <label
-                        htmlFor="subject"
-                        className="block font-mono text-xs text-primary uppercase tracking-wider"
-                      >
-                        &gt; Subject_Line
-                      </label>
-                      <input
-                        name="subject"
-                        type="text"
-                        id="subject"
-                        required
-                        className={`w-full bg-surface/50 border-b ${formErrors.subject ? "border-red-500" : "border-text-tertiary/50"} focus:border-primary text-gray-900 dark:text-white font-mono py-2 px-3 focus:outline-none transition-colors`}
-                        placeholder="_"
-                      />
-                      {formErrors.subject && (
-                        <p className="text-[10px] text-red-500 font-mono mt-1">
-                          {formErrors.subject}
-                        </p>
-                      )}
-                    </div>
-
-                    <div className="space-y-2">
-                      <label
-                        htmlFor="message"
-                        className="block font-mono text-xs text-primary uppercase tracking-wider"
-                      >
-                        &gt; Message_Body
-                      </label>
-                      <textarea
-                        name="message"
-                        id="message"
-                        required
-                        rows={4}
-                        className={`w-full bg-surface/50 border-b ${formErrors.message ? "border-red-500" : "border-text-tertiary/50"} focus:border-primary text-gray-900 dark:text-white font-mono py-2 px-3 focus:outline-none transition-colors resize-none`}
-                        placeholder="_"
-                      ></textarea>
-                      {formErrors.message && (
-                        <p className="text-[10px] text-red-500 font-mono mt-1">
-                          {formErrors.message}
-                        </p>
-                      )}
-                    </div>
-
-                    <button
-                      type="submit"
-                      disabled={isSubmitting}
-                      className="w-full bg-primary text-black font-mono font-bold uppercase tracking-widest py-4 hover:bg-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed mt-8"
-                    >
-                      {isSubmitting ? "EXECUTING..." : "EXECUTE_SEND"}
-                    </button>
-                  </form>
                 )}
-              </div>
-            </div>
+
+                <div>
+                  <label
+                    htmlFor={`${formId}-name`}
+                    className="block text-sm text-text-secondary"
+                  >
+                    Name
+                  </label>
+                  <input
+                    name="name"
+                    id={`${formId}-name`}
+                    type="text"
+                    required
+                    aria-invalid={Boolean(formErrors.name)}
+                    aria-describedby={
+                      formErrors.name ? `${formId}-name-error` : undefined
+                    }
+                    className="mt-2 w-full rounded-[14px] border border-text-tertiary/25 bg-[color-mix(in_oklab,var(--color-surface)_82%,transparent)] px-4 py-3 text-text-primary placeholder:text-text-tertiary/70 focus:outline-none focus:ring-2 focus:ring-[var(--ring)]"
+                    placeholder="Your name"
+                  />
+                  {formErrors.name && (
+                    <p
+                      id={`${formId}-name-error`}
+                      className="mt-2 text-xs text-red-400"
+                    >
+                      {formErrors.name}
+                    </p>
+                  )}
+                </div>
+
+                <div>
+                  <label
+                    htmlFor={`${formId}-email`}
+                    className="block text-sm text-text-secondary"
+                  >
+                    Email
+                  </label>
+                  <input
+                    name="email"
+                    id={`${formId}-email`}
+                    type="email"
+                    required
+                    aria-invalid={Boolean(formErrors.email)}
+                    aria-describedby={
+                      formErrors.email ? `${formId}-email-error` : undefined
+                    }
+                    className="mt-2 w-full rounded-[14px] border border-text-tertiary/25 bg-[color-mix(in_oklab,var(--color-surface)_82%,transparent)] px-4 py-3 text-text-primary placeholder:text-text-tertiary/70 focus:outline-none focus:ring-2 focus:ring-[var(--ring)]"
+                    placeholder="you@domain.com"
+                  />
+                  {formErrors.email && (
+                    <p
+                      id={`${formId}-email-error`}
+                      className="mt-2 text-xs text-red-400"
+                    >
+                      {formErrors.email}
+                    </p>
+                  )}
+                </div>
+
+                <div>
+                  <label
+                    htmlFor={`${formId}-subject`}
+                    className="block text-sm text-text-secondary"
+                  >
+                    Subject
+                  </label>
+                  <input
+                    name="subject"
+                    id={`${formId}-subject`}
+                    type="text"
+                    required
+                    aria-invalid={Boolean(formErrors.subject)}
+                    aria-describedby={
+                      formErrors.subject ? `${formId}-subject-error` : undefined
+                    }
+                    className="mt-2 w-full rounded-[14px] border border-text-tertiary/25 bg-[color-mix(in_oklab,var(--color-surface)_82%,transparent)] px-4 py-3 text-text-primary placeholder:text-text-tertiary/70 focus:outline-none focus:ring-2 focus:ring-[var(--ring)]"
+                    placeholder="What would you like to talk about?"
+                  />
+                  {formErrors.subject && (
+                    <p
+                      id={`${formId}-subject-error`}
+                      className="mt-2 text-xs text-red-400"
+                    >
+                      {formErrors.subject}
+                    </p>
+                  )}
+                </div>
+
+                <div>
+                  <label
+                    htmlFor={`${formId}-message`}
+                    className="block text-sm text-text-secondary"
+                  >
+                    Message
+                  </label>
+                  <textarea
+                    name="message"
+                    id={`${formId}-message`}
+                    rows={6}
+                    required
+                    aria-invalid={Boolean(formErrors.message)}
+                    aria-describedby={
+                      formErrors.message ? `${formId}-message-error` : undefined
+                    }
+                    className="mt-2 w-full rounded-[14px] border border-text-tertiary/25 bg-[color-mix(in_oklab,var(--color-surface)_82%,transparent)] px-4 py-3 text-text-primary placeholder:text-text-tertiary/70 focus:outline-none focus:ring-2 focus:ring-[var(--ring)]"
+                    placeholder="A few details helps me respond faster."
+                  />
+                  {formErrors.message && (
+                    <p
+                      id={`${formId}-message-error`}
+                      className="mt-2 text-xs text-red-400"
+                    >
+                      {formErrors.message}
+                    </p>
+                  )}
+                </div>
+
+                <div className="flex items-center gap-3">
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="btn btn-primary disabled:opacity-60 disabled:cursor-not-allowed"
+                  >
+                    {isSubmitting ? "Sending…" : "Send message"}
+                  </button>
+                  <span className="text-xs text-text-tertiary">
+                    No spam — just replies.
+                  </span>
+                </div>
+              </form>
+            )}
           </motion.div>
         </div>
       </div>

@@ -3,8 +3,6 @@ import React, { useState, useRef, FC } from "react";
 import { motion, useInView } from "framer-motion";
 import Image from "next/image";
 import projectsData from "@/data/projects.json";
-import { Card3D } from "./ui/Card3D";
-import { TextReveal } from "./ui/TextReveal";
 
 interface ProjectData {
   id: number;
@@ -13,6 +11,14 @@ interface ProjectData {
   image: string;
   link: string;
   tag: string[];
+  problem?: string;
+  impact?: string;
+  tech?: string[];
+  links?: {
+    demo?: string;
+    source?: string;
+    paper?: string;
+  };
 }
 
 const Projects: FC = () => {
@@ -28,31 +34,27 @@ const Projects: FC = () => {
     project.tag.includes(tag),
   );
 
-  const cardVariants = {
-    initial: { y: 100, opacity: 0 },
-    animate: { y: 0, opacity: 1 },
-  };
-
   return (
     <section
       id="projects"
-      className="py-20 sm:py-32 px-4 sm:px-6 bg-background relative overflow-hidden border-t border-text-tertiary/10 scroll-mt-24"
+      className="py-20 sm:py-28 px-4 sm:px-6 bg-background relative overflow-hidden border-t border-text-tertiary/10 scroll-mt-24"
     >
       <div className="max-w-7xl mx-auto relative z-10">
-        <div className="mb-16 sm:mb-24">
+        <div className="mb-10 sm:mb-14">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="flex items-end gap-4 mb-4"
           >
-            <h2 className="text-5xl sm:text-7xl md:text-8xl font-black text-text-tertiary/20 uppercase tracking-tighter leading-none">
-              Work
+            <span className="pill">Selected work</span>
+            <h2 className="mt-6 text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight text-text-primary">
+              Projects that show how I think and ship
             </h2>
-            <div className="h-px flex-grow bg-primary/30 mb-4"></div>
-            <span className="font-mono text-primary text-sm mb-4">
-              BUILD.LOG
-            </span>
+            <p className="mt-4 text-text-secondary max-w-[72ch] leading-relaxed">
+              Each project is framed as a short case study: the problem, the
+              approach, and the impact. If a metric isn’t available, I’m
+              explicit about what changed.
+            </p>
           </motion.div>
         </div>
 
@@ -62,10 +64,10 @@ const Projects: FC = () => {
               <button
                 key={category}
                 onClick={() => handleTagChange(category)}
-                className={`px-4 py-3 min-h-[44px] flex-shrink-0 font-mono text-xs uppercase tracking-wider border transition-all ${
+                className={`px-4 py-3 min-h-[44px] flex-shrink-0 font-mono text-xs uppercase tracking-wider border rounded-full transition-all ${
                   tag === category
-                    ? "bg-primary text-black border-primary font-bold"
-                    : "bg-transparent text-text-tertiary border-text-tertiary/30 hover:border-primary hover:text-primary"
+                    ? "bg-surface text-text-primary border-text-tertiary/40"
+                    : "bg-transparent text-text-tertiary border-text-tertiary/25 hover:border-text-tertiary/45 hover:text-text-primary"
                 }`}
               >
                 {category}
@@ -76,89 +78,142 @@ const Projects: FC = () => {
           </div>
         </div>
 
-        <ul
-          ref={ref}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"
-        >
-          {filteredProjects.map((project, index) => (
-            <motion.li
-              key={index}
-              variants={cardVariants}
-              initial="initial"
-              animate={isInView ? "animate" : "initial"}
-              transition={{ duration: 0.6, delay: index * 0.15 }}
-              className="group"
-            >
-              <Card3D>
-                <a
-                  href={project.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex flex-col h-full bg-surface border border-text-tertiary/30 hover:border-primary transition-all duration-300 relative overflow-hidden"
-                >
-                  {/* Technical overlay lines */}
-                  <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-primary opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                  <div className="absolute top-0 right-0 w-2 h-2 border-t border-r border-primary opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                  <div className="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-primary opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                  <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-primary opacity-0 group-hover:opacity-100 transition-opacity"></div>
+        <ul ref={ref} className="space-y-6">
+          {filteredProjects.map((project: ProjectData, index: number) => {
+            const primaryUrl =
+              project.links?.demo ||
+              project.links?.paper ||
+              project.links?.source ||
+              project.link;
 
-                  <div className="relative h-48 flex-shrink-0 overflow-hidden border-b border-text-tertiary/30">
-                    <div className="absolute inset-0 bg-primary/20 mix-blend-overlay z-10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                    <Image
-                      className="w-full h-full object-cover filter grayscale group-hover:grayscale-0 transition-all duration-500"
-                      src={project.image}
-                      alt={`Screenshot of ${project.name}`}
-                      fill
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    />
-                  </div>
-
-                  <div className="p-6 flex flex-col flex-grow">
-                    <div className="mb-4">
-                      <h3 className="text-xl font-bold text-blue-500 dark:text-white font-mono uppercase group-hover:text-primary transition-colors">
-                        {project.name}
-                      </h3>
+            return (
+              <motion.li
+                key={project.id}
+                initial={{ opacity: 0, y: 14 }}
+                animate={
+                  isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 14 }
+                }
+                transition={{
+                  duration: 0.5,
+                  delay: Math.min(index * 0.06, 0.3),
+                }}
+              >
+                <article className="surface-card overflow-hidden">
+                  <div className="grid grid-cols-1 md:grid-cols-12">
+                    <div className="md:col-span-5 relative min-h-[220px] border-b md:border-b-0 md:border-r border-text-tertiary/20 bg-[color-mix(in_oklab,var(--color-surface)_88%,transparent)]">
+                      <a
+                        href={primaryUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={`Open ${project.name}`}
+                        className="absolute inset-0"
+                      />
+                      <Image
+                        src={project.image}
+                        alt={`Preview for ${project.name}`}
+                        fill
+                        className="object-cover"
+                        sizes="(max-width: 768px) 100vw, 42vw"
+                      />
                     </div>
 
-                    <p className="text-text-secondary text-sm mb-6 font-mono line-clamp-3 flex-grow">
-                      {project.description}
-                    </p>
+                    <div className="md:col-span-7 p-6 sm:p-8">
+                      <div className="flex items-start justify-between gap-4">
+                        <div>
+                          <h3 className="text-2xl font-semibold tracking-tight text-text-primary">
+                            {project.name}
+                          </h3>
+                          <p className="mt-2 text-text-secondary leading-relaxed">
+                            {project.description}
+                          </p>
+                        </div>
+                        <div className="hidden sm:flex flex-wrap justify-end gap-2">
+                          {project.tag
+                            .filter((t) => t !== "All")
+                            .map((t) => (
+                              <span key={t} className="pill">
+                                {t}
+                              </span>
+                            ))}
+                        </div>
+                      </div>
 
-                    <div className="flex flex-wrap gap-2 mb-6 mt-auto">
-                      {project.tag
-                        .filter((t) => t !== "All")
-                        .map((t, i) => (
-                          <span
-                            key={i}
-                            className="text-[10px] font-mono text-text-tertiary uppercase tracking-wider"
+                      <dl className="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-5 text-sm">
+                        {project.problem && (
+                          <div>
+                            <dt className="font-mono text-xs uppercase tracking-widest text-text-tertiary">
+                              Problem
+                            </dt>
+                            <dd className="mt-2 text-text-secondary leading-relaxed">
+                              {project.problem}
+                            </dd>
+                          </div>
+                        )}
+                        {Array.isArray(project.tech) &&
+                          project.tech.length > 0 && (
+                            <div>
+                              <dt className="font-mono text-xs uppercase tracking-widest text-text-tertiary">
+                                Tech
+                              </dt>
+                              <dd className="mt-2 flex flex-wrap gap-2">
+                                {project.tech.slice(0, 6).map((item) => (
+                                  <span key={item} className="pill">
+                                    {item}
+                                  </span>
+                                ))}
+                              </dd>
+                            </div>
+                          )}
+                        {project.impact && (
+                          <div>
+                            <dt className="font-mono text-xs uppercase tracking-widest text-text-tertiary">
+                              Impact
+                            </dt>
+                            <dd className="mt-2 text-text-secondary leading-relaxed">
+                              {project.impact}
+                            </dd>
+                          </div>
+                        )}
+                      </dl>
+
+                      <div className="mt-7 flex flex-wrap gap-3">
+                        {project.links?.demo && (
+                          <a
+                            href={project.links.demo}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="btn btn-primary"
                           >
-                            [{t}]
-                          </span>
-                        ))}
-                    </div>
-
-                    <div className="flex items-center text-primary font-mono text-xs uppercase tracking-widest group-hover:translate-x-2 transition-transform pt-4 border-t border-text-tertiary/10">
-                      <span>View_Source</span>
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-4 w-4 ml-2"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M14 5l7 7m0 0l-7 7m7-7H3"
-                        />
-                      </svg>
+                            Live demo
+                          </a>
+                        )}
+                        {project.links?.paper && (
+                          <a
+                            href={project.links.paper}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="btn btn-primary"
+                          >
+                            Read paper
+                          </a>
+                        )}
+                        {(project.links?.source || project.link) && (
+                          <a
+                            href={project.links?.source || project.link}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="btn btn-secondary"
+                          >
+                            Source
+                          </a>
+                        )}
+                      </div>
                     </div>
                   </div>
-                </a>
-              </Card3D>
-            </motion.li>
-          ))}
+                </article>
+              </motion.li>
+            );
+          })}
         </ul>
       </div>
     </section>

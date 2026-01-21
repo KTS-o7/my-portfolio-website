@@ -4,176 +4,142 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import heroData from "@/data/hero.json";
-import { Spotlight } from "./ui/Spotlight";
-import { ParticlesBackground } from "./ui/ParticlesBackground";
 
 const Hero: FC = () => {
-  const typeAnimationSequence = [];
-  typeAnimationSequence.push(heroData.name, heroData.roleAnimationDelay);
-  heroData.roles.forEach((role) => {
-    typeAnimationSequence.push(role, heroData.roleAnimationDelay);
-  });
-
   return (
     <section
       id="home"
-      className="bg-background relative overflow-hidden min-h-screen flex items-start pt-36 md:pt-48 pb-20"
+      className="bg-background relative overflow-hidden min-h-screen flex items-start pt-32 md:pt-44 pb-20"
     >
-      <div className="absolute inset-0 z-0">
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#121212_1px,transparent_1px),linear-gradient(to_bottom,#121212_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]"></div>
-        <ParticlesBackground />
-      </div>
-
       <div className="max-w-7xl mx-auto px-4 sm:px-6 w-full relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-          {/* Left Column: Text Content */}
-          <motion.div
-            initial="hidden"
-            animate="visible"
-            variants={{
-              hidden: { opacity: 0 },
-              visible: {
-                opacity: 1,
-                transition: { staggerChildren: 0.1 },
-              },
-            }}
-            className="flex flex-col justify-center"
-          >
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
+          <header className="lg:col-span-7">
             <motion.div
-              variants={{
-                hidden: { opacity: 0, x: -20 },
-                visible: { opacity: 1, x: 0 },
-              }}
-              className="flex items-center space-x-2 mb-6"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className="flex flex-col"
             >
-              <div className="w-2 h-2 bg-primary rounded-full animate-pulse"></div>
-              <span className="text-primary font-mono text-sm tracking-widest uppercase">
-                System Online
-              </span>
-            </motion.div>
+              <span className="pill w-fit">{heroData.kicker}</span>
 
-            <motion.p
-              variants={{
-                hidden: { opacity: 0, y: 10 },
-                visible: { opacity: 1, y: 0 },
-              }}
-              className="text-primary font-mono text-xs sm:text-sm md:text-base tracking-[0.22em] uppercase leading-relaxed mb-6 max-w-[32rem]"
-            >
-              {heroData.name}
-            </motion.p>
+              <h1 className="mt-6 text-4xl sm:text-6xl md:text-7xl font-semibold tracking-tight leading-[1.02] text-text-primary">
+                {heroData.name}
+              </h1>
 
-            <motion.h1
-              variants={{
-                hidden: { opacity: 0, y: 20 },
-                visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
-              }}
-              className="text-5xl sm:text-7xl md:text-8xl font-black tracking-tighter text-gray-900 dark:text-white mb-6 leading-[0.9]"
-            >
-              FULL
-              <br />
-              STACK
-              <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">
-                ENGINEER
-              </span>
-            </motion.h1>
-
-            <motion.div
-              variants={{
-                hidden: { opacity: 0, y: 20 },
-                visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
-              }}
-              className="border-l-2 border-primary/30 pl-6 mb-8"
-            >
-              <p className="text-text-secondary text-lg md:text-xl font-mono leading-relaxed">
-                Leading{" "}
-                <span className="text-gray-900 dark:text-white font-bold">
-                  Compliance OS
-                </span>{" "}
-                at OnFinance.
-                <br />
-                Architecting secure, scalable infrastructure for the future of
-                fintech.
+              <p className="mt-6 text-xl sm:text-2xl text-text-primary leading-snug max-w-[56ch]">
+                {heroData.headline}
               </p>
+              <p className="mt-4 text-base sm:text-lg text-text-secondary leading-relaxed max-w-[70ch]">
+                {heroData.subhead}
+              </p>
+
+              <p className="mt-6 text-text-tertiary font-mono text-sm leading-relaxed max-w-[70ch]">
+                {heroData.current}
+              </p>
+
+              <div className="mt-8 flex flex-wrap gap-3">
+                {heroData.buttons.map((button) => {
+                  const className =
+                    button.type === "primary"
+                      ? "btn btn-primary"
+                      : "btn btn-secondary";
+
+                  return button.external ? (
+                    <Link
+                      key={button.text}
+                      href={button.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={className}
+                    >
+                      {button.text}
+                    </Link>
+                  ) : (
+                    <a
+                      key={button.text}
+                      href={button.link}
+                      className={className}
+                    >
+                      {button.text}
+                    </a>
+                  );
+                })}
+              </div>
             </motion.div>
+
+            {Array.isArray(heroData.proofPoints) &&
+              heroData.proofPoints.length > 0 && (
+                <dl className="mt-10 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {heroData.proofPoints.map((point) => (
+                    <div
+                      key={point.label}
+                      className="surface-card p-5 transition-transform duration-200 hover:-translate-y-0.5"
+                    >
+                      <dt className="text-xs font-mono uppercase tracking-widest text-text-tertiary">
+                        {point.label}
+                      </dt>
+                      <dd className="mt-2 text-text-primary">{point.value}</dd>
+                    </div>
+                  ))}
+                </dl>
+              )}
+          </header>
+
+          <aside className="lg:col-span-5 order-first lg:order-last">
+            <motion.figure
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.05 }}
+              className="surface-card p-5"
+            >
+              <div className="relative overflow-hidden rounded-[14px] border border-[var(--border)] aspect-[4/5] bg-[color-mix(in_oklab,var(--color-surface)_88%,transparent)]">
+                <Image
+                  src={heroData.image}
+                  alt={`${heroData.name} portrait`}
+                  fill
+                  priority
+                  className="object-cover"
+                />
+              </div>
+              <figcaption className="mt-4 text-sm text-text-secondary">
+                <span className="font-mono text-xs uppercase tracking-widest text-text-tertiary">
+                  Now
+                </span>
+                <div className="mt-1">{heroData.current}</div>
+              </figcaption>
+            </motion.figure>
 
             <motion.div
-              variants={{
-                hidden: { opacity: 0, y: 20 },
-                visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
-              }}
-              className="flex flex-wrap gap-4"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.12 }}
+              className="surface-card p-5 mt-5"
             >
-              {heroData.buttons.map((button, index) => {
-                const isPrimary = button.type === "primary";
-                return button.external ? (
-                  <Link
-                    key={index}
-                    href={button.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={`px-8 py-4 font-mono text-sm font-bold tracking-wider uppercase transition-all duration-300 ${
-                      isPrimary
-                        ? "bg-primary text-black hover:bg-white"
-                        : "border border-text-tertiary text-text-secondary hover:border-primary hover:text-primary"
-                    }`}
+              <h2 className="font-mono text-xs uppercase tracking-widest text-text-tertiary">
+                System Sketch
+              </h2>
+              <p className="mt-3 text-sm text-text-secondary leading-relaxed">
+                My work tends to look like this: clear interfaces, async
+                workflows, and observability you can trust.
+              </p>
+
+              <div className="mt-4 grid grid-cols-2 gap-3 text-sm">
+                {[
+                  "API contracts",
+                  "Queues & workers",
+                  "Postgres/data models",
+                  "Tracing & metrics",
+                ].map((item) => (
+                  <div
+                    key={item}
+                    className="rounded-[14px] border border-[var(--border)] bg-[color-mix(in_oklab,var(--color-surface)_86%,transparent)] p-3"
                   >
-                    {button.text}
-                  </Link>
-                ) : (
-                  <a
-                    key={index}
-                    href={button.link}
-                    className={`px-8 py-4 font-mono text-sm font-bold tracking-wider uppercase transition-all duration-300 ${
-                      isPrimary
-                        ? "bg-primary text-black hover:bg-white"
-                        : "border border-text-tertiary text-text-secondary hover:border-primary hover:text-primary"
-                    }`}
-                  >
-                    {button.text}
-                  </a>
-                );
-              })}
+                    {item}
+                  </div>
+                ))}
+              </div>
             </motion.div>
-          </motion.div>
-
-          {/* Visual/Profile - Now shown on mobile above text */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="relative order-first lg:order-last"
-          >
-            <div className="relative w-full aspect-square max-w-[280px] sm:max-w-md mx-auto">
-              {/* Technical decorative elements */}
-              <div className="absolute inset-0 border border-text-tertiary/20 rounded-full"></div>
-              <div className="absolute inset-4 border border-text-tertiary/20 rounded-full border-dashed animate-[spin_60s_linear_infinite]"></div>
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="w-[200px] h-[200px] sm:w-[300px] sm:h-[300px] relative overflow-hidden rounded-full grayscale hover:grayscale-0 transition-all duration-500 border-2 border-primary/50">
-                  <Image
-                    src={heroData.image}
-                    alt="Profile"
-                    fill
-                    className="object-cover"
-                    priority
-                  />
-                </div>
-              </div>
-
-              {/* Floating tech badges - hidden on extra small screens for cleaner look */}
-              <div className="absolute top-0 right-10 bg-surface border border-text-tertiary/30 px-4 py-2 rounded-none hidden sm:block">
-                <span className="text-primary font-mono text-xs">FastAPI</span>
-              </div>
-              <div className="absolute bottom-20 left-0 bg-surface border border-text-tertiary/30 px-4 py-2 rounded-none hidden sm:block">
-                <span className="text-primary font-mono text-xs">LLMs</span>
-              </div>
-              <div className="absolute bottom-0 right-20 bg-surface border border-text-tertiary/30 px-4 py-2 rounded-none hidden sm:block">
-                <span className="text-primary font-mono text-xs">
-                  Agentic AI
-                </span>
-              </div>
-            </div>
-          </motion.div>
+          </aside>
         </div>
       </div>
     </section>

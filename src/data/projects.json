@@ -1,87 +1,104 @@
 {
-  "categories": [
-    "All",
-    "Software",
-    "Hardware",
-    "Publication"
-  ],
+  "categories": ["All", "Software", "Hardware", "Publication"],
   "projects": [
     {
       "id": 1,
       "name": "Portfolio-GPT",
-      "description": "This is a portfolio website created using LLMs only. Allowed to iterate the design quickly.",
+      "description": "A portfolio that communicates my backend + LLM tooling work with a clear narrative and a distinct visual system.",
+      "problem": "My work was hard to understand quickly from a generic portfolio layout.",
+      "impact": "Faster iteration on messaging and project storytelling; improved hierarchy and accessibility.",
+      "tech": ["Next.js", "TypeScript", "Tailwind CSS", "Framer Motion"],
+      "links": {
+        "demo": "https://portfolio.shenthar.me/",
+        "source": "https://github.com/KTS-o7/my-portfolio-website"
+      },
       "image": "/proj/website.png",
       "link": "https://github.com/KTS-o7/my-portfolio-website",
-      "tag": [
-        "All",
-        "Software"
-      ]
+      "tag": ["All", "Software"]
     },
     {
       "id": 2,
       "name": "Better Bing Image Downloader",
-      "description": "Python library to download images from Bing in bulk for Machine learning. 20+ Stars, Now availabe as a CLI tool.",
+      "description": "Python library + CLI to download Bing images at scale for dataset creation.",
+      "problem": "Collecting image datasets for ML was slow and manual.",
+      "impact": "20+ GitHub stars; packaged as a CLI for repeatable dataset pulls.",
+      "tech": ["Python", "CLI", "Packaging", "HTTP"],
+      "links": {
+        "source": "https://github.com/KTS-o7/better_bing_image_downloader"
+      },
       "image": "/proj/bingScrape.png",
       "link": "https://github.com/KTS-o7/better_bing_image_downloader",
-      "tag": [
-        "All",
-        "Software"
-      ]
+      "tag": ["All", "Software"]
     },
     {
       "id": 3,
       "name": "QuantQuips",
-      "description": "Langchain based backtesting, algotrading and analytics. Appreciated by judges from JPMC.",
+      "description": "Backtesting + analytics toolkit with LLM-assisted workflows for exploration and reporting.",
+      "problem": "Quant research needed faster iteration from idea → backtest → insight sharing.",
+      "impact": "Praised by judges from JPMC for clarity and utility.",
+      "tech": ["Python", "Pandas", "LangChain", "Backtesting"],
+      "links": {
+        "source": "https://github.com/KTS-o7/QuantQuips"
+      },
       "image": "/proj/Qq.png",
       "link": "https://github.com/KTS-o7/QuantQuips",
-      "tag": [
-        "All",
-        "Software"
-      ]
+      "tag": ["All", "Software"]
     },
     {
       "id": 4,
       "name": "RV Board",
-      "description": "Protyping Board for RVCE students using LPC2148 ARM7 microcontroller. Drivers developed in Assembly, Embedded C",
+      "description": "Prototype board for students using an LPC2148 (ARM7) with low-level drivers in Embedded C and Assembly.",
+      "problem": "Needed an accessible platform for hands-on embedded systems labs.",
+      "impact": "Reusable board + driver stack for repeatable classroom experiments.",
+      "tech": ["LPC2148", "Embedded C", "Assembly", "Drivers"],
+      "links": {
+        "source": "https://github.com/KTS-o7/RV_Board"
+      },
       "image": "/proj/rvboard.png",
       "link": "https://github.com/KTS-o7/RV_Board",
-      "tag": [
-        "All",
-        "Hardware"
-      ]
+      "tag": ["All", "Hardware"]
     },
     {
       "id": 5,
       "name": "Algorithmic-fusion-for-Lung-scan-classification",
-      "description": "Fusion of CNN algorithms for Multiple Lung Disease Classification.",
+      "description": "Research on fusing CNN models for multi-class lung disease classification.",
+      "problem": "Single-model performance varied across imaging modalities and conditions.",
+      "impact": "Explored ensemble/fusion strategies and compared outcomes across datasets.",
+      "tech": ["Python", "CNNs", "PyTorch", "Research"],
+      "links": {
+        "source": "https://github.com/KTS-o7/Algorithmic-fusion-for-Lung-scan-classification"
+      },
       "image": "/publication/cnn.png",
       "link": "https://github.com/KTS-o7/Algorithmic-fusion-for-Lung-scan-classification",
-      "tag": [
-        "All",
-        "Publication"
-      ]
+      "tag": ["All", "Publication"]
     },
     {
       "id": 6,
       "name": "HandWrittenTripSheet OCR",
-      "description": "OCR for handwritten TripSheet using EasyOCR and RegEx. Increased accuracy by 40%",
+      "description": "Handwritten trip-sheet OCR pipeline (EasyOCR + regex post-processing).",
+      "problem": "Manual data entry for handwritten logistics documents was error-prone and slow.",
+      "impact": "Improved extraction accuracy by ~40% through post-processing and validation.",
+      "tech": ["Python", "EasyOCR", "Regex", "Data cleaning"],
+      "links": {
+        "paper": "https://ieeexplore.ieee.org/document/10170030"
+      },
       "image": "/publication/ieeeTrip.png",
       "link": "https://ieeexplore.ieee.org/document/10170030",
-      "tag": [
-        "All",
-        "Publication"
-      ]
+      "tag": ["All", "Publication"]
     },
     {
       "id": 7,
       "name": "Evaluation of filters in CT and Xray images of Lungs classification",
-      "description": "A study on the effect of filters on the classification of CT and Xray images of Lungs.",
+      "description": "Study on how image filters impact CT/X-ray lung classification models.",
+      "problem": "Pre-processing choices can silently change model accuracy and bias.",
+      "impact": "Benchmarked filters and documented effects to guide reproducible pipelines.",
+      "tech": ["Python", "Image processing", "ML evaluation", "Research"],
+      "links": {
+        "paper": "https://ijeecs.iaescore.com/index.php/IJEECS/article/view/34975/18055"
+      },
       "image": "/publication/q3.png",
       "link": "https://ijeecs.iaescore.com/index.php/IJEECS/article/view/34975/18055",
-      "tag": [
-        "All",
-        "Publication"
-      ]
+      "tag": ["All", "Publication"]
     }
   ]
 }

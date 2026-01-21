@@ -96,7 +96,11 @@ export const getProfileData = (baseUrl: string): ProfileData => {
   const projects: ProjectEntry[] = projectsData.projects.map((project) => ({
     name: project.name,
     description: project.description,
-    url: project.link,
+    url:
+      project.links?.demo ||
+      project.links?.paper ||
+      project.links?.source ||
+      project.link,
     tags: project.tag.filter((tag) => tag !== "All"),
     type: project.tag.includes("Publication") ? "publication" : "project",
   }));

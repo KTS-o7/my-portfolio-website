@@ -1,139 +1,75 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
+import React from "react";
 import techData from "@/data/technologies.json";
 import NextImage from "next/image";
 
 export const TechStack = () => {
-  const scrollRef = useRef<HTMLDivElement>(null);
-  const animationRef = useRef<number | null>(null);
-  const scrollPositionRef = useRef(0);
-  const [isPaused, setIsPaused] = useState(false);
-  const isDraggingRef = useRef(false);
-  const startXRef = useRef(0);
-  const scrollLeftRef = useRef(0);
+  const coreSet = new Set([
+    "Python",
+    "FastAPI",
+    "PostgreSQL",
+    "AWS",
+    "Docker",
+    "Kubernetes",
+    "LangGraph",
+    "LiteLLM",
+  ]);
 
-  useEffect(() => {
-    const scrollContainer = scrollRef.current;
-    if (!scrollContainer) return;
-
-    const scrollSpeed = 0.3;
-
-    const animate = () => {
-      if (!isPaused && !isDraggingRef.current) {
-        scrollPositionRef.current += scrollSpeed;
-
-        if (scrollPositionRef.current >= scrollContainer.scrollWidth / 2) {
-          scrollPositionRef.current = 0;
-        }
-
-        scrollContainer.scrollLeft = scrollPositionRef.current;
-      } else if (!isDraggingRef.current) {
-        scrollPositionRef.current = scrollContainer.scrollLeft;
-      }
-
-      animationRef.current = requestAnimationFrame(animate);
-    };
-
-    animationRef.current = requestAnimationFrame(animate);
-
-    return () => {
-      if (animationRef.current) {
-        cancelAnimationFrame(animationRef.current);
-      }
-    };
-  }, [isPaused]);
-
-  const handleMouseDown = (e: React.MouseEvent) => {
-    if (!scrollRef.current) return;
-    isDraggingRef.current = true;
-    startXRef.current = e.pageX - scrollRef.current.offsetLeft;
-    scrollLeftRef.current = scrollRef.current.scrollLeft;
-    scrollRef.current.style.cursor = "grabbing";
-  };
-
-  const handleMouseMove = (e: React.MouseEvent) => {
-    if (!isDraggingRef.current || !scrollRef.current) return;
-    e.preventDefault();
-    const x = e.pageX - scrollRef.current.offsetLeft;
-    const walk = (x - startXRef.current) * 2;
-    scrollRef.current.scrollLeft = scrollLeftRef.current - walk;
-    scrollPositionRef.current = scrollRef.current.scrollLeft;
-  };
-
-  const handleMouseUp = () => {
-    if (!scrollRef.current) return;
-    isDraggingRef.current = false;
-    scrollRef.current.style.cursor = "grab";
-  };
-
-  const handleMouseLeave = () => {
-    if (isDraggingRef.current && scrollRef.current) {
-      isDraggingRef.current = false;
-      scrollRef.current.style.cursor = "grab";
-    }
-    setIsPaused(false);
-  };
-
-  const duplicatedTechnologies = [
-    ...techData.technologies,
-    ...techData.technologies,
-  ];
+  const core = techData.technologies.filter((tech) => coreSet.has(tech.name));
+  const rest = techData.technologies.filter((tech) => !coreSet.has(tech.name));
 
   return (
-    <div className="w-full overflow-hidden py-12 border-y border-text-tertiary/10 bg-black/20">
-      <div className="flex items-center justify-center gap-4 mb-10">
-        <div className="h-px w-12 bg-primary/30"></div>
-        <h3 className="text-xl font-mono font-bold text-white uppercase tracking-widest">
-          {techData.title}_
-        </h3>
-        <div className="h-px w-12 bg-primary/30"></div>
+    <section aria-labelledby="toolbox" className="surface-card p-6 sm:p-8">
+      <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
+        <div>
+          <span className="pill">Toolbox</span>
+          <h3
+            id="toolbox"
+            className="mt-4 text-xl sm:text-2xl font-semibold tracking-tight text-text-primary"
+          >
+            Tools I reach for in production
+          </h3>
+          <p className="mt-3 text-text-secondary leading-relaxed max-w-[72ch]">
+            A curated core set, plus a wider toolbox depending on the problem.
+          </p>
+        </div>
+        <div className="text-xs font-mono uppercase tracking-widest text-text-tertiary">
+          Total: {techData.technologies.length}
+        </div>
       </div>
 
-      <div
-        ref={scrollRef}
-        className="flex gap-px overflow-x-hidden py-4 select-none cursor-grab active:cursor-grabbing bg-text-tertiary/10"
-        style={{ scrollBehavior: "auto" }}
-        onMouseEnter={() => setIsPaused(true)}
-        onMouseLeave={handleMouseLeave}
-        onMouseDown={handleMouseDown}
-        onMouseMove={handleMouseMove}
-        onMouseUp={handleMouseUp}
-      >
-        {duplicatedTechnologies.map((tech, index) => (
-          <div
-            key={`${tech.name}-${index}`}
-            className="flex-shrink-0 group cursor-pointer bg-surface hover:bg-primary/10 transition-colors w-[160px] sm:w-[180px] h-[120px] flex flex-col items-center justify-center border-r border-text-tertiary/20 relative"
-          >
-            <div className="absolute top-2 right-2 text-[10px] font-mono text-text-tertiary opacity-50 group-hover:text-primary group-hover:opacity-100">
-              {(index + 1).toString().padStart(2, '0')}
-            </div>
-
-            <div className="h-10 w-10 sm:h-12 sm:w-12 mb-4 grayscale group-hover:grayscale-0 transition-all duration-300 opacity-70 group-hover:opacity-100 group-hover:scale-110 relative">
-              <NextImage
-                src={tech.logo}
-                alt={tech.name}
-                fill
-                sizes="(max-width: 640px) 40px, 48px"
-                className="object-contain"
-                onError={(e) => {
-                  const target = e.target as HTMLImageElement;
-                  target.style.display = 'none';
-                }}
-              />
-            </div>
-            <p className="text-text-secondary text-xs font-mono uppercase tracking-wider group-hover:text-primary transition-colors">
-              {tech.name}
-            </p>
-
-            <div className="absolute bottom-0 left-0 w-full h-0.5 bg-primary transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
-          </div>
+      <div className="mt-6 flex flex-wrap gap-2">
+        {core.map((tech) => (
+          <span key={tech.name} className="pill">
+            {tech.name}
+          </span>
         ))}
       </div>
 
-      <div className="flex justify-between items-center px-4 max-w-7xl mx-auto mt-4 text-[10px] font-mono text-text-tertiary uppercase tracking-widest">
-        <span>&lt; SCROLL_TO_NAVIGATE &gt;</span>
-        <span>TOTAL_NODES: {techData.technologies.length}</span>
-      </div>
-    </div>
+      <details className="mt-8 rounded-[14px] border border-[var(--border)] p-4">
+        <summary className="cursor-pointer text-text-secondary">
+          Full toolbox
+        </summary>
+        <ul className="mt-4 columns-2 md:columns-3 gap-6">
+          {rest.map((tech) => (
+            <li
+              key={tech.name}
+              className="break-inside-avoid flex items-center gap-2 py-1 text-sm text-text-tertiary"
+            >
+              <span className="relative h-5 w-5 flex-shrink-0">
+                <NextImage
+                  src={tech.logo}
+                  alt=""
+                  fill
+                  sizes="20px"
+                  className="object-contain opacity-80"
+                />
+              </span>
+              <span>{tech.name}</span>
+            </li>
+          ))}
+        </ul>
+      </details>
+    </section>
   );
 };
