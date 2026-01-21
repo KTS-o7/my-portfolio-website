@@ -5,6 +5,8 @@
     "primary": "I am an AI and Fullstack Engineer at OnFinance AI, where I architect ComplianceOS—a platform delivering 1250+ hours/year savings on BFSI compliance automation. I specialize in engineering Agentic workflows using LangGraph and LiteLLM to handle millions of tokens of regulatory data efficiently.",
     "secondary": "Previously, as an SDE Intern at RingCentral, I led the modernization of legacy interfaces to React and optimized application performance by 3x. My focus is on creating high-impact, scalable AI solutions for complex domains like fintech and compliance."
   },
+  "location": "Bangalore, India",
+  "status": "Available",
   "skills": [
     "Python",
     "FastAPI",
