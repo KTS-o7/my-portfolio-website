@@ -1,5 +1,24 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  async redirects() {
+    return [
+      {
+        source: "/.well-known/llms.txt",
+        destination: "/llms.txt",
+        permanent: true,
+      },
+      {
+        source: "/works",
+        destination: "/projects",
+        permanent: true,
+      },
+      {
+        source: "/works/:path*",
+        destination: "/work/:path*",
+        permanent: true,
+      },
+    ];
+  },
   images: {
     remotePatterns: [
       {
@@ -29,7 +48,7 @@ const nextConfig = {
       },
     ],
     dangerouslyAllowSVG: true,
-    contentDispositionType: 'attachment',
+    contentDispositionType: "attachment",
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
   },
 };

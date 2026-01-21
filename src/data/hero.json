@@ -12,17 +12,9 @@
   "shortDescriptionLine2": "Architecting ComplianceOS and building Agentic workflows using LangGraph and LiteLLM.",
   "detailedDescription": {
     "intro": "As a Computer Science and Engineering graduate from Bangalore, India, I'm passionate about",
-    "technologies": [
-      "LangGraph",
-      "LiteLLM",
-      "RAG",
-      "Generative AI"
-    ],
+    "technologies": ["LangGraph", "LiteLLM", "RAG", "Generative AI"],
     "webDev": "Next.js",
-    "languages": [
-      "Python",
-      "C++"
-    ],
+    "languages": ["Python", "C++"],
     "outro": "allows me to build innovative solutions across different domains."
   },
   "buttons": [

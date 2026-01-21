@@ -108,7 +108,7 @@ export default function About() {
 
   return (
     <section
-      className="bg-background py-20 sm:py-32 relative overflow-hidden border-t border-text-tertiary/10"
+      className="bg-background py-20 sm:py-32 relative overflow-hidden border-t border-text-tertiary/10 scroll-mt-24"
       id="about"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">

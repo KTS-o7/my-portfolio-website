@@ -29,7 +29,7 @@ const Contact: FC = () => {
     // Email validation
     if (
       !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(
-        formData.get("email") as string
+        formData.get("email") as string,
       )
     ) {
       errors.email = "Please enter a valid email address";
@@ -88,7 +88,7 @@ const Contact: FC = () => {
         "service_kts", // TODO: Replace with your actual EmailJS Service ID
         "template_12c4eap",
         templateParams,
-        "x5mPMRuUfMt6x20y0"
+        "x5mPMRuUfMt6x20y0",
       )
       .then((result) => {
         console.log("Email sent successfully!", result.status, result.text);
@@ -108,7 +108,7 @@ const Contact: FC = () => {
   return (
     <section
       id="contact"
-      className="py-20 sm:py-32 px-4 sm:px-6 bg-background relative overflow-hidden border-t border-text-tertiary/10"
+      className="py-20 sm:py-32 px-4 sm:px-6 bg-background relative overflow-hidden border-t border-text-tertiary/10 scroll-mt-24"
     >
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="mb-16 sm:mb-24">
@@ -122,7 +122,9 @@ const Contact: FC = () => {
               Contact
             </h2>
             <div className="h-px flex-grow bg-primary/30 mb-4"></div>
-            <span className="font-mono text-primary text-sm mb-4">INIT_COMM</span>
+            <span className="font-mono text-primary text-sm mb-4">
+              INIT_COMM
+            </span>
           </motion.div>
         </div>
 
@@ -143,13 +145,28 @@ const Contact: FC = () => {
               <div className="space-y-8">
                 <div className="flex items-start gap-4 group">
                   <div className="bg-primary/10 p-3 border border-primary/20 group-hover:bg-primary group-hover:text-black transition-colors">
-                    <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                    <svg
+                      className="h-6 w-6"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                      />
                     </svg>
                   </div>
                   <div>
-                    <h4 className="text-sm font-mono text-text-tertiary uppercase tracking-wider mb-1">Email_Protocol</h4>
-                    <a href={`mailto:${contactData.email}`} className="text-lg text-gray-900 dark:text-white hover:text-primary font-mono transition-colors">
+                    <h4 className="text-sm font-mono text-text-tertiary uppercase tracking-wider mb-1">
+                      Email_Protocol
+                    </h4>
+                    <a
+                      href={`mailto:${contactData.email}`}
+                      className="text-lg text-gray-900 dark:text-white hover:text-primary font-mono transition-colors"
+                    >
                       {contactData.email}
                     </a>
                   </div>
@@ -157,13 +174,28 @@ const Contact: FC = () => {
 
                 <div className="flex items-start gap-4 group">
                   <div className="bg-primary/10 p-3 border border-primary/20 group-hover:bg-primary group-hover:text-black transition-colors">
-                    <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                    <svg
+                      className="h-6 w-6"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
+                      />
                     </svg>
                   </div>
                   <div>
-                    <h4 className="text-sm font-mono text-text-tertiary uppercase tracking-wider mb-1">Voice_Link</h4>
-                    <a href={`tel:${contactData.phone.link}`} className="text-lg text-gray-900 dark:text-white hover:text-primary font-mono transition-colors">
+                    <h4 className="text-sm font-mono text-text-tertiary uppercase tracking-wider mb-1">
+                      Voice_Link
+                    </h4>
+                    <a
+                      href={`tel:${contactData.phone.link}`}
+                      className="text-lg text-gray-900 dark:text-white hover:text-primary font-mono transition-colors"
+                    >
                       {contactData.phone.display}
                     </a>
                   </div>
@@ -171,13 +203,30 @@ const Contact: FC = () => {
 
                 <div className="flex items-start gap-4 group">
                   <div className="bg-primary/10 p-3 border border-primary/20 group-hover:bg-primary group-hover:text-black transition-colors">
-                    <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                    <svg
+                      className="h-6 w-6"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
+                      />
                     </svg>
                   </div>
                   <div>
-                    <h4 className="text-sm font-mono text-text-tertiary uppercase tracking-wider mb-1">Secure_Chat</h4>
-                    <a href={contactData.whatsapp.link} target="_blank" rel="noopener noreferrer" className="text-lg text-gray-900 dark:text-white hover:text-primary font-mono transition-colors">
+                    <h4 className="text-sm font-mono text-text-tertiary uppercase tracking-wider mb-1">
+                      Secure_Chat
+                    </h4>
+                    <a
+                      href={contactData.whatsapp.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-lg text-gray-900 dark:text-white hover:text-primary font-mono transition-colors"
+                    >
                       {contactData.whatsapp.display}
                     </a>
                   </div>
@@ -185,7 +234,9 @@ const Contact: FC = () => {
               </div>
 
               <div className="mt-12 pt-8 border-t border-text-tertiary/20">
-                <h4 className="text-sm font-mono text-text-tertiary uppercase tracking-wider mb-4">External_Nodes</h4>
+                <h4 className="text-sm font-mono text-text-tertiary uppercase tracking-wider mb-4">
+                  External_Nodes
+                </h4>
                 <div className="flex gap-4">
                   {contactData.socialMedia.map((social, index) => (
                     <Link
@@ -195,7 +246,9 @@ const Contact: FC = () => {
                       className="text-text-secondary hover:text-primary transition-colors"
                     >
                       <FontAwesomeIcon
-                        icon={social.icon === "faGithub" ? faGithub : faLinkedin}
+                        icon={
+                          social.icon === "faGithub" ? faGithub : faLinkedin
+                        }
                         className="h-6 w-6"
                       />
                     </Link>
@@ -217,14 +270,20 @@ const Contact: FC = () => {
                 <div className="w-3 h-3 rounded-full bg-red-500"></div>
                 <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
                 <div className="w-3 h-3 rounded-full bg-green-500"></div>
-                <span className="ml-2 font-mono text-xs text-text-tertiary">user@portfolio:~/contact</span>
+                <span className="ml-2 font-mono text-xs text-text-tertiary">
+                  user@portfolio:~/contact
+                </span>
               </div>
 
               <div className="p-6 sm:p-8">
                 {emailSubmitted ? (
                   <div className="text-center py-12">
-                    <div className="text-primary font-mono text-xl mb-4">&gt; Message_Sent_Successfully</div>
-                    <p className="text-text-secondary font-mono text-sm mb-8">Thank you for establishing connection.</p>
+                    <div className="text-primary font-mono text-xl mb-4">
+                      &gt; Message_Sent_Successfully
+                    </div>
+                    <p className="text-text-secondary font-mono text-sm mb-8">
+                      Thank you for establishing connection.
+                    </p>
                     <button
                       onClick={() => setEmailSubmitted(false)}
                       className="text-xs font-mono uppercase tracking-widest border-b border-primary text-primary hover:text-white hover:border-white transition-colors"
@@ -235,55 +294,91 @@ const Contact: FC = () => {
                 ) : (
                   <form className="space-y-6" onSubmit={handleSubmit}>
                     <div className="space-y-2">
-                      <label htmlFor="name" className="block font-mono text-xs text-primary uppercase tracking-wider">&gt; Enter_Name</label>
+                      <label
+                        htmlFor="name"
+                        className="block font-mono text-xs text-primary uppercase tracking-wider"
+                      >
+                        &gt; Enter_Name
+                      </label>
                       <input
                         name="name"
                         type="text"
                         id="name"
                         required
-                        className={`w-full bg-surface/50 border-b ${formErrors.name ? 'border-red-500' : 'border-text-tertiary/50'} focus:border-primary text-gray-900 dark:text-white font-mono py-2 px-3 focus:outline-none transition-colors`}
+                        className={`w-full bg-surface/50 border-b ${formErrors.name ? "border-red-500" : "border-text-tertiary/50"} focus:border-primary text-gray-900 dark:text-white font-mono py-2 px-3 focus:outline-none transition-colors`}
                         placeholder="_"
                       />
-                      {formErrors.name && <p className="text-[10px] text-red-500 font-mono mt-1">{formErrors.name}</p>}
+                      {formErrors.name && (
+                        <p className="text-[10px] text-red-500 font-mono mt-1">
+                          {formErrors.name}
+                        </p>
+                      )}
                     </div>
 
                     <div className="space-y-2">
-                      <label htmlFor="email" className="block font-mono text-xs text-primary uppercase tracking-wider">&gt; Enter_Email</label>
+                      <label
+                        htmlFor="email"
+                        className="block font-mono text-xs text-primary uppercase tracking-wider"
+                      >
+                        &gt; Enter_Email
+                      </label>
                       <input
                         name="email"
                         type="email"
                         id="email"
                         required
-                        className={`w-full bg-surface/50 border-b ${formErrors.email ? 'border-red-500' : 'border-text-tertiary/50'} focus:border-primary text-gray-900 dark:text-white font-mono py-2 px-3 focus:outline-none transition-colors`}
+                        className={`w-full bg-surface/50 border-b ${formErrors.email ? "border-red-500" : "border-text-tertiary/50"} focus:border-primary text-gray-900 dark:text-white font-mono py-2 px-3 focus:outline-none transition-colors`}
                         placeholder="_"
                       />
-                      {formErrors.email && <p className="text-[10px] text-red-500 font-mono mt-1">{formErrors.email}</p>}
+                      {formErrors.email && (
+                        <p className="text-[10px] text-red-500 font-mono mt-1">
+                          {formErrors.email}
+                        </p>
+                      )}
                     </div>
 
                     <div className="space-y-2">
-                      <label htmlFor="subject" className="block font-mono text-xs text-primary uppercase tracking-wider">&gt; Subject_Line</label>
+                      <label
+                        htmlFor="subject"
+                        className="block font-mono text-xs text-primary uppercase tracking-wider"
+                      >
+                        &gt; Subject_Line
+                      </label>
                       <input
                         name="subject"
                         type="text"
                         id="subject"
                         required
-                        className={`w-full bg-surface/50 border-b ${formErrors.subject ? 'border-red-500' : 'border-text-tertiary/50'} focus:border-primary text-gray-900 dark:text-white font-mono py-2 px-3 focus:outline-none transition-colors`}
+                        className={`w-full bg-surface/50 border-b ${formErrors.subject ? "border-red-500" : "border-text-tertiary/50"} focus:border-primary text-gray-900 dark:text-white font-mono py-2 px-3 focus:outline-none transition-colors`}
                         placeholder="_"
                       />
-                      {formErrors.subject && <p className="text-[10px] text-red-500 font-mono mt-1">{formErrors.subject}</p>}
+                      {formErrors.subject && (
+                        <p className="text-[10px] text-red-500 font-mono mt-1">
+                          {formErrors.subject}
+                        </p>
+                      )}
                     </div>
 
                     <div className="space-y-2">
-                      <label htmlFor="message" className="block font-mono text-xs text-primary uppercase tracking-wider">&gt; Message_Body</label>
+                      <label
+                        htmlFor="message"
+                        className="block font-mono text-xs text-primary uppercase tracking-wider"
+                      >
+                        &gt; Message_Body
+                      </label>
                       <textarea
                         name="message"
                         id="message"
                         required
                         rows={4}
-                        className={`w-full bg-surface/50 border-b ${formErrors.message ? 'border-red-500' : 'border-text-tertiary/50'} focus:border-primary text-gray-900 dark:text-white font-mono py-2 px-3 focus:outline-none transition-colors resize-none`}
+                        className={`w-full bg-surface/50 border-b ${formErrors.message ? "border-red-500" : "border-text-tertiary/50"} focus:border-primary text-gray-900 dark:text-white font-mono py-2 px-3 focus:outline-none transition-colors resize-none`}
                         placeholder="_"
                       ></textarea>
-                      {formErrors.message && <p className="text-[10px] text-red-500 font-mono mt-1">{formErrors.message}</p>}
+                      {formErrors.message && (
+                        <p className="text-[10px] text-red-500 font-mono mt-1">
+                          {formErrors.message}
+                        </p>
+                      )}
                     </div>
 
                     <button
