@@ -15,7 +15,10 @@ const Hero: FC = () => {
   });
 
   return (
-    <section id="home" className="bg-background relative overflow-hidden min-h-screen flex items-start pt-36 md:pt-48 pb-20">
+    <section
+      id="home"
+      className="bg-background relative overflow-hidden min-h-screen flex items-start pt-36 md:pt-48 pb-20"
+    >
       <div className="absolute inset-0 z-0">
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#121212_1px,transparent_1px),linear-gradient(to_bottom,#121212_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]"></div>
         <ParticlesBackground />
@@ -23,7 +26,6 @@ const Hero: FC = () => {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 w-full relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-
           {/* Left Column: Text Content */}
           <motion.div
             initial="hidden"
@@ -32,7 +34,7 @@ const Hero: FC = () => {
               hidden: { opacity: 0 },
               visible: {
                 opacity: 1,
-                transition: { staggerChildren: 0.1 }
+                transition: { staggerChildren: 0.1 },
               },
             }}
             className="flex flex-col justify-center"
@@ -40,45 +42,58 @@ const Hero: FC = () => {
             <motion.div
               variants={{
                 hidden: { opacity: 0, x: -20 },
-                visible: { opacity: 1, x: 0 }
+                visible: { opacity: 1, x: 0 },
               }}
               className="flex items-center space-x-2 mb-6"
             >
               <div className="w-2 h-2 bg-primary rounded-full animate-pulse"></div>
-              <span className="text-primary font-mono text-sm tracking-widest uppercase">System Online</span>
+              <span className="text-primary font-mono text-sm tracking-widest uppercase">
+                System Online
+              </span>
             </motion.div>
-
 
             <motion.h1
               variants={{
                 hidden: { opacity: 0, y: 20 },
-                visible: { opacity: 1, y: 0, transition: { duration: 0.5 } }
+                visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
               }}
               className="text-5xl sm:text-7xl md:text-8xl font-black tracking-tighter text-gray-900 dark:text-white mb-6 leading-[0.9]"
             >
-              FULL<br />
-              STACK<br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">ENGINEER</span>
+              <span className="block text-base sm:text-lg font-mono text-primary mb-2">
+                {heroData.name}
+              </span>
+              FULL
+              <br />
+              STACK
+              <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">
+                ENGINEER
+              </span>
             </motion.h1>
 
             <motion.div
               variants={{
                 hidden: { opacity: 0, y: 20 },
-                visible: { opacity: 1, y: 0, transition: { duration: 0.5 } }
+                visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
               }}
               className="border-l-2 border-primary/30 pl-6 mb-8"
             >
               <p className="text-text-secondary text-lg md:text-xl font-mono leading-relaxed">
-                Leading <span className="text-gray-900 dark:text-white font-bold">Compliance OS</span> at OnFinance.
+                Leading{" "}
+                <span className="text-gray-900 dark:text-white font-bold">
+                  Compliance OS
+                </span>{" "}
+                at OnFinance.
                 <br />
-                Architecting secure, scalable infrastructure for the future of fintech.
+                Architecting secure, scalable infrastructure for the future of
+                fintech.
               </p>
             </motion.div>
 
             <motion.div
               variants={{
                 hidden: { opacity: 0, y: 20 },
-                visible: { opacity: 1, y: 0, transition: { duration: 0.5 } }
+                visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
               }}
               className="flex flex-wrap gap-4"
             >
@@ -90,10 +105,11 @@ const Hero: FC = () => {
                     href={button.link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={`px-8 py-4 font-mono text-sm font-bold tracking-wider uppercase transition-all duration-300 ${isPrimary
-                      ? "bg-primary text-black hover:bg-white"
-                      : "border border-text-tertiary text-text-secondary hover:border-primary hover:text-primary"
-                      }`}
+                    className={`px-8 py-4 font-mono text-sm font-bold tracking-wider uppercase transition-all duration-300 ${
+                      isPrimary
+                        ? "bg-primary text-black hover:bg-white"
+                        : "border border-text-tertiary text-text-secondary hover:border-primary hover:text-primary"
+                    }`}
                   >
                     {button.text}
                   </Link>
@@ -101,10 +117,11 @@ const Hero: FC = () => {
                   <a
                     key={index}
                     href={button.link}
-                    className={`px-8 py-4 font-mono text-sm font-bold tracking-wider uppercase transition-all duration-300 ${isPrimary
-                      ? "bg-primary text-black hover:bg-white"
-                      : "border border-text-tertiary text-text-secondary hover:border-primary hover:text-primary"
-                      }`}
+                    className={`px-8 py-4 font-mono text-sm font-bold tracking-wider uppercase transition-all duration-300 ${
+                      isPrimary
+                        ? "bg-primary text-black hover:bg-white"
+                        : "border border-text-tertiary text-text-secondary hover:border-primary hover:text-primary"
+                    }`}
                   >
                     {button.text}
                   </a>
@@ -144,7 +161,9 @@ const Hero: FC = () => {
                 <span className="text-primary font-mono text-xs">LLMs</span>
               </div>
               <div className="absolute bottom-0 right-20 bg-surface border border-text-tertiary/30 px-4 py-2 rounded-none hidden sm:block">
-                <span className="text-primary font-mono text-xs">Agentic AI</span>
+                <span className="text-primary font-mono text-xs">
+                  Agentic AI
+                </span>
               </div>
             </div>
           </motion.div>

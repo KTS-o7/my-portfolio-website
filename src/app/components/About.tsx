@@ -25,8 +25,12 @@ export default function About() {
                 transition={{ duration: 0.2, delay: index * 0.02 }}
                 className="flex items-center gap-2 text-text-secondary p-2 border-l border-primary/30 hover:bg-primary/5 transition-all group cursor-default"
               >
-                <span className="text-primary font-mono text-xs opacity-50 group-hover:opacity-100">&gt;</span>
-                <span className="font-mono text-[10px] sm:text-xs uppercase tracking-wider group-hover:text-primary transition-colors">{skill}</span>
+                <span className="text-primary font-mono text-xs opacity-50 group-hover:opacity-100">
+                  &gt;
+                </span>
+                <span className="font-mono text-[10px] sm:text-xs uppercase tracking-wider group-hover:text-primary transition-colors">
+                  {skill}
+                </span>
               </motion.li>
             ))}
           </ul>
@@ -42,11 +46,17 @@ export default function About() {
                 transition={{ duration: 0.3, delay: index * 0.1 }}
                 className="border-l-2 border-text-tertiary pl-4 hover:border-primary transition-colors"
               >
-                <h4 className="text-gray-900 dark:text-white font-bold text-lg font-mono uppercase">{edu.degree}</h4>
-                <p className="text-primary font-mono text-sm mb-2">{edu.institution}</p>
+                <h4 className="text-gray-900 dark:text-white font-bold text-lg font-mono uppercase">
+                  {edu.degree}
+                </h4>
+                <p className="text-primary font-mono text-sm mb-2">
+                  {edu.institution}
+                </p>
                 <div className="flex flex-wrap gap-4 text-xs font-mono text-text-tertiary uppercase tracking-widest">
                   <span>GPA: {edu.gpa}</span>
-                  <span>{"//"} {edu.period}</span>
+                  <span>
+                    {"//"} {edu.period}
+                  </span>
                 </div>
               </motion.div>
             ))}
@@ -56,10 +66,15 @@ export default function About() {
               transition={{ duration: 0.3, delay: 0.2 }}
               className="mt-8 pt-6 border-t border-text-tertiary/20"
             >
-              <h4 className="text-text-secondary font-mono text-sm uppercase tracking-widest mb-4">Specializations_</h4>
+              <h4 className="text-text-secondary font-mono text-sm uppercase tracking-widest mb-4">
+                Specializations_
+              </h4>
               <div className="flex flex-wrap gap-2">
                 {aboutData.specializations.map((spec, index) => (
-                  <span key={index} className="text-primary bg-primary/5 px-3 py-1 text-xs font-mono border border-primary/20">
+                  <span
+                    key={index}
+                    className="text-primary bg-primary/5 px-3 py-1 text-xs font-mono border border-primary/20"
+                  >
                     {spec}
                   </span>
                 ))}
@@ -79,7 +94,9 @@ export default function About() {
                 className="flex items-start gap-3 p-4 border border-text-tertiary/30 hover:border-primary/50 transition-all bg-surface/50"
               >
                 <div className="mt-1 w-2 h-2 bg-primary rounded-full animate-pulse"></div>
-                <span className="text-text-secondary font-mono text-sm uppercase tracking-wide">{cert}</span>
+                <span className="text-text-secondary font-mono text-sm uppercase tracking-wide">
+                  {cert}
+                </span>
               </motion.div>
             ))}
           </div>
@@ -106,7 +123,9 @@ export default function About() {
               About
             </h2>
             <div className="h-px flex-grow bg-primary/30 mb-4"></div>
-            <span className="font-mono text-primary text-sm mb-4">SYS.INFO</span>
+            <span className="font-mono text-primary text-sm mb-4">
+              SYS.INFO
+            </span>
           </motion.div>
         </div>
 
@@ -134,12 +153,20 @@ export default function About() {
             {/* Decorative Tech Specs */}
             <div className="mt-12 grid grid-cols-2 gap-4 border-t border-text-tertiary/20 pt-8">
               <div>
-                <span className="block text-xs font-mono text-text-tertiary uppercase mb-1">Location</span>
-                <span className="text-gray-900 dark:text-white font-mono">Bangalore, IN</span>
+                <span className="block text-xs font-mono text-text-tertiary uppercase mb-1">
+                  Location
+                </span>
+                <span className="text-gray-900 dark:text-white font-mono">
+                  {aboutData.location}
+                </span>
               </div>
               <div>
-                <span className="block text-xs font-mono text-text-tertiary uppercase mb-1">Status</span>
-                <span className="text-primary font-mono animate-pulse">Available</span>
+                <span className="block text-xs font-mono text-text-tertiary uppercase mb-1">
+                  Status
+                </span>
+                <span className="text-primary font-mono animate-pulse">
+                  {aboutData.status}
+                </span>
               </div>
             </div>
           </motion.div>
@@ -158,10 +185,11 @@ export default function About() {
                   <button
                     key={tabId}
                     onClick={() => handleTabChange(tabId)}
-                    className={`px-6 py-3 font-mono text-xs sm:text-sm uppercase tracking-widest transition-all flex-shrink-0 ${tab === tabId
-                      ? "bg-primary text-black font-bold"
-                      : "text-text-tertiary hover:text-black dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5"
-                      }`}
+                    className={`px-6 py-3 font-mono text-xs sm:text-sm uppercase tracking-widest transition-all flex-shrink-0 ${
+                      tab === tabId
+                        ? "bg-primary text-black font-bold"
+                        : "text-text-tertiary hover:text-black dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5"
+                    }`}
                   >
                     {tabId}
                   </button>
@@ -185,12 +213,14 @@ export default function About() {
           className="mt-24 border-t border-text-tertiary/10 pt-12"
         >
           <div className="flex items-center gap-4 mb-8">
-            <span className="text-primary font-mono text-xs uppercase tracking-widest">Stack_Trace</span>
+            <span className="text-primary font-mono text-xs uppercase tracking-widest">
+              Stack_Trace
+            </span>
             <div className="h-px flex-grow bg-text-tertiary/20"></div>
           </div>
           <TechStack />
         </motion.div>
       </div>
-    </section >
+    </section>
   );
 }
