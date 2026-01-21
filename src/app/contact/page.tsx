@@ -28,11 +28,10 @@ export default function ContactPage() {
       className="flex min-h-screen flex-col bg-background transition-colors duration-300"
     >
       <Navbar />
-      <div className="container mt-24 mx-auto px-4 sm:px-8 md:px-12 py-4">
-        <h1 className="sr-only">Contact {heroData.name}</h1>
+      <h1 className="sr-only">Contact {heroData.name}</h1>
+      <div className="pt-24">
+        <Contact showTopBorder={false} />
       </div>
-
-      <Contact />
 
       <Footer />
       <ThemeToggle />

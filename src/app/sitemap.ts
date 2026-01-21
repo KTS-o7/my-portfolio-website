@@ -1,9 +1,16 @@
 import type { MetadataRoute } from "next";
 import { getSiteUrl } from "@/lib/profile";
+import experienceData from "@/data/experience.json";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const siteUrl = getSiteUrl();
   const lastModified = new Date();
+
+  const companyUrls =
+    experienceData.experience?.map((entry) => ({
+      url: `${siteUrl}/work/${entry.slug}`,
+      lastModified,
+    })) || [];
 
   return [
     {
@@ -26,6 +33,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
       url: `${siteUrl}/contact`,
       lastModified,
     },
+    {
+      url: `${siteUrl}/work`,
+      lastModified,
+    },
+    ...companyUrls,
     {
       url: `${siteUrl}/work/complianceos`,
       lastModified,

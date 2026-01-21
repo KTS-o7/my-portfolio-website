@@ -3,6 +3,7 @@ import Link from "next/link";
 import React, { useState, FC, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/solid";
+import heroData from "@/data/hero.json";
 
 interface NAVLINK {
   title: string;
@@ -18,12 +19,12 @@ const navLinks: NAVLINK[] = [
     routePath: "/",
   },
   {
-    title: "About",
-    homePath: "#about",
-    routePath: "/about",
+    title: "Experience",
+    homePath: "#experience",
+    routePath: "/work",
   },
   {
-    title: "Selected Work",
+    title: "Projects",
     homePath: "#projects",
     routePath: "/projects",
   },
@@ -31,6 +32,11 @@ const navLinks: NAVLINK[] = [
     title: "Writing",
     homePath: "/publications",
     routePath: "/publications",
+  },
+  {
+    title: "About",
+    homePath: "#about",
+    routePath: "/about",
   },
   {
     title: "Contact",
@@ -84,7 +90,7 @@ const Navbar: FC = () => {
       observerCallback,
       observerOptions,
     );
-    const sections = ["home", "about", "projects", "contact"];
+    const sections = ["home", "experience", "projects", "about", "contact"];
     sections.forEach((id) => {
       const el = document.getElementById(id);
       if (el) observer.observe(el);
@@ -117,7 +123,7 @@ const Navbar: FC = () => {
             </span>
             <span className="flex flex-col leading-none">
               <span className="text-base sm:text-lg font-semibold tracking-tight text-text-primary group-hover:text-primary transition-colors">
-                Krishna Shenthar
+                {heroData.name}
               </span>
               <span className="hidden sm:block text-[11px] font-mono uppercase tracking-widest text-text-tertiary">
                 Backend · Distributed · LLM tooling
@@ -149,9 +155,8 @@ const Navbar: FC = () => {
                 ? isAnchor && activeSection === href.substring(1)
                 : !link.external &&
                   (href === pathname ||
-                    (href === "/projects" &&
-                      (pathname.startsWith("/projects") ||
-                        pathname.startsWith("/work"))));
+                    (href === "/work" && pathname.startsWith("/work")) ||
+                    (href === "/projects" && pathname.startsWith("/projects")));
 
               return (
                 <Link

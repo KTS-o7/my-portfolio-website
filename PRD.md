@@ -8,10 +8,22 @@ This portfolio is designed like an engineering artifact: clear hierarchy, calm s
 
 ## Information Architecture
 - **Hero**: name + one-sentence value proposition + current focus + primary CTAs
+- **Experience** (`/work`): work experience + shipped artifacts grouped by company (`/work/{company}`)
+- **Projects** (`/projects`): case-study cards for open source, research, and personal builds (problem/tech/impact + links)
 - **About**: working style + strengths + education/credentials + toolbox
-- **Selected Work**: filterable list with case-study fields (problem/tech/impact + links)
 - **Contact**: direct channels + social + accessible form
 - **(Optional)** Testimonials/endorsements
+
+## UX Flow (streamlined)
+- **0–5s (Orientation)**: Visitor lands and immediately sees “what I do” (headline), then “who” (name), then credibility (proof points).
+- **5–25s (Evaluation)**: “Experience” + “Projects” appear before “About” so the visitor can judge shipped outcomes and artifacts first.
+- **25–60s (Context)**: “About” explains how I work, what I optimize for, and my toolbox/credentials.
+- **Action (Conversion)**: Contact section offers direct channels + a form; no hunting for links.
+
+### Friction removed
+- Avoided generic card grids and “AI landing” blocks; used one consistent pattern: `pill` → headline → supporting copy → structured evidence.
+- Reduced duplicated callouts across pages by centralizing “featured case study” inside Experience.
+- Improved scanability via company-grouped experiences and explicit case-study links.
 
 ## Visual System
 - **Palette**

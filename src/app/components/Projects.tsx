@@ -21,7 +21,9 @@ interface ProjectData {
   };
 }
 
-const Projects: FC = () => {
+const Projects: FC<{ showTopBorder?: boolean }> = ({
+  showTopBorder = true,
+}) => {
   const [tag, setTag] = useState("All");
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true });
@@ -37,7 +39,9 @@ const Projects: FC = () => {
   return (
     <section
       id="projects"
-      className="py-20 sm:py-28 px-4 sm:px-6 bg-background relative overflow-hidden border-t border-text-tertiary/10 scroll-mt-24"
+      className={`py-20 sm:py-28 px-4 sm:px-6 bg-background relative overflow-hidden scroll-mt-24 ${
+        showTopBorder ? "border-t border-text-tertiary/10" : ""
+      }`}
     >
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="mb-10 sm:mb-14">
@@ -75,6 +79,10 @@ const Projects: FC = () => {
             ))}
             {/* Visual spacer for end of list */}
             <div className="w-12 flex-shrink-0 sm:hidden"></div>
+          </div>
+          <div className="mt-3 text-xs font-mono uppercase tracking-widest text-text-tertiary">
+            Showing {filteredProjects.length}{" "}
+            {filteredProjects.length === 1 ? "item" : "items"} · Filter: {tag}
           </div>
         </div>
 
@@ -126,6 +134,15 @@ const Projects: FC = () => {
                           <p className="mt-2 text-text-secondary leading-relaxed">
                             {project.description}
                           </p>
+                          <div className="mt-3 flex flex-wrap gap-2 sm:hidden">
+                            {project.tag
+                              .filter((t) => t !== "All")
+                              .map((t) => (
+                                <span key={t} className="pill">
+                                  {t}
+                                </span>
+                              ))}
+                          </div>
                         </div>
                         <div className="hidden sm:flex flex-wrap justify-end gap-2">
                           {project.tag
