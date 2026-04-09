@@ -13,7 +13,7 @@ const publications = projectsData.projects.filter((project) =>
 
 const title = `Publications | ${heroData.name}`;
 const description =
-  "Research publications and technical work by Krishna Tejaswi Shenthar.";
+  "Research publications and technical work by Krishnatejaswi Shenthar.";
 
 export const metadata: Metadata = {
   title,
