@@ -3,101 +3,85 @@
   "projects": [
     {
       "id": 1,
-      "name": "Portfolio-GPT",
-      "description": "A portfolio that communicates my backend + LLM tooling work with a clear narrative and a distinct visual system.",
-      "problem": "My work was hard to understand quickly from a generic portfolio layout.",
-      "impact": "Faster iteration on messaging and project storytelling; improved hierarchy and accessibility.",
-      "tech": ["Next.js", "TypeScript", "Tailwind CSS", "Framer Motion"],
+      "name": "graph-rca",
+      "description": "Log-to-resolution RAG system over 200 annotated production incidents — LLM parses raw logs into a causal DAG stored in MongoDB; ChromaDB (HNSW index) retrieves runbook context scoped to that graph traversal before generating a root-cause report. Output quality validated by a 3-model judge ensemble (Qwen3:32b, GPT-4o-mini, Llama-3.1-70B) across 9 reproducible experiment scripts; ships with CPU/GPU Docker Compose variants and one-command ./run.sh setup.",
+      "problem": "Manual analysis of production incident logs for root cause determination is time-consuming and inconsistent.",
+      "impact": "Automated root-cause reports with high-quality validation and easy deployment, reducing resolution time.",
+      "tech": ["Python", "FastAPI", "LangChain", "ChromaDB", "MongoDB"],
       "links": {
-        "demo": "https://portfolio.shenthar.me/",
-        "source": "https://github.com/KTS-o7/my-portfolio-website"
+        "source": "https://github.com/KTS-o7/graph-rca"
       },
       "image": "/proj/website.png",
-      "link": "https://github.com/KTS-o7/my-portfolio-website",
+      "link": "https://github.com/KTS-o7/graph-rca",
       "tag": ["All", "Software"]
     },
     {
       "id": 2,
-      "name": "Better Bing Image Downloader",
-      "description": "Python library + CLI to download Bing images at scale for dataset creation.",
-      "problem": "Collecting image datasets for ML was slow and manual.",
-      "impact": "20+ GitHub stars; packaged as a CLI for repeatable dataset pulls.",
-      "tech": ["Python", "CLI", "Packaging", "HTTP"],
+      "name": "permission-mongo",
+      "description": "RBAC-powered BaaS for MongoDB targeting 50K+ QPS custom AST-caching policy expression compiler, lock-free router with atomics, fasthttp tuned for 256K concurrent connections, batched async audit logging. Ships with labeled Prometheus histograms (latency, RBAC eval outcomes, cache hit/miss), a pre-built Grafana dashboard, and a Python SDK bundled alongside the Go service.",
+      "problem": "High-performance, scalable RBAC for MongoDB requires complex custom implementations.",
+      "impact": "Delivers a production-ready RBAC service with advanced features, monitoring, and SDK support.",
+      "tech": ["Go", "MongoDB", "Prometheus", "Grafana"],
       "links": {
-        "source": "https://github.com/KTS-o7/better_bing_image_downloader"
+        "source": "https://github.com/KTS-o7/permission-mongo"
+      },
+      "image": "/proj/permission-mongo.png",
+      "link": "https://github.com/KTS-o7/permission-mongo",
+      "tag": ["All", "Software"]
+    },
+    {
+      "id": 3,
+      "name": "BetterBingImageDownloader",
+      "description": "Published and actively maintained library with 18K+ downloads, 41 stars, 10 versioned releases; v3.0.0 was a correctness release fixing a thread-unsafe counter, atomic file writes, MD5 deduplication, and a global socket.setdefaulttimeout() side-effect. Test suite grew from 0 → 41 passing tests with GitHub Actions CI; follows full pip packaging lifecycle with pyproject.toml and entry-point CLI.",
+      "problem": "Existing tools for downloading Bing images were unreliable, lacking proper testing and packaging.",
+      "impact": "Reliable, well-tested library with significant adoption, improving dataset creation workflows.",
+      "tech": ["Python", "PyPI"],
+      "links": {
+        "source": "https://github.com/KTS-o7/better_bing_image_downloader",
+        "demo": "https://pypi.org/project/better-bing-image-downloader"
       },
       "image": "/proj/bingScrape.png",
       "link": "https://github.com/KTS-o7/better_bing_image_downloader",
       "tag": ["All", "Software"]
     },
     {
-      "id": 3,
-      "name": "QuantQuips",
-      "description": "Backtesting + analytics toolkit with LLM-assisted workflows for exploration and reporting.",
-      "problem": "Quant research needed faster iteration from idea → backtest → insight sharing.",
-      "impact": "Praised by judges from JPMC for clarity and utility.",
-      "tech": ["Python", "Pandas", "LangChain", "Backtesting"],
-      "links": {
-        "source": "https://github.com/KTS-o7/QuantQuips"
-      },
-      "image": "/proj/Qq.png",
-      "link": "https://github.com/KTS-o7/QuantQuips",
+      "id": 4,
+      "name": "Cyclomatic Complexity Clang Plugin",
+      "description": "Clang compiler plugin using AST traversal to compute per-function cyclomatic complexity across C/C++ codebases; generates refactoring reports and integrates with CI/CD to enforce complexity thresholds at review time. Awarded Best Project by HPE LLVM team; built during LLVM 2024 workshop alongside contributions to LLVM project toolchain.",
+      "problem": "Assessing and enforcing code complexity in large C/C++ projects is challenging without integrated tools.",
+      "impact": "Automated complexity analysis tool that aids refactoring and code quality enforcement, recognized with an award.",
+      "tech": ["C++", "Clang/LLVM"],
+      "links": {},
+      "image": "/proj/rvboard.png",
+      "link": "",
       "tag": ["All", "Software"]
     },
     {
-      "id": 4,
-      "name": "RV Board",
-      "description": "Prototype board for students using an LPC2148 (ARM7) with low-level drivers in Embedded C and Assembly.",
-      "problem": "Needed an accessible platform for hands-on embedded systems labs.",
-      "impact": "Reusable board + driver stack for repeatable classroom experiments.",
-      "tech": ["LPC2148", "Embedded C", "Assembly", "Drivers"],
-      "links": {
-        "source": "https://github.com/KTS-o7/RV_Board"
-      },
-      "image": "/proj/rvboard.png",
-      "link": "https://github.com/KTS-o7/RV_Board",
-      "tag": ["All", "Hardware"]
-    },
-    {
       "id": 5,
-      "name": "Algorithmic-fusion-for-Lung-scan-classification",
-      "description": "Research on fusing CNN models for multi-class lung disease classification.",
-      "problem": "Single-model performance varied across imaging modalities and conditions.",
-      "impact": "Explored ensemble/fusion strategies and compared outcomes across datasets.",
-      "tech": ["Python", "CNNs", "PyTorch", "Research"],
+      "name": "Lung Classification",
+      "description": "Noise filter effects on deep learning medical imaging.",
+      "problem": "Noise in CT and X-ray images impacts the accuracy of lung disease classification models.",
+      "impact": "Evaluated filter effects to improve model performance in medical imaging, published in IJEECS.",
+      "tech": ["Python", "PyTorch", "Image Processing"],
       "links": {
-        "source": "https://github.com/KTS-o7/Algorithmic-fusion-for-Lung-scan-classification"
+        "paper": "https://doi.org/10.11591/ijeecs.v33.i3"
       },
-      "image": "/publication/cnn.png",
-      "link": "https://github.com/KTS-o7/Algorithmic-fusion-for-Lung-scan-classification",
+      "image": "/publication/q3.png",
+      "link": "https://doi.org/10.11591/ijeecs.v33.i3",
       "tag": ["All", "Publication"]
     },
     {
       "id": 6,
-      "name": "HandWrittenTripSheet OCR",
-      "description": "Handwritten trip-sheet OCR pipeline (EasyOCR + regex post-processing).",
-      "problem": "Manual data entry for handwritten logistics documents was error-prone and slow.",
-      "impact": "Improved extraction accuracy by ~40% through post-processing and validation.",
-      "tech": ["Python", "EasyOCR", "Regex", "Data cleaning"],
+      "name": "Handwritten Tripsheet Analysis",
+      "description": "EasyOCR + regex pipeline achieving 30% accuracy gain.",
+      "problem": "Handwritten tripsheets in logistics lead to high error rates in data extraction.",
+      "impact": "Achieved 30% accuracy improvement through OCR and post-processing, published in IEEE Xplore.",
+      "tech": ["Python", "EasyOCR", "Regex"],
       "links": {
         "paper": "https://ieeexplore.ieee.org/document/10170030"
       },
       "image": "/publication/ieeeTrip.png",
       "link": "https://ieeexplore.ieee.org/document/10170030",
-      "tag": ["All", "Publication"]
-    },
-    {
-      "id": 7,
-      "name": "Evaluation of filters in CT and Xray images of Lungs classification",
-      "description": "Study on how image filters impact CT/X-ray lung classification models.",
-      "problem": "Pre-processing choices can silently change model accuracy and bias.",
-      "impact": "Benchmarked filters and documented effects to guide reproducible pipelines.",
-      "tech": ["Python", "Image processing", "ML evaluation", "Research"],
-      "links": {
-        "paper": "https://ijeecs.iaescore.com/index.php/IJEECS/article/view/34975/18055"
-      },
-      "image": "/publication/q3.png",
-      "link": "https://ijeecs.iaescore.com/index.php/IJEECS/article/view/34975/18055",
       "tag": ["All", "Publication"]
     }
   ]
