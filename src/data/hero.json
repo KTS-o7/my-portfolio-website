@@ -1,7 +1,7 @@
 {
   "image": "/Hero.png",
-  "name": "Krishna Tejaswi Shenthar",
-  "kicker": "Backend systems • Python • Distributed/Cloud • LLM tooling",
+  "name": "Krishnatejaswi Shenthar",
+  "kicker": "Backend · Distributed · LLM tooling",
   "headline": "I build backend systems that stay fast, observable, and boring in production.",
   "subhead": "Python-first engineer focused on reliable APIs, distributed workflows, and pragmatic LLM tooling (RAG, evals, orchestration).",
   "current": "Building ComplianceOS at OnFinance AI (fintech compliance automation).",

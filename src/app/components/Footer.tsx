@@ -16,10 +16,10 @@ const Footer: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col md:flex-row justify-between items-start gap-6">
         <div>
           <div className="text-text-primary font-semibold tracking-tight">
-            Krishna Tejaswi Shenthar
+            Krishnatejaswi Shenthar
           </div>
           <div className="mt-1 text-xs font-mono uppercase tracking-widest text-text-tertiary">
-            Backend systems · Distributed · LLM tooling
+            Backend · Distributed · LLM tooling
           </div>
           <div className="mt-3 text-sm text-text-secondary">
             Built with Next.js. Designed to communicate engineering craft and

@@ -6,24 +6,33 @@
         "name": "OnFinance AI",
         "url": "https://www.onfinance.ai/company"
       },
-      "role": "AI & Fullstack Engineer (founding-engineer equivalent)",
+      "role": "AI and Fullstack Engineer",
       "type": "Full-time",
       "location": "Bangalore, India",
-      "timeframe": "2024 — Present",
+      "timeframe": "Jun 2024 – Present",
       "summary": "Building ComplianceOS: compliance automation workflows + agentic analysis over large regulatory corpora.",
       "highlights": [
-        "End-to-end ownership across discovery → architecture → production delivery",
-        "Agentic workflows with LangGraph + LiteLLM, built for reliability and observability",
-        "Reported impact: ~1250+ hours/year saved (internal estimate; varies by customer)"
+        "Owned end-to-end design and migration of a custom RBAC engine (V1→V5) — expression DSL compilation, field-level restrictions, and async context resolution for multi-tenant row-level access over regulatory documents.",
+        "Diagnosed and resolved a production OOMKill on a live document parser; root-caused full-document rasterization holding ~4.9 GB RAM, batched processing cut peak memory by 93%, verified and deployed same day.",
+        "Eliminated N+1 query patterns across high-traffic service paths via bulk MongoDB $in queries and iterative BFS subtask traversal — 95–99% reduction in DB round-trips with zero API or schema changes.",
+        "Replaced in-process concurrency limits with message-queue back-pressure for the AI agent service, decoupling HTTP handlers from run executors and eliminating silent job loss on pod restarts.",
+        "Migrated core auth layer from synchronous ODM to async Motor/Beanie across 13 files, resolving event-loop blocking and unawaited-async ordering bugs in audit logs.",
+        "Engineered LangGraph agentic workflows with LiteLLM processing 100M+ tokens/month of SEBI, RBI, and IRDAI regulatory data; built RAG pipeline for clause-level retrieval over DRHPs and compliance circulars.",
+        "Contributed to securing $4.2M Pre-Series A from PeakXV Partners through technical demos and executive presentations of ComplianceOS."
       ],
       "skills": [
         "Python",
         "FastAPI",
         "LangGraph",
         "LiteLLM",
+        "MongoDB",
         "PostgreSQL",
         "AWS",
-        "Docker"
+        "Docker",
+        "Kubernetes",
+        "RabbitMQ",
+        "JWT",
+        "OAuth"
       ],
       "caseStudies": [
         {
@@ -42,17 +51,19 @@
       "role": "SDE Intern",
       "type": "Internship",
       "location": "Bangalore, India",
-      "timeframe": "2023",
+      "timeframe": "Jan 2024 – Jun 2024",
       "summary": "Modernized legacy interfaces and improved app performance through targeted frontend and integration work.",
       "highlights": [
-        "Led modernization of legacy UI to React",
-        "Improved application performance by ~3× (per internal measurement)"
+        "Ported Porting Script Generator from Angular 1.x to React + Redux; increased test coverage by 95% via React Testing Library and reduced load time 4x (2s → <0.5s).",
+        "Integrated feature into global CI/CD pipelines with performance regression gates enforcing new load-time thresholds."
       ],
       "skills": [
         "React",
+        "Redux",
         "TypeScript",
-        "Performance profiling",
-        "API integration"
+        "React Testing Library",
+        "CI/CD",
+        "Performance Optimization"
       ],
       "caseStudies": [],
       "selectedProjectIds": []

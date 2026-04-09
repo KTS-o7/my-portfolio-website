@@ -9,24 +9,47 @@
   "status": "Available",
   "skills": [
     "Python",
-    "FastAPI",
+    "Go",
+    "C++",
+    "TypeScript",
+    "SQL",
+    "Embedded C",
+    "LangChain",
     "LangGraph",
     "LiteLLM",
-    "React",
+    "Langfuse",
+    "RAG",
+    "Qdrant",
+    "ChromaDB",
+    "Pydantic",
+    "PyTorch",
+    "Claude API",
+    "Bifrost",
+    "FastAPI",
+    "Motor/Beanie",
+    "RabbitMQ",
+    "JWT",
+    "OAuth",
+    "ReactJS",
     "NextJS",
-    "AWS",
+    "TailwindCSS",
+    "AWS (EKS)",
+    "Docker",
+    "Kubernetes",
+    "ArgoCD",
+    "Kustomize",
+    "GitHub Actions",
     "MongoDB",
     "PostgreSQL",
-    "Docker",
-    "SQL",
-    "C++"
+    "MySQL",
+    "Redis"
   ],
   "education": [
     {
       "degree": "BE Computer Science and Engineering",
       "institution": "RV College of Engineering, Bangalore",
       "gpa": "9.28",
-      "period": "2021 - 2025"
+      "period": "Dec 2021 – Jul 2025"
     }
   ],
   "specializations": [
@@ -36,9 +59,9 @@
     "Cloud Infrastructure"
   ],
   "certifications": [
-    "Introduction to Soft Computing (Top 5%ile), NPTEL Gold",
-    "Data Science for Engineers (Top 1%ile), NPTEL Gold",
-    "Publication: Effect of Noise in Medical image analysis (IJEECS)",
-    "Publication: Handwritten Tripsheet Analysis (IEEE Xplore)"
+    "NPTEL Gold — Soft Computing (Top 5%ile): Fuzzy Logic, Genetic Algorithms, ANNs (Mar 2024)",
+    "NPTEL Gold — Data Science for Engineers (Top 1%ile): Statistics, Linear Algebra, R (Oct 2023)",
+    "Lung Classification (IJEECS, Jan 2024): Noise filter effects on deep learning medical imaging. doi:10.11591/ijeecs.v33.i3",
+    "Handwritten Tripsheet Analysis (IEEE Xplore, Jul 2023): EasyOCR + regex pipeline achieving 30% accuracy gain. ieeexplore.ieee.org/document/10170030"
   ]
 }
