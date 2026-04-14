@@ -5,7 +5,7 @@ import Script from "next/script";
 import { LazyMotionWrapper } from "./components/ui/LazyMotionWrapper";
 import { buildJsonLd, getProfileData, getSiteUrl } from "@/lib/profile";
 import { ThemeToggle } from "./components/ui/ThemeToggle";
-import { ThemePreviewPanel } from "./components/ui/ThemePreviewPanel";
+// import { ThemePreviewPanel } from "./components/ui/ThemePreviewPanel";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import FeaturedExperience from "./components/home/FeaturedExperience";
@@ -35,7 +35,7 @@ export default function Home() {
         <CtaSection />
         <Footer />
         <ThemeToggle />
-        <ThemePreviewPanel />
+        {/* <ThemePreviewPanel /> */}
         <Analytics />
         <SpeedInsights />
       </main>
