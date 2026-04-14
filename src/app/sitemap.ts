@@ -1,50 +1,31 @@
 import type { MetadataRoute } from "next";
 import { getSiteUrl } from "@/lib/profile";
 import experienceData from "@/data/experience.json";
+import workData from "@/data/work.json";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const siteUrl = getSiteUrl();
   const lastModified = new Date();
 
-  const companyUrls =
-    experienceData.experience?.map((entry) => ({
-      url: `${siteUrl}/work/${entry.slug}`,
-      lastModified,
-    })) || [];
+  const experienceUrls = experienceData.experience?.map((entry) => ({
+    url: `${siteUrl}/experience/${entry.slug}`,
+    lastModified,
+  })) || [];
+
+  const caseStudyUrls = (workData.work || []).map((item) => ({
+    url: `${siteUrl}/case-studies/${item.slug}`,
+    lastModified,
+  }));
 
   return [
-    {
-      url: `${siteUrl}/`,
-      lastModified,
-    },
-    {
-      url: `${siteUrl}/about`,
-      lastModified,
-    },
-    {
-      url: `${siteUrl}/projects`,
-      lastModified,
-    },
-    {
-      url: `${siteUrl}/publications`,
-      lastModified,
-    },
-    {
-      url: `${siteUrl}/contact`,
-      lastModified,
-    },
-    {
-      url: `${siteUrl}/work`,
-      lastModified,
-    },
-    ...companyUrls,
-    {
-      url: `${siteUrl}/work/complianceos`,
-      lastModified,
-    },
-    {
-      url: `${siteUrl}/llms.txt`,
-      lastModified,
-    },
+    { url: `${siteUrl}/`, lastModified },
+    { url: `${siteUrl}/about`, lastModified },
+    { url: `${siteUrl}/projects`, lastModified },
+    { url: `${siteUrl}/publications`, lastModified },
+    { url: `${siteUrl}/contact`, lastModified },
+    { url: `${siteUrl}/experience`, lastModified },
+    ...experienceUrls,
+    ...caseStudyUrls,
+    { url: `${siteUrl}/llms.txt`, lastModified },
   ];
 }

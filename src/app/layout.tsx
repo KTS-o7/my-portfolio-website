@@ -11,13 +11,21 @@ const description = [heroData.shortDescription, heroData.shortDescriptionLine2]
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
-  title: `${heroData.name} | Portfolio`,
+  title: {
+    default: `${heroData.name} | Portfolio`,
+    template: `%s | Krishnatejaswi Shenthar`,
+  },
   description,
   openGraph: {
     title: `${heroData.name} | Portfolio`,
     description,
     url: "/",
     type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `${heroData.name} | Portfolio`,
+    description,
   },
 };
 
@@ -27,8 +35,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var t=localStorage.getItem('theme');var p=localStorage.getItem('palette')||'forestPink';document.documentElement.classList.add(t==='light'?'light':'dark');document.documentElement.setAttribute('data-palette',p);}catch(e){}})();`,
+          }}
+        />
         <link
           rel="alternate"
           type="text/plain"
