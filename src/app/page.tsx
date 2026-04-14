@@ -1,28 +1,17 @@
 import Navbar from "./components/Navbar";
-import dynamic from "next/dynamic";
-import { SmoothScroll } from "./components/ui/SmoothScroll";
-import { LazyMotionWrapper } from "./components/ui/LazyMotionWrapper";
+import Hero from "./components/Hero";
+import Footer from "./components/Footer";
 import Script from "next/script";
+import { LazyMotionWrapper } from "./components/ui/LazyMotionWrapper";
 import { buildJsonLd, getProfileData, getSiteUrl } from "@/lib/profile";
-
-const HeroSection = dynamic(() => import("./components/Hero"), {
-  ssr: true,
-  loading: () => <div className="min-h-screen bg-background" />,
-});
-const ExperienceSection = dynamic(() => import("./components/Experience"), {
-  ssr: true,
-});
-const AboutSection = dynamic(() => import("./components/About"), { ssr: true });
-const ProjectsSection = dynamic(() => import("./components/Projects"), {
-  ssr: true,
-});
-const EmailSection = dynamic(() => import("./components/Contact"), {
-  ssr: true,
-});
-const Footer = dynamic(() => import("./components/Footer"), { ssr: true });
+import { ThemeToggle } from "./components/ui/ThemeToggle";
+// import { ThemePreviewPanel } from "./components/ui/ThemePreviewPanel";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
-import { ThemeToggle } from "./components/ui/ThemeToggle";
+import FeaturedExperience from "./components/home/FeaturedExperience";
+import FeaturedProjects from "./components/home/FeaturedProjects";
+import ValueSection from "./components/home/ValueSection";
+import CtaSection from "./components/home/CtaSection";
 
 export default function Home() {
   const siteUrl = getSiteUrl();
@@ -37,20 +26,16 @@ export default function Home() {
         strategy="beforeInteractive"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <main
-        id="content"
-        className="flex min-h-screen flex-col bg-background transition-colors duration-300"
-      >
-        <SmoothScroll />
+      <main id="content" className="flex min-h-screen flex-col bg-background transition-colors duration-300">
         <Navbar />
-        <HeroSection />
-        <ExperienceSection condensed />
-        <ProjectsSection />
-        <AboutSection />
-        <EmailSection />
-
+        <Hero />
+        <FeaturedExperience />
+        <FeaturedProjects />
+        <ValueSection />
+        <CtaSection />
         <Footer />
         <ThemeToggle />
+        {/* <ThemePreviewPanel /> */}
         <Analytics />
         <SpeedInsights />
       </main>

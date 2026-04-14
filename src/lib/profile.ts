@@ -31,6 +31,7 @@ type ProfileData = {
     linkedin?: string;
     blog?: string;
     resume?: string;
+    booking?: string;
     employer?: string;
   };
   skills: string[];
@@ -85,7 +86,8 @@ export const getProfileData = (baseUrl: string): ProfileData => {
   const github = getLinkByPlatform("github");
   const linkedin = getLinkByPlatform("linkedin");
   const blog = findButtonLink(/blog/i);
-  const resume = findButtonLink(/cv|resume/i);
+  const booking = (heroData as any).bookingUrl;
+  const resume = (heroData as any).resumeUrl || findButtonLink(/cv|resume/i);
   const employer = "https://www.onfinance.ai/company";
 
   const skills = dedupeList([
@@ -122,6 +124,7 @@ export const getProfileData = (baseUrl: string): ProfileData => {
       linkedin,
       blog,
       resume,
+      booking,
       employer,
     },
     skills,
@@ -174,7 +177,7 @@ export const buildLlmProfileText = (profile: ProfileData) => {
       .map((item) => {
         const company = item.company?.name ? ` (${item.company.name})` : "";
         const shortDescription = item.subtitle || item.summary?.[0] || "";
-        const url = `${profile.links.website}/work/${item.slug}`;
+        const url = `${profile.links.website}/case-studies/${item.slug}`;
         return `- ${item.title}${company}: ${shortDescription} — ${url}`;
       })
       .join("\n");
@@ -187,6 +190,32 @@ export const buildLlmProfileText = (profile: ProfileData) => {
   parts.push(`## Location\n${profile.location}`);
   parts.push(
     `## Work preferences\n- Open to: Bangalore (India), remote, relocation (good opportunities/comp)`,
+  );
+  parts.push(
+    `## Availability\nAvailable for full-time roles and select freelance projects. Based in Bangalore, India. Open to remote and relocation for strong opportunities.`,
+  );
+  parts.push(
+    `## How to engage\n` +
+      [
+        profile.links.booking && `- Book a call: ${profile.links.booking}`,
+        profile.links.resume && `- Resume/CV: ${profile.links.resume}`,
+        profile.contact.email && `- Email: ${profile.contact.email}`,
+      ]
+        .filter(Boolean)
+        .join("\n"),
+  );
+  parts.push(
+    `## Canonical pages\n` +
+      [
+        `- Home: ${profile.links.website}/`,
+        `- Experience: ${profile.links.website}/experience`,
+        `- Case studies: ${profile.links.website}/case-studies/complianceos`,
+        `- Projects: ${profile.links.website}/projects`,
+        `- About: ${profile.links.website}/about`,
+        `- Contact: ${profile.links.website}/contact`,
+        `- Publications: ${profile.links.website}/publications`,
+        `- Machine-readable profile: ${profile.links.website}/llms.txt`,
+      ].join("\n"),
   );
   parts.push(
     `## Links\n` +
@@ -284,7 +313,7 @@ export const buildJsonLd = (profile: ProfileData, baseUrl: string) => {
     "@id": `${baseUrl}#featured-work-${index + 1}`,
     name: item.title,
     description: item.summary?.join(" ") || "",
-    url: `${baseUrl}/work/${item.slug}`,
+    url: `${baseUrl}/case-studies/${item.slug}`,
     creator: { "@id": personId },
     publisher: {
       "@type": "Organization",

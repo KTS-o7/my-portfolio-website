@@ -17,6 +17,21 @@ const nextConfig = {
         destination: "/work/:path*",
         permanent: true,
       },
+      {
+        source: "/work/complianceos",
+        destination: "/case-studies/complianceos",
+        permanent: true,
+      },
+      {
+        source: "/work/:company",
+        destination: "/experience/:company",
+        permanent: true,
+      },
+      {
+        source: "/work",
+        destination: "/experience",
+        permanent: true,
+      },
     ];
   },
   images: {
