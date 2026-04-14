@@ -115,7 +115,7 @@ export default function Experience({
 
                 <div className="flex flex-col gap-3 w-full lg:w-[320px]">
                   <Link
-                    href={`/work/${entry.slug}`}
+                    href={`/experience/${entry.slug}`}
                     className="btn btn-primary"
                   >
                     View experience
@@ -157,7 +157,7 @@ export default function Experience({
 
         {showSeeMore && (
           <div className="mt-10">
-            <Link href="/work" className="btn btn-secondary">
+            <Link href="/experience" className="btn btn-secondary">
               See full experience timeline
             </Link>
           </div>

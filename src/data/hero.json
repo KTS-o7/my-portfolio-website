@@ -26,29 +26,25 @@
       "value": "End‑to‑end: design → deploy"
     }
   ],
+  "bookingUrl": "https://calendar.app.google/zjsY3uvWa4avw1wq6",
+  "resumeUrl": "https://drive.google.com/file/d/1uy1w2prce_k-YD5bZrxUytEDXIXil6-2/view?usp=sharing",
   "buttons": [
     {
-      "text": "Projects",
-      "link": "#projects",
+      "text": "Book a call",
+      "link": "https://calendar.app.google/zjsY3uvWa4avw1wq6",
       "type": "primary",
+      "external": true
+    },
+    {
+      "text": "View selected work",
+      "link": "/projects",
+      "type": "secondary",
       "external": false
     },
     {
       "text": "Resume",
-      "link": "https://drive.google.com/file/d/1uy1w2prce_k-YD5bZrxUytEDXIXil6-2/view",
+      "link": "https://drive.google.com/file/d/1uy1w2prce_k-YD5bZrxUytEDXIXil6-2/view?usp=sharing",
       "type": "secondary",
-      "external": true
-    },
-    {
-      "text": "Experience",
-      "link": "#experience",
-      "type": "secondary",
-      "external": false
-    },
-    {
-      "text": "Writing",
-      "link": "https://kts-o7.github.io/blog/",
-      "type": "tertiary",
       "external": true
     }
   ]
