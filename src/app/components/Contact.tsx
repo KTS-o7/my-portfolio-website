@@ -2,7 +2,7 @@
 import React, { FC, useId, useState } from "react";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faGithub, faLinkedin } from "@fortawesome/free-brands-svg-icons";
+import { faGithub, faLinkedin, faXTwitter } from "@fortawesome/free-brands-svg-icons";
 import emailjs from "@emailjs/browser";
 import DOMPurify from "dompurify";
 import { motion } from "framer-motion";
@@ -201,7 +201,13 @@ const Contact: FC<{ showTopBorder?: boolean }> = ({ showTopBorder = true }) => {
                   >
                     <span className="sr-only">{social.platform}</span>
                     <FontAwesomeIcon
-                      icon={social.icon === "faGithub" ? faGithub : faLinkedin}
+                      icon={
+                        social.icon === "faGithub"
+                          ? faGithub
+                          : social.icon === "faXTwitter"
+                            ? faXTwitter
+                            : faLinkedin
+                      }
                       className="h-5 w-5"
                     />
                     <span className="capitalize">{social.platform}</span>

@@ -1,25 +1,16 @@
 import type { Metadata } from "next";
-import heroData from "@/data/hero.json";
 import Navbar from "@/app/components/Navbar";
 import Footer from "@/app/components/Footer";
 import Projects from "@/app/components/Projects";
 import { ThemeToggle } from "@/app/components/ui/ThemeToggle";
+import { buildPageMetadata } from "@/lib/metadata";
 
-const title = `Work & Projects | ${heroData.name}`;
-const description =
-  "Projects, publications, and end-to-end work (discovery → development → deployment).";
-
-export const metadata: Metadata = {
-  title,
-  description,
-  alternates: { canonical: "/projects" },
-  openGraph: {
-    title,
-    description,
-    url: "/projects",
-    type: "website",
-  },
-};
+export const metadata: Metadata = buildPageMetadata({
+  title: "Work & Projects",
+  description:
+    "Projects, publications, and end-to-end work — discovery to deployment.",
+  path: "/projects",
+});
 
 export default function ProjectsPage() {
   return (
@@ -28,11 +19,19 @@ export default function ProjectsPage() {
       className="flex min-h-screen flex-col bg-background transition-colors duration-300"
     >
       <Navbar />
-      <h1 className="sr-only">Work and projects by {heroData.name}</h1>
       <div className="pt-24">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-12 pb-4">
+          <span className="pill">Work</span>
+          <h1 className="mt-5 text-4xl sm:text-5xl font-semibold tracking-tight text-text-primary">
+            Selected projects
+          </h1>
+          <p className="mt-4 text-text-secondary max-w-[72ch] leading-relaxed">
+            Each project is framed as a short case study: the problem, the
+            approach, and the measurable impact.
+          </p>
+        </div>
         <Projects showTopBorder={false} />
       </div>
-
       <Footer />
       <ThemeToggle />
     </main>

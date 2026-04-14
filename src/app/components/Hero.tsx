@@ -6,6 +6,9 @@ import Link from "next/link";
 import heroData from "@/data/hero.json";
 
 const Hero: FC = () => {
+  const bookingUrl = (heroData as any).bookingUrl as string;
+  const resumeUrl = (heroData as any).resumeUrl as string;
+
   return (
     <section
       id="home"
@@ -38,32 +41,30 @@ const Hero: FC = () => {
               </p>
 
               <div className="mt-8 flex flex-wrap gap-3">
-                {heroData.buttons.map((button) => {
-                  const className =
-                    button.type === "primary"
-                      ? "btn btn-primary"
-                      : "btn btn-secondary";
+                {/* Primary CTA */}
+                <a
+                  href={bookingUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn-primary"
+                >
+                  Book a call
+                </a>
 
-                  return button.external ? (
-                    <Link
-                      key={button.text}
-                      href={button.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={className}
-                    >
-                      {button.text}
-                    </Link>
-                  ) : (
-                    <a
-                      key={button.text}
-                      href={button.link}
-                      className={className}
-                    >
-                      {button.text}
-                    </a>
-                  );
-                })}
+                {/* Secondary CTA */}
+                <Link href="/projects" className="btn btn-secondary">
+                  View selected work
+                </Link>
+
+                {/* Resume CTA */}
+                <a
+                  href={resumeUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn-secondary"
+                >
+                  Resume ↗
+                </a>
               </div>
             </motion.div>
 
@@ -145,4 +146,5 @@ const Hero: FC = () => {
     </section>
   );
 };
+
 export default Hero;
