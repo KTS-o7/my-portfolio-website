@@ -5,7 +5,6 @@ import experienceData from "@/data/experience.json";
 import projectsData from "@/data/projects.json";
 import Navbar from "@/app/components/Navbar";
 import Footer from "@/app/components/Footer";
-import { ThemeToggle } from "@/app/components/ui/ThemeToggle";
 
 type ExperienceEntry = {
   slug: string;
@@ -65,7 +64,7 @@ export default async function CompanyExperiencePage({
     return (
       <main id="content" className="min-h-screen bg-background">
         <Navbar />
-        <div className="container mt-24 mx-auto px-4 sm:px-8 md:px-12 py-12">
+        <div className="max-w-[720px] mt-24 mx-auto px-4 sm:px-6 py-12">
           <h1 className="text-2xl font-semibold tracking-tight text-text-primary">
             Experience not found
           </h1>
@@ -91,7 +90,7 @@ export default async function CompanyExperiencePage({
       className="flex min-h-screen flex-col bg-background transition-colors duration-300"
     >
       <Navbar />
-      <div className="container mt-24 mx-auto px-4 sm:px-8 md:px-12 py-10">
+      <div className="max-w-[720px] mt-24 mx-auto px-4 sm:px-6 py-10">
         <div className="font-mono text-xs uppercase tracking-widest text-text-tertiary">
           <Link href="/" className="link-underline text-text-primary">
             Home
@@ -105,7 +104,7 @@ export default async function CompanyExperiencePage({
         </div>
 
         <header className="mt-6">
-          <span className="pill w-fit">{entry.type || "Experience"}</span>
+          <span className="font-mono text-xs uppercase tracking-widest text-text-tertiary">{entry.type || "Experience"}</span>
           <h1 className="mt-5 text-4xl sm:text-5xl font-semibold tracking-tight text-text-primary">
             {entry.company.name}
           </h1>
@@ -122,8 +121,8 @@ export default async function CompanyExperiencePage({
         </header>
 
         {Array.isArray(entry.highlights) && entry.highlights.length > 0 && (
-          <section className="mt-10 surface-card p-6 sm:p-8">
-            <h2 className="pill w-fit">Highlights</h2>
+          <section className="mt-10 border-t border-border pt-8">
+            <h2 className="font-mono text-xs uppercase tracking-widest text-text-tertiary">Highlights</h2>
             <ul className="mt-5 space-y-2 text-text-secondary">
               {entry.highlights.map((item) => (
                 <li key={item} className="flex gap-3 leading-relaxed">
@@ -136,11 +135,11 @@ export default async function CompanyExperiencePage({
         )}
 
         {Array.isArray(entry.skills) && entry.skills.length > 0 && (
-          <section className="mt-6 surface-card p-6 sm:p-8">
-            <h2 className="pill w-fit">Stack</h2>
+          <section className="mt-10 border-t border-border pt-8">
+            <h2 className="font-mono text-xs uppercase tracking-widest text-text-tertiary">Stack</h2>
             <div className="mt-5 flex flex-wrap gap-2">
               {entry.skills.map((skill) => (
-                <span key={skill} className="pill">
+                <span key={skill} className="font-mono text-xs uppercase tracking-widest text-text-tertiary">
                   {skill}
                 </span>
               ))}
@@ -149,8 +148,8 @@ export default async function CompanyExperiencePage({
         )}
 
         {Array.isArray(entry.caseStudies) && entry.caseStudies.length > 0 && (
-          <section className="mt-6 surface-card p-6 sm:p-8">
-            <h2 className="pill w-fit">Case studies</h2>
+          <section className="mt-10 border-t border-border pt-8">
+            <h2 className="font-mono text-xs uppercase tracking-widest text-text-tertiary">Case studies</h2>
             <div className="mt-5 space-y-3">
               {entry.caseStudies.map((cs) => (
                 <Link
@@ -166,12 +165,12 @@ export default async function CompanyExperiencePage({
         )}
 
         {selectedProjects.length > 0 && (
-          <section className="mt-6 surface-card p-6 sm:p-8">
-            <h2 className="pill w-fit">Selected projects</h2>
+          <section className="mt-10 border-t border-border pt-8">
+            <h2 className="font-mono text-xs uppercase tracking-widest text-text-tertiary">Selected projects</h2>
             <ul className="mt-6 space-y-4">
               {selectedProjects.map((project) => (
                 <li key={project.id}>
-                  <div className="rounded-[14px] border border-[var(--border)] p-5">
+                  <div className="border-t border-border pt-5">
                     <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
                       <div>
                         <div className="text-lg font-semibold tracking-tight text-text-primary">
@@ -183,7 +182,7 @@ export default async function CompanyExperiencePage({
                       </div>
                       <div className="flex flex-wrap gap-2">
                         {(project.tech || []).slice(0, 6).map((t: string) => (
-                          <span key={t} className="pill">
+                          <span key={t} className="font-mono text-xs uppercase tracking-widest text-text-tertiary">
                             {t}
                           </span>
                         ))}
@@ -195,18 +194,18 @@ export default async function CompanyExperiencePage({
                           href={project.links?.demo || project.links?.paper}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="btn btn-primary"
+                          className="link-underline text-text-primary font-mono text-sm"
                         >
-                          Open
+                          Open ↗
                         </a>
                       )}
                       <a
                         href={project.links?.source || project.link}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="btn btn-secondary"
+                        className="link-underline text-text-secondary font-mono text-sm"
                       >
-                        Source
+                        Source ↗
                       </a>
                     </div>
                   </div>
@@ -218,7 +217,7 @@ export default async function CompanyExperiencePage({
 
         <section className="mt-10">
           <div className="flex flex-wrap gap-3">
-            <Link href="/work" className="btn btn-secondary">
+            <Link href="/work" className="btn">
               Back to experience
             </Link>
             {entry.company?.url && (
@@ -226,7 +225,7 @@ export default async function CompanyExperiencePage({
                 href={entry.company.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn btn-secondary"
+                className="btn"
               >
                 Company site
               </a>
@@ -239,7 +238,6 @@ export default async function CompanyExperiencePage({
       </div>
 
       <Footer />
-      <ThemeToggle />
     </main>
   );
 }

@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import Navbar from "@/app/components/Navbar";
 import Footer from "@/app/components/Footer";
 import Projects from "@/app/components/Projects";
-import { ThemeToggle } from "@/app/components/ui/ThemeToggle";
 import { buildPageMetadata } from "@/lib/metadata";
 
 export const metadata: Metadata = buildPageMetadata({
@@ -20,8 +19,8 @@ export default function ProjectsPage() {
     >
       <Navbar />
       <div className="pt-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-12 pb-4">
-          <span className="pill">Work</span>
+        <div className="max-w-[1100px] mx-auto px-4 sm:px-6 pt-12 pb-4">
+          <span className="font-mono text-xs uppercase tracking-widest text-text-tertiary">Work</span>
           <h1 className="mt-5 text-4xl sm:text-5xl font-semibold tracking-tight text-text-primary">
             Selected projects
           </h1>
@@ -33,7 +32,6 @@ export default function ProjectsPage() {
         <Projects showTopBorder={false} />
       </div>
       <Footer />
-      <ThemeToggle />
     </main>
   );
 }

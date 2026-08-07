@@ -11,15 +11,11 @@ type Theme = "dark" | "light";
 interface ThemeContextValue {
   theme: Theme;
   toggleTheme: () => void;
-  palette: string;
-  setPalette: (key: string) => void;
 }
 
 const ThemeContext = createContext<ThemeContextValue>({
-  theme: "dark",
+  theme: "light",
   toggleTheme: () => {},
-  palette: "forestPink",
-  setPalette: () => {},
 });
 
 export const useTheme = () => useContext(ThemeContext);
@@ -35,19 +31,15 @@ function subscribeToStorage(callback: () => void) {
 
 function getThemeSnapshot(): Theme {
   const val = localStorage.getItem("theme");
-  return val === "light" ? "light" : "dark";
+  if (val === "light" || val === "dark") return val;
+  // No stored preference: respect the OS setting, fall back to light.
+  return window.matchMedia("(prefers-color-scheme: dark)").matches
+    ? "dark"
+    : "light";
 }
 
 function getThemeServerSnapshot(): Theme {
-  return "dark";
-}
-
-function getPaletteSnapshot(): string {
-  return localStorage.getItem("palette") || "forestPink";
-}
-
-function getPaletteServerSnapshot(): string {
-  return "forestPink";
+  return "light";
 }
 
 // ---------------------------------------------------------------------------
@@ -56,19 +48,10 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
   // useSyncExternalStore is the React-blessed API for reading browser storage.
   // It always returns the server snapshot during SSR / first-render so the
   // server and client initial renders agree, eliminating the hydration mismatch.
-  // After hydration it reads the live localStorage value and re-renders once if
-  // it differs — this is safe because it's driven by the store, not setState
-  // inside an effect.
   const theme = useSyncExternalStore(
     subscribeToStorage,
     getThemeSnapshot,
     getThemeServerSnapshot,
-  );
-
-  const palette = useSyncExternalStore(
-    subscribeToStorage,
-    getPaletteSnapshot,
-    getPaletteServerSnapshot,
   );
 
   // Sync DOM classes for theme (pure external side-effect, no setState)
@@ -76,12 +59,8 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
     const root = document.documentElement;
     root.classList.remove("dark", "light");
     root.classList.add(theme);
+    root.setAttribute("data-palette", "gruvbox");
   }, [theme]);
-
-  // Sync palette data attribute (pure external side-effect, no setState)
-  useEffect(() => {
-    document.documentElement.setAttribute("data-palette", palette);
-  }, [palette]);
 
   const toggleTheme = () => {
     const next: Theme = theme === "dark" ? "light" : "dark";
@@ -90,13 +69,8 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
     window.dispatchEvent(new Event("storage"));
   };
 
-  const setPalette = (key: string) => {
-    localStorage.setItem("palette", key);
-    window.dispatchEvent(new Event("storage"));
-  };
-
   return (
-    <ThemeContext.Provider value={{ theme, toggleTheme, palette, setPalette }}>
+    <ThemeContext.Provider value={{ theme, toggleTheme }}>
       {children}
     </ThemeContext.Provider>
   );

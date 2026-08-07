@@ -5,7 +5,6 @@ import heroData from "@/data/hero.json";
 import workData from "@/data/work.json";
 import Navbar from "@/app/components/Navbar";
 import Footer from "@/app/components/Footer";
-import { ThemeToggle } from "@/app/components/ui/ThemeToggle";
 import { getSiteUrl } from "@/lib/profile";
 
 export function generateStaticParams() {
@@ -54,7 +53,7 @@ export default async function CaseStudyPage({
     return (
       <main className="min-h-screen bg-background">
         <Navbar />
-        <div className="container mt-24 mx-auto px-4 sm:px-8 md:px-12 py-12">
+        <div className="max-w-[720px] mt-24 mx-auto px-4 sm:px-6 py-12">
           <h1 className="text-2xl font-semibold tracking-tight text-text-primary">
             Work not found
           </h1>
@@ -117,7 +116,7 @@ export default async function CaseStudyPage({
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <Navbar />
-      <div className="container mt-24 mx-auto px-4 sm:px-8 md:px-12 py-12">
+      <div className="max-w-[720px] mt-24 mx-auto px-4 sm:px-6 py-12">
         <div className="mb-10">
           <div className="font-mono text-xs uppercase tracking-widest text-text-tertiary">
             <Link href="/" className="hover:text-primary transition-colors">
@@ -142,8 +141,8 @@ export default async function CaseStudyPage({
           </p>
         </div>
 
-        <section aria-labelledby="key-facts" className="surface-card p-6 sm:p-8 mb-10">
-          <h2 id="key-facts" className="pill w-fit">Key facts</h2>
+        <section aria-labelledby="key-facts" className="border-t border-border pt-8 mb-10">
+          <h2 id="key-facts" className="font-mono text-xs uppercase tracking-widest text-text-tertiary">Key facts</h2>
           <dl className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
               <dt className="font-mono text-xs uppercase tracking-widest text-text-tertiary">Role</dt>
@@ -193,7 +192,7 @@ export default async function CaseStudyPage({
           <h2 id="stack" className="text-2xl font-semibold tracking-tight text-text-primary">Stack</h2>
           <div className="mt-4 flex flex-wrap gap-2">
             {workItem.stack.map((item) => (
-              <span key={item} className="pill">{item}</span>
+              <span key={item} className="font-mono text-xs uppercase tracking-widest text-text-tertiary">{item}</span>
             ))}
           </div>
         </section>
@@ -211,8 +210,8 @@ export default async function CaseStudyPage({
           </ul>
         </section>
 
-        <section aria-labelledby="notes" className="surface-card p-6 sm:p-8">
-          <h2 id="notes" className="pill w-fit">Notes</h2>
+        <section aria-labelledby="notes" className="border-t border-border pt-8">
+          <h2 id="notes" className="font-mono text-xs uppercase tracking-widest text-text-tertiary">Notes</h2>
           <ul className="mt-4 space-y-3 text-text-secondary text-sm">
             {workItem.notes.map((note) => (
               <li key={note} className="flex gap-3">
@@ -222,7 +221,7 @@ export default async function CaseStudyPage({
             ))}
           </ul>
           <div className="mt-8 flex flex-wrap gap-3">
-            <Link href="/experience" className="btn btn-secondary">
+            <Link href="/experience" className="btn">
               Back to experience
             </Link>
             <Link href="/contact" className="btn btn-primary">Contact</Link>
@@ -231,7 +230,6 @@ export default async function CaseStudyPage({
       </div>
 
       <Footer />
-      <ThemeToggle />
     </main>
   );
 }

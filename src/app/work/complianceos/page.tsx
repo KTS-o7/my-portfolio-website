@@ -5,7 +5,6 @@ import heroData from "@/data/hero.json";
 import workData from "@/data/work.json";
 import Navbar from "@/app/components/Navbar";
 import Footer from "@/app/components/Footer";
-import { ThemeToggle } from "@/app/components/ui/ThemeToggle";
 import { getSiteUrl } from "@/lib/profile";
 
 const pagePath = "/work/complianceos";
@@ -36,7 +35,7 @@ export default function ComplianceOsPage() {
     return (
       <main className="min-h-screen bg-background">
         <Navbar />
-        <div className="container mt-24 mx-auto px-4 sm:px-8 md:px-12 py-12">
+        <div className="max-w-[720px] mt-24 mx-auto px-4 sm:px-6 py-12">
           <h1 className="text-2xl font-semibold tracking-tight text-text-primary">
             Work not found
           </h1>
@@ -100,7 +99,7 @@ export default function ComplianceOsPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <Navbar />
-      <div className="container mt-24 mx-auto px-4 sm:px-8 md:px-12 py-12">
+      <div className="max-w-[720px] mt-24 mx-auto px-4 sm:px-6 py-12">
         <div className="mb-10">
           <div className="font-mono text-xs uppercase tracking-widest text-text-tertiary">
             <Link href="/" className="hover:text-primary transition-colors">
@@ -127,9 +126,9 @@ export default function ComplianceOsPage() {
 
         <section
           aria-labelledby="key-facts"
-          className="surface-card p-6 sm:p-8 mb-10"
+          className="border-t border-border pt-8 mb-10"
         >
-          <h2 id="key-facts" className="pill w-fit">
+          <h2 id="key-facts" className="font-mono text-xs uppercase tracking-widest text-text-tertiary">
             Key facts
           </h2>
           <dl className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -209,7 +208,7 @@ export default function ComplianceOsPage() {
           </h2>
           <div className="mt-4 flex flex-wrap gap-2">
             {workItem.stack.map((item) => (
-              <span key={item} className="pill">
+              <span key={item} className="font-mono text-xs uppercase tracking-widest text-text-tertiary">
                 {item}
               </span>
             ))}
@@ -239,8 +238,8 @@ export default function ComplianceOsPage() {
           </ul>
         </section>
 
-        <section aria-labelledby="notes" className="surface-card p-6 sm:p-8">
-          <h2 id="notes" className="pill w-fit">
+        <section aria-labelledby="notes" className="border-t border-border pt-8">
+          <h2 id="notes" className="font-mono text-xs uppercase tracking-widest text-text-tertiary">
             Notes
           </h2>
           <ul className="mt-4 space-y-3 text-text-secondary text-sm">
@@ -260,7 +259,6 @@ export default function ComplianceOsPage() {
       </div>
 
       <Footer />
-      <ThemeToggle />
     </main>
   );
 }

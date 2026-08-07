@@ -109,18 +109,20 @@ const Contact: FC<{ showTopBorder?: boolean }> = ({ showTopBorder = true }) => {
   return (
     <section
       id="contact"
-      className={`py-20 sm:py-28 px-4 sm:px-6 bg-background relative overflow-hidden scroll-mt-24 ${
-        showTopBorder ? "border-t border-text-tertiary/10" : ""
+      className={`py-20 sm:py-28 px-4 sm:px-6 bg-background relative scroll-mt-24 ${
+        showTopBorder ? "border-t border-border" : ""
       }`}
     >
-      <div className="max-w-7xl mx-auto relative z-10">
+      <div className="max-w-[720px] mx-auto relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
         >
-          <span className="pill">Contact</span>
-          <h2 className="mt-6 text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight text-text-primary">
+          <p className="font-mono text-xs uppercase tracking-widest text-text-tertiary">
+            Contact
+          </p>
+          <h2 className="mt-4 text-3xl sm:text-4xl font-semibold tracking-tight text-text-primary">
             Let’s build something reliable
           </h2>
           <p className="mt-4 text-text-secondary max-w-[72ch] leading-relaxed">
@@ -128,20 +130,20 @@ const Contact: FC<{ showTopBorder?: boolean }> = ({ showTopBorder = true }) => {
           </p>
         </motion.div>
 
-        <div className="mt-10 grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+        <div className="mt-10 grid grid-cols-1 lg:grid-cols-12 gap-x-10 gap-y-10 items-start">
           <motion.div
             initial={{ opacity: 0, y: 12 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="lg:col-span-5 surface-card p-6 sm:p-8"
+            className="lg:col-span-5 border-t border-border pt-8"
           >
             <h3 className="font-mono text-xs uppercase tracking-widest text-text-tertiary">
               Direct
             </h3>
 
-            <dl className="mt-5 space-y-4">
-              <div className="rounded-[14px] border border-[var(--border)] p-4">
+            <dl className="mt-5 space-y-5">
+              <div>
                 <dt className="font-mono text-xs uppercase tracking-widest text-text-tertiary">
                   Email
                 </dt>
@@ -155,7 +157,7 @@ const Contact: FC<{ showTopBorder?: boolean }> = ({ showTopBorder = true }) => {
                 </dd>
               </div>
 
-              <div className="rounded-[14px] border border-[var(--border)] p-4">
+              <div>
                 <dt className="font-mono text-xs uppercase tracking-widest text-text-tertiary">
                   Phone
                 </dt>
@@ -169,7 +171,7 @@ const Contact: FC<{ showTopBorder?: boolean }> = ({ showTopBorder = true }) => {
                 </dd>
               </div>
 
-              <div className="rounded-[14px] border border-[var(--border)] p-4">
+              <div>
                 <dt className="font-mono text-xs uppercase tracking-widest text-text-tertiary">
                   WhatsApp
                 </dt>
@@ -186,7 +188,7 @@ const Contact: FC<{ showTopBorder?: boolean }> = ({ showTopBorder = true }) => {
               </div>
             </dl>
 
-            <div className="mt-8 pt-6 border-t border-text-tertiary/15">
+            <div className="mt-8 pt-6 border-t border-border">
               <h3 className="font-mono text-xs uppercase tracking-widest text-text-tertiary">
                 Social
               </h3>
@@ -197,7 +199,7 @@ const Contact: FC<{ showTopBorder?: boolean }> = ({ showTopBorder = true }) => {
                     href={social.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="btn btn-secondary"
+                    className="btn"
                   >
                     <span className="sr-only">{social.platform}</span>
                     <FontAwesomeIcon
@@ -222,7 +224,7 @@ const Contact: FC<{ showTopBorder?: boolean }> = ({ showTopBorder = true }) => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.05 }}
-            className="lg:col-span-7 surface-card p-6 sm:p-8"
+            className="lg:col-span-7 border-t border-border pt-8"
           >
             <h3 className="text-xl font-semibold tracking-tight text-text-primary">
               Send a message
@@ -232,7 +234,7 @@ const Contact: FC<{ showTopBorder?: boolean }> = ({ showTopBorder = true }) => {
             </p>
 
             {emailSubmitted ? (
-              <div className="mt-8 rounded-[14px] border border-[var(--border)] p-6">
+              <div className="mt-8 border-t border-border pt-6">
                 <div className="text-text-primary font-semibold">
                   Message sent.
                 </div>
@@ -241,7 +243,7 @@ const Contact: FC<{ showTopBorder?: boolean }> = ({ showTopBorder = true }) => {
                 </p>
                 <button
                   onClick={() => setEmailSubmitted(false)}
-                  className="mt-6 btn btn-secondary"
+                  className="mt-6 btn"
                   type="button"
                 >
                   Send another
@@ -251,7 +253,7 @@ const Contact: FC<{ showTopBorder?: boolean }> = ({ showTopBorder = true }) => {
               <form className="mt-8 space-y-5" onSubmit={handleSubmit}>
                 {formErrors.submission && (
                   <div
-                    className="rounded-[14px] border border-red-500/40 bg-red-500/10 p-4 text-sm text-text-secondary"
+                    className="border border-red-500/40 p-4 text-sm text-text-secondary"
                     role="alert"
                   >
                     {formErrors.submission}
@@ -274,7 +276,7 @@ const Contact: FC<{ showTopBorder?: boolean }> = ({ showTopBorder = true }) => {
                     aria-describedby={
                       formErrors.name ? `${formId}-name-error` : undefined
                     }
-                    className="mt-2 w-full rounded-[14px] border border-text-tertiary/25 bg-[color-mix(in_oklab,var(--color-surface)_82%,transparent)] px-4 py-3 text-text-primary placeholder:text-text-tertiary/70 focus:outline-none focus:ring-2 focus:ring-[var(--ring)]"
+                    className="mt-2 w-full border border-border bg-surface px-4 py-3 text-text-primary placeholder:text-text-tertiary/70 focus:outline-none focus:ring-2 focus:ring-[var(--ring)]"
                     placeholder="Your name"
                   />
                   {formErrors.name && (
@@ -303,7 +305,7 @@ const Contact: FC<{ showTopBorder?: boolean }> = ({ showTopBorder = true }) => {
                     aria-describedby={
                       formErrors.email ? `${formId}-email-error` : undefined
                     }
-                    className="mt-2 w-full rounded-[14px] border border-text-tertiary/25 bg-[color-mix(in_oklab,var(--color-surface)_82%,transparent)] px-4 py-3 text-text-primary placeholder:text-text-tertiary/70 focus:outline-none focus:ring-2 focus:ring-[var(--ring)]"
+                    className="mt-2 w-full border border-border bg-surface px-4 py-3 text-text-primary placeholder:text-text-tertiary/70 focus:outline-none focus:ring-2 focus:ring-[var(--ring)]"
                     placeholder="you@domain.com"
                   />
                   {formErrors.email && (
@@ -332,7 +334,7 @@ const Contact: FC<{ showTopBorder?: boolean }> = ({ showTopBorder = true }) => {
                     aria-describedby={
                       formErrors.subject ? `${formId}-subject-error` : undefined
                     }
-                    className="mt-2 w-full rounded-[14px] border border-text-tertiary/25 bg-[color-mix(in_oklab,var(--color-surface)_82%,transparent)] px-4 py-3 text-text-primary placeholder:text-text-tertiary/70 focus:outline-none focus:ring-2 focus:ring-[var(--ring)]"
+                    className="mt-2 w-full border border-border bg-surface px-4 py-3 text-text-primary placeholder:text-text-tertiary/70 focus:outline-none focus:ring-2 focus:ring-[var(--ring)]"
                     placeholder="What would you like to talk about?"
                   />
                   {formErrors.subject && (
@@ -361,7 +363,7 @@ const Contact: FC<{ showTopBorder?: boolean }> = ({ showTopBorder = true }) => {
                     aria-describedby={
                       formErrors.message ? `${formId}-message-error` : undefined
                     }
-                    className="mt-2 w-full rounded-[14px] border border-text-tertiary/25 bg-[color-mix(in_oklab,var(--color-surface)_82%,transparent)] px-4 py-3 text-text-primary placeholder:text-text-tertiary/70 focus:outline-none focus:ring-2 focus:ring-[var(--ring)]"
+                    className="mt-2 w-full border border-border bg-surface px-4 py-3 text-text-primary placeholder:text-text-tertiary/70 focus:outline-none focus:ring-2 focus:ring-[var(--ring)]"
                     placeholder="A few details helps me respond faster."
                   />
                   {formErrors.message && (
