@@ -88,7 +88,7 @@ export const getProfileData = (baseUrl: string): ProfileData => {
   const blog = findButtonLink(/blog/i);
   const booking = (heroData as any).bookingUrl;
   const resume = (heroData as any).resumeUrl || findButtonLink(/cv|resume/i);
-  const employer = "https://www.onfinance.ai/company";
+  const employer = "https://www.futurestandard.com/";
 
   const skills = dedupeList([
     ...(aboutData.skills || []),
@@ -189,10 +189,10 @@ export const buildLlmProfileText = (profile: ProfileData) => {
   );
   parts.push(`## Location\n${profile.location}`);
   parts.push(
-    `## Work preferences\n- Open to: Bangalore (India), remote, relocation (good opportunities/comp)`,
+    `## Work preferences\n- Open to: AI engineering roles (LLM systems, agents, RAG) — Bangalore (India), remote, relocation (good opportunities/comp)`,
   );
   parts.push(
-    `## Availability\nAvailable for full-time roles and select freelance projects. Based in Bangalore, India. Open to remote and relocation for strong opportunities.`,
+    `## Availability\nAvailable for AI engineer / LLM systems roles and select freelance AI projects. Based in Bangalore, India. Open to remote and relocation for strong opportunities.`,
   );
   parts.push(
     `## How to engage\n` +
@@ -304,6 +304,8 @@ export const buildJsonLd = (profile: ProfileData, baseUrl: string) => {
   const sameAs = [
     profile.links.github,
     profile.links.linkedin,
+    getLinkByPlatform("twitter"),
+    "https://shenthar.me",
     profile.links.blog,
     profile.links.resume,
   ].filter(Boolean);
@@ -346,9 +348,9 @@ export const buildJsonLd = (profile: ProfileData, baseUrl: string) => {
         },
         worksFor: {
           "@type": "Organization",
-          name: "OnFinance AI",
-          url: "https://www.onfinance.ai",
-          sameAs: ["https://www.onfinance.ai/company"],
+          name: "Future Standard",
+          url: "https://www.futurestandard.com",
+          sameAs: ["https://www.futurestandard.com/"],
         },
         knowsAbout: profile.skills,
         sameAs,
