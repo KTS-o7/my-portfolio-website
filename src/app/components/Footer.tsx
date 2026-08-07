@@ -20,7 +20,7 @@ const Footer: React.FC = () => {
               Krishnatejaswi Shenthar
             </div>
             <div className="mt-1 text-xs font-mono uppercase tracking-widest text-text-tertiary">
-              Backend · Distributed · LLM tooling
+              AI · Agents · Production LLM Systems
             </div>
             <div className="mt-3 text-sm text-text-secondary max-w-[32ch]">
               Built with Next.js. Designed to communicate engineering craft and

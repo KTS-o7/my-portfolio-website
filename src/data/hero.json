@@ -1,25 +1,25 @@
 {
   "image": "/Hero.png",
   "name": "Krishnatejaswi Shenthar",
-  "kicker": "Backend · Distributed · LLM tooling",
-  "headline": "I build backend systems that stay fast, observable, and boring in production.",
-  "subhead": "Python-first engineer focused on reliable APIs, distributed workflows, and pragmatic LLM tooling (RAG, evals, orchestration).",
-  "current": "Building ComplianceOS at OnFinance AI (fintech compliance automation).",
-  "roles": ["Backend Engineer", "Distributed Systems", "LLM Tooling Engineer"],
-  "shortDescription": "Backend systems engineer (Python • distributed/cloud) building production LLM tooling",
-  "shortDescriptionLine2": "I ship reliable APIs, workflows, and infra with strong observability and performance.",
+  "kicker": "AI · Agents · Production LLM Systems",
+  "headline": "I build production LLM systems — agents, RAG, and evaluation pipelines that hold up at scale.",
+  "subhead": "AI Engineer focused on agentic workflows, agent memory architectures, and RAG systems processing 1B+ tokens/month in production.",
+  "current": "Analyst — AI & Agent Systems at Future Standard, designing agentic memory architectures and operations-intelligence agent systems.",
+  "roles": ["AI Engineer", "Production LLM Systems", "Agentic Workflows & RAG"],
+  "shortDescription": "AI Engineer building production LLM systems — RAG, LangGraph, agentic workflows at 1B+ tokens/month",
+  "shortDescriptionLine2": "I ship agents, retrieval pipelines, and evals end-to-end: orchestration → APIs → production deployment.",
   "proofPoints": [
     {
       "label": "Primary stack",
-      "value": "Python, FastAPI, Postgres"
+      "value": "Python, FastAPI, LangGraph, LiteLLM"
     },
     {
-      "label": "Systems focus",
-      "value": "Performance, reliability, observability"
+      "label": "AI focus",
+      "value": "Agentic workflows, agent memory, RAG, evals"
     },
     {
-      "label": "LLM tooling",
-      "value": "LangGraph, LiteLLM, RAG"
+      "label": "Production scale",
+      "value": "1B+ tokens/month, 1,500+ hours/year saved"
     },
     {
       "label": "Delivery style",

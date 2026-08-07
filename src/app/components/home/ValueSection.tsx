@@ -4,12 +4,12 @@ import { motion } from "framer-motion";
 
 const values = [
   {
-    label: "Backend-first",
-    body: "APIs, distributed systems, and data pipelines built for production — observable, reliable, fast.",
+    label: "AI-first",
+    body: "Production LLM systems — agents, agentic memory, RAG, and evals built for real operational workloads.",
   },
   {
     label: "LLM tooling",
-    body: "RAG pipelines, agentic workflows, evals, and LiteLLM orchestration over real regulatory-scale corpora.",
+    body: "LangGraph + LiteLLM orchestration, retrieval pipelines, and evaluation at 1B+ tokens/month scale.",
   },
   {
     label: "End-to-end ownership",

@@ -3,6 +3,7 @@ import heroData from "@/data/hero.json";
 import "./globals.css";
 import { ThemeProvider } from "./context/ThemeContext";
 import { getSiteUrl } from "@/lib/profile";
+import { SITE_KEYWORDS } from "@/lib/metadata";
 
 const siteUrl = getSiteUrl();
 const description = [heroData.shortDescription, heroData.shortDescriptionLine2]
@@ -16,6 +17,7 @@ export const metadata: Metadata = {
     template: `%s | Krishnatejaswi Shenthar`,
   },
   description,
+  keywords: SITE_KEYWORDS,
   openGraph: {
     title: `${heroData.name} | Portfolio`,
     description,
