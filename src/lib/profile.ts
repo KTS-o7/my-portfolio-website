@@ -77,7 +77,7 @@ export const getSiteUrl = (origin?: string) => {
     process.env.NEXT_PUBLIC_SITE_URL ||
     (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : undefined);
 
-  const base = envUrl || origin || "http://localhost:3000";
+  const base = envUrl || origin || "https://portfolio.shenthar.me";
   return base.replace(/\/$/, "");
 };
 
