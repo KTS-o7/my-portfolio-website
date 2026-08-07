@@ -1,6 +1,36 @@
 {
   "experience": [
     {
+      "slug": "future-standard",
+      "company": {
+        "name": "Future Standard",
+        "url": "https://www.futurestandard.com/"
+      },
+      "role": "Analyst — AI & Agent Systems",
+      "type": "Full-time",
+      "location": "Bangalore, India",
+      "timeframe": "Jun 2026 – Present",
+      "summary": "Designing agentic memory architectures and building agent systems for operations and process intelligence.",
+      "highlights": [
+        "Designing agentic memory architectures that let AI agents retain and recall operational context across multi-step workflows.",
+        "Building agent systems for operations and process intelligence — automating discovery, decision support, and execution monitoring.",
+        "Owning end-to-end delivery: agent orchestration (LangGraph/LiteLLM), backend APIs, evaluation pipelines, and production deployment."
+      ],
+      "skills": [
+        "AI Agents",
+        "Agentic Memory",
+        "LangGraph",
+        "LiteLLM",
+        "RAG",
+        "LLM Evals",
+        "Python",
+        "FastAPI",
+        "Distributed Systems"
+      ],
+      "caseStudies": [],
+      "selectedProjectIds": []
+    },
+    {
       "slug": "onfinance-ai",
       "company": {
         "name": "OnFinance AI",
@@ -9,15 +39,16 @@
       "role": "AI and Fullstack Engineer",
       "type": "Full-time",
       "location": "Bangalore, India",
-      "timeframe": "Jun 2024 – Present",
-      "summary": "Building ComplianceOS: compliance automation workflows + agentic analysis over large regulatory corpora.",
+      "timeframe": "Jun 2025 – May 2026",
+      "summary": "Built ComplianceOS end-to-end: compliance automation workflows + agentic analysis over large regulatory corpora (DB → backend → cloud → LLM pipelines).",
       "highlights": [
+        "Built ComplianceOS end-to-end (DB → backend → cloud → LLM pipelines), cutting BFSI compliance effort by 1,500+ hours/year; AI features contributed to $800K+ ARR growth.",
         "Owned end-to-end design and migration of a custom RBAC engine (V1→V5) — expression DSL compilation, field-level restrictions, and async context resolution for multi-tenant row-level access over regulatory documents.",
         "Diagnosed and resolved a production OOMKill on a live document parser; root-caused full-document rasterization holding ~4.9 GB RAM, batched processing cut peak memory by 93%, verified and deployed same day.",
         "Eliminated N+1 query patterns across high-traffic service paths via bulk MongoDB $in queries and iterative BFS subtask traversal — 95–99% reduction in DB round-trips with zero API or schema changes.",
         "Replaced in-process concurrency limits with message-queue back-pressure for the AI agent service, decoupling HTTP handlers from run executors and eliminating silent job loss on pod restarts.",
         "Migrated core auth layer from synchronous ODM to async Motor/Beanie across 13 files, resolving event-loop blocking and unawaited-async ordering bugs in audit logs.",
-        "Engineered LangGraph agentic workflows with LiteLLM processing 100M+ tokens/month of SEBI, RBI, and IRDAI regulatory data; built RAG pipeline for clause-level retrieval over DRHPs and compliance circulars.",
+        "Engineered LangGraph agentic workflows with LiteLLM processing 1B+ tokens/month of SEBI, RBI, and IRDAI regulatory data; built production RAG over financial regulations with versioned embeddings and citation grounding for clause-level retrieval over DRHPs and compliance circulars.",
         "Contributed to securing $4.2M Pre-Series A from PeakXV Partners through technical demos and executive presentations of ComplianceOS."
       ],
       "skills": [
@@ -51,10 +82,10 @@
       "role": "SDE Intern",
       "type": "Internship",
       "location": "Bangalore, India",
-      "timeframe": "Jan 2024 – Jun 2024",
+      "timeframe": "Jan 2025 – Jul 2025",
       "summary": "Modernized legacy interfaces and improved app performance through targeted frontend and integration work.",
       "highlights": [
-        "Ported Porting Script Generator from Angular 1.x to React + Redux; increased test coverage by 95% via React Testing Library and reduced load time 4x (2s → <0.5s).",
+        "Ported Porting Script Generator from Angular 1.x to React + Redux; reached 95% test coverage via React Testing Library and made load time 3x faster (2s → <0.5s).",
         "Integrated feature into global CI/CD pipelines with performance regression gates enforcing new load-time thresholds."
       ],
       "skills": [

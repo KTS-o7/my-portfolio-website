@@ -1,9 +1,9 @@
 {
   "image": "/Images/3dlaptop.jpg",
-  "title": "AI & Fullstack Engineer driving innovation",
+  "title": "AI Engineer building production LLM systems",
   "description": {
-    "primary": "I am an AI and Fullstack Engineer at OnFinance AI, where I architect ComplianceOS—a platform delivering 1250+ hours/year savings on BFSI compliance automation. I specialize in engineering Agentic workflows using LangGraph and LiteLLM to handle millions of tokens of regulatory data efficiently.",
-    "secondary": "Previously, as an SDE Intern at RingCentral, I led the modernization of legacy interfaces to React and optimized application performance by 3x. My focus is on creating high-impact, scalable AI solutions for complex domains like fintech and compliance."
+    "primary": "I am an AI Engineer — currently Analyst, AI & Agent Systems at Future Standard — where I design agentic memory architectures that let AI agents retain and recall operational context across multi-step workflows, and build agent systems for operations and process intelligence. I own delivery end-to-end: agent orchestration (LangGraph/LiteLLM), backend APIs, evaluation pipelines, and production deployment.",
+    "secondary": "Previously at OnFinance AI, I built ComplianceOS end-to-end (DB → backend → cloud → LLM pipelines), saving 1,500+ hours/year on BFSI compliance, with AI features contributing to $800K+ ARR and LangGraph + LiteLLM workflows processing 1B+ tokens/month. Before that, as an SDE Intern at RingCentral, I led an Angular 1.x → React migration that made load times 3x faster. My focus is production RAG, agentic workflows, and AI agents for complex domains."
   },
   "location": "Bangalore, India",
   "status": "Available",
@@ -14,11 +14,15 @@
     "TypeScript",
     "SQL",
     "Embedded C",
+    "AI Agents",
     "LangChain",
     "LangGraph",
     "LiteLLM",
     "Langfuse",
     "RAG",
+    "Agentic Memory",
+    "LLM Evals",
+    "VectorDB",
     "Qdrant",
     "ChromaDB",
     "Pydantic",
@@ -49,12 +53,14 @@
       "degree": "BE Computer Science and Engineering",
       "institution": "RV College of Engineering, Bangalore",
       "gpa": "9.28",
-      "period": "Dec 2021 – Jul 2025"
+      "period": "Dec 2021 – Aug 2025"
     }
   ],
   "specializations": [
-    "Agentic AI",
-    "Fullstack Development",
+    "Agentic AI Systems",
+    "Agent Memory Architectures",
+    "RAG & Retrieval Pipelines",
+    "LLM Evals & Observability",
     "System Design",
     "Cloud Infrastructure"
   ],
