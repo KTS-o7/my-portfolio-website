@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 const SITE_NAME = "Krishnatejaswi Shenthar";
-const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://krishnatejaswi.com";
+const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://portfolio.shenthar.me";
 
 export const SITE_KEYWORDS = [
   "Krishnatejaswi Shenthar",
