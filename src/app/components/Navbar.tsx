@@ -64,7 +64,7 @@ const Navbar: FC = () => {
                 {heroData.name}
               </span>
               <span className="hidden sm:block text-[11px] font-mono uppercase tracking-widest text-text-tertiary">
-                Backend · Distributed · LLM tooling
+                AI · Agents · Production LLM Systems
               </span>
             </span>
           </Link>
