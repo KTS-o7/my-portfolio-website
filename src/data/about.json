@@ -1,9 +1,9 @@
 {
-  "image": "/Images/3dlaptop.jpg",
+  "image": "/Images/3dlaptop.webp",
   "title": "AI Engineer building production LLM systems",
   "description": {
-    "primary": "I am an AI Engineer — currently Analyst, AI & Agent Systems at Future Standard — where I design agentic memory architectures that let AI agents retain and recall operational context across multi-step workflows, and build agent systems for operations and process intelligence. I own delivery end-to-end: agent orchestration (LangGraph/LiteLLM), backend APIs, evaluation pipelines, and production deployment.",
-    "secondary": "Previously at OnFinance AI, I built ComplianceOS end-to-end (DB → backend → cloud → LLM pipelines), saving 1,500+ hours/year on BFSI compliance, with AI features contributing to $800K+ ARR and LangGraph + LiteLLM workflows processing 1B+ tokens/month. Before that, as an SDE Intern at RingCentral, I led an Angular 1.x → React migration that made load times 3x faster. My focus is production RAG, agentic workflows, and AI agents for complex domains."
+    "primary": "I am an AI Engineer \u2014 currently Analyst, AI & Agent Systems at Future Standard \u2014 where I design agentic memory architectures that let AI agents retain and recall operational context across multi-step workflows, and build agent systems for operations and process intelligence. I own delivery end-to-end: agent orchestration (LangGraph/LiteLLM), backend APIs, evaluation pipelines, and production deployment.",
+    "secondary": "Previously at OnFinance AI, I built ComplianceOS end-to-end (DB \u2192 backend \u2192 cloud \u2192 LLM pipelines), saving 1,500+ hours/year on BFSI compliance, with AI features contributing to $800K+ ARR and LangGraph + LiteLLM workflows processing 1B+ tokens/month. Before that, as an SDE Intern at RingCentral, I led an Angular 1.x \u2192 React migration that made load times 3x faster. My focus is production RAG, agentic workflows, and AI agents for complex domains."
   },
   "location": "Bangalore, India",
   "status": "Available",
@@ -53,7 +53,7 @@
       "degree": "BE Computer Science and Engineering",
       "institution": "RV College of Engineering, Bangalore",
       "gpa": "9.28",
-      "period": "Dec 2021 – Aug 2025"
+      "period": "Dec 2021 \u2013 Aug 2025"
     }
   ],
   "specializations": [
@@ -65,8 +65,8 @@
     "Cloud Infrastructure"
   ],
   "certifications": [
-    "NPTEL Gold — Soft Computing (Top 5%ile): Fuzzy Logic, Genetic Algorithms, ANNs (Mar 2024)",
-    "NPTEL Gold — Data Science for Engineers (Top 1%ile): Statistics, Linear Algebra, R (Oct 2023)",
+    "NPTEL Gold \u2014 Soft Computing (Top 5%ile): Fuzzy Logic, Genetic Algorithms, ANNs (Mar 2024)",
+    "NPTEL Gold \u2014 Data Science for Engineers (Top 1%ile): Statistics, Linear Algebra, R (Oct 2023)",
     "Lung Classification (IJEECS, Jan 2024): Noise filter effects on deep learning medical imaging. doi:10.11591/ijeecs.v33.i3",
     "Handwritten Tripsheet Analysis (IEEE Xplore, Jul 2023): EasyOCR + regex pipeline achieving 30% accuracy gain. ieeexplore.ieee.org/document/10170030"
   ]
