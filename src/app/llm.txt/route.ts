@@ -1,8 +1,8 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
+import { getSiteUrl } from "@/lib/profile";
 
-export const runtime = "edge";
+export const dynamic = "force-static";
 
-export async function GET(request: NextRequest) {
-  const redirectUrl = new URL("/llms.txt", request.nextUrl);
-  return NextResponse.redirect(redirectUrl, 301);
+export function GET() {
+  return NextResponse.redirect(`${getSiteUrl()}/llms.txt`, 301);
 }
