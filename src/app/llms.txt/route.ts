@@ -1,10 +1,11 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { buildLlmProfileText, getProfileData, getSiteUrl } from "@/lib/profile";
 
-export const runtime = "edge";
+export const dynamic = "force-static";
+export const revalidate = 3600;
 
-export async function GET(request: NextRequest) {
-  const baseUrl = getSiteUrl(request.nextUrl.origin);
+export function GET() {
+  const baseUrl = getSiteUrl();
   const profile = getProfileData(baseUrl);
   const body = buildLlmProfileText(profile);
 
