@@ -24,6 +24,7 @@
     "dompurify": "^3.2.5",
     "dotenv": "^16.4.5",
     "framer-motion": "^12.23.26",
+    "fuse.js": "^7.5.0",
     "geist": "^1.7.2",
     "gray-matter": "^4.0.3",
     "heroicons": "^2.1.1",

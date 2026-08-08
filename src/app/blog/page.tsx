@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import Navbar from "@/app/components/Navbar";
 import Footer from "@/app/components/Footer";
+import BlogIndex, {
+  type BlogPostSummary,
+} from "@/app/components/blog/BlogIndex";
 import {
   formatPostDate,
   getPostsBySection,
@@ -18,7 +20,22 @@ export const metadata: Metadata = buildPageMetadata({
 });
 
 export default function BlogIndexPage() {
-  const sections = getSections();
+  const sections = getSections().map((section) => ({
+    section,
+    label: getSectionLabel(section),
+  }));
+
+  const posts: BlogPostSummary[] = sections.flatMap(({ section, label }) =>
+    getPostsBySection(section).map((post) => ({
+      section: post.section,
+      sectionLabel: label,
+      slug: post.slug,
+      title: post.title,
+      description: post.description ?? "",
+      tags: post.tags,
+      dateLabel: formatPostDate(post.date),
+    })),
+  );
 
   return (
     <main
@@ -39,51 +56,7 @@ export default function BlogIndexPage() {
             infrastructure.
           </p>
 
-          {sections.map((section) => {
-            const posts = getPostsBySection(section);
-            if (posts.length === 0) return null;
-            return (
-              <section key={section} className="mt-16">
-                <div className="flex items-baseline justify-between">
-                  <h2 className="font-mono text-xs uppercase tracking-widest text-text-tertiary">
-                    {getSectionLabel(section)}
-                  </h2>
-                  <Link
-                    href={`/blog/${section}`}
-                    className="font-mono text-xs uppercase tracking-widest text-text-tertiary hover:text-text-primary transition-colors link-underline"
-                  >
-                    All →
-                  </Link>
-                </div>
-                <div className="mt-6">
-                  {posts.map((post) => (
-                    <Link
-                      key={`${post.section}/${post.slug}`}
-                      href={`/blog/${post.section}/${post.slug}`}
-                      className="group grid grid-cols-[auto_1fr] sm:grid-cols-[auto_1fr_auto] items-baseline gap-x-6 gap-y-1 border-t border-border py-5 last:border-b"
-                    >
-                      <span className="font-mono text-xs text-text-tertiary">
-                        {formatPostDate(post.date)}
-                      </span>
-                      <span className="min-w-0">
-                        <span className="block text-base sm:text-lg font-semibold tracking-tight text-text-primary transition-all duration-200 group-hover:translate-x-1 group-hover:text-primary">
-                          {post.title}
-                        </span>
-                        {post.description && (
-                          <span className="mt-1 block text-sm text-text-secondary truncate">
-                            {post.description}
-                          </span>
-                        )}
-                      </span>
-                      <span className="hidden sm:block font-mono text-xs text-text-tertiary transition-transform duration-200 group-hover:translate-x-1">
-                        →
-                      </span>
-                    </Link>
-                  ))}
-                </div>
-              </section>
-            );
-          })}
+          <BlogIndex sections={sections} posts={posts} />
         </div>
       </div>
       <Footer />
