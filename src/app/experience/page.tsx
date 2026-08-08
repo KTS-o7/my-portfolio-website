@@ -3,7 +3,6 @@ import heroData from "@/data/hero.json";
 import Navbar from "@/app/components/Navbar";
 import Footer from "@/app/components/Footer";
 import Experience from "@/app/components/Experience";
-import { ThemeToggle } from "@/app/components/ui/ThemeToggle";
 import { LazyMotionWrapper } from "@/app/components/ui/LazyMotionWrapper";
 
 const title = `Experience | ${heroData.name}`;
@@ -30,8 +29,8 @@ export default function ExperienceIndexPage() {
     >
       <Navbar />
       <div className="pt-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-12 pb-4">
-          <span className="pill">Experience</span>
+        <div className="max-w-[1100px] mx-auto px-4 sm:px-6 pt-12 pb-4">
+          <span className="font-mono text-xs uppercase tracking-widest text-text-tertiary">Experience</span>
           <h1 className="mt-5 text-4xl sm:text-5xl font-semibold tracking-tight text-text-primary">
             Roles &amp; outcomes
           </h1>
@@ -44,7 +43,6 @@ export default function ExperienceIndexPage() {
         </LazyMotionWrapper>
       </div>
       <Footer />
-      <ThemeToggle />
     </main>
   );
 }

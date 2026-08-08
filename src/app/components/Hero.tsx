@@ -5,6 +5,12 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import heroData from "@/data/hero.json";
 
+const metrics = [
+  { value: "1B+", label: "tokens/month in production" },
+  { value: "1,500+", label: "hours/year saved" },
+  { value: "$800K+", label: "ARR growth contributed" },
+];
+
 const Hero: FC = () => {
   const bookingUrl = (heroData as any).bookingUrl as string;
   const resumeUrl = (heroData as any).resumeUrl as string;
@@ -12,35 +18,33 @@ const Hero: FC = () => {
   return (
     <section
       id="home"
-      className="bg-background relative overflow-hidden min-h-screen flex items-start pt-32 md:pt-44 pb-20"
+      className="bg-background relative pt-32 md:pt-44 pb-16"
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 w-full relative z-10">
+      <div className="max-w-[1100px] mx-auto px-4 sm:px-6 w-full relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
-          <header className="lg:col-span-7">
+          <header className="lg:col-span-8">
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
               className="flex flex-col"
             >
-              <span className="pill w-fit">{heroData.kicker}</span>
-
-              <p className="mt-6 font-mono text-xs sm:text-sm uppercase tracking-widest text-text-tertiary">
-                {heroData.name}
+              <p className="font-mono text-xs uppercase tracking-widest text-text-tertiary">
+                {heroData.kicker}
               </p>
 
-              <h1 className="mt-4 text-4xl sm:text-6xl md:text-7xl font-semibold tracking-tight leading-[1.02] text-text-primary max-w-[22ch]">
+              <h1 className="mt-6 text-[clamp(2.5rem,6vw,4rem)] font-semibold tracking-tight leading-[1.04] text-text-primary max-w-[20ch]">
                 {heroData.headline}
               </h1>
-              <p className="mt-4 text-base sm:text-lg text-text-secondary leading-relaxed max-w-[70ch]">
+              <p className="mt-6 text-base sm:text-lg text-text-secondary leading-relaxed max-w-[68ch]">
                 {heroData.subhead}
               </p>
 
-              <p className="mt-6 text-text-tertiary font-mono text-sm leading-relaxed max-w-[70ch]">
+              <p className="mt-6 text-text-tertiary font-mono text-sm leading-relaxed max-w-[68ch]">
                 {heroData.current}
               </p>
 
-              <div className="mt-8 flex flex-wrap gap-3">
+              <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3">
                 {/* Primary CTA */}
                 <a
                   href={bookingUrl}
@@ -51,49 +55,48 @@ const Hero: FC = () => {
                   Book a call
                 </a>
 
-                {/* Secondary CTA */}
-                <Link href="/projects" className="btn btn-secondary">
-                  View selected work
+                {/* Secondary CTAs */}
+                <Link href="/projects" className="btn">
+                  View selected work →
                 </Link>
-
-                {/* Resume CTA */}
                 <a
                   href={resumeUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="btn btn-secondary"
+                  className="btn"
                 >
                   Resume ↗
                 </a>
               </div>
             </motion.div>
 
-            {Array.isArray(heroData.proofPoints) &&
-              heroData.proofPoints.length > 0 && (
-                <dl className="mt-10 grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {heroData.proofPoints.map((point) => (
-                    <div
-                      key={point.label}
-                      className="surface-card p-5 transition-transform duration-200 hover:-translate-y-0.5"
-                    >
-                      <dt className="text-xs font-mono uppercase tracking-widest text-text-tertiary">
-                        {point.label}
-                      </dt>
-                      <dd className="mt-2 text-text-primary">{point.value}</dd>
-                    </div>
-                  ))}
-                </dl>
-              )}
+            {/* Oversized inline metrics */}
+            <motion.dl
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.15 }}
+              className="mt-14 grid grid-cols-1 sm:grid-cols-3 gap-8 border-t border-border pt-8"
+            >
+              {metrics.map((metric) => (
+                <div key={metric.label}>
+                  <dd className="text-4xl sm:text-5xl font-semibold tracking-tight text-text-primary">
+                    {metric.value}
+                  </dd>
+                  <dt className="mt-2 font-mono text-xs uppercase tracking-widest text-text-tertiary">
+                    {metric.label}
+                  </dt>
+                </div>
+              ))}
+            </motion.dl>
           </header>
 
-          <aside className="lg:col-span-5 order-first lg:order-last">
+          <aside className="lg:col-span-4 order-first lg:order-last">
             <motion.figure
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.05 }}
-              className="surface-card p-5"
             >
-              <div className="relative overflow-hidden rounded-[14px] border border-[var(--border)] aspect-[4/5] bg-[color-mix(in_oklab,var(--color-surface)_88%,transparent)]">
+              <div className="relative overflow-hidden border border-border aspect-[4/5] max-w-[280px]">
                 <Image
                   src={heroData.image}
                   alt={`${heroData.name} portrait`}
@@ -102,44 +105,13 @@ const Hero: FC = () => {
                   className="object-cover"
                 />
               </div>
-              <figcaption className="mt-4 text-sm text-text-secondary">
+              <figcaption className="mt-4 text-sm text-text-secondary max-w-[280px]">
                 <span className="font-mono text-xs uppercase tracking-widest text-text-tertiary">
                   Now
                 </span>
                 <div className="mt-1">{heroData.current}</div>
               </figcaption>
             </motion.figure>
-
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.12 }}
-              className="surface-card p-5 mt-5"
-            >
-              <h2 className="font-mono text-xs uppercase tracking-widest text-text-tertiary">
-                How I Work
-              </h2>
-              <p className="mt-3 text-sm text-text-secondary leading-relaxed">
-                I optimize for clarity and operational confidence — the kind you
-                feel at 2am.
-              </p>
-
-              <div className="mt-4 grid grid-cols-2 gap-3 text-sm">
-                {[
-                  "Define contracts",
-                  "Design workflows",
-                  "Make it observable",
-                  "Ship + iterate",
-                ].map((item) => (
-                  <div
-                    key={item}
-                    className="rounded-[14px] border border-[var(--border)] bg-[color-mix(in_oklab,var(--color-surface)_86%,transparent)] p-3"
-                  >
-                    {item}
-                  </div>
-                ))}
-              </div>
-            </motion.div>
           </aside>
         </div>
       </div>

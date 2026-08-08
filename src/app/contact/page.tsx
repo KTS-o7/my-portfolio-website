@@ -4,7 +4,6 @@ import contactData from "@/data/contact.json";
 import Navbar from "@/app/components/Navbar";
 import Footer from "@/app/components/Footer";
 import Contact from "@/app/components/Contact";
-import { ThemeToggle } from "@/app/components/ui/ThemeToggle";
 import { buildPageMetadata } from "@/lib/metadata";
 
 export const metadata: Metadata = buildPageMetadata({
@@ -25,9 +24,9 @@ export default function ContactPage() {
       className="flex min-h-screen flex-col bg-background transition-colors duration-300"
     >
       <Navbar />
-      <div className="pt-24 max-w-7xl mx-auto px-4 sm:px-6 w-full">
-        <header className="py-12 border-b border-text-tertiary/10">
-          <span className="pill">Available</span>
+      <div className="pt-24 max-w-[1100px] mx-auto px-4 sm:px-6 w-full">
+        <header className="py-12 border-b border-border">
+          <span className="font-mono text-xs uppercase tracking-widest text-text-tertiary">Available</span>
           <h1 className="mt-5 text-4xl sm:text-5xl font-semibold tracking-tight text-text-primary">
             Let&apos;s work together
           </h1>
@@ -51,7 +50,6 @@ export default function ContactPage() {
       </div>
       <Contact showTopBorder={false} />
       <Footer />
-      <ThemeToggle />
     </main>
   );
 }

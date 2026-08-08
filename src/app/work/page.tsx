@@ -2,7 +2,6 @@ import heroData from "@/data/hero.json";
 import Navbar from "@/app/components/Navbar";
 import Footer from "@/app/components/Footer";
 import Experience from "@/app/components/Experience";
-import { ThemeToggle } from "@/app/components/ui/ThemeToggle";
 import { buildPageMetadata } from "@/lib/metadata";
 
 export const metadata = buildPageMetadata({
@@ -23,7 +22,6 @@ export default function WorkIndexPage() {
         <Experience showTopBorder={false} showSeeMore={false} />
       </div>
       <Footer />
-      <ThemeToggle />
     </main>
   );
 }

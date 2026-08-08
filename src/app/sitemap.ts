@@ -12,8 +12,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     lastModified,
   })) || [];
 
-  const caseStudyUrls = (workData.work || []).map((item) => ({
-    url: `${siteUrl}/case-studies/${item.slug}`,
+  const workUrls = (workData.work || []).map((item) => ({
+    url: `${siteUrl}/work/${item.slug}`,
     lastModified,
   }));
 
@@ -25,7 +25,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${siteUrl}/contact`, lastModified },
     { url: `${siteUrl}/experience`, lastModified },
     ...experienceUrls,
-    ...caseStudyUrls,
+    ...workUrls,
     { url: `${siteUrl}/llms.txt`, lastModified },
   ];
 }

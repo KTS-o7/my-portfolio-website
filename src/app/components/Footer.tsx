@@ -7,19 +7,18 @@ const Footer: React.FC = () => {
   const github = contactData.socialMedia?.find((item) => item.platform === "github")?.url;
   const twitter = contactData.socialMedia?.find((item) => item.platform === "twitter")?.url;
   const linkedin = contactData.socialMedia?.find((item) => item.platform === "linkedin")?.url;
-  const bookingUrl = (contactData as any).bookingUrl as string | undefined;
   const resumeUrl = (contactData as any).resumeUrl as string | undefined;
 
   return (
-    <footer className="bg-background border-t border-text-tertiary/20 py-10">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6">
+    <footer className="bg-background border-t border-border py-10">
+      <div className="max-w-[1100px] mx-auto px-4 sm:px-6">
         <div className="flex flex-col md:flex-row justify-between items-start gap-8">
           {/* Left: identity */}
           <div className="flex-shrink-0">
             <div className="text-text-primary font-semibold tracking-tight">
               Krishnatejaswi Shenthar
             </div>
-            <div className="mt-1 text-xs font-mono uppercase tracking-widest text-text-tertiary">
+            <div className="mt-1 font-mono text-xs uppercase tracking-widest text-text-tertiary">
               AI · Agents · Production LLM Systems
             </div>
             <div className="mt-3 text-sm text-text-secondary max-w-[32ch]">
@@ -33,7 +32,7 @@ const Footer: React.FC = () => {
             aria-label="Footer navigation"
             className="flex flex-col gap-2 text-sm"
           >
-          <span className="text-xs font-mono uppercase tracking-widest text-text-tertiary mb-1">
+            <span className="font-mono text-xs uppercase tracking-widest text-text-tertiary mb-1">
               Pages
             </span>
             <Link href="/experience" className="text-text-secondary hover:text-text-primary transition-colors">
@@ -53,27 +52,30 @@ const Footer: React.FC = () => {
             </Link>
           </nav>
 
-          {/* Right: social + utility */}
+          {/* Right: social links */}
           <nav
             aria-label="Footer links"
-            className="flex flex-wrap gap-3"
+            className="flex flex-col gap-2 text-sm"
           >
+            <span className="font-mono text-xs uppercase tracking-widest text-text-tertiary mb-1">
+              Elsewhere
+            </span>
             {github && (
-              <Link href={github} target="_blank" rel="noopener noreferrer" className="btn btn-secondary">
-                GitHub
+              <Link href={github} target="_blank" rel="noopener noreferrer" className="text-text-secondary hover:text-text-primary transition-colors link-underline w-fit">
+                GitHub ↗
               </Link>
             )}
             {twitter && (
-              <Link href={twitter} target="_blank" rel="noopener noreferrer" className="btn btn-secondary">
-                Twitter
+              <Link href={twitter} target="_blank" rel="noopener noreferrer" className="text-text-secondary hover:text-text-primary transition-colors link-underline w-fit">
+                Twitter ↗
               </Link>
             )}
             {linkedin && (
-              <Link href={linkedin} target="_blank" rel="noopener noreferrer" className="btn btn-secondary">
-                LinkedIn
+              <Link href={linkedin} target="_blank" rel="noopener noreferrer" className="text-text-secondary hover:text-text-primary transition-colors link-underline w-fit">
+                LinkedIn ↗
               </Link>
             )}
-            <a href={`mailto:${contactData.email}`} className="btn btn-secondary">
+            <a href={`mailto:${contactData.email}`} className="text-text-secondary hover:text-text-primary transition-colors link-underline w-fit">
               Email
             </a>
             {resumeUrl && (
@@ -81,26 +83,16 @@ const Footer: React.FC = () => {
                 href={resumeUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn btn-secondary"
+                className="text-text-secondary hover:text-text-primary transition-colors link-underline w-fit"
               >
                 Resume ↗
-              </a>
-            )}
-            {bookingUrl && (
-              <a
-                href={bookingUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn btn-primary"
-              >
-                Book a call
               </a>
             )}
           </nav>
         </div>
 
         {/* Bottom copyright row */}
-        <div className="mt-8 pt-6 border-t border-text-tertiary/10 text-xs text-text-tertiary">
+        <div className="mt-8 pt-6 border-t border-border font-mono text-xs text-text-tertiary">
           © {new Date().getFullYear()} Krishnatejaswi Shenthar
         </div>
       </div>

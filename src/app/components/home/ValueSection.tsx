@@ -19,26 +19,29 @@ const values = [
 
 export default function ValueSection() {
   return (
-    <section className="bg-background py-20 sm:py-24 border-t border-text-tertiary/10">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6">
+    <section className="bg-background py-20 sm:py-24">
+      <div className="max-w-[1100px] mx-auto px-4 sm:px-6">
         <motion.div initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-          <span className="pill">Why work with me</span>
-          <h2 className="mt-5 text-3xl sm:text-4xl font-semibold tracking-tight text-text-primary">
+          <p className="font-mono text-xs uppercase tracking-widest text-text-tertiary">
+            Why work with me
+          </p>
+          <h2 className="mt-4 text-2xl sm:text-3xl font-semibold tracking-tight text-text-primary">
             What I bring to a team
           </h2>
         </motion.div>
 
-        <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-5">
+        <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-x-10 gap-y-8 border-t border-border pt-10">
           {values.map((v, i) => (
             <motion.div
               key={v.label}
               initial={{ opacity: 0, y: 12 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: i * 0.08 }}
-              className="surface-card p-6"
+              transition={{ delay: i * 0.06 }}
             >
-              <h3 className="font-mono text-xs uppercase tracking-widest text-text-tertiary">{v.label}</h3>
+              <h3 className="font-mono text-xs uppercase tracking-widest text-text-tertiary">
+                {v.label}
+              </h3>
               <p className="mt-3 text-text-secondary leading-relaxed">{v.body}</p>
             </motion.div>
           ))}

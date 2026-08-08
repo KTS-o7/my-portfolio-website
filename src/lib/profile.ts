@@ -177,7 +177,7 @@ export const buildLlmProfileText = (profile: ProfileData) => {
       .map((item) => {
         const company = item.company?.name ? ` (${item.company.name})` : "";
         const shortDescription = item.subtitle || item.summary?.[0] || "";
-        const url = `${profile.links.website}/case-studies/${item.slug}`;
+        const url = `${profile.links.website}/work/${item.slug}`;
         return `- ${item.title}${company}: ${shortDescription} — ${url}`;
       })
       .join("\n");
@@ -209,7 +209,7 @@ export const buildLlmProfileText = (profile: ProfileData) => {
       [
         `- Home: ${profile.links.website}/`,
         `- Experience: ${profile.links.website}/experience`,
-        `- Case studies: ${profile.links.website}/case-studies/complianceos`,
+        `- Featured work: ${profile.links.website}/work/complianceos`,
         `- Projects: ${profile.links.website}/projects`,
         `- About: ${profile.links.website}/about`,
         `- Contact: ${profile.links.website}/contact`,
@@ -315,7 +315,7 @@ export const buildJsonLd = (profile: ProfileData, baseUrl: string) => {
     "@id": `${baseUrl}#featured-work-${index + 1}`,
     name: item.title,
     description: item.summary?.join(" ") || "",
-    url: `${baseUrl}/case-studies/${item.slug}`,
+    url: `${baseUrl}/work/${item.slug}`,
     creator: { "@id": personId },
     publisher: {
       "@type": "Organization",

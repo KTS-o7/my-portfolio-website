@@ -1,75 +1,89 @@
 "use client";
 import React from "react";
+import Link from "next/link";
 import techData from "@/data/technologies.json";
-import NextImage from "next/image";
+
+const groups: { label: string; names: string[] }[] = [
+  {
+    label: "Languages",
+    names: ["Python", "JavaScript", "TypeScript", "C++", "Java", "Go"],
+  },
+  {
+    label: "Backend & Data",
+    names: ["FastAPI", "Node.js", "PostgreSQL", "MongoDB", "Redis", "Kafka"],
+  },
+  {
+    label: "AI & LLM",
+    names: ["LangGraph", "LiteLLM", "LangChain", "OpenAI", "Hugging Face"],
+  },
+  {
+    label: "Infra",
+    names: ["AWS", "Docker", "Kubernetes", "Terraform", "GitHub Actions"],
+  },
+  {
+    label: "Frontend",
+    names: ["React", "Next.js", "Tailwind CSS", "Angular"],
+  },
+];
 
 export const TechStack = () => {
-  const coreSet = new Set([
-    "Python",
-    "FastAPI",
-    "PostgreSQL",
-    "AWS",
-    "Docker",
-    "Kubernetes",
-    "LangGraph",
-    "LiteLLM",
-  ]);
-
-  const core = techData.technologies.filter((tech) => coreSet.has(tech.name));
-  const rest = techData.technologies.filter((tech) => !coreSet.has(tech.name));
+  const available = new Set(techData.technologies.map((tech) => tech.name));
+  const known = groups
+    .map((group) => ({
+      label: group.label,
+      items: group.names.filter((name) => available.has(name)),
+    }))
+    .filter((group) => group.items.length > 0);
+  const grouped = new Set(known.flatMap((group) => group.items));
+  const rest = techData.technologies
+    .map((tech) => tech.name)
+    .filter((name) => !grouped.has(name));
 
   return (
-    <section aria-labelledby="toolbox" className="surface-card p-6 sm:p-8">
+    <section aria-labelledby="toolbox" className="border-t border-border pt-10">
       <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
         <div>
-          <span className="pill">Toolbox</span>
+          <p className="font-mono text-xs uppercase tracking-widest text-text-tertiary">
+            Toolbox
+          </p>
           <h3
             id="toolbox"
             className="mt-4 text-xl sm:text-2xl font-semibold tracking-tight text-text-primary"
           >
             Tools I reach for in production
           </h3>
-          <p className="mt-3 text-text-secondary leading-relaxed max-w-[72ch]">
+          <p className="mt-3 text-text-secondary leading-relaxed">
             A curated core set, plus a wider toolbox depending on the problem.
           </p>
         </div>
-        <div className="text-xs font-mono uppercase tracking-widest text-text-tertiary">
+        <div className="font-mono text-xs uppercase tracking-widest text-text-tertiary">
           Total: {techData.technologies.length}
         </div>
       </div>
 
-      <div className="mt-6 flex flex-wrap gap-2">
-        {core.map((tech) => (
-          <span key={tech.name} className="pill">
-            {tech.name}
-          </span>
+      <dl className="mt-8 space-y-5">
+        {known.map((group) => (
+          <div key={group.label}>
+            <dt className="font-mono text-xs uppercase tracking-widest text-text-tertiary">
+              {group.label}
+            </dt>
+            <dd className="mt-2 text-text-secondary leading-relaxed">
+              {group.items.join(", ")}
+            </dd>
+          </div>
         ))}
-      </div>
+      </dl>
 
-      <details className="mt-8 rounded-[14px] border border-[var(--border)] p-4">
-        <summary className="cursor-pointer text-text-secondary">
-          Full toolbox
-        </summary>
-        <ul className="mt-4 columns-2 md:columns-3 gap-6">
-          {rest.map((tech) => (
-            <li
-              key={tech.name}
-              className="break-inside-avoid flex items-center gap-2 py-1 text-sm text-text-tertiary"
-            >
-              <span className="relative h-5 w-5 flex-shrink-0">
-                <NextImage
-                  src={tech.logo}
-                  alt=""
-                  fill
-                  sizes="20px"
-                  className="object-contain opacity-80"
-                />
-              </span>
-              <span>{tech.name}</span>
-            </li>
-          ))}
-        </ul>
-      </details>
+      {rest.length > 0 && (
+        <details className="mt-8 border-t border-border pt-4">
+          <summary className="cursor-pointer text-text-secondary">
+            Full toolbox
+          </summary>
+          <p className="mt-4 text-sm text-text-tertiary leading-relaxed">
+            {rest.join(", ")}
+          </p>
+        </details>
+      )}
     </section>
   );
 };
