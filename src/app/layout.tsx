@@ -6,6 +6,8 @@ import "./globals.css";
 import { ThemeProvider } from "./context/ThemeContext";
 import { getSiteUrl } from "@/lib/profile";
 import { SITE_KEYWORDS } from "@/lib/metadata";
+import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const siteUrl = getSiteUrl();
 const description = [heroData.shortDescription, heroData.shortDescriptionLine2]
@@ -63,6 +65,8 @@ export default function RootLayout({
         className={`${GeistSans.variable} ${jetBrainsMono.variable} font-sans antialiased`}
       >
         <ThemeProvider>{children}</ThemeProvider>
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
