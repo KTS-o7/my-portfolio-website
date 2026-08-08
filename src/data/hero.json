@@ -1,13 +1,17 @@
 {
-  "image": "/Hero.png",
+  "image": "/hero-portrait.webp",
   "name": "Krishnatejaswi Shenthar",
-  "kicker": "AI · Agents · Production LLM Systems",
-  "headline": "I build production LLM systems — agents, RAG, and evaluation pipelines that hold up at scale.",
+  "kicker": "AI \u00b7 Agents \u00b7 Production LLM Systems",
+  "headline": "I build production LLM systems \u2014 agents, RAG, and evaluation pipelines that hold up at scale.",
   "subhead": "AI Engineer focused on agentic workflows, agent memory architectures, and RAG systems processing 1B+ tokens/month in production.",
-  "current": "Analyst — AI & Agent Systems at Future Standard, designing agentic memory architectures and operations-intelligence agent systems.",
-  "roles": ["AI Engineer", "Production LLM Systems", "Agentic Workflows & RAG"],
-  "shortDescription": "AI Engineer building production LLM systems — RAG, LangGraph, agentic workflows at 1B+ tokens/month",
-  "shortDescriptionLine2": "I ship agents, retrieval pipelines, and evals end-to-end: orchestration → APIs → production deployment.",
+  "current": "Analyst \u2014 AI & Agent Systems at Future Standard, designing agentic memory architectures and operations-intelligence agent systems.",
+  "roles": [
+    "AI Engineer",
+    "Production LLM Systems",
+    "Agentic Workflows & RAG"
+  ],
+  "shortDescription": "AI Engineer building production LLM systems \u2014 RAG, LangGraph, agentic workflows at 1B+ tokens/month",
+  "shortDescriptionLine2": "I ship agents, retrieval pipelines, and evals end-to-end: orchestration \u2192 APIs \u2192 production deployment.",
   "proofPoints": [
     {
       "label": "Primary stack",
@@ -23,7 +27,7 @@
     },
     {
       "label": "Delivery style",
-      "value": "End‑to‑end: design → deploy"
+      "value": "End\u2011to\u2011end: design \u2192 deploy"
     }
   ],
   "bookingUrl": "https://calendar.app.google/zjsY3uvWa4avw1wq6",

@@ -1,7 +1,6 @@
 "use client";
 import React, { FC } from "react";
 import Image from "next/image";
-import { motion } from "framer-motion";
 import Link from "next/link";
 import heroData from "@/data/hero.json";
 
@@ -23,12 +22,7 @@ const Hero: FC = () => {
       <div className="max-w-[1100px] mx-auto px-4 sm:px-6 w-full relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
           <header className="lg:col-span-8">
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              className="flex flex-col"
-            >
+            <div className="flex flex-col">
               <p className="font-mono text-xs uppercase tracking-widest text-text-tertiary">
                 {heroData.kicker}
               </p>
@@ -68,15 +62,10 @@ const Hero: FC = () => {
                   Resume ↗
                 </a>
               </div>
-            </motion.div>
+            </div>
 
             {/* Oversized inline metrics */}
-            <motion.dl
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.15 }}
-              className="mt-14 grid grid-cols-1 sm:grid-cols-3 gap-8 border-t border-border pt-8"
-            >
+            <dl className="mt-14 grid grid-cols-1 sm:grid-cols-3 gap-8 border-t border-border pt-8">
               {metrics.map((metric) => (
                 <div key={metric.label}>
                   <dd className="text-4xl sm:text-5xl font-semibold tracking-tight text-text-primary">
@@ -87,21 +76,19 @@ const Hero: FC = () => {
                   </dt>
                 </div>
               ))}
-            </motion.dl>
+            </dl>
           </header>
 
           <aside className="lg:col-span-4 order-first lg:order-last">
-            <motion.figure
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.05 }}
-            >
+            {/* LCP element: no entrance animation — it must paint immediately */}
+            <figure>
               <div className="relative overflow-hidden border border-border aspect-[4/5] max-w-[280px]">
                 <Image
                   src={heroData.image}
                   alt={`${heroData.name} portrait`}
                   fill
                   priority
+                  sizes="(max-width: 1024px) 280px, 280px"
                   className="object-cover"
                 />
               </div>
@@ -111,7 +98,7 @@ const Hero: FC = () => {
                 </span>
                 <div className="mt-1">{heroData.current}</div>
               </figcaption>
-            </motion.figure>
+            </figure>
           </aside>
         </div>
       </div>
