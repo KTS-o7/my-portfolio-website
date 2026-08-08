@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import Navbar from "@/app/components/Navbar";
 import Footer from "@/app/components/Footer";
+import SearchablePosts from "@/app/components/blog/SearchablePosts";
 import {
   formatPostDate,
   getPostsBySection,
@@ -58,32 +59,18 @@ export default async function BlogSectionPage({
             {getSectionLabel(section)}
           </h1>
 
-          <div className="mt-10">
-            {posts.map((post) => (
-              <Link
-                key={post.slug}
-                href={`/blog/${post.section}/${post.slug}`}
-                className="group grid grid-cols-[auto_1fr] sm:grid-cols-[auto_1fr_auto] items-baseline gap-x-6 gap-y-1 border-t border-border py-5 last:border-b"
-              >
-                <span className="font-mono text-xs text-text-tertiary">
-                  {formatPostDate(post.date)}
-                </span>
-                <span className="min-w-0">
-                  <span className="block text-base sm:text-lg font-semibold tracking-tight text-text-primary transition-all duration-200 group-hover:translate-x-1 group-hover:text-primary">
-                    {post.title}
-                  </span>
-                  {post.description && (
-                    <span className="mt-1 block text-sm text-text-secondary truncate">
-                      {post.description}
-                    </span>
-                  )}
-                </span>
-                <span className="hidden sm:block font-mono text-xs text-text-tertiary transition-transform duration-200 group-hover:translate-x-1">
-                  →
-                </span>
-              </Link>
-            ))}
-          </div>
+          <SearchablePosts
+            posts={posts.map((post) => ({
+              section: post.section,
+              sectionLabel: getSectionLabel(post.section),
+              slug: post.slug,
+              title: post.title,
+              description: post.description ?? "",
+              tags: post.tags,
+              dateLabel: formatPostDate(post.date),
+            }))}
+            placeholder={`Search ${getSectionLabel(section).toLowerCase()} — try a title, tag, or year…`}
+          />
         </div>
       </div>
       <Footer />
