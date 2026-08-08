@@ -1,0 +1,51 @@
++++
+title = 'Permutations'
+date = 2025-09-18T22:49:10+05:30
+draft = false
+math = true
+author = "Krishnatejaswi S"
+description = "CSES permutations — constructing a permutation of 1..n with no two adjacent elements differing by 1, using an interleaving strategy."
+tags = ["competitive-programming", "cses", "algorithms", "combinatorics"]
++++
+
+Link to the problem : [Permutations](https://cses.fi/problemset/task/1070)
+
+## Intuition
+The idea is to generate a permutation of the numbers from 1 to n such that the difference between any two consecutive elements is at least greater than 1.
+
+One way to do this is to first write all the even numbers between 1 and n in increasing order and then write all the odd numbers between 1 and n in increasing order.
+
+This is only one such solution. There are other solutions as well.
+
+Edge case:
+- If n is 1, print 1. this is  because there are no consecutive elements in the permutation, hence is a valid permutation.
+- If n is less than 4, print "NO SOLUTION".
+ because for n < 4, any permutation will have a difference between any two consecutive elements less than 1.
+ example 
+ 1 2 3 4, 1 3 2 4, 1 3 4 2, etc are not valid permutations.
+
+
+
+## Solution
+```python
+def main():
+    n = int(input())
+    if n == 1:
+        print(1)
+        return
+    if n < 4:
+        print("NO SOLUTION")
+        return
+    for i in range(2,n+1,2):
+        print(i, end=" ")
+    for i in range(1,n+1,2):
+        print(i, end=" ")
+
+if __name__ == "__main__":
+    main()
+```
+
+### Other possible solutions
+- Write all the odd numbers between 1 and n in increasing order and then write all the even numbers between 1 and n in increasing order.
+- Write all the odd numbers between 1 and n in decreasing order and then write all the even numbers between 1 and n in decreasing order.
+- Write all the even numbers between 1 and n in increasing order and then write all the odd numbers between 1 and n in decreasing order.
