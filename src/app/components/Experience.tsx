@@ -14,7 +14,6 @@ type ExperienceEntry = {
   summary?: string;
   highlights?: string[];
   skills?: string[];
-  caseStudies?: { title: string; href: string }[];
 };
 
 export default function Experience({
@@ -139,16 +138,6 @@ export default function Experience({
                     >
                       View experience →
                     </Link>
-                    {Array.isArray(entry.caseStudies) &&
-                      entry.caseStudies.map((cs) => (
-                        <Link
-                          key={cs.href}
-                          href={cs.href}
-                          className="link-underline text-text-secondary font-mono text-sm"
-                        >
-                          {cs.title} →
-                        </Link>
-                      ))}
                   </div>
                 </div>
               </div>

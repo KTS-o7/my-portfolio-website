@@ -16,7 +16,6 @@ type ExperienceEntry = {
   summary?: string;
   highlights?: string[];
   skills?: string[];
-  caseStudies?: { title: string; href: string }[];
   selectedProjectIds?: number[];
 };
 
@@ -147,27 +146,6 @@ export default async function CompanyExperiencePage({
           </section>
         )}
 
-        {Array.isArray(entry.caseStudies) && entry.caseStudies.length > 0 && (
-          <section className="mt-10 border-t border-border pt-8">
-            <h2 className="font-mono text-xs uppercase tracking-widest text-text-tertiary">Case studies</h2>
-            <div className="mt-5 space-y-3">
-              {entry.caseStudies.map((cs) => {
-                const href = cs.href.startsWith("/work/complianceos")
-                  ? "/case-studies/complianceos"
-                  : cs.href;
-                return (
-                  <Link
-                    key={cs.href}
-                    href={href}
-                    className="block w-fit link-underline text-text-primary"
-                  >
-                    {cs.title} →
-                  </Link>
-                );
-              })}
-            </div>
-          </section>
-        )}
 
         {selectedProjects.length > 0 && (
           <section className="mt-10 border-t border-border pt-8">
