@@ -5,8 +5,6 @@ import Script from "next/script";
 import { LazyMotionWrapper } from "./components/ui/LazyMotionWrapper";
 import { buildJsonLd, getProfileData, getSiteUrl } from "@/lib/profile";
 import MarqueeStrip from "./components/home/MarqueeStrip";
-import { Analytics } from "@vercel/analytics/react";
-import { SpeedInsights } from "@vercel/speed-insights/next";
 import FeaturedExperience from "./components/home/FeaturedExperience";
 import FeaturedProjects from "./components/home/FeaturedProjects";
 import ValueSection from "./components/home/ValueSection";
@@ -36,8 +34,6 @@ export default function Home() {
         <LatestWriting />
         <CtaSection />
         <Footer />
-        <Analytics />
-        <SpeedInsights />
       </main>
     </LazyMotionWrapper>
   );
