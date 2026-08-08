@@ -4,8 +4,7 @@ import Footer from "./components/Footer";
 import Script from "next/script";
 import { LazyMotionWrapper } from "./components/ui/LazyMotionWrapper";
 import { buildJsonLd, getProfileData, getSiteUrl } from "@/lib/profile";
-import { ThemeToggle } from "./components/ui/ThemeToggle";
-// import { ThemePreviewPanel } from "./components/ui/ThemePreviewPanel";
+import MarqueeStrip from "./components/home/MarqueeStrip";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import FeaturedExperience from "./components/home/FeaturedExperience";
@@ -29,13 +28,12 @@ export default function Home() {
       <main id="content" className="flex min-h-screen flex-col bg-background transition-colors duration-300">
         <Navbar />
         <Hero />
+        <MarqueeStrip />
         <FeaturedExperience />
         <FeaturedProjects />
         <ValueSection />
         <CtaSection />
         <Footer />
-        <ThemeToggle />
-        {/* <ThemePreviewPanel /> */}
         <Analytics />
         <SpeedInsights />
       </main>

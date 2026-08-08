@@ -24,6 +24,7 @@
     "dompurify": "^3.2.5",
     "dotenv": "^16.4.5",
     "framer-motion": "^12.23.26",
+    "geist": "^1.7.2",
     "heroicons": "^2.1.1",
     "json2csv": "^6.0.0-alpha.2",
     "next": "^16.1.1",

@@ -10,59 +10,75 @@ export default function FeaturedProjects() {
     .slice(0, 3);
 
   return (
-    <section className="bg-background py-20 sm:py-24 border-t border-text-tertiary/10">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6">
+    <section className="bg-background py-20 sm:py-24">
+      <div className="max-w-[1100px] mx-auto px-4 sm:px-6">
         <motion.div initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-          <span className="pill">Selected work</span>
-          <h2 className="mt-5 text-3xl sm:text-4xl font-semibold tracking-tight text-text-primary">
+          <p className="font-mono text-xs uppercase tracking-widest text-text-tertiary">
+            Selected work
+          </p>
+          <h2 className="mt-4 text-2xl sm:text-3xl font-semibold tracking-tight text-text-primary">
             Projects that show how I think
           </h2>
         </motion.div>
 
-        <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-5">
+        <div className="mt-10">
           {projects.map((project, i) => {
             const url =
               (project.links as any)?.demo ||
               (project.links as any)?.paper ||
               (project.links as any)?.source ||
               project.link;
+            const meta = project.tag.filter((t) => t !== "All").join(" · ");
+            const inner = (
+              <>
+                <span className="font-mono text-xs text-text-tertiary">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <span className="min-w-0">
+                  <span className="block text-lg sm:text-xl font-semibold tracking-tight text-text-primary transition-all duration-200 group-hover:translate-x-1 group-hover:text-primary">
+                    {project.name}
+                  </span>
+                  <span className="mt-1 block text-sm text-text-secondary truncate">
+                    {project.description}
+                  </span>
+                </span>
+                <span className="col-start-2 sm:col-start-auto font-mono text-xs uppercase tracking-widest text-text-tertiary sm:text-right">
+                  {meta}
+                  <span className="ml-3 inline-block transition-transform duration-200 group-hover:translate-x-1">
+                    →
+                  </span>
+                </span>
+              </>
+            );
             return (
-              <motion.article
+              <motion.div
                 key={project.id}
                 initial={{ opacity: 0, y: 12 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: i * 0.08 }}
-                className="surface-card p-6 flex flex-col justify-between gap-5"
+                transition={{ delay: i * 0.06 }}
               >
-                <div>
-                  <h3 className="text-base font-semibold tracking-tight text-text-primary">{project.name}</h3>
-                  <p className="mt-2 text-text-secondary text-sm leading-relaxed line-clamp-4">{project.description}</p>
-                  {project.tech && (
-                    <div className="mt-4 flex flex-wrap gap-1.5">
-                      {project.tech.slice(0, 4).map((t) => (
-                        <span key={t} className="pill text-[11px]">{t}</span>
-                      ))}
-                    </div>
-                  )}
-                </div>
-                {url && (
+                {url ? (
                   <a
                     href={url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="btn btn-secondary text-sm w-fit"
+                    className="group grid grid-cols-[auto_1fr] sm:grid-cols-[auto_1fr_auto] items-baseline gap-x-6 gap-y-2 border-t border-border py-6 last:border-b"
                   >
-                    View →
+                    {inner}
                   </a>
+                ) : (
+                  <div className="group grid grid-cols-[auto_1fr] sm:grid-cols-[auto_1fr_auto] items-baseline gap-x-6 gap-y-2 border-t border-border py-6 last:border-b">
+                    {inner}
+                  </div>
                 )}
-              </motion.article>
+              </motion.div>
             );
           })}
         </div>
 
         <div className="mt-8">
-          <Link href="/projects" className="btn btn-secondary">
+          <Link href="/projects" className="btn">
             See all projects →
           </Link>
         </div>

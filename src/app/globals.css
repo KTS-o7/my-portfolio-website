@@ -3,231 +3,65 @@
 @tailwind utilities;
 
 /* ============================================================
-   Palette CSS variable blocks — applied via data-palette attr
-   7 palettes: inkTeal, goldTeal, forestPink, purpleYellow,
-   blueGold, darkGreenGold, navyBlueGold
+   Single palette: gruvbox — applied via data-palette attr.
+   Dark is the default block; .light overrides.
    ============================================================ */
 
-/* === Palette: inkTeal (default) === */
-html[data-palette="inkTeal"] {
-  --color-background: #0b0f14;
-  --color-surface: #0f1823;
-  --color-primary: #f59e0b;
-  --color-secondary: #14b8a6;
-  --color-accent: #e2e8f0;
-  --color-text-primary: #e6edf3;
-  --color-text-secondary: #b6c2d2;
-  --color-text-tertiary: #7b8797;
-}
-html[data-palette="inkTeal"].light {
-  --color-background: #fbf7f2;
-  --color-surface: #ffffff;
-  --color-primary: #b45309;
-  --color-secondary: #0f766e;
-  --color-accent: #0f172a;
-  --color-text-primary: #0f172a;
-  --color-text-secondary: #334155;
-  --color-text-tertiary: #64748b;
+html[data-palette="gruvbox"] {
+  color-scheme: dark;
+  --color-background: #282828;
+  --color-surface: #32302f;
+  --color-primary: #fabd2f;
+  --color-secondary: #8ec07c;
+  --color-accent: #ebdbb2;
+  --color-text-primary: #ebdbb2;
+  --color-text-secondary: #d5c4a1;
+  --color-text-tertiary: #a89984;
+  --color-border: color-mix(in oklab, var(--color-text-primary) 12%, transparent);
+  --ring: color-mix(in oklab, var(--color-primary) 65%, transparent);
 }
 
-/* === Palette: goldTeal === */
-html[data-palette="goldTeal"] {
-  --color-background: #050e0d;
-  --color-surface: #0a1a18;
-  --color-primary: #FFBA00;
-  --color-secondary: #11AC9D;
-  --color-accent: #B2F7EF;
-  --color-text-primary: #e8faf8;
-  --color-text-secondary: #9dd9d2;
-  --color-text-tertiary: #5fa099;
-}
-html[data-palette="goldTeal"].light {
-  --color-background: #f0fffe;
-  --color-surface: #ffffff;
-  --color-primary: #b58600;
-  --color-secondary: #0b7a71;
-  --color-accent: #012e2b;
-  --color-text-primary: #012e2b;
-  --color-text-secondary: #134e48;
-  --color-text-tertiary: #3d8f87;
+html[data-palette="gruvbox"].light {
+  color-scheme: light;
+  --color-background: #fbf1c7;
+  --color-surface: #f9f5d7;
+  --color-primary: #b57614;
+  --color-secondary: #076678;
+  --color-accent: #3c3836;
+  --color-text-primary: #3c3836;
+  --color-text-secondary: #504945;
+  --color-text-tertiary: #7c6f64;
+  --color-border: color-mix(in oklab, var(--color-text-primary) 12%, transparent);
+  --ring: color-mix(in oklab, var(--color-primary) 45%, transparent);
 }
 
-/* === Palette: forestPink === */
-html[data-palette="forestPink"] {
-  --color-background: #020f08;
-  --color-surface: #041a10;
-  --color-primary: #EC839E;
-  --color-secondary: #D3B238;
-  --color-accent: #F4B8C7;
-  --color-text-primary: #fce8ed;
-  --color-text-secondary: #c4a8b0;
-  --color-text-tertiary: #6a7060;
-}
-html[data-palette="forestPink"].light {
-  --color-background: #f0fff6;
-  --color-surface: #ffffff;
-  --color-primary: #0B6043;
-  --color-secondary: #D3B238;
-  --color-accent: #020f08;
-  --color-text-primary: #020f08;
-  --color-text-secondary: #0d3020;
-  --color-text-tertiary: #3d6050;
-}
-
-/* === Palette: purpleYellow === */
-html[data-palette="purpleYellow"] {
-  --color-background: #0d0015;
-  --color-surface: #1a0030;
-  --color-primary: #F9D402;
-  --color-secondary: #9C59BD;
-  --color-accent: #e8d0ff;
-  --color-text-primary: #f0e8ff;
-  --color-text-secondary: #c0a0d8;
-  --color-text-tertiary: #7a5099;
-}
-html[data-palette="purpleYellow"].light {
-  --color-background: #faf0ff;
-  --color-surface: #ffffff;
-  --color-primary: #660099;
-  --color-secondary: #C79C0E;
-  --color-accent: #0d0015;
-  --color-text-primary: #0d0015;
-  --color-text-secondary: #2a0044;
-  --color-text-tertiary: #6a3088;
-}
-
-/* === Palette: blueGold — commented out, available for later ===
-html[data-palette="blueGold"] {
-  --color-background: #000814;
-  --color-surface: #001D3D;
-  --color-primary: #CCA000;
-  --color-secondary: #F0CB46;
-  --color-accent: #e0efff;
-  --color-text-primary: #e0efff;
-  --color-text-secondary: #a0bce0;
-  --color-text-tertiary: #4a78b8;
-}
-html[data-palette="blueGold"].light {
-  --color-background: #f0f4ff;
-  --color-surface: #ffffff;
-  --color-primary: #CCA000;
-  --color-secondary: #003566;
-  --color-accent: #000814;
-  --color-text-primary: #000814;
-  --color-text-secondary: #00224a;
-  --color-text-tertiary: #2a5a90;
-}
-=== */
-
-/* === Palette: darkGreenGold === */
-html[data-palette="darkGreenGold"] {
-  --color-background: #020d0a;
-  --color-surface: #06362D;
-  --color-primary: #FFD500;
-  --color-secondary: #D1A505;
-  --color-accent: #DEE2B1;
-  --color-text-primary: #eef5e0;
-  --color-text-secondary: #b0c8a0;
-  --color-text-tertiary: #5a8870;
-}
-html[data-palette="darkGreenGold"].light {
-  --color-background: #f0fff6;
-  --color-surface: #ffffff;
-  --color-primary: #D1A505;
-  --color-secondary: #06362D;
-  --color-accent: #020d0a;
-  --color-text-primary: #020d0a;
-  --color-text-secondary: #0a2820;
-  --color-text-tertiary: #2a6050;
-}
-
-/* === Palette: navyBlueGold === */
-html[data-palette="navyBlueGold"] {
-  --color-background: #00001a;
-  --color-surface: #000040;
-  --color-primary: #FFD60A;
-  --color-secondary: #FFBF1C;
-  --color-accent: #dce8ff;
-  --color-text-primary: #dce8ff;
-  --color-text-secondary: #9ab0e0;
-  --color-text-tertiary: #4868b8;
-}
-html[data-palette="navyBlueGold"].light {
-  --color-background: #f0f0ff;
-  --color-surface: #ffffff;
-  --color-primary: #D1A309;
-  --color-secondary: #000080;
-  --color-accent: #00001a;
-  --color-text-primary: #00001a;
-  --color-text-secondary: #00006a;
-  --color-text-tertiary: #2828a0;
-}
-
-/* ============================================================
-   End palette blocks
-   ============================================================ */
-
-:root {
-  /* Typography — always set, not palette-dependent */
-  --font-sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
-    "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans",
-    sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
-  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
-    "Liberation Mono", "Courier New", monospace;
-
-  /* Layout + affordances — not palette-dependent */
-  --radius: 16px;
-  --radius-sm: 12px;
-}
-
-/* Fallback dark colors only when no data-palette is set */
+/* Fallback (pre-hydration, before data-palette is set) */
 :root:not([data-palette]) {
   color-scheme: dark;
-  --color-background: #0b0f14;
-  --color-surface: #0f1823;
-  --color-primary: #f59e0b;
-  --color-secondary: #14b8a6;
-  --color-accent: #e2e8f0;
-  --color-text-primary: #e6edf3;
-  --color-text-secondary: #b6c2d2;
-  --color-text-tertiary: #7b8797;
-  --border: color-mix(in oklab, var(--color-text-tertiary) 35%, transparent);
-  --shadow-soft: 0 24px 70px -40px rgba(0, 0, 0, 0.7);
-  --shadow-lift: 0 18px 45px -32px rgba(0, 0, 0, 0.8);
-  --ring: color-mix(in oklab, var(--color-secondary) 65%, transparent);
+  --color-background: #282828;
+  --color-surface: #32302f;
+  --color-primary: #fabd2f;
+  --color-secondary: #8ec07c;
+  --color-accent: #ebdbb2;
+  --color-text-primary: #ebdbb2;
+  --color-text-secondary: #d5c4a1;
+  --color-text-tertiary: #a89984;
+  --color-border: color-mix(in oklab, var(--color-text-primary) 12%, transparent);
+  --ring: color-mix(in oklab, var(--color-primary) 65%, transparent);
 }
 
-/* Dark mode layout tokens — always apply regardless of palette */
-html.dark {
-  color-scheme: dark;
-  --border: color-mix(in oklab, var(--color-text-tertiary) 35%, transparent);
-  --shadow-soft: 0 24px 70px -40px rgba(0, 0, 0, 0.7);
-  --shadow-lift: 0 18px 45px -32px rgba(0, 0, 0, 0.8);
-  --ring: color-mix(in oklab, var(--color-secondary) 65%, transparent);
-}
-
-/* Fallback light colors only when no data-palette is set */
 :root:not([data-palette]).light {
   color-scheme: light;
-
-  /* Brand palette (light) — paper + copper + teal */
-  --color-background: #fbf7f2;
-  --color-surface: #ffffff;
-  --color-primary: #b45309;
-  --color-secondary: #0f766e;
-  --color-accent: #0f172a;
-  --color-text-primary: #0f172a;
-  --color-text-secondary: #334155;
-  --color-text-tertiary: #64748b;
-}
-
-/* Light mode layout tokens — always apply regardless of palette */
-html.light {
-  color-scheme: light;
-  --border: color-mix(in oklab, var(--color-text-tertiary) 28%, transparent);
-  --shadow-soft: 0 24px 70px -48px rgba(2, 6, 23, 0.28);
-  --shadow-lift: 0 18px 45px -34px rgba(2, 6, 23, 0.28);
-  --ring: color-mix(in oklab, var(--color-secondary) 45%, transparent);
+  --color-background: #fbf1c7;
+  --color-surface: #f9f5d7;
+  --color-primary: #b57614;
+  --color-secondary: #076678;
+  --color-accent: #3c3836;
+  --color-text-primary: #3c3836;
+  --color-text-secondary: #504945;
+  --color-text-tertiary: #7c6f64;
+  --color-border: color-mix(in oklab, var(--color-text-primary) 12%, transparent);
+  --ring: color-mix(in oklab, var(--color-primary) 45%, transparent);
 }
 
 * {
@@ -243,31 +77,12 @@ html {
 body {
   color: var(--color-text-primary);
   background-color: var(--color-background);
-  font-family: var(--font-sans);
+  font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
   letter-spacing: -0.01em;
   text-rendering: geometricPrecision;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
-
-  /* Subtle “systems” atmosphere without template gradients */
-  background-image:
-    radial-gradient(
-      1100px circle at 12% 0%,
-      color-mix(in oklab, var(--color-primary) 16%, transparent),
-      transparent 52%
-    ),
-    radial-gradient(
-      900px circle at 82% 10%,
-      color-mix(in oklab, var(--color-secondary) 14%, transparent),
-      transparent 55%
-    ),
-    linear-gradient(
-      180deg,
-      color-mix(in oklab, var(--color-surface) 22%, transparent),
-      transparent 28%
-    );
-  background-attachment: fixed;
 }
 
 :focus-visible {
@@ -277,7 +92,7 @@ body {
 
 ::selection {
   background-color: color-mix(in oklab, var(--color-primary) 70%, white);
-  color: color-mix(in oklab, var(--color-background) 15%, black);
+  color: var(--color-background);
 }
 
 @layer base {
@@ -289,7 +104,8 @@ body {
   pre,
   kbd,
   samp {
-    font-family: var(--font-mono);
+    font-family: var(--font-jetbrains-mono), ui-monospace, SFMono-Regular,
+      monospace;
   }
 }
 
@@ -300,10 +116,8 @@ body {
     top: 12px;
     transform: translateY(-140%);
     padding: 10px 12px;
-    border-radius: 999px;
-    background: var(--color-surface);
-    border: 1px solid var(--border);
-    box-shadow: var(--shadow-soft);
+    background: var(--color-background);
+    border: 1px solid var(--color-border);
     font-size: 14px;
     z-index: 1000;
   }
@@ -312,118 +126,53 @@ body {
     transform: translateY(0);
   }
 
+  /* Minimal link-style buttons: text + arrow, hairline underline on hover.
+     One filled primary CTA is allowed via .btn-primary. */
   .btn {
     display: inline-flex;
     align-items: center;
-    justify-content: center;
+    gap: 8px;
     min-height: 44px;
-    padding: 12px 16px;
-    border-radius: 999px;
-    border: 1px solid var(--border);
-    gap: 10px;
-    font-weight: 600;
-    letter-spacing: -0.01em;
-    transition: transform 180ms ease, box-shadow 180ms ease,
-      border-color 180ms ease, background-color 180ms ease;
+    font-family: var(--font-jetbrains-mono), ui-monospace, monospace;
+    font-size: 13px;
+    letter-spacing: 0.04em;
+    color: var(--color-text-secondary);
     text-decoration: none;
+    transition: color 180ms ease;
   }
 
   .btn:hover {
-    transform: translateY(-1px);
-    box-shadow: var(--shadow-lift);
-    border-color: color-mix(
-      in oklab,
-      var(--color-text-tertiary) 55%,
-      transparent
-    );
-  }
-
-  .btn:active {
-    transform: translateY(0);
-    box-shadow: none;
+    color: var(--color-text-primary);
   }
 
   .btn-primary {
-    background: color-mix(
-      in oklab,
-      var(--color-primary) 18%,
-      var(--color-surface)
-    );
-    border-color: color-mix(in oklab, var(--color-primary) 35%, var(--border));
+    color: var(--color-background);
+    background: var(--color-primary);
+    padding: 10px 18px;
+    min-height: 44px;
+    font-weight: 600;
+    transition: background-color 180ms ease;
   }
 
   .btn-primary:hover {
-    background: color-mix(
-      in oklab,
-      var(--color-primary) 24%,
-      var(--color-surface)
-    );
-  }
-
-  .btn-secondary {
-    background: transparent;
-  }
-
-  .pill {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 8px 12px;
-    border-radius: 999px;
-    border: 1px solid var(--border);
-    background: color-mix(in oklab, var(--color-surface) 82%, transparent);
-    font-family: var(--font-mono);
-    font-size: 12px;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: var(--color-text-secondary);
-  }
-
-  .surface-card {
-    background: color-mix(in oklab, var(--color-surface) 90%, transparent);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    box-shadow: var(--shadow-soft);
+    color: var(--color-background);
+    background: color-mix(in oklab, var(--color-primary) 88%, var(--color-text-primary));
   }
 
   .link-underline {
-    background-image: linear-gradient(
-      to right,
-      color-mix(in oklab, var(--color-secondary) 80%, transparent),
-      color-mix(in oklab, var(--color-primary) 75%, transparent)
-    );
+    background-image: linear-gradient(to right, var(--color-primary), var(--color-primary));
     background-repeat: no-repeat;
     background-position: 0 100%;
-    background-size: 0% 2px;
+    background-size: 0% 1px;
     transition: background-size 180ms ease;
   }
 
   .link-underline:hover {
-    background-size: 100% 2px;
+    background-size: 100% 1px;
   }
 }
 
 @layer utilities {
-  .perspective-1000 {
-    perspective: 1000px;
-  }
-
-  .perspective-2000 {
-    perspective: 2000px;
-  }
-
-  .preserve-3d {
-    transform-style: preserve-3d;
-  }
-
-  .backface-hidden {
-    backface-visibility: hidden;
-  }
-
-  .animate-fadeIn {
-    animation: fadeIn 0.3s ease-in-out;
-  }
-
   .no-scrollbar::-webkit-scrollbar {
     display: none;
   }
@@ -431,18 +180,6 @@ body {
   .no-scrollbar {
     -ms-overflow-style: none;
     scrollbar-width: none;
-  }
-
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-      transform: translateY(-10px);
-    }
-
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
   }
 }
 

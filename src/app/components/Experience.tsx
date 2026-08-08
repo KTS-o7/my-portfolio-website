@@ -14,7 +14,6 @@ type ExperienceEntry = {
   summary?: string;
   highlights?: string[];
   skills?: string[];
-  caseStudies?: { title: string; href: string }[];
 };
 
 export default function Experience({
@@ -31,18 +30,20 @@ export default function Experience({
   return (
     <section
       id="experience"
-      className={`bg-background py-20 sm:py-28 relative overflow-hidden scroll-mt-24 ${
-        showTopBorder ? "border-t border-text-tertiary/10" : ""
+      className={`bg-background py-20 sm:py-28 relative scroll-mt-24 ${
+        showTopBorder ? "border-t border-border" : ""
       }`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
+      <div className="max-w-[1100px] mx-auto px-4 sm:px-6 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
         >
-          <span className="pill">Experience</span>
-          <h2 className="mt-6 text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight text-text-primary">
+          <p className="font-mono text-xs uppercase tracking-widest text-text-tertiary">
+            Experience
+          </p>
+          <h2 className="mt-4 text-3xl sm:text-4xl font-semibold tracking-tight text-text-primary">
             Roles, outcomes, and the systems behind them
           </h2>
           <p className="mt-4 text-text-secondary max-w-[72ch] leading-relaxed">
@@ -51,7 +52,7 @@ export default function Experience({
           </p>
         </motion.div>
 
-        <div className="mt-10 grid grid-cols-1 gap-6">
+        <div className="mt-10">
           {entries.map((entry, index) => (
             <motion.article
               key={entry.slug}
@@ -62,22 +63,44 @@ export default function Experience({
                 duration: 0.45,
                 delay: Math.min(index * 0.05, 0.2),
               }}
-              className="surface-card p-6 sm:p-8"
+              className="border-t border-border py-10 last:border-b"
             >
-              <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-6">
-                <div className="min-w-0">
-                  <div className="flex flex-wrap items-center gap-2">
-                    <h3 className="text-xl sm:text-2xl font-semibold tracking-tight text-text-primary">
-                      {entry.company?.name}
-                    </h3>
-                    {entry.type && <span className="pill">{entry.type}</span>}
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-x-10 gap-y-6">
+                <div className="lg:col-span-3">
+                  <div className="font-mono text-xs text-text-tertiary">
+                    {String(index + 1).padStart(2, "0")}
                   </div>
+                  <div className="mt-2 font-mono text-xs uppercase tracking-widest text-text-tertiary">
+                    {entry.timeframe}
+                  </div>
+                  {entry.type && (
+                    <div className="mt-2 font-mono text-xs uppercase tracking-widest text-text-tertiary">
+                      {entry.type}
+                    </div>
+                  )}
+                  {entry.location && (
+                    <div className="mt-2 font-mono text-xs uppercase tracking-widest text-text-tertiary">
+                      {entry.location}
+                    </div>
+                  )}
+                </div>
 
-                  <div className="mt-2 text-text-secondary">
-                    <span className="text-text-primary">{entry.role}</span>
-                    {entry.timeframe ? ` · ${entry.timeframe}` : ""}
-                    {entry.location ? ` · ${entry.location}` : ""}
-                  </div>
+                <div className="lg:col-span-9 min-w-0">
+                  <h3 className="text-xl sm:text-2xl font-semibold tracking-tight text-text-primary">
+                    {entry.company?.url ? (
+                      <a
+                        href={entry.company.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="link-underline"
+                      >
+                        {entry.company.name}
+                      </a>
+                    ) : (
+                      entry.company?.name
+                    )}
+                  </h3>
+                  <div className="mt-1 text-text-secondary">{entry.role}</div>
 
                   {entry.summary && (
                     <p className="mt-4 text-text-secondary leading-relaxed max-w-[80ch]">
@@ -101,54 +124,21 @@ export default function Experience({
                     )}
 
                   {Array.isArray(entry.skills) && entry.skills.length > 0 && (
-                    <div className="mt-6 flex flex-wrap gap-2">
+                    <p className="mt-5 font-mono text-xs leading-relaxed text-text-tertiary">
                       {entry.skills
                         .slice(0, condensed ? 6 : 10)
-                        .map((skill) => (
-                          <span key={skill} className="pill">
-                            {skill}
-                          </span>
-                        ))}
-                    </div>
+                        .join(" · ")}
+                    </p>
                   )}
-                </div>
 
-                <div className="flex flex-col gap-3 w-full lg:w-[320px]">
-                  <Link
-                    href={`/experience/${entry.slug}`}
-                    className="btn btn-primary"
-                  >
-                    View experience
-                  </Link>
-                  {entry.company?.url && (
-                    <a
-                      href={entry.company.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="btn btn-secondary"
+                  <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-2">
+                    <Link
+                      href={`/experience/${entry.slug}`}
+                      className="link-underline text-text-primary font-mono text-sm"
                     >
-                      Company site
-                    </a>
-                  )}
-                  {Array.isArray(entry.caseStudies) &&
-                    entry.caseStudies.length > 0 && (
-                      <div className="rounded-[14px] border border-[var(--border)] p-4">
-                        <div className="font-mono text-xs uppercase tracking-widest text-text-tertiary">
-                          Case studies
-                        </div>
-                        <div className="mt-3 space-y-2">
-                          {entry.caseStudies.map((cs) => (
-                            <Link
-                              key={cs.href}
-                              href={cs.href}
-                              className="link-underline text-text-primary"
-                            >
-                              {cs.title}
-                            </Link>
-                          ))}
-                        </div>
-                      </div>
-                    )}
+                      View experience →
+                    </Link>
+                  </div>
                 </div>
               </div>
             </motion.article>
@@ -157,8 +147,8 @@ export default function Experience({
 
         {showSeeMore && (
           <div className="mt-10">
-            <Link href="/experience" className="btn btn-secondary">
-              See full experience timeline
+            <Link href="/experience" className="btn">
+              See full experience timeline →
             </Link>
           </div>
         )}

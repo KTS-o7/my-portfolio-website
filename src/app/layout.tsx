@@ -1,4 +1,6 @@
 import { Metadata } from "next";
+import { GeistSans } from "geist/font/sans";
+import { JetBrains_Mono } from "next/font/google";
 import heroData from "@/data/hero.json";
 import "./globals.css";
 import { ThemeProvider } from "./context/ThemeContext";
@@ -10,8 +12,13 @@ const description = [heroData.shortDescription, heroData.shortDescriptionLine2]
   .filter(Boolean)
   .join(" ");
 
-export const metadata: Metadata = {
-  metadataBase: new URL(siteUrl),
+const jetBrainsMono = JetBrains_Mono({
+  subsets: ["latin"],
+  variable: "--font-jetbrains-mono",
+  display: "swap",
+});
+
+export const metadata: Metadata = {  metadataBase: new URL(siteUrl),
   title: {
     default: `${heroData.name} | Portfolio`,
     template: `%s | Krishnatejaswi Shenthar`,
@@ -41,7 +48,7 @@ export default function RootLayout({
       <head>
         <script
           dangerouslySetInnerHTML={{
-            __html: `(function(){try{var t=localStorage.getItem('theme');var p=localStorage.getItem('palette')||'forestPink';document.documentElement.classList.add(t==='light'?'light':'dark');document.documentElement.setAttribute('data-palette',p);}catch(e){}})();`,
+            __html: `(function(){try{var t=localStorage.getItem('theme');if(t!=='light'&&t!=='dark'){t=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}document.documentElement.classList.add(t);document.documentElement.setAttribute('data-palette','gruvbox');}catch(e){}})();`,
           }}
         />
         <link
@@ -52,7 +59,9 @@ export default function RootLayout({
         />
         <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
       </head>
-      <body className="antialiased">
+      <body
+        className={`${GeistSans.variable} ${jetBrainsMono.variable} font-sans antialiased`}
+      >
         <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>

@@ -1,9 +1,7 @@
-import Image from "next/image";
 import Link from "next/link";
 import projectsData from "@/data/projects.json";
 import Navbar from "@/app/components/Navbar";
 import Footer from "@/app/components/Footer";
-import { ThemeToggle } from "@/app/components/ui/ThemeToggle";
 import { buildPageMetadata } from "@/lib/metadata";
 
 const publications = projectsData.projects.filter((project) =>
@@ -25,8 +23,10 @@ export default function PublicationsPage() {
     >
       <Navbar />
       <div className="pt-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-12 pb-4">
-          <span className="pill">Research</span>
+        <div className="max-w-[720px] mx-auto px-4 sm:px-6 pt-12 pb-4">
+          <p className="font-mono text-xs uppercase tracking-widest text-text-tertiary">
+            Research
+          </p>
           <h1 className="mt-5 text-4xl sm:text-5xl font-semibold tracking-tight text-text-primary">
             Writing &amp; publications
           </h1>
@@ -40,46 +40,37 @@ export default function PublicationsPage() {
           </p>
         </div>
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 pb-12">
-          <ul className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-6">
-            {publications.map((pub) => (
-              <li
-                key={pub.id}
-                className="surface-card overflow-hidden transition-transform duration-200 hover:-translate-y-0.5"
-              >
+        <div className="max-w-[720px] mx-auto px-4 sm:px-6 pb-12">
+          <ul className="mt-12">
+            {publications.map((pub, index) => (
+              <li key={pub.id} className="border-t border-border py-8 last:border-b">
                 <a
                   href={pub.links?.paper || pub.link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex flex-col h-full"
+                  className="group grid grid-cols-[auto_1fr] items-baseline gap-x-6"
                 >
-                  <div className="relative h-44 border-b border-text-tertiary/20 overflow-hidden bg-[color-mix(in_oklab,var(--color-surface)_88%,transparent)]">
-                    <Image
-                      src={pub.image}
-                      alt={`Cover image for ${pub.name}`}
-                      fill
-                      className="object-cover"
-                      sizes="(max-width: 768px) 100vw, 50vw"
-                    />
-                  </div>
-                  <div className="p-6 flex flex-col flex-grow">
-                    <h2 className="text-xl font-semibold tracking-tight text-text-primary">
+                  <span className="font-mono text-xs text-text-tertiary">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <span className="min-w-0">
+                    <span className="block text-xl font-semibold tracking-tight text-text-primary transition-all duration-200 group-hover:translate-x-1 group-hover:text-primary">
                       {pub.name}
-                    </h2>
-                    <p className="mt-3 text-text-secondary text-sm leading-relaxed line-clamp-5 flex-grow">
+                    </span>
+                    <span className="mt-3 block text-text-secondary text-sm leading-relaxed">
                       {pub.description}
-                    </p>
-                    <div className="mt-6 pt-4 border-t border-text-tertiary/10 text-text-secondary font-mono text-xs uppercase tracking-widest">
-                      Read paper
-                    </div>
-                  </div>
+                    </span>
+                    <span className="mt-4 block text-text-secondary font-mono text-xs uppercase tracking-widest">
+                      Read paper ↗
+                    </span>
+                  </span>
                 </a>
               </li>
             ))}
           </ul>
         </div>
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12 border-t border-text-tertiary/10">
+        <div className="max-w-[720px] mx-auto px-4 sm:px-6 py-12 border-t border-border">
           <div className="flex flex-wrap gap-3">
             <Link href="/projects" className="btn btn-primary">
               View projects
@@ -88,7 +79,6 @@ export default function PublicationsPage() {
         </div>
       </div>
       <Footer />
-      <ThemeToggle />
     </main>
   );
 }

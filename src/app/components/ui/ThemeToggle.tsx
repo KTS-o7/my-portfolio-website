@@ -8,14 +8,14 @@ export const ThemeToggle = () => {
   return (
     <button
       onClick={toggleTheme}
-      className="fixed bottom-6 right-6 z-50 p-3 sm:p-4 rounded-full border border-text-tertiary/25 bg-surface/70 backdrop-blur-md hover:border-text-tertiary/45 hover:-translate-y-0.5 transition-all duration-200 mobile-touch-optimized min-w-[48px] min-h-[48px] flex items-center justify-center"
+      className="inline-flex items-center justify-center p-2 text-text-tertiary hover:text-text-primary transition-colors mobile-touch-optimized min-w-[44px] min-h-[44px] md:min-w-0 md:min-h-0"
       aria-label={
         theme === "dark" ? "Switch to light theme" : "Switch to dark theme"
       }
     >
       {theme === "dark" ? (
         <svg
-          className="w-5 h-5 sm:w-6 sm:h-6 text-text-primary transition-transform duration-300"
+          className="w-5 h-5"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
@@ -29,7 +29,7 @@ export const ThemeToggle = () => {
         </svg>
       ) : (
         <svg
-          className="w-5 h-5 sm:w-6 sm:h-6 text-text-primary transition-transform duration-300"
+          className="w-5 h-5"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"

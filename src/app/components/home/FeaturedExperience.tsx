@@ -8,51 +8,55 @@ export default function FeaturedExperience() {
   const entries = experienceData.experience.slice(0, 2);
 
   return (
-    <section className="bg-background py-20 sm:py-24 border-t border-text-tertiary/10">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6">
+    <section className="bg-background py-20 sm:py-24">
+      <div className="max-w-[1100px] mx-auto px-4 sm:px-6">
         <motion.div initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-          <span className="pill">Experience</span>
-          <h2 className="mt-5 text-3xl sm:text-4xl font-semibold tracking-tight text-text-primary">
+          <p className="font-mono text-xs uppercase tracking-widest text-text-tertiary">
+            Experience
+          </p>
+          <h2 className="mt-4 text-2xl sm:text-3xl font-semibold tracking-tight text-text-primary">
             Where I&apos;ve shipped
           </h2>
         </motion.div>
 
-        <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-5">
+        <div className="mt-10">
           {entries.map((entry, i) => (
-            <motion.article
+            <motion.div
               key={entry.slug}
               initial={{ opacity: 0, y: 12 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: i * 0.08 }}
-              className="surface-card p-6 flex flex-col justify-between gap-6"
+              transition={{ delay: i * 0.06 }}
             >
-              <div>
-                <div className="flex items-center gap-2 flex-wrap">
-                  <h3 className="text-lg font-semibold tracking-tight text-text-primary">{entry.company.name}</h3>
-                  {entry.type && <span className="pill">{entry.type}</span>}
-                </div>
-                <p className="mt-1 text-text-secondary text-sm">{entry.role} · {entry.timeframe}</p>
-                {entry.summary && (
-                  <p className="mt-3 text-text-secondary text-sm leading-relaxed line-clamp-3">{entry.summary}</p>
-                )}
-                {entry.skills && (
-                  <div className="mt-4 flex flex-wrap gap-1.5">
-                    {entry.skills.slice(0, 5).map((s) => (
-                      <span key={s} className="pill text-[11px]">{s}</span>
-                    ))}
-                  </div>
-                )}
-              </div>
-              <Link href={`/experience/${entry.slug}`} className="btn btn-secondary text-sm w-fit">
-                View details →
+              <Link
+                href={`/experience/${entry.slug}`}
+                className="group grid grid-cols-[auto_1fr] sm:grid-cols-[auto_1fr_auto] items-baseline gap-x-6 gap-y-2 border-t border-border py-6 last:border-b"
+              >
+                <span className="font-mono text-xs text-text-tertiary">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <span className="min-w-0">
+                  <span className="block text-lg sm:text-xl font-semibold tracking-tight text-text-primary transition-all duration-200 group-hover:translate-x-1 group-hover:text-primary">
+                    {entry.company.name}
+                  </span>
+                  <span className="mt-1 block text-sm text-text-secondary truncate">
+                    {entry.role}
+                    {entry.summary ? ` — ${entry.summary}` : ""}
+                  </span>
+                </span>
+                <span className="col-start-2 sm:col-start-auto font-mono text-xs uppercase tracking-widest text-text-tertiary sm:text-right">
+                  {entry.timeframe}
+                  <span className="ml-3 inline-block transition-transform duration-200 group-hover:translate-x-1">
+                    →
+                  </span>
+                </span>
               </Link>
-            </motion.article>
+            </motion.div>
           ))}
         </div>
 
         <div className="mt-8">
-          <Link href="/experience" className="btn btn-secondary">
+          <Link href="/experience" className="btn">
             View all experience →
           </Link>
         </div>
