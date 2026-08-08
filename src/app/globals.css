@@ -204,3 +204,196 @@ body {
     touch-action: manipulation;
   }
 }
+
+/* ============================================================
+   Blog post content — hand-rolled prose styles (gruvbox vars)
+   ============================================================ */
+
+.post-content {
+  color: var(--color-text-secondary);
+  font-size: 1rem;
+  line-height: 1.8;
+}
+
+.post-content > * + * {
+  margin-top: 1.25em;
+}
+
+.post-content h1,
+.post-content h2,
+.post-content h3,
+.post-content h4 {
+  color: var(--color-text-primary);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.3;
+}
+
+.post-content h1 {
+  font-size: 1.75rem;
+  margin-top: 2.25em;
+}
+
+.post-content h2 {
+  font-size: 1.4rem;
+  margin-top: 2.25em;
+  padding-top: 1.5em;
+  border-top: 1px solid var(--color-border);
+}
+
+.post-content h3 {
+  font-size: 1.15rem;
+  margin-top: 2em;
+}
+
+.post-content h4 {
+  font-size: 1rem;
+  margin-top: 1.75em;
+}
+
+.post-content .heading-anchor {
+  color: inherit;
+  text-decoration: none;
+}
+
+.post-content a:not(.heading-anchor) {
+  color: var(--color-primary);
+  text-decoration: underline;
+  text-decoration-color: color-mix(in oklab, var(--color-primary) 40%, transparent);
+  text-underline-offset: 3px;
+  transition: text-decoration-color 180ms ease;
+}
+
+.post-content a:not(.heading-anchor):hover {
+  text-decoration-color: var(--color-primary);
+}
+
+.post-content strong {
+  color: var(--color-text-primary);
+  font-weight: 600;
+}
+
+.post-content ul,
+.post-content ol {
+  padding-left: 1.5em;
+}
+
+.post-content ul {
+  list-style: disc;
+}
+
+.post-content ol {
+  list-style: decimal;
+}
+
+.post-content li + li {
+  margin-top: 0.4em;
+}
+
+.post-content li::marker {
+  color: var(--color-text-tertiary);
+}
+
+.post-content code:not(pre code) {
+  font-size: 0.85em;
+  color: var(--color-accent);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  padding: 0.15em 0.4em;
+}
+
+.post-content pre {
+  overflow-x: auto;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  padding: 1em 1.25em;
+  font-size: 0.85rem;
+  line-height: 1.7;
+}
+
+.post-content pre.has-copy-btn {
+  position: relative;
+  padding-top: 2.25em;
+}
+
+.copy-code-btn {
+  position: absolute;
+  top: 0.5em;
+  right: 0.5em;
+  font-family: var(--font-jetbrains-mono), monospace;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-text-tertiary);
+  background: var(--color-background);
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  padding: 0.2em 0.6em;
+  cursor: pointer;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.copy-code-btn:hover {
+  color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+.post-content pre code {
+  background: transparent;
+  border: 0;
+  padding: 0;
+}
+
+.post-content blockquote {
+  border-left: 2px solid var(--color-primary);
+  padding-left: 1.25em;
+  color: var(--color-text-tertiary);
+  font-style: italic;
+}
+
+.post-content hr {
+  border: 0;
+  border-top: 1px solid var(--color-border);
+  margin: 2.5em 0;
+}
+
+.post-content table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.post-content th,
+.post-content td {
+  text-align: left;
+  padding: 0.6em 0.9em;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.post-content th {
+  color: var(--color-text-primary);
+  font-weight: 600;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.post-content img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 6px;
+  border: 1px solid var(--color-border);
+}
+
+/* KaTeX display math: scroll horizontally instead of overflowing */
+.post-content .katex-display {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0.25em 0;
+}
+
+.post-content .katex {
+  color: var(--color-text-primary);
+}

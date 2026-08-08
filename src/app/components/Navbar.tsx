@@ -14,6 +14,7 @@ interface NavLink {
 const navLinks: NavLink[] = [
   { title: "Experience", routePath: "/experience" },
   { title: "Projects", routePath: "/projects" },
+  { title: "Blog", routePath: "/blog" },
   { title: "About", routePath: "/about" },
   { title: "Publications", routePath: "/publications" },
   { title: "Contact", routePath: "/contact" },

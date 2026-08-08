@@ -10,6 +10,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import FeaturedExperience from "./components/home/FeaturedExperience";
 import FeaturedProjects from "./components/home/FeaturedProjects";
 import ValueSection from "./components/home/ValueSection";
+import LatestWriting from "./components/home/LatestWriting";
 import CtaSection from "./components/home/CtaSection";
 
 export default function Home() {
@@ -32,6 +33,7 @@ export default function Home() {
         <FeaturedExperience />
         <FeaturedProjects />
         <ValueSection />
+        <LatestWriting />
         <CtaSection />
         <Footer />
         <Analytics />

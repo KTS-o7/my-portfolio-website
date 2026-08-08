@@ -214,6 +214,7 @@ export const buildLlmProfileText = (profile: ProfileData) => {
         `- About: ${profile.links.website}/about`,
         `- Contact: ${profile.links.website}/contact`,
         `- Publications: ${profile.links.website}/publications`,
+        `- Blog: ${profile.links.website}/blog`,
         `- Machine-readable profile: ${profile.links.website}/llms.txt`,
       ].join("\n"),
   );
