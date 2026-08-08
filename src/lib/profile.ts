@@ -73,11 +73,16 @@ const dedupeList = (items: string[]) => {
 };
 
 export const getSiteUrl = (origin?: string) => {
-  const envUrl =
+  // Canonical domain always wins on Vercel: VERCEL_URL is the
+  // per-deployment host, never the custom domain, so it stays last.
+  const base =
     process.env.NEXT_PUBLIC_SITE_URL ||
-    (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : undefined);
-
-  const base = envUrl || origin || "https://portfolio.shenthar.me";
+    (process.env.VERCEL_ENV === "production"
+      ? "https://portfolio.shenthar.me"
+      : undefined) ||
+    (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : undefined) ||
+    origin ||
+    "https://portfolio.shenthar.me";
   return base.replace(/\/$/, "");
 };
 
