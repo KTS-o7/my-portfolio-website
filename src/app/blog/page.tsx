@@ -20,12 +20,18 @@ export const metadata: Metadata = buildPageMetadata({
 });
 
 export default function BlogIndexPage() {
-  const sections = getSections().map((section) => ({
-    section,
-    label: getSectionLabel(section),
-  }));
+  const PREVIEW_COUNT = 6;
 
-  const posts: BlogPostSummary[] = sections.flatMap(({ section, label }) =>
+  const sections = getSections().map((section) => {
+    const total = getPostsBySection(section).length;
+    return {
+      section,
+      label: `${getSectionLabel(section)}`,
+      total,
+    };
+  });
+
+  const toSummary = (section: string, label: string) =>
     getPostsBySection(section).map((post) => ({
       section: post.section,
       sectionLabel: label,
@@ -34,7 +40,13 @@ export default function BlogIndexPage() {
       description: post.description ?? "",
       tags: post.tags,
       dateLabel: formatPostDate(post.date),
-    })),
+    }));
+
+  const posts: BlogPostSummary[] = sections.flatMap(
+    ({ section, label }) => toSummary(section, label).slice(0, PREVIEW_COUNT),
+  );
+  const allPosts: BlogPostSummary[] = sections.flatMap(({ section, label }) =>
+    toSummary(section, label),
   );
 
   return (
@@ -56,7 +68,7 @@ export default function BlogIndexPage() {
             infrastructure.
           </p>
 
-          <BlogIndex sections={sections} posts={posts} />
+          <BlogIndex sections={sections} posts={posts} allPosts={allPosts} />
         </div>
       </div>
       <Footer />

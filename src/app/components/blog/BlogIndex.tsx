@@ -17,6 +17,7 @@ export type BlogPostSummary = {
 type SectionGroup = {
   section: string;
   label: string;
+  total: number;
 };
 
 function PostRow({ post }: { post: BlogPostSummary }) {
@@ -48,15 +49,17 @@ function PostRow({ post }: { post: BlogPostSummary }) {
 export default function BlogIndex({
   sections,
   posts,
+  allPosts,
 }: {
   sections: SectionGroup[];
   posts: BlogPostSummary[];
+  allPosts: BlogPostSummary[];
 }) {
   const [query, setQuery] = useState("");
 
   const fuse = useMemo(
     () =>
-      new Fuse(posts, {
+      new Fuse(allPosts, {
         keys: [
           { name: "title", weight: 0.5 },
           { name: "description", weight: 0.25 },
@@ -66,7 +69,7 @@ export default function BlogIndex({
         threshold: 0.35,
         ignoreLocation: true,
       }),
-    [posts],
+    [allPosts],
   );
 
   const searching = query.trim().length > 0;
@@ -104,7 +107,7 @@ export default function BlogIndex({
           </div>
         </section>
       ) : (
-        sections.map(({ section, label }) => {
+        sections.map(({ section, label, total }) => {
           const sectionPosts = posts.filter((p) => p.section === section);
           if (sectionPosts.length === 0) return null;
           return (
@@ -117,7 +120,7 @@ export default function BlogIndex({
                   href={`/blog/${section}`}
                   className="font-mono text-xs uppercase tracking-widest text-text-tertiary hover:text-text-primary transition-colors link-underline"
                 >
-                  All →
+                  All {total} →
                 </Link>
               </div>
               <div className="mt-6">
