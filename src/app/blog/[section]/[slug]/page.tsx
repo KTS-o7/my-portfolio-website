@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import Script from "next/script";
 import Navbar from "@/app/components/Navbar";
 import Footer from "@/app/components/Footer";
+import CodeCopyEnhancer from "@/app/components/CodeCopyEnhancer";
 import {
   formatPostDate,
   getAllPosts,
@@ -122,6 +123,7 @@ export default async function BlogPostPage({
             className="post-content mt-10"
             dangerouslySetInnerHTML={{ __html: post.html }}
           />
+          <CodeCopyEnhancer />
         </article>
       </div>
       <Footer />

@@ -313,6 +313,33 @@ body {
   line-height: 1.7;
 }
 
+.post-content pre.has-copy-btn {
+  position: relative;
+  padding-top: 2.25em;
+}
+
+.copy-code-btn {
+  position: absolute;
+  top: 0.5em;
+  right: 0.5em;
+  font-family: var(--font-jetbrains-mono), monospace;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-text-tertiary);
+  background: var(--color-background);
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  padding: 0.2em 0.6em;
+  cursor: pointer;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.copy-code-btn:hover {
+  color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
 .post-content pre code {
   background: transparent;
   border: 0;
