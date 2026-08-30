@@ -1,5 +1,5 @@
 +++
-title = "Shipping a Three-Environment CI/CD Pipeline from Zero"
+title = "Shipping a three-environment CI/CD pipeline from zero"
 date = 2026-08-30T00:00:00+05:30
 draft = false
 math = false
@@ -8,32 +8,32 @@ description = "Building dev, staging, and prod from an empty repo: per-env Terra
 tags = ["infra", "cicd", "terraform", "github-actions", "devops"]
 +++
 
-I recently stood up a full deployment pipeline for a monorepo I work on, starting from an empty repository with nothing but a README and a `services/` directory. No legacy Jenkins, no inherited AWS account, no conventions to respect. That kind of blank slate is rare, so I wrote down the decisions that mattered — and the one that saved us from an incident in the first month.
+Use three environments when you need to test production-like load and database changes before customers see them. Dev catches fast feedback. Staging tests the release path. Production needs a deliberate approval.
 
-## Why three environments, not two
+I built this pattern from an empty monorepo. The decisions below kept the setup simple and made failures safer to handle.
 
-The obvious setup is dev + prod. Staging looks like a tax: more infra, more config to keep in sync, one more thing that can break. I almost skipped it.
+## Why use three environments
 
-What changed my mind: staging's job is not to catch application bugs — CI does that. Staging's job is to be a **prod-shaped rehearsal space**. Same Terraform modules, same deployment path, realistic data volume. Two things you cannot rehearse anywhere else:
+Staging is not another test environment. It is a production-shaped rehearsal space. It uses the same Terraform modules and deployment path, with approved synthetic or anonymised data at a representative scale. It lets you test:
 
-- **Load behavior.** Dev runs one replica with a toy dataset. A query that scans fine over 10k rows times out over 10M. You find that out in staging or you find it out in an incident.
-- **Migrations.** A schema change that takes 40ms on an empty dev database can lock a table for minutes in prod. Running it against staging data at production scale is the only cheap way to learn that before your users do.
+- load behaviour that a small dev dataset cannot show
+- migrations that may lock or backfill a production-sized table
 
-If staging diverges from prod — different module version, hand-tweaked security group — it stops being evidence and starts being decoration.
+If staging uses a different module version or hand-edited security group, it no longer proves much about production.
 
-## Account isolation before everything else
+## Separate production from non-production accounts
 
-The first Terraform I wrote wasn't a VPC. It was the account boundary: a nonprod account holding dev and staging, and a separate prod account. This is the single highest-leverage decision in the whole setup, and it costs almost nothing up front.
+Create a non-production account for dev and staging. Use a separate production account. Do this before you create application resources.
 
-- **Blast radius.** A misconfigured CI role can delete every database in nonprod and ruin an afternoon. The same mistake in a shared account ruins your quarter.
-- **IAM sanity.** CI deploy credentials are scoped per account. The pipeline literally *cannot* touch prod until it assumes the prod role, which only the production workflow can do.
-- **Billing clarity.** Nonprod spend is one line item. When it spikes, you know it's a leak, not customer traffic.
+- a bad CI role can damage non-production without reaching production
+- deployment credentials can be scoped to one account
+- billing shows whether non-production costs are growing
 
-Retrofitting account separation after the fact is a migration project. Doing it on day one is an afternoon.
+Adding this boundary later is much harder.
 
-## The trunk-based flow
+## Use one promotion path
 
-One long-lived branch: `main`. All three environments deploy from it. The promotion path:
+Use one long-lived branch: `main`. Deploy all environments from it in this order:
 
 ```
 PR opened → preview environment deployed
@@ -42,7 +42,7 @@ PR merged → dev auto-deploys
           → prod waits for manual approval
 ```
 
-The manual gate on prod is deliberate. Not because I distrust automation, but because someone should look at the staging diff — migrations included — before it hits users. The gate is one button click on a GitHub environment approval, so it adds thirty seconds, not a release meeting. A sketch of the production job:
+Use a GitHub environment for production approval. A job that references an environment with required reviewers waits before it can start. See [GitHub’s deployment environment guidance](https://docs.github.com/en/actions/how-tos/deploy/configure-and-manage-deployments/control-deployments). This is a simplified job:
 
 ```yaml
 name: deploy
@@ -59,6 +59,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: hashicorp/setup-terraform@v3
+      - run: terraform -chdir=infra/envs/dev init
+      - run: terraform -chdir=infra/envs/dev plan -out=tfplan
       - run: terraform -chdir=infra/envs/dev apply -auto-approve # infra only
       - run: ./scripts/migrate.sh dev
       - run: ./scripts/deploy.sh dev
@@ -70,6 +72,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: hashicorp/setup-terraform@v3
+      - run: terraform -chdir=infra/envs/staging init
+      - run: terraform -chdir=infra/envs/staging plan -out=tfplan
       - run: terraform -chdir=infra/envs/staging apply -auto-approve # infra only
       - name: Run migrations
         run: ./scripts/migrate.sh staging
@@ -78,14 +82,32 @@ jobs:
       - name: Smoke tests
         run: ./scripts/smoke.sh staging
 
-  prod:
+  plan-prod:
     needs: staging
     runs-on: ubuntu-latest
-    environment: prod   # required reviewers configured here
     steps:
       - uses: actions/checkout@v4
       - uses: hashicorp/setup-terraform@v3
-      - run: terraform -chdir=infra/envs/prod apply -auto-approve # infra only
+      - run: terraform -chdir=infra/envs/prod init
+      - run: terraform -chdir=infra/envs/prod plan -out=tfplan
+      - uses: actions/upload-artifact@v4
+        with:
+          name: prod-tfplan
+          path: infra/envs/prod/tfplan
+
+  prod:
+    needs: plan-prod
+    runs-on: ubuntu-latest
+    environment: prod   # required reviewers inspect the plan first
+    steps:
+      - uses: actions/checkout@v4
+      - uses: hashicorp/setup-terraform@v3
+      - run: terraform -chdir=infra/envs/prod init
+      - uses: actions/download-artifact@v4
+        with:
+          name: prod-tfplan
+          path: infra/envs/prod
+      - run: terraform -chdir=infra/envs/prod apply -auto-approve tfplan # infra only
       - name: Run migrations
         run: ./scripts/migrate.sh prod
       - name: Deploy application
@@ -94,11 +116,11 @@ jobs:
         run: ./scripts/smoke.sh prod
 ```
 
-The `concurrency` line serializes deploys to the same ref — two merges landing a minute apart don't race each other through `terraform apply`. Real version has OIDC-based cloud auth instead of static keys; this is the skeleton, not the whole body.
+The production job waits for its required reviewers. They can inspect the saved plan before approval. The `concurrency` line prevents two deployments for the same branch from running together. Use OIDC-based cloud authentication in the real workflow instead of long-lived keys.
 
-## Terraform layout: directories over workspaces
+## Use separate Terraform directories and state
 
-I used per-environment directories with separate state backends, not Terraform workspaces. Workspaces hide environment state behind a CLI flag — one forgotten `workspace select` and `plan` runs against the wrong state file. Directories make the environment explicit in every command and every path:
+Use one directory and remote state backend for each environment. That makes the target clear in every command. HashiCorp recommends separate directories and state files when you are not using HCP Terraform or Terraform Enterprise for these environment boundaries. See its [Terraform configuration style guide](https://developer.hashicorp.com/terraform/language/style).
 
 ```
 infra/
@@ -118,29 +140,31 @@ infra/
         └── main.tf     # same modules, prod-sized, multi-AZ
 ```
 
-Each `envs/` directory is a thin composition of shared modules plus a variables file. Staging and prod call the *same modules with the same version pin* — only sizes and replica counts differ. The moment you copy-paste a module "just for staging," you've forked your infrastructure.
+Each environment directory calls shared modules with its own variables and backend configuration. Keep staging and production on the same module version. Change sizes and replica counts through variables, not copied modules.
 
-## Migrations: expand, migrate, contract
+## Keep database changes safe to deploy
 
-Migrations run **in the pipeline**, before the new application version goes live — never as a first-boot side effect of the app, which races under rolling deploys. The ordering constraint is handled by expand-migrate-contract:
+Run migrations in the pipeline, before you deploy the new application. Do not run them as an application start-up side effect. Under rolling deployment, more than one application version can start at once.
 
-1. **Expand:** add the new column/table. Old code still works, new code can start writing.
-2. **Migrate:** deploy the new code, backfill data.
-3. **Contract:** a later PR drops the old column.
+Use expand, migrate, contract:
 
-Every deploy is therefore backward-compatible with the previous schema, which is what makes rollback safe: reverting the app doesn't require reverting the database.
+1. Expand the schema. Old code must still work.
+2. Deploy new code and backfill data.
+3. Contract the schema in a later pull request.
 
-## Previews that actually deploy
+This keeps the previous application version compatible with the expanded schema. You can roll back the application without rolling back the database.
 
-Every PR gets a real, running environment — seeded with synthetic data and its own config — because "works on my machine" is not reviewable. Two viable patterns:
+## Give each pull request a deployable preview
 
-- **Ephemeral infra:** spin up a fresh environment per PR, tear down on close. Maximally isolated, slower (minutes per PR), costs more.
-- **Shared dev with path-based routing:** deploy PR builds into dev under a prefix. Cheap and fast, but PRs share a database and can stomp each other.
+Give every pull request a running preview with synthetic data and its own configuration. You can use either pattern:
 
-We started with ephemeral and kept it. The teardown-on-merge job is the important half — preview environments without an expiry date become a billing surprise and, eventually, someone's forgotten attack surface.
+- ephemeral infrastructure for each pull request, then destroy it on close
+- shared development infrastructure with path-based routing, which is cheaper but shares state
 
-## Rollback is a pipeline, not a panic
+If you use ephemeral previews, delete them on merge or close. Otherwise they become unmanaged cost and access risk.
 
-Because everything deploys from `main`, application rollback is `git revert` and let the pipeline run. The compatible expanded schema stays in place; a database rollback needs its own explicitly designed migration. That is why contract lives in a separate, later PR.
+## Make rollback routine
 
-A month in, we shipped a migration that locked a staging table for four minutes. It would have been a prod incident. Instead it was a Slack message and a rewritten migration. That's the entire argument for the third environment, in one sentence.
+For application rollback, revert the change on `main` and use the same pipeline. Leave a compatible expanded schema in place. A database rollback needs its own designed migration, which is why schema contraction is separate.
+
+The test is simple: can you deploy, verify and roll back the same way in every environment? If not, fix the pipeline before the next release.
