@@ -11,7 +11,7 @@ const pagePath = "/work/complianceos";
 
 const workItem = workData.work.find((item) => item.slug === "complianceos");
 
-const title = `ComplianceOS — End-to-end Work | ${heroData.name}`;
+const title = "ComplianceOS — End-to-end Work";
 const description =
   "Founding-engineer style deep dive: discovery → architecture → development → deployment for ComplianceOS (OnFinance AI), with agentic workflows (LangGraph + LiteLLM) for compliance automation.";
 

@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import heroData from "@/data/hero.json";
 import experienceData from "@/data/experience.json";
 import projectsData from "@/data/projects.json";
 import Navbar from "@/app/components/Navbar";
@@ -30,8 +29,8 @@ export async function generateMetadata({
   );
 
   const title = entry
-    ? `${entry.company.name} | Experience | ${heroData.name}`
-    : `Experience | ${heroData.name}`;
+    ? `${entry.company.name} | Experience`
+    : "Experience";
   const description =
     entry?.summary ||
     "Work experience, outcomes, and supporting projects grouped by company.";

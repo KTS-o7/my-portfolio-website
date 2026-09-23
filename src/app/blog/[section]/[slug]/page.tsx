@@ -32,7 +32,7 @@ export async function generateMetadata({
   const post = await getPost(section, slug);
   if (!post) return {};
 
-  const title = `${post.title} | Krishnatejaswi Shenthar`;
+  const title = post.title;
   const description =
     post.description || `${post.title} — a post on the blog.`;
   const path = `/blog/${post.section}/${post.slug}`;

@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import Footer from "./components/Footer";
@@ -10,6 +11,10 @@ import FeaturedProjects from "./components/home/FeaturedProjects";
 import ValueSection from "./components/home/ValueSection";
 import LatestWriting from "./components/home/LatestWriting";
 import CtaSection from "./components/home/CtaSection";
+
+export const metadata: Metadata = {
+  alternates: { canonical: "/" },
+};
 
 export default function Home() {
   const siteUrl = getSiteUrl();

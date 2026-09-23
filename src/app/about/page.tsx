@@ -1,6 +1,4 @@
 import type { Metadata } from "next";
-import heroData from "@/data/hero.json";
-import aboutData from "@/data/about.json";
 import Navbar from "@/app/components/Navbar";
 import Footer from "@/app/components/Footer";
 import About from "@/app/components/About";
@@ -9,7 +7,8 @@ import Link from "next/link";
 
 export const metadata: Metadata = buildPageMetadata({
   title: "About",
-  description: aboutData.description?.primary || heroData.shortDescription,
+  description:
+    "AI engineer building production agent systems, memory architectures, backend APIs, and evaluation pipelines at Future Standard.",
   path: "/about",
   type: "profile",
 });

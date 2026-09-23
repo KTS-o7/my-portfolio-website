@@ -18,13 +18,23 @@ const nextConfig = {
         permanent: true,
       },
       {
-        source: "/work/complianceos",
-        destination: "/case-studies/complianceos",
+        source: "/case-studies/complianceos",
+        destination: "/work/complianceos",
         permanent: true,
       },
       {
-        source: "/work/:company",
-        destination: "/experience/:company",
+        source: "/work/future-standard",
+        destination: "/experience/future-standard",
+        permanent: true,
+      },
+      {
+        source: "/work/onfinance-ai",
+        destination: "/experience/onfinance-ai",
+        permanent: true,
+      },
+      {
+        source: "/work/ringcentral",
+        destination: "/experience/ringcentral",
         permanent: true,
       },
       {

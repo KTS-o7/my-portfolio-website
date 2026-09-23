@@ -26,7 +26,7 @@ export async function generateMetadata({
   const { section } = await params;
   const label = getSectionLabel(section);
   return buildPageMetadata({
-    title: `${label} | Blog | Krishnatejaswi Shenthar`,
+    title: `${label} | Blog`,
     description: `Posts in the ${label} section of the blog.`,
     path: `/blog/${section}`,
   });

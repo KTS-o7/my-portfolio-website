@@ -25,9 +25,9 @@ export default function About({
           <p className="font-mono text-xs uppercase tracking-widest text-text-tertiary">
             About
           </p>
-          <h2 className="mt-4 text-3xl sm:text-4xl font-semibold tracking-tight text-text-primary">
+          <h1 className="mt-4 text-3xl sm:text-4xl font-semibold tracking-tight text-text-primary">
             A backend engineer who ships with intent
-          </h2>
+          </h1>
           <p className="mt-4 text-text-secondary leading-relaxed">
             I care about systems that are easy to reason about: clear contracts,
             predictable performance, and observability that tells the truth.
