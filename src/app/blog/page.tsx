@@ -7,7 +7,9 @@ import BlogIndex, {
 } from "@/app/components/blog/BlogIndex";
 import CopyRssButton from "@/app/components/blog/CopyRssButton";
 import {
+  type BlogPostMeta,
   formatPostDate,
+  getAllPosts,
   getPostsBySection,
   getSectionLabel,
   getSections,
@@ -23,33 +25,37 @@ export const metadata: Metadata = buildPageMetadata({
 
 export default function BlogIndexPage() {
   const PREVIEW_COUNT = 6;
+  const LATEST_COUNT = 5;
 
-  const sections = getSections().map((section) => {
-    const total = getPostsBySection(section).length;
-    return {
-      section,
-      label: `${getSectionLabel(section)}`,
-      total,
-    };
+  const toSummary = (post: BlogPostMeta): BlogPostSummary => ({
+    section: post.section,
+    sectionLabel: getSectionLabel(post.section),
+    slug: post.slug,
+    title: post.title,
+    description: post.description ?? "",
+    tags: post.tags,
+    dateLabel: formatPostDate(post.date),
   });
 
-  const toSummary = (section: string, label: string) =>
-    getPostsBySection(section).map((post) => ({
-      section: post.section,
-      sectionLabel: label,
-      slug: post.slug,
-      title: post.title,
-      description: post.description ?? "",
-      tags: post.tags,
-      dateLabel: formatPostDate(post.date),
+  // Sections with the most recent post come first. Posts inside a section
+  // are already newest first.
+  const newestTime = (section: string) => {
+    const date = getPostsBySection(section)[0]?.date;
+    return date ? new Date(date).getTime() : 0;
+  };
+  const sections = [...getSections()]
+    .sort((a, b) => newestTime(b) - newestTime(a))
+    .map((section) => ({
+      section,
+      label: getSectionLabel(section),
+      total: getPostsBySection(section).length,
     }));
 
-  const posts: BlogPostSummary[] = sections.flatMap(
-    ({ section, label }) => toSummary(section, label).slice(0, PREVIEW_COUNT),
+  const latest = getAllPosts().slice(0, LATEST_COUNT).map(toSummary);
+  const posts: BlogPostSummary[] = sections.flatMap(({ section }) =>
+    getPostsBySection(section).slice(0, PREVIEW_COUNT).map(toSummary),
   );
-  const allPosts: BlogPostSummary[] = sections.flatMap(({ section, label }) =>
-    toSummary(section, label),
-  );
+  const allPosts: BlogPostSummary[] = getAllPosts().map(toSummary);
 
   return (
     <main
@@ -81,7 +87,12 @@ export default function BlogIndexPage() {
             infrastructure.
           </p>
 
-          <BlogIndex sections={sections} posts={posts} allPosts={allPosts} />
+          <BlogIndex
+            sections={sections}
+            latest={latest}
+            posts={posts}
+            allPosts={allPosts}
+          />
         </div>
       </div>
       <Footer />

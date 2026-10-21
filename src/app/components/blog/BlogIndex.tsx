@@ -24,10 +24,12 @@ type SectionGroup = {
 
 export default function BlogIndex({
   sections,
+  latest,
   posts,
   allPosts,
 }: {
   sections: SectionGroup[];
+  latest: BlogPostSummary[];
   posts: BlogPostSummary[];
   allPosts: BlogPostSummary[];
 }) {
@@ -70,30 +72,48 @@ export default function BlogIndex({
           </div>
         </section>
       ) : (
-        sections.map(({ section, label, total }) => {
-          const sectionPosts = posts.filter((p) => p.section === section);
-          if (sectionPosts.length === 0) return null;
-          return (
-            <section key={section} className="mt-16">
-              <div className="flex items-baseline justify-between">
-                <h2 className="font-mono text-xs uppercase tracking-widest text-text-tertiary">
-                  {label}
-                </h2>
-                <Link
-                  href={`/blog/${section}`}
-                  className="font-mono text-xs uppercase tracking-widest text-text-tertiary hover:text-text-primary transition-colors link-underline"
-                >
-                  All {total} →
-                </Link>
-              </div>
+        <>
+          {latest.length > 0 && (
+            <section className="mt-16">
+              <h2 className="font-mono text-xs uppercase tracking-widest text-text-tertiary">
+                Latest
+              </h2>
               <div className="mt-6">
-                {sectionPosts.map((post) => (
-                  <PostRow key={`${post.section}/${post.slug}`} post={post} />
+                {latest.map((post) => (
+                  <PostRow
+                    key={`${post.section}/${post.slug}`}
+                    post={post}
+                    showSection
+                  />
                 ))}
               </div>
             </section>
-          );
-        })
+          )}
+          {sections.map(({ section, label, total }) => {
+            const sectionPosts = posts.filter((p) => p.section === section);
+            if (sectionPosts.length === 0) return null;
+            return (
+              <section key={section} className="mt-16">
+                <div className="flex items-baseline justify-between">
+                  <h2 className="font-mono text-xs uppercase tracking-widest text-text-tertiary">
+                    {label}
+                  </h2>
+                  <Link
+                    href={`/blog/${section}`}
+                    className="font-mono text-xs uppercase tracking-widest text-text-tertiary hover:text-text-primary transition-colors link-underline"
+                  >
+                    All {total} →
+                  </Link>
+                </div>
+                <div className="mt-6">
+                  {sectionPosts.map((post) => (
+                    <PostRow key={`${post.section}/${post.slug}`} post={post} />
+                  ))}
+                </div>
+              </section>
+            );
+          })}
+        </>
       )}
     </>
   );

@@ -1,7 +1,13 @@
 import Link from "next/link";
 import type { BlogPostSummary } from "./BlogIndex";
 
-export default function PostRow({ post }: { post: BlogPostSummary }) {
+export default function PostRow({
+  post,
+  showSection = false,
+}: {
+  post: BlogPostSummary;
+  showSection?: boolean;
+}) {
   return (
     <Link
       href={`/blog/${post.section}/${post.slug}`}
@@ -9,6 +15,11 @@ export default function PostRow({ post }: { post: BlogPostSummary }) {
     >
       <span className="font-mono text-xs text-text-tertiary">
         {post.dateLabel}
+        {showSection && (
+          <span className="mt-1 block uppercase tracking-widest">
+            {post.sectionLabel}
+          </span>
+        )}
       </span>
       <span className="min-w-0">
         <span className="block text-base sm:text-lg font-semibold tracking-tight text-text-primary transition-all duration-200 group-hover:translate-x-1 group-hover:text-primary">
