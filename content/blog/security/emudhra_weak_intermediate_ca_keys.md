@@ -107,6 +107,7 @@ A CRL that fails against its own CA certificate means the CA signed it with a ke
 | 18 Oct 09:24-09:38 | eMudhra revokes all eight as cACompromise |
 | 19 Oct | Sectigo revokes the cross-signs, Go 1.27.3 and 1.26.10 ship, Apple blocks |
 | 20 Oct | Microsoft blocks (per the incident site), [NSS 3.131.1](https://groups.google.com/a/mozilla.org/g/dev-tech-crypto/c/vSxZxnOMMvs) drops emSign ECC Root CA - G3, [Google's post](https://blog.google/security/protecting-chrome-and-android-users-from-compromised-emudhra-intermediate-ca-certificates/) |
+| 21 Oct | Firefox for Android 158.0.2 fixes profiles that weren't loading the block list at startup ([comment 29](https://bugzilla.mozilla.org/show_bug.cgi?id=2083449#c29)) |
 | 27 Oct (PDT) | Chrome Root Store drops emSign ECC Root CA - G3 |
 
 Chrome blocks by key, so the Sectigo copies are covered too. It skipped the code-signing CAs because Chrome won't build a TLS path through them.

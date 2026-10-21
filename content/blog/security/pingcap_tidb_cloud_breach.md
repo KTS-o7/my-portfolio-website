@@ -48,7 +48,7 @@ That lands on the Sep 8 the leak post gives, a day before PingCAP's window opens
 
 10.6 TB is the number I trust least. If each of the 88 exports was a full copy, a lot of it could be the same tables stored many times over, and the post doesn't say whether it counted them once. On [Hacker News](https://news.ycombinator.com/item?id=50173716) one commenter read it as "a leak of every possible piece of metadata but not an actual leak of customer data", then added that the SQL logs do contain customer data.
 
-A first batch of 128.3 GiB compressed is up as torrents, and the post says credential owners "will be hearing from us soon". Don't download it to check whether you're in it. It reportedly holds live credentials and personal data.
+The leak post links a first batch of 128.3 GiB compressed as torrents (I haven't checked what's in it), and says credential owners "will be hearing from us soon". Don't download it to check whether you're in it. It reportedly holds live credentials and personal data.
 
 The post names a lot of companies, Booking.com, Shopee and Capcom among them. Most appear only in what it calls a 94-name billing dictionary, and none is a confirmed victim. Bitget is the one that has responded. Per [TechFlow](https://www.techflowpost.com/en-US/newsletter/140659), its Greater China head Xie Jiayin said on X on Oct 20 that Bitget only kept some public trade logs on TiDB Cloud, had stopped using it more than two months earlier, and no user data or passwords leaked.
 
