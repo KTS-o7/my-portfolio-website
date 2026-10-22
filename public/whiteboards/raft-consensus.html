@@ -88,6 +88,9 @@ summary { cursor: pointer; color: var(--soft); }
 .rotate-hint { display: none; margin: 0 0 10px; color: var(--soft); font-size: 14px; }
 @media (orientation: portrait) and (max-width: 600px) { .rotate-hint { display: block; } }
 .wb-embed .rotate-hint { display: none; }
+/* phones get a portrait board with its own layout (see useLayout) */
+.board.narrow { aspect-ratio: 3 / 4; }
+.has-narrow .rotate-hint { display: none !important; }
 /* ?embed=1: the host page (e.g. a blog post) supplies the title and lede */
 .wb-embed body { background: transparent; }
 .wb-embed main { max-width: none; padding: 0 0 8px; }
@@ -334,14 +337,28 @@ var rough=function(){"use strict";function t(t,e,s){if(t&&t.length){const[n,o]=e
   // A step without `cam` is framed from what it draws: its new elements, the ids in its
   // `focus` list, and the arrows its packets travel on. Narrow displays (phones) get a
   // tighter frame with a smaller minimum width, which is what keeps text readable there.
-  const BOARD_W = 2600, BOARD_H = 1462, NARROW = 520;
+  let BOARD_W = 2600, BOARD_H = 1462, ASPECT = 16 / 9;
+  const NARROW = 520;
+  // Boards built with layouts (ELK, at build time) carry a wide and a narrow layout; the
+  // story sets LAYOUTS. Narrow displays get the narrow layout on a portrait board.
+  let LAYOUTS = null, LAY = null;
+  const boardEl = $(".board");
+  const layoutFor = (width) => (!LAYOUTS ? null : width < NARROW ? LAYOUTS.narrow : LAYOUTS.wide);
+  function useLayout(l) {
+    if (!l || l === LAY) return false;
+    LAY = l; [BOARD_W, BOARD_H] = l.size; ASPECT = l.aspect;
+    boardEl.classList.toggle("narrow", !!l.narrow);
+    root.classList.toggle("has-narrow", true);
+    setVB([0, 0, BOARD_W, BOARD_H]);
+    return true;
+  }
   const displayWidth = () => svg.getBoundingClientRect().width || 1000;
   const bboxOf = (g) => { const b = g.getBBox(); return b.width || b.height ? b : null; };
   function fit(bounds, width) {
     const [x0, y0, x1, y1] = bounds;
-    const narrow = width < NARROW, pad = narrow ? 28 : 40, minW = narrow ? 640 : 1100;
-    const w = Math.min(BOARD_W, Math.max(x1 - x0 + 2 * pad, ((y1 - y0 + 2 * pad) * 16) / 9, minW));
-    const h = (w * 9) / 16;
+    const narrow = width < NARROW, pad = narrow ? 28 : 40, minW = narrow ? (LAY && LAY.narrow ? 560 : 640) : 1100;
+    const w = Math.min(BOARD_W, Math.max(x1 - x0 + 2 * pad, (y1 - y0 + 2 * pad) * ASPECT, minW));
+    const h = w / ASPECT;
     const x = Math.min(Math.max((x0 + x1) / 2 - w / 2, 0), BOARD_W - w);
     const y = Math.min(Math.max((y0 + y1) / 2 - h / 2, 0), BOARD_H - h);
     return [x, y, w, h];
@@ -374,8 +391,8 @@ var rough=function(){"use strict";function t(t,e,s){if(t&&t.length){const[n,o]=e
       if (next.every((v, i) => Math.abs(v - frame[i]) < 1)) break;
       frame = next;
     }
-    // Still cutting a box: slide the frame, keeping the step's own elements in view, so the
-    // box ends up fully inside or fully outside, whichever is the smaller move.
+    // Still cutting a box (or a note): slide the frame, keeping the step's own elements in
+    // view, so it ends up fully inside or fully outside, whichever is the smaller move.
     const keeps = (x, y, [, , w, h]) =>
       x >= 0 && y >= 0 && x + w <= BOARD_W && y + h <= BOARD_H &&
       bounds[0] >= x && bounds[1] >= y && bounds[2] <= x + w && bounds[3] <= y + h;
@@ -383,7 +400,7 @@ var rough=function(){"use strict";function t(t,e,s){if(t&&t.length){const[n,o]=e
       const [fx, fy, fw, fh] = frame;
       let moved = false;
       els.forEach((g) => {
-        if (moved || !g.classList.contains("box")) return;
+        if (moved || !(g.classList.contains("box") || g.classList.contains("note"))) return;
         const b = bboxOf(g);
         if (!b) return;
         const inView = b.x < fx + fw && b.x + b.width > fx && b.y < fy + fh && b.y + b.height > fy;
@@ -428,135 +445,156 @@ var rough=function(){"use strict";function t(t,e,s){if(t&&t.length){const[n,o]=e
 
   // ---------- the story ----------
 
-  // Cameras are automatic (framed from what each step draws); only the recap sets one.
-  // Each node's log sits in a strip beside it (two cells: earlier entries, then the new
-  // one), so a step's new elements stay close together and the frame stays tight.
-  // Regions: ring x 60-1350, y 150-940, notes right of S1 (x 1000-1400); split-vote inset bottom right
-  // (x 1200-2080, y 1000-1330); legend bottom left; "runs in" note top right.
-  const FULL = [0, 0, 2600, 1462];
+  // ---------- layout helpers: elements placed from LAYOUTS (board_layout.py) ----------
+  const P = (id) => { const p = LAY.pos[id]; if (!p) throw new Error("no layout for " + id); return p; };
+  const lbox = (id, slot, lines, o) => () => { const [x, y, w, h] = P(slot); return box(id, x, y, w, h, lines, o)(); };
+  const lnote = (id, slot, lines, o) => () => { const [x, y] = P(slot); return note(id, x + 5, y + 5, lines, o)(); };
+  const lframe = (id, group, title, o) => () => { const [x, y, w, h] = P(group); return frame(id, x, y + 70, w, h - 70, title, o)(); };
+  const cross = (id, slot) => () => {
+    const [x, y, w, h] = P(slot);
+    return place(id, "bad", "strike", world, (g) => {
+      g.appendChild(sketch(poly([[x + 8, y + 8], [x + w - 8, y + h - 8]]), { roughness: 1.4 }));
+      g.appendChild(sketch(poly([[x + w - 8, y + 8], [x + 8, y + h - 8]]), { roughness: 1.4 }));
+    });
+  };
+  // A short red slash across the middle of an arrow that is already on the board.
+  const cut = (id, linkId) => () => {
+    const p = els.get(linkId).querySelector(".guide"), L = p.getTotalLength();
+    const a = p.getPointAtLength(L * 0.5 - 10), b = p.getPointAtLength(L * 0.5 + 10);
+    const dx = b.x - a.x, dy = b.y - a.y, n = Math.hypot(dx, dy), ux = -dy / n, uy = dx / n;
+    const m = [(a.x + b.x) / 2, (a.y + b.y) / 2];
+    return place(id, "bad", "strike", world, (g) =>
+      g.appendChild(sketch(poly([[m[0] - ux * 36 - dx, m[1] - uy * 36 - dy], [m[0] + ux * 36 + dx, m[1] + uy * 36 + dy]]), { roughness: 1.4 })));
+  };
+  // An arrow from slot a to slot b, centre to centre, cut at both borders. `offset` moves it
+  // sideways (so a request and its reply don't overlap); the label goes beside it.
+  const link = (id, a, b, o = {}) => () => {
+    const A = P(a), B = P(b), size = o.size || 26;
+    let c1 = [A[0] + A[2] / 2, A[1] + A[3] / 2], c2 = [B[0] + B[2] / 2, B[1] + B[3] / 2];
+    const dx = c2[0] - c1[0], dy = c2[1] - c1[1], L = Math.hypot(dx, dy), nx = -dy / L, ny = dx / L;
+    const off = (o.offset || 0) * 26;
+    c1 = [c1[0] + nx * off, c1[1] + ny * off]; c2 = [c2[0] + nx * off, c2[1] + ny * off];
+    const exit = (c, to, [x, y, w, h], m) => {
+      const ex = to[0] - c[0], ey = to[1] - c[1];
+      let t = Infinity;
+      if (ex) t = Math.min(t, ((ex > 0 ? x + w + m : x - m) - c[0]) / ex);
+      if (ey) t = Math.min(t, ((ey > 0 ? y + h + m : y - m) - c[1]) / ey);
+      return [c[0] + ex * t, c[1] + ey * t];
+    };
+    const p1 = exit(c1, c2, A, 6), p2 = exit(c2, c1, B, 10), opts = Object.assign({ size }, o);
+    if (o.label) {
+      // Try spots along the arrow, on both sides, and take the first whose label box
+      // overlaps no text or box already on the board.
+      const lw = o.label.length * size * 0.56, lh = size * 1.3;
+      const d = Math.abs(nx) * (lw / 2 + 16) + Math.abs(ny) * (lh / 2 + 10);
+      const taken = [];
+      els.forEach((g) => {
+        if (g.classList.contains("frame")) return;
+        g.querySelectorAll(".txt").forEach((t) => taken.push(t.getBBox()));
+        if (g.dataset.box) { const [x, y, w, h] = g.dataset.box.split(",").map(Number); taken.push({ x, y, width: w, height: h }); }
+      });
+      const free = (cx, cy) => taken.every((q) =>
+        cx + lw / 2 + 6 < q.x || cx - lw / 2 - 6 > q.x + q.width || cy + lh / 2 + 6 < q.y || cy - lh / 2 - 6 > q.y + q.height);
+      const sides = o.side ? [o.side, -o.side] : [1, -1];
+      let best = null;
+      search: for (const t of [0.5, 0.4, 0.6, 0.3, 0.7]) for (const side of sides) {
+        const cx = p1[0] + (p2[0] - p1[0]) * t + nx * side * d, cy = p1[1] + (p2[1] - p1[1]) * t + ny * side * d;
+        if (!best) best = [cx, cy];
+        if (free(cx, cy)) { best = [cx, cy]; break search; }
+      }
+      opts.at = [best[0], best[1] - size * 0.72];
+    }
+    return arrow(id, [p1, p2], opts)();
+  };
+
+  LAYOUTS = {"wide": {"pos": {"ring": [286, 60, 1302.0, 673], "s5_g": [286, 78, 448, 100], "s5": [286, 78, 190, 100], "s5_log": [496, 96, 238, 64], "s5_c1": [496, 96, 114, 64], "s5_c2": [620, 96, 114, 64], "s2_gn": [774, 60, 814, 135], "s2_g": [774, 60, 448, 100], "s2": [774, 60, 190, 100], "s2_log": [984, 78, 238, 64], "s2_c1": [984, 78, 114, 64], "s2_c2": [1108, 78, 114, 64], "s2_n": [1242, 60, 346, 135], "clientG": [340, 305, 279, 218], "client": [340, 305, 200, 90], "ln1": [340, 419, 279, 104], "s1": [659, 364, 190, 100], "s1_log": [889, 382, 238, 64], "s1_c1": [889, 382, 114, 64], "s1_c2": [1013, 382, 114, 64], "s4_g": [286, 633, 448, 100], "s4": [286, 633, 190, 100], "s4_log": [496, 651, 238, 64], "s4_c1": [496, 651, 114, 64], "s4_c2": [620, 651, 114, 64], "s3_gn": [774, 633, 813, 100], "s3_g": [774, 633, 448, 100], "s3": [774, 633, 190, 100], "s3_log": [984, 651, 238, 64], "s3_c1": [984, 651, 114, 64], "s3_c2": [1108, 651, 114, 64], "s3_n": [1242, 633, 345, 78], "splitG": [286, 873, 772, 317], "split_row": [316, 973, 712, 90], "ca": [316, 973, 220, 90], "cb": [566, 973, 220, 90], "cab": [816, 982, 212, 72], "retry": [316, 1093, 503, 67], "runs": [1198, 873, 329, 127], "legendG": [1667, 873, 288, 328], "lgr_old": [1697, 973, 228, 39], "lg_old": [1697, 976, 44, 34], "lg_old_t": [1755, 973, 170, 39], "lgr_new": [1697, 1026, 179, 39], "lg_new": [1697, 1028, 44, 34], "lg_new_t": [1755, 1026, 121, 39], "lgr_bad": [1697, 1079, 154, 39], "lg_bad": [1697, 1082, 44, 34], "lg_bad_t": [1755, 1079, 96, 39], "lgr_mute": [1697, 1132, 117, 39], "lg_mute": [1697, 1134, 44, 34], "lg_mute_t": [1755, 1132, 59, 39]}, "size": [2242, 1261], "aspect": 1.7777777777777777, "narrow": false}, "narrow": {"pos": {"ring": [646, 60, 787.0, 1059], "s5_g": [802, 138, 238, 184], "s5_log": [802, 138, 238, 64], "s5_c1": [802, 138, 114, 64], "s5_c2": [926, 138, 114, 64], "s5": [826, 222, 190, 100], "s2_gn": [1080, 60, 346, 339], "s2_n": [1080, 60, 346, 135], "s2_g": [1080, 215, 238, 184], "s2_log": [1080, 215, 238, 64], "s2_c1": [1080, 215, 114, 64], "s2_c2": [1204, 215, 114, 64], "s2": [1104, 299, 190, 100], "clientG": [646, 509, 279, 218], "ln1": [646, 509, 279, 104], "client": [646, 637, 200, 90], "s1": [965, 568, 190, 100], "s1_log": [1195, 586, 238, 64], "s1_c1": [1195, 586, 114, 64], "s1_c2": [1319, 586, 114, 64], "s4_g": [802, 886, 238, 184], "s4": [826, 886, 190, 100], "s4_log": [802, 1006, 238, 64], "s4_c1": [802, 1006, 114, 64], "s4_c2": [926, 1006, 114, 64], "s3_gn": [1080, 837, 345, 282], "s3_g": [1080, 837, 238, 184], "s3": [1104, 837, 190, 100], "s3_log": [1080, 957, 238, 64], "s3_c1": [1080, 957, 114, 64], "s3_c2": [1204, 957, 114, 64], "s3_n": [1080, 1041, 345, 78], "splitG": [758, 1319, 563, 539], "split_row": [788, 1419, 220, 312], "ca": [788, 1419, 220, 90], "cb": [788, 1539, 220, 90], "cab": [792, 1659, 212, 72], "retry": [788, 1761, 503, 67], "runs": [875, 2058, 329, 127], "legendG": [896, 2385, 288, 328], "lgr_old": [926, 2485, 228, 39], "lg_old": [926, 2488, 44, 34], "lg_old_t": [984, 2485, 170, 39], "lgr_new": [926, 2538, 179, 39], "lg_new": [926, 2540, 44, 34], "lg_new_t": [984, 2538, 121, 39], "lgr_bad": [926, 2591, 154, 39], "lg_bad": [926, 2594, 44, 34], "lg_bad_t": [984, 2591, 96, 39], "lgr_mute": [926, 2644, 117, 39], "lg_mute": [926, 2646, 44, 34], "lg_mute_t": [984, 2644, 59, 39]}, "size": [2080, 2773], "aspect": 0.75, "narrow": true}};
   const S = [];
-  const node = (id, x, y, role, k, term) => {
-    const name = id.slice(0, 2).toUpperCase();
-    return box(id, x, y, 200, 100, [term ? `${name} · term ${term}` : name, role], { k: k || "old", size: 28 });
-  };
-  // Log strip origin per node: [x of the "earlier" cell, y]. The new entry goes 130 to the right.
-  const STRIP = { s1: [716, 168], s2: [1096, 398], s5: [120, 496], s4: [476, 778], s3: [956, 778] };
-  const cell = (id, nodeId, col, text, k) => {
-    const [x, y] = STRIP[nodeId];
-    return box(id, x + (col - 1) * 130, y, 120, 64, [text], { k, size: 26 });
-  };
-
-  // 0. Five followers
   S.push({ ops: [
-    node("s1", 500, 150, "follower"),
-    node("s2", 880, 380, "follower"),
-    node("s5", 120, 380, "follower"),
-    node("s4", 260, 760, "follower"),
-    node("s3", 740, 760, "follower"),
+    lbox("s1", "s1", ["S1", "follower"], {"k": "old", "size": 28}),
+    lbox("s2", "s2", ["S2", "follower"], {"k": "old", "size": 28}),
+    lbox("s5", "s5", ["S5", "follower"], {"k": "old", "size": 28}),
+    lbox("s4", "s4", ["S4", "follower"], {"k": "old", "size": 28}),
+    lbox("s3", "s3", ["S3", "follower"], {"k": "old", "size": 28}),
   ] });
-
-  // 1. S1's election timeout fires
   S.push({ erase: ["s1"], ops: [
-    node("s1c", 500, 150, "candidate", "new", 2),
-    note("timeout", 120, 165, ["election timeout", "(150-300 ms, random)"], { k: "new", size: 26 }),
+    lbox("s1c", "s1", ["S1 \u00b7 term 2", "candidate"], {"k": "new", "size": 28}),
+    lnote("timeout", "ln1", ["election timeout", "(150-300 ms, random)"], {"k": "new", "size": 24}),
   ] });
-
-  // 2. RequestVote to every peer
-  S.push({ ops: [
-    arrow("rv2", [[702, 252], [876, 400]], { k: "new" }),
-    arrow("rv5", [[498, 230], [324, 390]], { k: "new" }),
-    arrow("rv3", [[650, 252], [810, 756]], { k: "new" }),
-    arrow("rv4", [[550, 252], [390, 756]], { k: "new" }),
-    note("rv_n", 1000, 150, ["RequestVote(term 2)", "to every peer"], { k: "new", size: 26 }),
-  ], packets: [{ via: "rv2", overlap: 0 }, { via: "rv5", overlap: 0 }, { via: "rv3", overlap: 0 }, { via: "rv4", overlap: 0 }] });
-
-  // 3. Votes come back: a majority
-  S.push({ ops: [
-    arrow("v2", [[878, 440], [704, 286]], { k: "new", dash: true }),
-    arrow("v5", [[322, 425], [495, 262]], { k: "new", dash: true }),
-    note("maj", 1000, 240, ["3 of 5 votes,", "its own included"], { k: "new", size: 26 }),
-    note("rule", 1110, 372, ["a peer votes yes if it", "hasn’t voted this term", "and the candidate’s log", "is at least as up-to-date"], { k: "old", size: 24 }),
-  ], packets: [{ via: "v2", overlap: 0 }, { via: "v5", overlap: 0 }] });
-
-  // 4. Leader, heartbeats
-  S.push({ erase: ["s1c", "timeout", "rv2", "rv5", "rv3", "rv4", "rv_n", "v2", "v5", "maj", "rule"], ops: [
-    node("s1l", 500, 150, "leader", "new", 2),
-    arrow("hb2", [[702, 252], [876, 400]], { k: "new", dash: true }),
-    arrow("hb5", [[498, 230], [324, 390]], { k: "new", dash: true }),
-    arrow("hb3", [[650, 252], [810, 756]], { k: "new", dash: true }),
-    arrow("hb4", [[550, 252], [390, 756]], { k: "new", dash: true }),
-    note("hb_n", 1000, 150, ["heartbeats:", "empty AppendEntries", "keep followers quiet"], { k: "new", size: 26 }),
-  ], packets: [{ via: "hb2", overlap: 0 }, { via: "hb5", overlap: 0 }, { via: "hb3", overlap: 0 }, { via: "hb4", overlap: 0 }] });
-
-  // 5. Split vote, as an inset
-  S.push({ ops: [
-    frame("split", 1200, 1000, 880, 330, "what if two candidates start at once?", { k: "bad" }),
-    box("ca", 1250, 1050, 220, 90, ["S2 candidate"], { k: "bad", size: 24 }),
-    box("cb", 1500, 1050, 220, 90, ["S4 candidate"], { k: "bad", size: 24 }),
-    note("cab", 1760, 1056, ["neither reaches", "a majority"], { k: "bad", size: 24 }),
-    note("retry", 1250, 1180, ["both time out and retry with a new term;", "random timeouts make a repeat unlikely"], { k: "old", size: 22 }),
+  S.push({ erase: ["timeout"], packets: [{"via": "rv2", "overlap": 0}, {"via": "rv5", "overlap": 0}, {"via": "rv3", "overlap": 0}, {"via": "rv4", "overlap": 0}], ops: [
+    link("rv2", "s1", "s2", {"k": "new", "dash": false, "offset": -1, "size": 26}),
+    link("rv5", "s1", "s5", {"k": "new", "dash": false, "offset": -1, "size": 26}),
+    link("rv3", "s1", "s3", {"k": "new", "dash": false, "offset": -1, "size": 26}),
+    link("rv4", "s1", "s4", {"k": "new", "dash": false, "offset": -1, "size": 26}),
+    lnote("rv_n", "ln1", ["RequestVote(term 2)", "to every peer"], {"k": "new", "size": 24}),
   ] });
-
-  // 6. Client write; every node's log appears; the leader appends locally
-  S.push({ erase: ["hb_n"], ops: [
-    cell("e1o", "s1", 1, "earlier", "old"), cell("e2o", "s2", 1, "earlier", "old"),
-    cell("e5o", "s5", 1, "earlier", "old"), cell("e4o", "s4", 1, "earlier", "old"),
-    cell("e3o", "s3", 1, "earlier", "old"),
-    box("client", 120, 150, 200, 90, ["client"], { size: 28 }),
-    arrow("cw", [[322, 190], [496, 190]], { label: "write x=5", at: [409, 140], size: 24 }),
-    cell("e1", "s1", 2, "x=5", "new"),
-    note("e1_n", 980, 165, ["not committed", "yet"], { k: "new", size: 24 }),
-  ], packets: [{ via: "cw", overlap: 1 }] });
-
-  // 7. AppendEntries in parallel; S3 unreachable
+  S.push({ erase: ["rv_n"], packets: [{"via": "v2", "overlap": 0}, {"via": "v5", "overlap": 0}], ops: [
+    link("v2", "s2", "s1", {"k": "new", "dash": true, "offset": -1, "size": 26}),
+    link("v5", "s5", "s1", {"k": "new", "dash": true, "offset": -1, "size": 26}),
+    lnote("maj", "ln1", ["3 of 5 votes,", "its own included"], {"k": "new", "size": 24}),
+    lnote("rule", "s2_n", ["a peer votes yes if it", "hasn\u2019t voted this term", "and the candidate\u2019s log", "is at least as up-to-date"], {"k": "old", "size": 24}),
+  ] });
+  S.push({ erase: ["s1c", "timeout", "rv2", "rv5", "rv3", "rv4", "rv_n", "v2", "v5", "maj", "rule"], packets: [{"via": "hb2", "overlap": 0}, {"via": "hb5", "overlap": 0}, {"via": "hb3", "overlap": 0}, {"via": "hb4", "overlap": 0}], ops: [
+    lbox("s1l", "s1", ["S1 \u00b7 term 2", "leader"], {"k": "new", "size": 28}),
+    link("hb2", "s1", "s2", {"k": "new", "dash": true, "offset": 0, "size": 26}),
+    link("hb5", "s1", "s5", {"k": "new", "dash": true, "offset": 0, "size": 26}),
+    link("hb3", "s1", "s3", {"k": "new", "dash": true, "offset": 0, "size": 26}),
+    link("hb4", "s1", "s4", {"k": "new", "dash": true, "offset": 0, "size": 26}),
+    lnote("hb_n", "ln1", ["heartbeats:", "empty AppendEntries", "keep followers quiet"], {"k": "new", "size": 24}),
+  ] });
   S.push({ ops: [
-    cell("e2", "s2", 2, "x=5", "new"),
-    cell("e4", "s4", 2, "x=5", "new"),
-    cell("e5", "s5", 2, "x=5", "new"),
-    strike("hb3_x", 680, 476, 750, 428),
-    note("s3_down", 1090, 792, ["unreachable"], { k: "bad", size: 26 }),
-  ], packets: [{ via: "hb2", overlap: 0 }, { via: "hb5", overlap: 0 }, { via: "hb4", overlap: 0 }] });
-
-  // 8. Majority -> committed, reply to the client
-  S.push({ erase: ["e1_n"], ops: [
-    note("e1_c", 980, 165, ["committed:", "3 of 5 have it"], { k: "new", size: 24 }),
-    arrow("cr", [[496, 226], [322, 226]], { k: "new", label: "ok", at: [409, 238], size: 24 }),
-  ], packets: [{ via: "cr", overlap: 1 }] });
-
-  // 9. S3 returns with a stale entry; the consistency check rejects the append
-  S.push({ erase: ["hb3_x", "s3_down"], ops: [
-    cell("e3s", "s3", 2, "stale", "bad"),
-    note("e3_n", 740, 878, ["prev index + term don’t", "match: rejected"], { k: "bad", size: 26 }),
-  ], packets: [{ via: "hb3", overlap: 1 }] });
-
-  // 10. The leader backs up and overwrites
-  S.push({ erase: ["e3s", "e3_n"], ops: [
-    cell("e3", "s3", 2, "x=5", "new"),
-    note("e3_f", 740, 878, ["leader backed up and", "overwrote it"], { k: "new", size: 26 }),
-  ], packets: [{ via: "hb3", overlap: 1 }] });
-
-  // 11. The leader crashes; a new election in term 3
+    lframe("split_f", "splitG", "what if two candidates start at once?", {"k": "bad"}),
+    lbox("ca", "ca", ["S2 candidate"], {"k": "bad", "size": 24}),
+    lbox("cb", "cb", ["S4 candidate"], {"k": "bad", "size": 24}),
+    lnote("cab", "cab", ["neither reaches", "a majority"], {"k": "bad", "size": 24}),
+    lnote("retry", "retry", ["both time out and retry with a new term;", "random timeouts make a repeat unlikely"], {"k": "old", "size": 22}),
+  ] });
+  S.push({ erase: ["hb_n"], packets: [{"via": "cw", "overlap": 1}], ops: [
+    lbox("e1o", "s1_c1", ["earlier"], {"k": "old", "size": 26}),
+    lbox("e2o", "s2_c1", ["earlier"], {"k": "old", "size": 26}),
+    lbox("e3o", "s3_c1", ["earlier"], {"k": "old", "size": 26}),
+    lbox("e4o", "s4_c1", ["earlier"], {"k": "old", "size": 26}),
+    lbox("e5o", "s5_c1", ["earlier"], {"k": "old", "size": 26}),
+    lbox("client", "client", ["client"], {"k": "old", "size": 28}),
+    link("cw", "client", "s1", {"k": "old", "dash": false, "offset": -1, "size": 26, "label": "write x=5"}),
+    lbox("e1", "s1_c2", ["x=5"], {"k": "new", "size": 26}),
+    lnote("e1_n", "ln1", ["not committed", "yet"], {"k": "new", "size": 24}),
+  ] });
+  S.push({ packets: [{"via": "hb2", "overlap": 0}, {"via": "hb5", "overlap": 0}, {"via": "hb4", "overlap": 0}], ops: [
+    lbox("e2", "s2_c2", ["x=5"], {"k": "new", "size": 26}),
+    lbox("e4", "s4_c2", ["x=5"], {"k": "new", "size": 26}),
+    lbox("e5", "s5_c2", ["x=5"], {"k": "new", "size": 26}),
+    cut("hb3_x", "hb3"),
+    lnote("s3_down", "s3_n", ["unreachable"], {"k": "bad", "size": 26}),
+  ] });
+  S.push({ erase: ["e1_n"], packets: [{"via": "cr", "overlap": 1}], ops: [
+    lnote("e1_c", "ln1", ["committed:", "3 of 5 have it"], {"k": "new", "size": 24}),
+    link("cr", "s1", "client", {"k": "new", "dash": false, "offset": -1, "size": 26, "label": "ok"}),
+  ] });
+  S.push({ erase: ["hb3_x", "s3_down"], packets: [{"via": "hb3", "overlap": 1}], ops: [
+    lbox("e3s", "s3_c2", ["stale"], {"k": "bad", "size": 26}),
+    lnote("e3_n", "s3_n", ["prev index + term don\u2019t", "match: rejected"], {"k": "bad", "size": 26}),
+  ] });
+  S.push({ erase: ["e3s", "e3_n"], packets: [{"via": "hb3", "overlap": 1}], ops: [
+    lbox("e3", "s3_c2", ["x=5"], {"k": "new", "size": 26}),
+    lnote("e3_f", "s3_n", ["leader backed up and", "overwrote it"], {"k": "new", "size": 26}),
+  ] });
   S.push({ focus: ["s5", "s4", "s3"], mute: ["s1l", "hb2", "hb3", "hb4", "hb5", "e1_c", "cw", "cr"], erase: ["s2", "e3_f"], ops: [
-    strike("s1_x1", 506, 158, 694, 242),
-    strike("s1_x2", 694, 158, 506, 242),
-    node("s2c", 880, 380, "candidate", "new", 3),
-    note("win", 880, 510, ["only a node with every", "committed entry can win"], { k: "new", size: 26 }),
+    cross("s1_x", "s1"),
+    lbox("s2c", "s2", ["S2 \u00b7 term 3", "candidate"], {"k": "new", "size": 28}),
+    lnote("win", "s2_n", ["only a node with every", "committed entry can win"], {"k": "new", "size": 26}),
   ] });
-
-  // 12. Recap
-  S.push({ cam: FULL, ops: [
-    note("runs", 1500, 180, ["runs in production:", "etcd, CockroachDB,", "TiKV, Consul"], { k: "old", size: 30 }),
-    frame("legend", 120, 1180, 1000, 150, "legend"),
-    box("lg_old", 160, 1235, 44, 34, [], { k: "old" }),
-    note("lg_old_t", 216, 1231, ["already there"], { k: "old", size: 22 }),
-    box("lg_new", 410, 1235, 44, 34, [], { k: "new" }),
-    note("lg_new_t", 466, 1231, ["this step"], { k: "new", size: 22 }),
-    box("lg_bad", 640, 1235, 44, 34, [], { k: "bad" }),
-    note("lg_bad_t", 696, 1231, ["failure"], { k: "bad", size: 22 }),
-    box("lg_mute", 860, 1235, 44, 34, [], { k: "mute" }),
-    note("lg_mute_t", 916, 1231, ["gone"], { k: "mute", size: 22 }),
+  S.push({ cam: "full", ops: [
+    lnote("runs", "runs", ["runs in production:", "etcd, CockroachDB,", "TiKV, Consul"], {"k": "old", "size": 30}),
+    lframe("legend_f", "legendG", "legend", {"k": "old"}),
+    lbox("lg_old", "lg_old", [], {"k": "old", "size": 26}),
+    lnote("lg_old_t", "lg_old_t", ["already there"], {"k": "old", "size": 22}),
+    lbox("lg_new", "lg_new", [], {"k": "new", "size": 26}),
+    lnote("lg_new_t", "lg_new_t", ["this step"], {"k": "new", "size": 22}),
+    lbox("lg_bad", "lg_bad", [], {"k": "bad", "size": 26}),
+    lnote("lg_bad_t", "lg_bad_t", ["failure"], {"k": "bad", "size": 22}),
+    lbox("lg_mute", "lg_mute", [], {"k": "mute", "size": 26}),
+    lnote("lg_mute_t", "lg_mute_t", ["gone"], {"k": "mute", "size": 22}),
   ] });
-
   // ---------- navigation ----------
   const CAP = JSON.parse(document.getElementById("captions").textContent);
   const dotsEl = $("#dots"), prev = $("#prev"), next = $("#next"), say = $("#say");
@@ -598,11 +636,12 @@ var rough=function(){"use strict";function t(t,e,s){if(t&&t.length){const[n,o]=e
     ...(st.packets || []).map((p) => p.via),
   ];
   let lastFocus = [], lastNarrow = null;
-  const camFor = (st, width) => st.cam || frameFor(lastFocus, width);
+  const camFor = (st, width) => (st.cam === "full" ? [0, 0, BOARD_W, BOARD_H] : st.cam) || frameFor(lastFocus, width);
 
   function go(n) {
     n = Math.max(0, Math.min(S.length - 1, n));
-    const forward = n === cur + 1 && cur >= 0;
+    const relaid = useLayout(layoutFor(displayWidth()));
+    const forward = n === cur + 1 && cur >= 0 && !relaid;
     if (forward) { finishAll(); stopPackets(); }
     else { clearBoard(); for (let i = 0; i < n; i++) applyStep(i, false); }
     const animate = !reduced;
@@ -634,6 +673,14 @@ var rough=function(){"use strict";function t(t,e,s){if(t&&t.length){const[n,o]=e
 
   new ResizeObserver(() => {
     const narrow = displayWidth() < NARROW;
+    if (cur >= 0 && useLayout(layoutFor(displayWidth()))) {
+      clearBoard();
+      let made = [];
+      for (let i = 0; i <= cur; i++) made = applyStep(i, false);
+      lastFocus = focusIds(S[cur], made); lastNarrow = narrow;
+      camTo(camFor(S[cur], displayWidth()), true);
+      return;
+    }
     if (cur < 0 || narrow === lastNarrow || S[cur].cam) return;
     lastNarrow = narrow;
     camTo(frameFor(lastFocus, displayWidth()), true);
@@ -656,6 +703,7 @@ var rough=function(){"use strict";function t(t,e,s){if(t&&t.length){const[n,o]=e
   window.__wbCheck = (opts = {}) => {
     const width = opts.width || displayWidth(), minPx = opts.minPx || 11;
     const issues = [], ids = new Set();
+    useLayout(layoutFor(width));
     S.forEach((st, i) => {
       clearBoard();
       for (let j = 0; j < i; j++) applyStep(j, false);
@@ -693,9 +741,28 @@ var rough=function(){"use strict";function t(t,e,s){if(t&&t.length){const[n,o]=e
             issues.push(`step ${i + 1}: text in ${g.dataset.id} overlaps ${oid}`);
         });
       });
+      // Arrows that run through a box they don't start or end at (new arrows or new boxes only).
+      const boxes = [...els.values()].filter((g) => g.dataset.box);
+      els.forEach((g, id) => {
+        const guide = g.classList.contains("arrow") && g.querySelector(".guide");
+        if (!guide) return;
+        const pts = guide.getAttribute("d").slice(1).split("L").map((q) => q.trim().split(/\s+/).map(Number));
+        boxes.forEach((bx) => {
+          if (before.has(id) && before.has(bx.dataset.id)) return;
+          const [x, y, w, h] = bx.dataset.box.split(",").map(Number);
+          const inside = ([px, py]) => px > x - 4 && px < x + w + 4 && py > y - 4 && py < y + h + 4;
+          if (inside(pts[0]) || inside(pts[pts.length - 1])) return;
+          for (let k = 0; k + 1 < pts.length; k++) {
+            const [ax, ay] = pts[k], [bx2, by2] = pts[k + 1];
+            const hit = Array.from({ length: 21 }, (_, t) => [ax + ((bx2 - ax) * t) / 20, ay + ((by2 - ay) * t) / 20])
+              .some(([px, py]) => px > x + 4 && px < x + w - 4 && py > y + 4 && py < y + h - 4);
+            if (hit) { issues.push(`step ${i + 1}: arrow ${id} runs through ${bx.dataset.id}`); break; }
+          }
+        });
+      });
       if (smallest < minPx && i < S.length - 1)
         issues.push(`step ${i + 1}: smallest text is ${smallest.toFixed(1)} px at ${Math.round(width)} px wide (camera ${Math.round(cw)} wide)`);
-      if (Math.abs(cw / ch - 16 / 9) > 0.05) issues.push(`step ${i + 1}: camera ${cw}x${ch} is not 16:9`);
+      if (Math.abs(cw / ch - ASPECT) > 0.05) issues.push(`step ${i + 1}: camera ${cw}x${ch} is not 16:9`);
       els.forEach((g, id) => {
         if (before.has(id)) return;
         if (ids.has(id)) issues.push(`step ${i + 1}: duplicate id ${id}`);

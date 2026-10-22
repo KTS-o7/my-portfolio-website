@@ -2,6 +2,8 @@
 
 Usage: python3 -I whiteboards/raft_consensus.py
 Writes public/whiteboards/raft-consensus.html. Needs the whiteboard-html skill engine.
+No coordinates: the elements, groups and links below are laid out by the skill (ELK) for
+wide screens and for phones.
 """
 import sys
 from pathlib import Path
@@ -9,6 +11,7 @@ from pathlib import Path
 sys.dont_write_bytecode = True
 sys.path.insert(0, str(Path.home() / ".claude/skills/whiteboard-html/scripts"))
 import wb  # noqa: E402
+from board_layout import Board, story_js  # noqa: E402
 
 ROOT = Path(__file__).resolve().parent.parent
 
@@ -73,137 +76,119 @@ STEPS = [
 # The "Open:" line names the section of the post that covers each step.
 STEPS = [(h, b, f"the “{o}” section") for h, b, o in STEPS]
 
-STORY_JS = r"""
-  // Cameras are automatic (framed from what each step draws); only the recap sets one.
-  // Each node's log sits in a strip beside it (two cells: earlier entries, then the new
-  // one), so a step's new elements stay close together and the frame stays tight.
-  // Regions: ring x 60-1350, y 150-940, notes right of S1 (x 1000-1400); split-vote inset bottom right
-  // (x 1200-2080, y 1000-1330); legend bottom left; "runs in" note top right.
-  const FULL = [0, 0, 2600, 1462];
-  const S = [];
-  const node = (id, x, y, role, k, term) => {
-    const name = id.slice(0, 2).toUpperCase();
-    return box(id, x, y, 200, 100, [term ? `${name} · term ${term}` : name, role], { k: k || "old", size: 28 });
-  };
-  // Log strip origin per node: [x of the "earlier" cell, y]. The new entry goes 130 to the right.
-  const STRIP = { s1: [716, 168], s2: [1096, 398], s5: [120, 496], s4: [476, 778], s3: [956, 778] };
-  const cell = (id, nodeId, col, text, k) => {
-    const [x, y] = STRIP[nodeId];
-    return box(id, x + (col - 1) * 130, y, 120, 64, [text], { k, size: 26 });
-  };
+# The ELK copy the layout runs must match the hash kept here, in git.
+b = Board(elk_sha256=(ROOT / "whiteboards/elk.sha256").read_text().split()[0])
+NODES = ["s1", "s2", "s3", "s4", "s5"]
 
-  // 0. Five followers
-  S.push({ ops: [
-    node("s1", 500, 150, "follower"),
-    node("s2", 880, 380, "follower"),
-    node("s5", 120, 380, "follower"),
-    node("s4", 260, 760, "follower"),
-    node("s3", 740, 760, "follower"),
-  ] });
 
-  // 1. S1's election timeout fires
-  S.push({ erase: ["s1"], ops: [
-    node("s1c", 500, 150, "candidate", "new", 2),
-    note("timeout", 120, 165, ["election timeout", "(150-300 ms, random)"], { k: "new", size: 26 }),
-  ] });
+def node(id, slot, role, k="old", term=None):
+    name = slot.upper()
+    return b.box(id, [f"{name} · term {term}" if term else name, role], k=k, size=28, w=190, h=100, slot=slot)
 
-  // 2. RequestVote to every peer
-  S.push({ ops: [
-    arrow("rv2", [[702, 252], [876, 400]], { k: "new" }),
-    arrow("rv5", [[498, 230], [324, 390]], { k: "new" }),
-    arrow("rv3", [[650, 252], [810, 756]], { k: "new" }),
-    arrow("rv4", [[550, 252], [390, 756]], { k: "new" }),
-    note("rv_n", 1000, 150, ["RequestVote(term 2)", "to every peer"], { k: "new", size: 26 }),
-  ], packets: [{ via: "rv2", overlap: 0 }, { via: "rv5", overlap: 0 }, { via: "rv3", overlap: 0 }, { via: "rv4", overlap: 0 }] });
 
-  // 3. Votes come back: a majority
-  S.push({ ops: [
-    arrow("v2", [[878, 440], [704, 286]], { k: "new", dash: true }),
-    arrow("v5", [[322, 425], [495, 262]], { k: "new", dash: true }),
-    note("maj", 1000, 240, ["3 of 5 votes,", "its own included"], { k: "new", size: 26 }),
-    note("rule", 1110, 372, ["a peer votes yes if it", "hasn’t voted this term", "and the candidate’s log", "is at least as up-to-date"], { k: "old", size: 24 }),
-  ], packets: [{ via: "v2", overlap: 0 }, { via: "v5", overlap: 0 }] });
+def cell(id, node_id, col, text, k):
+    """One entry in a node's log strip: column 1 is the earlier entries, column 2 the new one."""
+    return b.box(id, [text], k=k, size=26, w=114, h=64, slot=f"{node_id}_c{col}")
 
-  // 4. Leader, heartbeats
-  S.push({ erase: ["s1c", "timeout", "rv2", "rv5", "rv3", "rv4", "rv_n", "v2", "v5", "maj", "rule"], ops: [
-    node("s1l", 500, 150, "leader", "new", 2),
-    arrow("hb2", [[702, 252], [876, 400]], { k: "new", dash: true }),
-    arrow("hb5", [[498, 230], [324, 390]], { k: "new", dash: true }),
-    arrow("hb3", [[650, 252], [810, 756]], { k: "new", dash: true }),
-    arrow("hb4", [[550, 252], [390, 756]], { k: "new", dash: true }),
-    note("hb_n", 1000, 150, ["heartbeats:", "empty AppendEntries", "keep followers quiet"], { k: "new", size: 26 }),
-  ], packets: [{ via: "hb2", overlap: 0 }, { via: "hb5", overlap: 0 }, { via: "hb3", overlap: 0 }, { via: "hb4", overlap: 0 }] });
 
-  // 5. Split vote, as an inset
-  S.push({ ops: [
-    frame("split", 1200, 1000, 880, 330, "what if two candidates start at once?", { k: "bad" }),
-    box("ca", 1250, 1050, 220, 90, ["S2 candidate"], { k: "bad", size: 24 }),
-    box("cb", 1500, 1050, 220, 90, ["S4 candidate"], { k: "bad", size: 24 }),
-    note("cab", 1760, 1056, ["neither reaches", "a majority"], { k: "bad", size: 24 }),
-    note("retry", 1250, 1180, ["both time out and retry with a new term;", "random timeouts make a repeat unlikely"], { k: "old", size: 22 }),
-  ] });
+# ---------- what is on the board ----------
+followers = {n: node(n, n, "follower") for n in NODES}
+s1c = node("s1c", "s1", "candidate", "new", 2)
+s1l = node("s1l", "s1", "leader", "new", 2)
+s2c = node("s2c", "s2", "candidate", "new", 3)
+old = {n: cell(f"e{n[1]}o", n, 1, "earlier", "old") for n in NODES}
+new = {n: cell(f"e{n[1]}", n, 2, "x=5", "new") for n in NODES}
+e3s = cell("e3s", "s3", 2, "stale", "bad")
 
-  // 6. Client write; every node's log appears; the leader appends locally
-  S.push({ erase: ["hb_n"], ops: [
-    cell("e1o", "s1", 1, "earlier", "old"), cell("e2o", "s2", 1, "earlier", "old"),
-    cell("e5o", "s5", 1, "earlier", "old"), cell("e4o", "s4", 1, "earlier", "old"),
-    cell("e3o", "s3", 1, "earlier", "old"),
-    box("client", 120, 150, 200, 90, ["client"], { size: 28 }),
-    arrow("cw", [[322, 190], [496, 190]], { label: "write x=5", at: [409, 140], size: 24 }),
-    cell("e1", "s1", 2, "x=5", "new"),
-    note("e1_n", 980, 165, ["not committed", "yet"], { k: "new", size: 24 }),
-  ], packets: [{ via: "cw", overlap: 1 }] });
+# The leader's notes take turns in one slot by the client, outside the fan of arrows from
+# S1; each replaces the one before. The voting rule goes under S2, the peer it is about.
+timeout = b.note("timeout", ["election timeout", "(150-300 ms, random)"], size=24, slot="ln1")
+hb_n = b.note("hb_n", ["heartbeats:", "empty AppendEntries", "keep followers quiet"], size=24, slot="ln1")
+e1_n = b.note("e1_n", ["not committed", "yet"], size=24, slot="ln1")
+e1_c = b.note("e1_c", ["committed:", "3 of 5 have it"], size=24, slot="ln1")
+rv_n = b.note("rv_n", ["RequestVote(term 2)", "to every peer"], size=24, slot="ln1")
+maj = b.note("maj", ["3 of 5 votes,", "its own included"], size=24, slot="ln1")
+rule = b.note("rule", ["a peer votes yes if it", "hasn’t voted this term", "and the candidate’s log",
+                       "is at least as up-to-date"], k="old", size=24, slot="s2_n")
+win = b.note("win", ["only a node with every", "committed entry can win"], size=26, slot="s2_n")
+s3_down = b.note("s3_down", ["unreachable"], k="bad", size=26, slot="s3_n")
+e3_n = b.note("e3_n", ["prev index + term don’t", "match: rejected"], k="bad", size=26, slot="s3_n")
+e3_f = b.note("e3_f", ["leader backed up and", "overwrote it"], size=26, slot="s3_n")
+client = b.box("client", ["client"], size=28, w=200, h=90)
 
-  // 7. AppendEntries in parallel; S3 unreachable
-  S.push({ ops: [
-    cell("e2", "s2", 2, "x=5", "new"),
-    cell("e4", "s4", 2, "x=5", "new"),
-    cell("e5", "s5", 2, "x=5", "new"),
-    strike("hb3_x", 680, 476, 750, 428),
-    note("s3_down", 1090, 792, ["unreachable"], { k: "bad", size: 26 }),
-  ], packets: [{ via: "hb2", overlap: 0 }, { via: "hb5", overlap: 0 }, { via: "hb4", overlap: 0 }] });
+ca = b.box("ca", ["S2 candidate"], k="bad", size=24, w=220, h=90)
+cb = b.box("cb", ["S4 candidate"], k="bad", size=24, w=220, h=90)
+cab = b.note("cab", ["neither reaches", "a majority"], k="bad", size=24)
+retry = b.note("retry", ["both time out and retry with a new term;", "random timeouts make a repeat unlikely"], k="old", size=22)
+runs = b.note("runs", ["runs in production:", "etcd, CockroachDB,", "TiKV, Consul"], k="old", size=30)
 
-  // 8. Majority -> committed, reply to the client
-  S.push({ erase: ["e1_n"], ops: [
-    note("e1_c", 980, 165, ["committed:", "3 of 5 have it"], { k: "new", size: 24 }),
-    arrow("cr", [[496, 226], [322, 226]], { k: "new", label: "ok", at: [409, 238], size: 24 }),
-  ], packets: [{ via: "cr", overlap: 1 }] });
+LEGEND = [("old", "already there"), ("new", "this step"), ("bad", "failure"), ("mute", "gone")]
+legend = []
+for k, label in LEGEND:
+    legend += [b.box(f"lg_{k}", [], k=k, w=44, h=34), b.note(f"lg_{k}_t", [label], k=k, size=22)]
 
-  // 9. S3 returns with a stale entry; the consistency check rejects the append
-  S.push({ erase: ["hb3_x", "s3_down"], ops: [
-    cell("e3s", "s3", 2, "stale", "bad"),
-    note("e3_n", 740, 878, ["prev index + term don’t", "match: rejected"], { k: "bad", size: 26 }),
-  ], packets: [{ via: "hb3", overlap: 1 }] });
+# ---------- how it is arranged ----------
+# Each node sits with its log strip, and S2 and S3 have a note slot after that: beside it on
+# wide boards, under it on phones. The leader is in the middle, two followers above and
+# two below, so its arrows fan out without crossing anyone.
+# On phones the top row's logs and notes go above the node, away from S1, so its arrows
+# reach the node without crossing them.
+TOP = {"s5", "s2"}
+for n in NODES:
+    b.group(f"{n}_log", "row", f"{n}_c1", f"{n}_c2", gap=10)
+    if n != "s1":  # S1's log has its own place in the middle row
+        b.group(f"{n}_g", "flow", n, f"{n}_log", gap=20, align="center", reverse_narrow=n in TOP)
+b.group("s2_gn", "flow", "s2_g", "s2_n", gap=20, reverse_narrow=True)
+b.group("s3_gn", "flow", "s3_g", "s3_n", gap=20)
+# S1's row holds the client and the leader's note slot on its left and its log on its
+# right: the arrows from S1 to the four followers leave it steeply, so beside it stays
+# clear (on phones too). The note goes above the client on phones, out of the client's
+# arrow.
+b.group("clientG", "stack", "client", "ln1", gap=24, reverse_narrow=True)
+b.group("ring", "rows", ("s5_g", "s2_gn"), ("clientG", "s1", "s1_log"), ("s4_g", "s3_gn"), gap=40, row_gap=110, axis="s1")
+b.component("cluster", ["ring"])
+b.group("split_row", "flow", "ca", "cb", "cab", gap=30, align="center")
+b.group("splitG", "stack", "split_row", "retry", gap=30, pad=30, pad_top=100)
+b.component("split", ["splitG"])
+b.component("runs", ["runs"])
+rows = [b.group(f"lgr_{k}", "row", f"lg_{k}", f"lg_{k}_t", gap=14, align="center") for k, _ in LEGEND]
+b.group("legendG", "stack", *rows, gap=14, pad=30, pad_top=100)
+b.component("legend", ["legendG"])
 
-  // 10. The leader backs up and overwrites
-  S.push({ erase: ["e3s", "e3_n"], ops: [
-    cell("e3", "s3", 2, "x=5", "new"),
-    note("e3_f", 740, 878, ["leader backed up and", "overwrote it"], { k: "new", size: 26 }),
-  ], packets: [{ via: "hb3", overlap: 1 }] });
+PEERS = ["s2", "s5", "s3", "s4"]
 
-  // 11. The leader crashes; a new election in term 3
-  S.push({ focus: ["s5", "s4", "s3"], mute: ["s1l", "hb2", "hb3", "hb4", "hb5", "e1_c", "cw", "cr"], erase: ["s2", "e3_f"], ops: [
-    strike("s1_x1", 506, 158, 694, 242),
-    strike("s1_x2", 694, 158, 506, 242),
-    node("s2c", 880, 380, "candidate", "new", 3),
-    note("win", 880, 510, ["only a node with every", "committed entry can win"], { k: "new", size: 26 }),
-  ] });
 
-  // 12. Recap
-  S.push({ cam: FULL, ops: [
-    note("runs", 1500, 180, ["runs in production:", "etcd, CockroachDB,", "TiKV, Consul"], { k: "old", size: 30 }),
-    frame("legend", 120, 1180, 1000, 150, "legend"),
-    box("lg_old", 160, 1235, 44, 34, [], { k: "old" }),
-    note("lg_old_t", 216, 1231, ["already there"], { k: "old", size: 22 }),
-    box("lg_new", 410, 1235, 44, 34, [], { k: "new" }),
-    note("lg_new_t", 466, 1231, ["this step"], { k: "new", size: 22 }),
-    box("lg_bad", 640, 1235, 44, 34, [], { k: "bad" }),
-    note("lg_bad_t", 696, 1231, ["failure"], { k: "bad", size: 22 }),
-    box("lg_mute", 860, 1235, 44, 34, [], { k: "mute" }),
-    note("lg_mute_t", 916, 1231, ["gone"], { k: "mute", size: 22 }),
-  ] });
+def fan(prefix, **o):
+    return [b.link(f"{prefix}{p[1]}", "s1", p, **o) for p in PEERS]
 
-"""
+
+def packets(ids):
+    return [{"via": i, "overlap": 0} for i in ids]
+
+
+# ---------- the story ----------
+STORY = [
+    {"ops": [followers[n] for n in ["s1", "s2", "s5", "s4", "s3"]]},
+    {"erase": ["s1"], "ops": [s1c, timeout]},
+    {"erase": ["timeout"], "packets": packets(["rv2", "rv5", "rv3", "rv4"]), "ops": [*fan("rv", k="new", offset=-1), rv_n]},
+    {"erase": ["rv_n"], "packets": packets(["v2", "v5"]),
+     "ops": [b.link("v2", "s2", "s1", k="new", dash=True, offset=-1),
+             b.link("v5", "s5", "s1", k="new", dash=True, offset=-1), maj, rule]},
+    {"erase": ["s1c", "timeout", "rv2", "rv5", "rv3", "rv4", "rv_n", "v2", "v5", "maj", "rule"],
+     "packets": packets(["hb2", "hb5", "hb3", "hb4"]), "ops": [s1l, *fan("hb", k="new", dash=True), hb_n]},
+    {"ops": [b.frame("split_f", "splitG", "what if two candidates start at once?", k="bad"), ca, cb, cab, retry]},
+    {"erase": ["hb_n"], "packets": [{"via": "cw", "overlap": 1}],
+     "ops": [*old.values(), client, b.link("cw", "client", "s1", label="write x=5", offset=-1), new["s1"], e1_n]},
+    {"packets": packets(["hb2", "hb5", "hb4"]),
+     "ops": [new["s2"], new["s4"], new["s5"], b.cut("hb3_x", "hb3"), s3_down]},
+    {"erase": ["e1_n"], "packets": [{"via": "cr", "overlap": 1}],
+     "ops": [e1_c, b.link("cr", "s1", "client", k="new", label="ok", offset=-1)]},
+    {"erase": ["hb3_x", "s3_down"], "packets": [{"via": "hb3", "overlap": 1}], "ops": [e3s, e3_n]},
+    {"erase": ["e3s", "e3_n"], "packets": [{"via": "hb3", "overlap": 1}], "ops": [new["s3"], e3_f]},
+    {"focus": ["s5", "s4", "s3"], "mute": ["s1l", "hb2", "hb3", "hb4", "hb5", "e1_c", "cw", "cr"], "erase": ["s2", "e3_f"],
+     "ops": [b.cross("s1_x", "s1"), s2c, win]},
+    {"cam": "full", "ops": [runs, b.frame("legend_f", "legendG", "legend"), *legend]},
+]
 
 wb.build(
     out=ROOT / "public/whiteboards/raft-consensus.html",
@@ -212,5 +197,5 @@ wb.build(
     lede_html="Leader election, log replication and log matching, one step at a time. "
               "Press <strong>Next</strong> to step through it.",
     steps=STEPS,
-    story_js=STORY_JS,
+    story_js=story_js(b, STORY),
 )
