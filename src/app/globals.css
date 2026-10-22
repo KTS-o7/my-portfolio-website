@@ -219,14 +219,10 @@ body {
   margin-top: 1.25em;
 }
 
-/* ```whiteboard embeds: wider than the text column on large screens */
+/* ```whiteboard embeds: same width as the text column */
 .post-content .whiteboard-embed {
-  position: relative;
-  left: 50%;
-  width: min(1040px, calc(100vw - 2rem));
   margin-left: 0;
   margin-right: 0;
-  transform: translateX(-50%);
 }
 
 .post-content .whiteboard-frame {

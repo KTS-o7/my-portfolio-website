@@ -338,85 +338,87 @@ var rough=function(){"use strict";function t(t,e,s){if(t&&t.length){const[n,o]=e
 
   // ---------- the story ----------
 
-  // Regions: coordinator left (x 160-460), node A top (x 1100-1400, y 240-370) and node B
-  // bottom (y 880-1010), their status notes right of them (x 1440-1800), the 3PC row along the
-  // bottom (y 1150-1350), the alternatives column on the right (x 1870-2530, y 200-840).
+  // Sized for a ~670 px blog column: the main view is 1500 units wide, so 26-28 unit text
+  // renders at about 12 px. Regions: coordinator left (x 100-400), node A top (x 760-1060,
+  // y 240-370) and node B bottom (y 880-1010), their status notes at x 1100-1420, the
+  // dilemma notes between the arrows (x 480-760, y 598-730), the 3PC row along the bottom
+  // (y 1150-1350), the alternatives column on the right (x 1870-2530, y 200-840).
   const FULL = [0, 0, 2600, 1462];
-  const MAIN = [60, 170, 1800, 1013];
+  const MAIN = [40, 175, 1500, 844];
   const S = [];
 
   // 0. Actors
   S.push({ cam: MAIN, ops: [
-    box("coord", 160, 560, 300, 130, ["coordinator"], { size: 28 }),
-    box("a", 1100, 240, 300, 130, ["node A"], { size: 28 }),
-    box("b", 1100, 880, 300, 130, ["node B"], { size: 28 }),
-    note("goal", 160, 760, ["all commit, or none do"], { k: "old", size: 26 }),
+    box("coord", 100, 560, 300, 130, ["coordinator"], { size: 30 }),
+    box("a", 760, 240, 300, 130, ["node A"], { size: 30 }),
+    box("b", 760, 880, 300, 130, ["node B"], { size: 30 }),
+    note("goal", 100, 760, ["all commit,", "or none do"], { k: "old", size: 28 }),
   ] });
 
   // 1. PREPARE
   S.push({ cam: MAIN, ops: [
-    arrow("pa", [[462, 600], [1096, 320]], { k: "new", label: "PREPARE", at: [700, 400], size: 24 }),
-    arrow("pb", [[462, 660], [1096, 930]], { k: "new", label: "PREPARE", at: [700, 862], size: 24 }),
+    arrow("pa", [[402, 600], [756, 320]], { k: "new", label: "PREPARE", at: [540, 420], size: 26 }),
+    arrow("pb", [[402, 660], [756, 930]], { k: "new", label: "PREPARE", at: [540, 818], size: 26 }),
   ], packets: [{ via: "pa", overlap: 0 }, { via: "pb", overlap: 0 }] });
 
   // 2. Durable log + locks
   S.push({ cam: MAIN, ops: [
-    note("a_s", 1440, 262, ["writes the transaction", "to a durable log,", "acquires locks"], { k: "new", size: 24 }),
-    note("b_s", 1440, 902, ["writes the transaction", "to a durable log,", "acquires locks"], { k: "new", size: 24 }),
+    note("a_s", 1100, 252, ["writes the transaction", "to a durable log,", "acquires locks"], { k: "new", size: 28 }),
+    note("b_s", 1100, 892, ["writes the transaction", "to a durable log,", "acquires locks"], { k: "new", size: 28 }),
   ] });
 
   // 3. YES votes
   S.push({ cam: MAIN, ops: [
-    arrow("ya", [[1096, 362], [470, 632]], { k: "new", dash: true, label: "YES", at: [860, 520], size: 24 }),
-    arrow("yb", [[1096, 960], [470, 690]], { k: "new", dash: true, label: "YES", at: [860, 760], size: 24 }),
+    arrow("ya", [[756, 362], [410, 632]], { k: "new", dash: true, label: "YES", at: [640, 470], size: 26 }),
+    arrow("yb", [[756, 960], [410, 690]], { k: "new", dash: true, label: "YES", at: [600, 880], size: 26 }),
   ], packets: [{ via: "ya", overlap: 0 }, { via: "yb", overlap: 0 }] });
 
   // 4. COMMIT
   S.push({ cam: MAIN, erase: ["pa", "pb", "a_s", "b_s"], mute: ["ya", "yb"], ops: [
-    arrow("ca", [[462, 600], [1096, 320]], { k: "new", label: "COMMIT", at: [700, 400], size: 24 }),
-    arrow("cb", [[462, 660], [1096, 930]], { k: "new", label: "COMMIT", at: [700, 862], size: 24 }),
-    note("a_c", 1440, 278, ["commits,", "releases locks"], { k: "new", size: 24 }),
-    note("b_c", 1440, 918, ["commits,", "releases locks"], { k: "new", size: 24 }),
+    arrow("ca", [[402, 600], [756, 320]], { k: "new", label: "COMMIT", at: [540, 420], size: 26 }),
+    arrow("cb", [[402, 660], [756, 930]], { k: "new", label: "COMMIT", at: [540, 818], size: 26 }),
+    note("a_c", 1100, 270, ["commits,", "releases locks"], { k: "new", size: 28 }),
+    note("b_c", 1100, 910, ["commits,", "releases locks"], { k: "new", size: 28 }),
   ], packets: [{ via: "ca", overlap: 0 }, { via: "cb", overlap: 0 }] });
 
   // 5. Any NO -> ABORT
   S.push({ cam: MAIN, ops: [
-    note("no", 160, 820, ["any NO: ABORT goes", "to everyone instead"], { k: "bad", size: 24 }),
+    note("no", 100, 860, ["any NO: ABORT", "goes to everyone"], { k: "bad", size: 28 }),
   ] });
 
   // 6. Crash after phase 1
   S.push({ cam: MAIN, erase: ["ca", "cb", "a_c", "b_c", "no", "goal"], ops: [
-    strike("cx1", 168, 568, 452, 682),
-    strike("cx2", 452, 568, 168, 682),
-    note("crash", 160, 720, ["crashed after phase 1,", "before phase 2"], { k: "bad", size: 24 }),
-    note("a_w", 1440, 262, ["voted YES,", "locks held"], { k: "bad", size: 24 }),
-    note("b_w", 1440, 902, ["voted YES,", "locks held"], { k: "bad", size: 24 }),
+    strike("cx1", 108, 568, 392, 682),
+    strike("cx2", 392, 568, 108, 682),
+    note("crash", 100, 730, ["crashed after", "phase 1, before", "phase 2"], { k: "bad", size: 28 }),
+    note("a_w", 1100, 270, ["voted YES,", "locks held"], { k: "bad", size: 28 }),
+    note("b_w", 1100, 910, ["voted YES,", "locks held"], { k: "bad", size: 28 }),
   ] });
 
   // 7. The dilemma
   S.push({ cam: MAIN, ops: [
-    note("d1", 640, 590, ["commit? another node", "might have said NO"], { k: "bad", size: 22 }),
-    note("d2", 640, 672, ["abort? COMMIT might", "have been on its way"], { k: "bad", size: 22 }),
-    note("wait", 1440, 400, ["so they wait, locks held,", "until the coordinator", "comes back"], { k: "old", size: 24 }),
+    note("d1", 490, 600, ["commit? another node", "might have said NO"], { k: "bad", size: 24 }),
+    note("d2", 490, 676, ["abort? COMMIT might", "be on its way"], { k: "bad", size: 24 }),
+    note("wait", 1100, 520, ["so they wait,", "locks held, until", "the coordinator", "comes back"], { k: "old", size: 28 }),
   ] });
 
   // 8. 3PC
-  S.push({ cam: [60, 449, 1800, 1013], ops: [
-    box("ph1", 200, 1150, 300, 100, ["PREPARE"], { size: 26 }),
-    box("ph2", 620, 1150, 340, 100, ["PRE-COMMIT"], { k: "new", size: 26 }),
-    box("ph3", 1080, 1150, 300, 100, ["COMMIT"], { size: 26 }),
-    arrow("p12", [[502, 1200], [616, 1200]]),
-    arrow("p23", [[962, 1200], [1076, 1200]]),
-    note("pc", 200, 1290, ["got PRE-COMMIT: the coordinator saw every YES,", "so committing alone is safe if it vanishes"], { k: "new", size: 24 }),
-    note("pc_cost", 1440, 1160, ["one extra round;", "still edge cases", "under partitions"], { k: "mute", size: 24 }),
+  S.push({ cam: [40, 618, 1500, 844], ops: [
+    box("ph1", 100, 1150, 300, 100, ["PREPARE"], { size: 28 }),
+    box("ph2", 500, 1150, 340, 100, ["PRE-COMMIT"], { k: "new", size: 28 }),
+    box("ph3", 940, 1150, 300, 100, ["COMMIT"], { size: 28 }),
+    arrow("p12", [[402, 1200], [496, 1200]]),
+    arrow("p23", [[842, 1200], [936, 1200]]),
+    note("pc", 100, 1290, ["got PRE-COMMIT: the coordinator saw every", "YES, so committing alone is safe"], { k: "new", size: 26 }),
+    note("pc_cost", 1280, 1150, ["one extra", "round; still", "edge cases", "under partitions"], { k: "mute", size: 24 }),
   ], packets: [{ via: "p12" }, { via: "p23", overlap: 1 }] });
 
   // 9. What systems do instead
-  S.push({ cam: [1100, 150, 1500, 844], ops: [
+  S.push({ cam: [1040, 150, 1500, 844], ops: [
     frame("alts", 1870, 200, 660, 640, "what systems do instead"),
-    box("alt1", 1900, 250, 600, 160, ["Saga pattern", "compensating transactions:", "no locks, no true atomicity"], { k: "new", size: 24 }),
-    box("alt2", 1900, 440, 600, 160, ["Paxos / Raft", "consensus: strong guarantees,", "more complexity"], { k: "new", size: 24 }),
-    box("alt3", 1900, 630, 600, 160, ["Optimistic concurrency", "detect conflicts at commit:", "good for low contention"], { k: "new", size: 24 }),
+    box("alt1", 1900, 250, 600, 170, ["Saga pattern", "compensating transactions:", "no locks, no true atomicity"], { k: "new", size: 28 }),
+    box("alt2", 1900, 440, 600, 170, ["Paxos / Raft", "consensus: strong", "guarantees, more complexity"], { k: "new", size: 28 }),
+    box("alt3", 1900, 630, 600, 170, ["Optimistic concurrency", "detect conflicts at commit:", "good for low contention"], { k: "new", size: 28 }),
   ] });
 
   // 10. Recap
