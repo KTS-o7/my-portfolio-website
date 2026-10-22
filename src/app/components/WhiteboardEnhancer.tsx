@@ -31,7 +31,29 @@ export default function WhiteboardEnhancer() {
     };
     const onLoad = (event: Event) => sendTheme(event.target as HTMLIFrameElement);
 
+    // "Open full screen" opens the board on its own page by default (iPhone Safari has
+    // no element full screen). Where the browser allows it, go full screen in place and
+    // ask for landscape, which is what makes the board readable on a phone.
+    const onOpen = (event: MouseEvent) => {
+      const figure = (event.currentTarget as HTMLElement).closest("figure");
+      if (!figure || !document.fullscreenEnabled || !figure.requestFullscreen) return;
+      event.preventDefault();
+      figure
+        .requestFullscreen()
+        .then(() => {
+          const orientation = screen.orientation as ScreenOrientation & {
+            lock?: (o: string) => Promise<void>;
+          };
+          return orientation.lock?.("landscape");
+        })
+        .catch(() => {});
+    };
+    const links = Array.from(
+      document.querySelectorAll<HTMLAnchorElement>(".post-content a.whiteboard-open"),
+    );
+
     window.addEventListener("message", onMessage);
+    links.forEach((link) => link.addEventListener("click", onOpen));
     frames.forEach((frame) => {
       frame.addEventListener("load", onLoad);
       sendTheme(frame);
@@ -44,6 +66,7 @@ export default function WhiteboardEnhancer() {
 
     return () => {
       window.removeEventListener("message", onMessage);
+      links.forEach((link) => link.removeEventListener("click", onOpen));
       frames.forEach((frame) => frame.removeEventListener("load", onLoad));
       observer.disconnect();
     };

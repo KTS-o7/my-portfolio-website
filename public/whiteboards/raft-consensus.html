@@ -78,6 +78,16 @@ code { font: .88em var(--mono); background: var(--oldfill); padding: 1px 5px; bo
 details { margin-top: 18px; }
 summary { cursor: pointer; color: var(--soft); }
 #script li { margin: 14px 0; }
+/* Phones held sideways (or a board in full screen): use the full width, because width is
+   what makes the text readable. Tapping the board advances it; the controls are a short
+   scroll below. Fitting the board to the height instead would shrink the text again. */
+@media (orientation: landscape) and (max-height: 600px) {
+  main { padding: 6px 8px 24px; }
+  header, .hint { display: none; }
+}
+.rotate-hint { display: none; margin: 0 0 10px; color: var(--soft); font-size: 14px; }
+@media (orientation: portrait) and (max-width: 600px) { .rotate-hint { display: block; } }
+.wb-embed .rotate-hint { display: none; }
 /* ?embed=1: the host page (e.g. a blog post) supplies the title and lede */
 .wb-embed body { background: transparent; }
 .wb-embed main { max-width: none; padding: 0 0 8px; }
@@ -91,6 +101,7 @@ summary { cursor: pointer; color: var(--soft); }
 <h1>Raft on a whiteboard</h1>
 <p>Leader election, log replication and log matching, one step at a time. Press <strong>Next</strong> to step through it.</p>
 </header>
+<p class="rotate-hint">Turn your phone sideways for a bigger board.</p>
 <div class="board" role="img" aria-label="Animated whiteboard. The same content is in the text walkthrough below.">
 <svg id="board" viewBox="0 0 2600 1462" preserveAspectRatio="xMidYMid meet">
 <defs id="defs"></defs><g id="under"></g><g id="world"></g><g id="fx"></g>

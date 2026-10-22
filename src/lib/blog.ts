@@ -99,7 +99,8 @@ type MdNode = {
 
 // A ```whiteboard fence names an animated board in public/whiteboards/<name>.html
 // (built with the whiteboard-html skill, sources in /whiteboards). It renders as a
-// sandboxed iframe; WhiteboardEnhancer syncs the theme and sizes it.
+// sandboxed iframe with an "Open full screen" link for phones; WhiteboardEnhancer
+// syncs the theme, sizes the frame and upgrades the link to real full screen.
 const remarkWhiteboards = () => (tree: MdNode) => {
   const walk = (node: MdNode) => {
     node.children?.forEach((child, i) => {
@@ -132,6 +133,26 @@ const remarkWhiteboards = () => (tree: MdNode) => {
                 className: ["whiteboard-frame"],
               },
               children: [],
+            },
+            {
+              // Works without JS (opens the board on its own page, e.g. on iPhone);
+              // WhiteboardEnhancer turns it into real full screen where supported.
+              type: "element",
+              tagName: "figcaption",
+              properties: { className: ["whiteboard-caption"] },
+              children: [
+                {
+                  type: "element",
+                  tagName: "a",
+                  properties: {
+                    href: `/whiteboards/${name}.html`,
+                    target: "_blank",
+                    rel: "noopener",
+                    className: ["whiteboard-open"],
+                  },
+                  children: [{ type: "text", value: "Open full screen" }],
+                },
+              ],
             },
           ],
         },
