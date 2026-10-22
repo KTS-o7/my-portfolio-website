@@ -146,7 +146,9 @@ var rough=function(){"use strict";function t(t,e,s){if(t&&t.length){const[n,o]=e
     });
     let lastH = 0;
     const report = () => {
-      const h = Math.ceil(document.documentElement.scrollHeight);
+      // body, not documentElement: the root is never shorter than the iframe itself,
+      // so its height would only ever grow (e.g. after collapsing the text list).
+      const h = Math.ceil(document.body.getBoundingClientRect().height);
       if (h !== lastH) { lastH = h; window.parent.postMessage({ type: "wb-height", height: h }, "*"); }
     };
     new ResizeObserver(report).observe(document.body);
