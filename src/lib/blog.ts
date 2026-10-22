@@ -87,11 +87,87 @@ const normalizeMathDelimiters = (markdown: string): string =>
     .replace(/\\\[([\s\S]*?)\\\]/g, (_m, inner) => `$$${inner}$$`)
     .replace(/\\\(([\s\S]*?)\\\)/g, (_m, inner) => `$${inner}$`);
 
+const WHITEBOARD_DIR = path.join(process.cwd(), "public", "whiteboards");
+
+type MdNode = {
+  type: string;
+  lang?: string | null;
+  value?: string;
+  children?: MdNode[];
+  data?: Record<string, unknown>;
+};
+
+// A ```whiteboard fence names an animated board in public/whiteboards/<name>.html
+// (built with the whiteboard-html skill, sources in /whiteboards). It renders as a
+// sandboxed iframe with an "Open full screen" link for phones; WhiteboardEnhancer
+// syncs the theme, sizes the frame and upgrades the link to real full screen.
+const remarkWhiteboards = () => (tree: MdNode) => {
+  const walk = (node: MdNode) => {
+    node.children?.forEach((child, i) => {
+      if (child.type !== "code" || child.lang !== "whiteboard") {
+        walk(child);
+        return;
+      }
+      const name = (child.value ?? "").trim();
+      if (
+        !/^[a-z0-9-]+$/.test(name) ||
+        !fs.existsSync(path.join(WHITEBOARD_DIR, `${name}.html`))
+      ) {
+        throw new Error(`Whiteboard "${name}" not found in public/whiteboards`);
+      }
+      node.children![i] = {
+        type: "paragraph",
+        children: [],
+        data: {
+          hName: "figure",
+          hProperties: { className: ["whiteboard-embed"] },
+          hChildren: [
+            {
+              type: "element",
+              tagName: "iframe",
+              properties: {
+                src: `/whiteboards/${name}.html?embed=1`,
+                title: "Animated whiteboard walkthrough",
+                loading: "lazy",
+                sandbox: "allow-scripts",
+                className: ["whiteboard-frame"],
+              },
+              children: [],
+            },
+            {
+              // Works without JS (opens the board on its own page, e.g. on iPhone);
+              // WhiteboardEnhancer turns it into real full screen where supported.
+              type: "element",
+              tagName: "figcaption",
+              properties: { className: ["whiteboard-caption"] },
+              children: [
+                {
+                  type: "element",
+                  tagName: "a",
+                  properties: {
+                    href: `/whiteboards/${name}.html`,
+                    target: "_blank",
+                    rel: "noopener",
+                    className: ["whiteboard-open"],
+                  },
+                  children: [{ type: "text", value: "Open full screen" }],
+                },
+              ],
+            },
+          ],
+        },
+      };
+    });
+  };
+  walk(tree);
+};
+
 const markdownToHtml = async (markdown: string): Promise<string> => {
   const file = await unified()
     .use(remarkParse)
     .use(remarkGfm)
     .use(remarkMath)
+    .use(remarkWhiteboards)
     .use(remarkRehype)
     .use(rehypePrettyCode, {
       theme: { dark: "gruvbox-dark-medium", light: "gruvbox-light-medium" },

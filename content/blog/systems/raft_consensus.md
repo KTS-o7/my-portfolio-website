@@ -14,6 +14,12 @@ Raft was built as a direct response to that. Same safety guarantees, designed fr
 
 It works. etcd runs on it. Kubernetes' entire cluster state lives in etcd. CockroachDB uses a Raft group per range. TiKV, Consul -- Raft is everywhere Paxos was supposed to be.
 
+The whole protocol is on the whiteboard below. Step through it with Next or the right arrow key, then read the sections after it for the details.
+
+```whiteboard
+raft-consensus
+```
+
 ## The Decomposition
 
 Raft's core move is breaking consensus into three subproblems that can be understood and implemented independently:

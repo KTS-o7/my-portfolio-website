@@ -5,6 +5,7 @@ import Script from "next/script";
 import Navbar from "@/app/components/Navbar";
 import Footer from "@/app/components/Footer";
 import CodeCopyEnhancer from "@/app/components/CodeCopyEnhancer";
+import WhiteboardEnhancer from "@/app/components/WhiteboardEnhancer";
 import {
   formatPostDate,
   getAllPosts,
@@ -124,6 +125,7 @@ export default async function BlogPostPage({
             dangerouslySetInnerHTML={{ __html: post.html }}
           />
           <CodeCopyEnhancer />
+          <WhiteboardEnhancer />
         </article>
       </div>
       <Footer />

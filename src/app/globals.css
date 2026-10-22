@@ -219,6 +219,53 @@ body {
   margin-top: 1.25em;
 }
 
+/* ```whiteboard embeds: same width as the text column */
+.post-content .whiteboard-embed {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.post-content .whiteboard-frame {
+  display: block;
+  width: 100%;
+  height: min(78vw, 820px);
+  border: 0;
+  background: transparent;
+}
+
+.post-content .whiteboard-caption {
+  margin-top: 0.5rem;
+  text-align: right;
+  font-family: var(--font-jetbrains-mono), ui-monospace, monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.post-content .whiteboard-open {
+  color: var(--color-text-tertiary);
+}
+
+.post-content .whiteboard-open:hover {
+  color: var(--color-text-primary);
+}
+
+/* Full screen: the board fills the screen; the engine fits it to the height. */
+.post-content .whiteboard-embed:fullscreen {
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  background: var(--color-background);
+}
+
+.post-content .whiteboard-embed:fullscreen .whiteboard-frame {
+  height: 100% !important;
+}
+
+.post-content .whiteboard-embed:fullscreen .whiteboard-caption {
+  display: none;
+}
+
 .post-content h1,
 .post-content h2,
 .post-content h3,
