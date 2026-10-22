@@ -87,11 +87,66 @@ const normalizeMathDelimiters = (markdown: string): string =>
     .replace(/\\\[([\s\S]*?)\\\]/g, (_m, inner) => `$$${inner}$$`)
     .replace(/\\\(([\s\S]*?)\\\)/g, (_m, inner) => `$${inner}$`);
 
+const WHITEBOARD_DIR = path.join(process.cwd(), "public", "whiteboards");
+
+type MdNode = {
+  type: string;
+  lang?: string | null;
+  value?: string;
+  children?: MdNode[];
+  data?: Record<string, unknown>;
+};
+
+// A ```whiteboard fence names an animated board in public/whiteboards/<name>.html
+// (built with the whiteboard-html skill, sources in /whiteboards). It renders as a
+// sandboxed iframe; WhiteboardEnhancer syncs the theme and sizes it.
+const remarkWhiteboards = () => (tree: MdNode) => {
+  const walk = (node: MdNode) => {
+    node.children?.forEach((child, i) => {
+      if (child.type !== "code" || child.lang !== "whiteboard") {
+        walk(child);
+        return;
+      }
+      const name = (child.value ?? "").trim();
+      if (
+        !/^[a-z0-9-]+$/.test(name) ||
+        !fs.existsSync(path.join(WHITEBOARD_DIR, `${name}.html`))
+      ) {
+        throw new Error(`Whiteboard "${name}" not found in public/whiteboards`);
+      }
+      node.children![i] = {
+        type: "paragraph",
+        children: [],
+        data: {
+          hName: "figure",
+          hProperties: { className: ["whiteboard-embed"] },
+          hChildren: [
+            {
+              type: "element",
+              tagName: "iframe",
+              properties: {
+                src: `/whiteboards/${name}.html?embed=1`,
+                title: "Animated whiteboard walkthrough",
+                loading: "lazy",
+                sandbox: "allow-scripts",
+                className: ["whiteboard-frame"],
+              },
+              children: [],
+            },
+          ],
+        },
+      };
+    });
+  };
+  walk(tree);
+};
+
 const markdownToHtml = async (markdown: string): Promise<string> => {
   const file = await unified()
     .use(remarkParse)
     .use(remarkGfm)
     .use(remarkMath)
+    .use(remarkWhiteboards)
     .use(remarkRehype)
     .use(rehypePrettyCode, {
       theme: { dark: "gruvbox-dark-medium", light: "gruvbox-light-medium" },

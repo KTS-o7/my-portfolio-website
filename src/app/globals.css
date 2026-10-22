@@ -219,6 +219,24 @@ body {
   margin-top: 1.25em;
 }
 
+/* ```whiteboard embeds: wider than the text column on large screens */
+.post-content .whiteboard-embed {
+  position: relative;
+  left: 50%;
+  width: min(1040px, calc(100vw - 2rem));
+  margin-left: 0;
+  margin-right: 0;
+  transform: translateX(-50%);
+}
+
+.post-content .whiteboard-frame {
+  display: block;
+  width: 100%;
+  height: min(78vw, 820px);
+  border: 0;
+  background: transparent;
+}
+
 .post-content h1,
 .post-content h2,
 .post-content h3,

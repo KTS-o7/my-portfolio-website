@@ -12,6 +12,12 @@ The problem is simple to state: you have a transaction that touches multiple nod
 
 Two-phase commit (2PC) solves this. It's been in production databases for decades. It also has a flaw that makes it unusable for anything long-running, which is why most modern large-scale systems don't use it directly.
 
+The whiteboard below walks through the clean path, the coordinator crash that blocks it, and what 3PC changes. Step through it with Next or the right arrow key.
+
+```whiteboard
+two-phase-commit
+```
+
 ## The Protocol
 
 There's a coordinator and a set of participants. The coordinator drives the protocol.
