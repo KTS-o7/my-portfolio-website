@@ -74,13 +74,12 @@ STEPS = [
 STEPS = [(h, b, f"the “{o}” section") for h, b, o in STEPS]
 
 STORY_JS = r"""
-  // Sized for a ~670 px blog column: every step except the recap fits a camera about 1440
-  // units wide, so 26-28 unit text renders at 12-13 px. Each node's log sits in a strip
-  // beside it (two cells: earlier entries, then the new one) instead of a separate panel.
-  // Regions: ring x 60-1350, y 150-940; vote rule y 960-1030; split-vote inset bottom right
+  // Cameras are automatic (framed from what each step draws); only the recap sets one.
+  // Each node's log sits in a strip beside it (two cells: earlier entries, then the new
+  // one), so a step's new elements stay close together and the frame stays tight.
+  // Regions: ring x 60-1350, y 150-940, notes right of S1 (x 1000-1400); split-vote inset bottom right
   // (x 1200-2080, y 1000-1330); legend bottom left; "runs in" note top right.
   const FULL = [0, 0, 2600, 1462];
-  const RING = [40, 145, 1440, 810];
   const S = [];
   const node = (id, x, y, role, k, term) => {
     const name = id.slice(0, 2).toUpperCase();
@@ -94,7 +93,7 @@ STORY_JS = r"""
   };
 
   // 0. Five followers
-  S.push({ cam: RING, ops: [
+  S.push({ ops: [
     node("s1", 500, 150, "follower"),
     node("s2", 880, 380, "follower"),
     node("s5", 120, 380, "follower"),
@@ -103,13 +102,13 @@ STORY_JS = r"""
   ] });
 
   // 1. S1's election timeout fires
-  S.push({ cam: RING, erase: ["s1"], ops: [
+  S.push({ erase: ["s1"], ops: [
     node("s1c", 500, 150, "candidate", "new", 2),
     note("timeout", 120, 165, ["election timeout", "(150-300 ms, random)"], { k: "new", size: 26 }),
   ] });
 
   // 2. RequestVote to every peer
-  S.push({ cam: RING, ops: [
+  S.push({ ops: [
     arrow("rv2", [[702, 252], [876, 400]], { k: "new" }),
     arrow("rv5", [[498, 230], [324, 390]], { k: "new" }),
     arrow("rv3", [[650, 252], [810, 756]], { k: "new" }),
@@ -118,15 +117,15 @@ STORY_JS = r"""
   ], packets: [{ via: "rv2", overlap: 0 }, { via: "rv5", overlap: 0 }, { via: "rv3", overlap: 0 }, { via: "rv4", overlap: 0 }] });
 
   // 3. Votes come back: a majority
-  S.push({ cam: [0, 120, 1700, 956], ops: [
+  S.push({ ops: [
     arrow("v2", [[878, 440], [704, 286]], { k: "new", dash: true }),
     arrow("v5", [[322, 425], [495, 262]], { k: "new", dash: true }),
     note("maj", 1000, 240, ["3 of 5 votes,", "its own included"], { k: "new", size: 26 }),
-    note("rule", 120, 960, ["a peer votes yes if it hasn’t voted this term", "and the candidate’s log is at least as up-to-date"], { k: "old", size: 26 }),
+    note("rule", 1110, 372, ["a peer votes yes if it", "hasn’t voted this term", "and the candidate’s log", "is at least as up-to-date"], { k: "old", size: 24 }),
   ], packets: [{ via: "v2", overlap: 0 }, { via: "v5", overlap: 0 }] });
 
   // 4. Leader, heartbeats
-  S.push({ cam: RING, erase: ["s1c", "timeout", "rv2", "rv5", "rv3", "rv4", "rv_n", "v2", "v5", "maj"], ops: [
+  S.push({ erase: ["s1c", "timeout", "rv2", "rv5", "rv3", "rv4", "rv_n", "v2", "v5", "maj", "rule"], ops: [
     node("s1l", 500, 150, "leader", "new", 2),
     arrow("hb2", [[702, 252], [876, 400]], { k: "new", dash: true }),
     arrow("hb5", [[498, 230], [324, 390]], { k: "new", dash: true }),
@@ -136,7 +135,7 @@ STORY_JS = r"""
   ], packets: [{ via: "hb2", overlap: 0 }, { via: "hb5", overlap: 0 }, { via: "hb3", overlap: 0 }, { via: "hb4", overlap: 0 }] });
 
   // 5. Split vote, as an inset
-  S.push({ cam: [1100, 820, 1100, 619], ops: [
+  S.push({ ops: [
     frame("split", 1200, 1000, 880, 330, "what if two candidates start at once?", { k: "bad" }),
     box("ca", 1250, 1050, 220, 90, ["S2 candidate"], { k: "bad", size: 24 }),
     box("cb", 1500, 1050, 220, 90, ["S4 candidate"], { k: "bad", size: 24 }),
@@ -145,7 +144,7 @@ STORY_JS = r"""
   ] });
 
   // 6. Client write; every node's log appears; the leader appends locally
-  S.push({ cam: RING, erase: ["hb_n"], ops: [
+  S.push({ erase: ["hb_n"], ops: [
     cell("e1o", "s1", 1, "earlier", "old"), cell("e2o", "s2", 1, "earlier", "old"),
     cell("e5o", "s5", 1, "earlier", "old"), cell("e4o", "s4", 1, "earlier", "old"),
     cell("e3o", "s3", 1, "earlier", "old"),
@@ -156,7 +155,7 @@ STORY_JS = r"""
   ], packets: [{ via: "cw", overlap: 1 }] });
 
   // 7. AppendEntries in parallel; S3 unreachable
-  S.push({ cam: RING, ops: [
+  S.push({ ops: [
     cell("e2", "s2", 2, "x=5", "new"),
     cell("e4", "s4", 2, "x=5", "new"),
     cell("e5", "s5", 2, "x=5", "new"),
@@ -165,25 +164,25 @@ STORY_JS = r"""
   ], packets: [{ via: "hb2", overlap: 0 }, { via: "hb5", overlap: 0 }, { via: "hb4", overlap: 0 }] });
 
   // 8. Majority -> committed, reply to the client
-  S.push({ cam: RING, erase: ["e1_n"], ops: [
+  S.push({ erase: ["e1_n"], ops: [
     note("e1_c", 980, 165, ["committed:", "3 of 5 have it"], { k: "new", size: 24 }),
     arrow("cr", [[496, 226], [322, 226]], { k: "new", label: "ok", at: [409, 238], size: 24 }),
   ], packets: [{ via: "cr", overlap: 1 }] });
 
   // 9. S3 returns with a stale entry; the consistency check rejects the append
-  S.push({ cam: RING, erase: ["hb3_x", "s3_down"], ops: [
+  S.push({ erase: ["hb3_x", "s3_down"], ops: [
     cell("e3s", "s3", 2, "stale", "bad"),
-    note("e3_n", 740, 878, ["prev index + term don’t", "match: rejected"], { k: "bad", size: 24 }),
+    note("e3_n", 740, 878, ["prev index + term don’t", "match: rejected"], { k: "bad", size: 26 }),
   ], packets: [{ via: "hb3", overlap: 1 }] });
 
   // 10. The leader backs up and overwrites
-  S.push({ cam: RING, erase: ["e3s", "e3_n"], ops: [
+  S.push({ erase: ["e3s", "e3_n"], ops: [
     cell("e3", "s3", 2, "x=5", "new"),
-    note("e3_f", 740, 878, ["leader backed up and", "overwrote it"], { k: "new", size: 24 }),
+    note("e3_f", 740, 878, ["leader backed up and", "overwrote it"], { k: "new", size: 26 }),
   ], packets: [{ via: "hb3", overlap: 1 }] });
 
   // 11. The leader crashes; a new election in term 3
-  S.push({ cam: RING, mute: ["s1l", "hb2", "hb3", "hb4", "hb5", "e1_c", "cw", "cr"], erase: ["s2", "e3_f"], ops: [
+  S.push({ focus: ["s5", "s4", "s3"], mute: ["s1l", "hb2", "hb3", "hb4", "hb5", "e1_c", "cw", "cr"], erase: ["s2", "e3_f"], ops: [
     strike("s1_x1", 506, 158, 694, 242),
     strike("s1_x2", 694, 158, 506, 242),
     node("s2c", 880, 380, "candidate", "new", 3),
