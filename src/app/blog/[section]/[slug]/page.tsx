@@ -99,7 +99,7 @@ export default async function BlogPostPage({
       />
       <Navbar />
       <div className="pt-24">
-        <article className="max-w-[720px] mx-auto px-4 sm:px-6 pt-12 pb-24">
+        <article className="w-full max-w-[720px] mx-auto px-4 sm:px-6 pt-12 pb-24">
           <Link
             href={`/blog/${post.section}`}
             className="font-mono text-xs uppercase tracking-widest text-text-tertiary hover:text-text-primary transition-colors link-underline"
