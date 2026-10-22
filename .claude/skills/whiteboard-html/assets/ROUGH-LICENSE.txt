@@ -1,0 +1,2 @@
+rough.js 4.6.6 (https://github.com/rough-stuff/rough), bundled/rough.js from unpkg.
+MIT License, Copyright (c) 2019 Preet Shihn.
