@@ -63,17 +63,16 @@ STEPS = [
 STEPS = [(h, b, f"the “{o}” section") for h, b, o in STEPS]
 
 STORY_JS = r"""
-  // Sized for a ~670 px blog column: the main view is 1500 units wide, so 26-28 unit text
-  // renders at about 12 px. Regions: coordinator left (x 100-400), node A top (x 760-1060,
+  // Cameras are automatic (framed from what each step draws, plus `focus`); only the
+  // recap sets one. Regions: coordinator left (x 100-400), node A top (x 760-1060,
   // y 240-370) and node B bottom (y 880-1010), their status notes at x 1100-1420, the
   // dilemma notes between the arrows (x 480-760, y 598-730), the 3PC row along the bottom
   // (y 1150-1350), the alternatives column on the right (x 1870-2530, y 200-840).
   const FULL = [0, 0, 2600, 1462];
-  const MAIN = [40, 175, 1500, 844];
   const S = [];
 
   // 0. Actors
-  S.push({ cam: MAIN, ops: [
+  S.push({ ops: [
     box("coord", 100, 560, 300, 130, ["coordinator"], { size: 30 }),
     box("a", 760, 240, 300, 130, ["node A"], { size: 30 }),
     box("b", 760, 880, 300, 130, ["node B"], { size: 30 }),
@@ -81,25 +80,25 @@ STORY_JS = r"""
   ] });
 
   // 1. PREPARE
-  S.push({ cam: MAIN, ops: [
+  S.push({ focus: ["coord", "a", "b"], ops: [
     arrow("pa", [[402, 600], [756, 320]], { k: "new", label: "PREPARE", at: [540, 420], size: 26 }),
     arrow("pb", [[402, 660], [756, 930]], { k: "new", label: "PREPARE", at: [540, 818], size: 26 }),
   ], packets: [{ via: "pa", overlap: 0 }, { via: "pb", overlap: 0 }] });
 
   // 2. Durable log + locks
-  S.push({ cam: MAIN, ops: [
+  S.push({ focus: ["a", "b"], ops: [
     note("a_s", 1100, 252, ["writes the transaction", "to a durable log,", "acquires locks"], { k: "new", size: 28 }),
     note("b_s", 1100, 892, ["writes the transaction", "to a durable log,", "acquires locks"], { k: "new", size: 28 }),
   ] });
 
   // 3. YES votes
-  S.push({ cam: MAIN, ops: [
+  S.push({ focus: ["coord", "a", "b"], ops: [
     arrow("ya", [[756, 362], [410, 632]], { k: "new", dash: true, label: "YES", at: [640, 470], size: 26 }),
     arrow("yb", [[756, 960], [410, 690]], { k: "new", dash: true, label: "YES", at: [600, 880], size: 26 }),
   ], packets: [{ via: "ya", overlap: 0 }, { via: "yb", overlap: 0 }] });
 
   // 4. COMMIT
-  S.push({ cam: MAIN, erase: ["pa", "pb", "a_s", "b_s"], mute: ["ya", "yb"], ops: [
+  S.push({ erase: ["pa", "pb", "a_s", "b_s"], mute: ["ya", "yb"], ops: [
     arrow("ca", [[402, 600], [756, 320]], { k: "new", label: "COMMIT", at: [540, 420], size: 26 }),
     arrow("cb", [[402, 660], [756, 930]], { k: "new", label: "COMMIT", at: [540, 818], size: 26 }),
     note("a_c", 1100, 270, ["commits,", "releases locks"], { k: "new", size: 28 }),
@@ -107,12 +106,12 @@ STORY_JS = r"""
   ], packets: [{ via: "ca", overlap: 0 }, { via: "cb", overlap: 0 }] });
 
   // 5. Any NO -> ABORT
-  S.push({ cam: MAIN, ops: [
+  S.push({ focus: ["coord", "a", "b"], ops: [
     note("no", 100, 860, ["any NO: ABORT", "goes to everyone"], { k: "bad", size: 28 }),
   ] });
 
   // 6. Crash after phase 1
-  S.push({ cam: MAIN, erase: ["ca", "cb", "a_c", "b_c", "no", "goal"], ops: [
+  S.push({ erase: ["ca", "cb", "a_c", "b_c", "no", "goal"], ops: [
     strike("cx1", 108, 568, 392, 682),
     strike("cx2", 392, 568, 108, 682),
     note("crash", 100, 730, ["crashed after", "phase 1, before", "phase 2"], { k: "bad", size: 28 }),
@@ -121,25 +120,25 @@ STORY_JS = r"""
   ] });
 
   // 7. The dilemma
-  S.push({ cam: MAIN, ops: [
-    note("d1", 490, 600, ["commit? another node", "might have said NO"], { k: "bad", size: 24 }),
-    note("d2", 490, 676, ["abort? COMMIT might", "be on its way"], { k: "bad", size: 24 }),
+  S.push({ ops: [
+    note("d1", 470, 596, ["commit? another node", "might have said NO"], { k: "bad", size: 26 }),
+    note("d2", 470, 676, ["abort? COMMIT might", "be on its way"], { k: "bad", size: 26 }),
     note("wait", 1100, 520, ["so they wait,", "locks held, until", "the coordinator", "comes back"], { k: "old", size: 28 }),
   ] });
 
   // 8. 3PC
-  S.push({ cam: [40, 618, 1500, 844], ops: [
+  S.push({ ops: [
     box("ph1", 100, 1150, 300, 100, ["PREPARE"], { size: 28 }),
     box("ph2", 500, 1150, 340, 100, ["PRE-COMMIT"], { k: "new", size: 28 }),
     box("ph3", 940, 1150, 300, 100, ["COMMIT"], { size: 28 }),
     arrow("p12", [[402, 1200], [496, 1200]]),
     arrow("p23", [[842, 1200], [936, 1200]]),
     note("pc", 100, 1290, ["got PRE-COMMIT: the coordinator saw every", "YES, so committing alone is safe"], { k: "new", size: 26 }),
-    note("pc_cost", 1280, 1150, ["one extra", "round; still", "edge cases", "under partitions"], { k: "mute", size: 24 }),
+    note("pc_cost", 940, 1290, ["one extra round;", "still edge cases", "under partitions"], { k: "mute", size: 24 }),
   ], packets: [{ via: "p12" }, { via: "p23", overlap: 1 }] });
 
   // 9. What systems do instead
-  S.push({ cam: [1040, 150, 1500, 844], ops: [
+  S.push({ ops: [
     frame("alts", 1870, 200, 660, 640, "what systems do instead"),
     box("alt1", 1900, 250, 600, 170, ["Saga pattern", "compensating transactions:", "no locks, no true atomicity"], { k: "new", size: 28 }),
     box("alt2", 1900, 440, 600, 170, ["Paxos / Raft", "consensus: strong", "guarantees, more complexity"], { k: "new", size: 28 }),

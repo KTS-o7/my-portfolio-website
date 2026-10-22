@@ -162,6 +162,33 @@ const remarkWhiteboards = () => (tree: MdNode) => {
   walk(tree);
 };
 
+type HastNode = {
+  type: string;
+  tagName?: string;
+  properties?: Record<string, unknown>;
+  children?: HastNode[];
+};
+
+// Wraps each table in a div that scrolls sideways, so a wide table scrolls inside the
+// column instead of widening the whole page (which cuts off the text on phones).
+const rehypeScrollTables = () => (tree: HastNode) => {
+  const walk = (node: HastNode) => {
+    node.children?.forEach((child, i) => {
+      if (child.type === "element" && child.tagName === "table") {
+        node.children![i] = {
+          type: "element",
+          tagName: "div",
+          properties: { className: ["table-scroll"] },
+          children: [child],
+        };
+      } else {
+        walk(child);
+      }
+    });
+  };
+  walk(tree);
+};
+
 const markdownToHtml = async (markdown: string): Promise<string> => {
   const file = await unified()
     .use(remarkParse)
@@ -169,6 +196,7 @@ const markdownToHtml = async (markdown: string): Promise<string> => {
     .use(remarkMath)
     .use(remarkWhiteboards)
     .use(remarkRehype)
+    .use(rehypeScrollTables)
     .use(rehypePrettyCode, {
       theme: { dark: "gruvbox-dark-medium", light: "gruvbox-light-medium" },
       keepBackground: false,
