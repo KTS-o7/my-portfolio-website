@@ -1,7 +1,7 @@
 """Whiteboard for content/blog/systems/raft_consensus.md.
 
 Usage: python3 -I whiteboards/raft_consensus.py
-Writes public/whiteboards/raft-consensus.html. Needs the whiteboard-html skill engine.
+Writes public/whiteboards/raft-consensus.html, using the whiteboard-html skill in .claude/skills/.
 No coordinates: the elements, groups and links below are laid out by the skill (ELK) for
 wide screens and for phones.
 """
@@ -9,11 +9,11 @@ import sys
 from pathlib import Path
 
 sys.dont_write_bytecode = True
-sys.path.insert(0, str(Path.home() / ".claude/skills/whiteboard-html/scripts"))
+ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(ROOT / ".claude/skills/whiteboard-html/scripts"))
 import wb  # noqa: E402
 from board_layout import Board, story_js  # noqa: E402
 
-ROOT = Path(__file__).resolve().parent.parent
 
 STEPS = [
     ("Every node starts as a follower",
@@ -76,8 +76,7 @@ STEPS = [
 # The "Open:" line names the section of the post that covers each step.
 STEPS = [(h, b, f"the “{o}” section") for h, b, o in STEPS]
 
-# The ELK copy the layout runs must match the hash kept here, in git.
-b = Board(elk_sha256=(ROOT / "whiteboards/elk.sha256").read_text().split()[0])
+b = Board()
 NODES = ["s1", "s2", "s3", "s4", "s5"]
 
 

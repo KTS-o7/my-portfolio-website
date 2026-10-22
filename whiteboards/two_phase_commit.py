@@ -1,7 +1,7 @@
 """Whiteboard for content/blog/systems/two_phase_commit.md.
 
 Usage: python3 -I whiteboards/two_phase_commit.py
-Writes public/whiteboards/two-phase-commit.html. Needs the whiteboard-html skill engine.
+Writes public/whiteboards/two-phase-commit.html, using the whiteboard-html skill in .claude/skills/.
 No coordinates: the elements, groups and links below are laid out by the skill (ELK) for
 wide screens and for phones.
 """
@@ -9,11 +9,11 @@ import sys
 from pathlib import Path
 
 sys.dont_write_bytecode = True
-sys.path.insert(0, str(Path.home() / ".claude/skills/whiteboard-html/scripts"))
+ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(ROOT / ".claude/skills/whiteboard-html/scripts"))
 import wb  # noqa: E402
 from board_layout import Board, story_js  # noqa: E402
 
-ROOT = Path(__file__).resolve().parent.parent
 
 STEPS = [
     ("One transaction, two nodes",
@@ -65,8 +65,7 @@ STEPS = [
 ]
 STEPS = [(h, b, f"the “{o}” section") for h, b, o in STEPS]
 
-# The ELK copy the layout runs must match the hash kept here, in git.
-b = Board(elk_sha256=(ROOT / "whiteboards/elk.sha256").read_text().split()[0])
+b = Board()
 
 # ---------- what is on the board ----------
 coord = b.box("coord", ["coordinator"], size=30, w=300, h=130)
