@@ -1,5 +1,5 @@
 +++
-title = 'Gray Code'
+title = "CSES Gray Code: Sequences That Change One Bit at a Time"
 date = 2025-09-19T23:03:51+05:30
 draft = false
 math = true

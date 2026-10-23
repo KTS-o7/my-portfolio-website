@@ -1,4 +1,4 @@
-"""Whiteboard for content/blog/systems/two_phase_commit.md.
+"""Whiteboard for content/blog/systems/two-phase-commit.md.
 
 Usage: python3 -I whiteboards/two_phase_commit.py
 Writes public/whiteboards/two-phase-commit.html, using the whiteboard-html skill in .claude/skills/.

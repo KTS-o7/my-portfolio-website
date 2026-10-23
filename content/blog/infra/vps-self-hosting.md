@@ -1,16 +1,17 @@
 +++
 title = "A $22/Year VPS Running Three Self-Hosted Services"
 date = 2026-05-02T00:00:00+05:30
+lastmod = 2026-10-23T00:00:00+05:30
 draft = false
 math = false
 author = "Krishnatejaswi S"
-description = "Running Obsidian LiveSync, Matrix Synapse, and Calibre-Web on a $22/year VPS — nginx reverse proxy, Docker Compose, Cloudflare tunnels, and what actually fits in 2.9GB RAM."
+description = "Running Obsidian LiveSync, a private Matrix server (Conduit), and Calibre-Web on a $22/year VPS — nginx reverse proxy, Docker Compose, Cloudflare in front, and what actually fits in 2.9GB RAM."
 tags = ["infra", "self-hosting", "vps", "docker", "nginx"]
 +++
 
 I wanted three things: a private Obsidian sync server, a Matrix chat instance for personal use, and a self-hosted book library. The obvious path is a cheap VPS, a few Docker containers, and nginx as a reverse proxy in front of everything.
 
-The whole stack runs on a budget VPS -- 1 vCPU, 2.9GB RAM, 30GB disk, $22/year. All three services are running with room to spare.
+The whole stack runs on a budget VPS -- 1 vCPU, 2.9GB RAM, 30GB disk, Dallas datacenter, Ubuntu 24.04, $22/year. I bought it to run bots and experiments; these three services turned out to be the immediately useful part. All three are running with room to spare.
 
 ## Initial Setup
 
@@ -26,7 +27,7 @@ sed -i 's/^PasswordAuthentication yes/PasswordAuthentication no/' /etc/ssh/sshd_
 systemctl restart sshd
 ```
 
-Test key login before disabling password auth. If you lock yourself out, you're recovering via the provider's console.
+Test key login before disabling password auth, and don't close your existing SSH session until a new one opens with the key. If you lock yourself out, you're recovering via the provider's console.
 
 **Swap -- critical on 3GB RAM:**
 
@@ -58,6 +59,16 @@ The TURN ports are for Matrix voice/video -- skip them if you're not setting up 
 
 ```bash
 curl -fsSL https://get.docker.com | sh
+```
+
+The baseline before any services:
+
+```
+OS: Ubuntu 24.04 LTS
+RAM: 2.9GB (470MB used, 2.4GB free)
+Disk: 30GB (2.4GB used, 26GB free)
+Swap: 2GB (none used yet)
+CPU: 1 core
 ```
 
 ## Service 1: Obsidian LiveSync (CouchDB)
@@ -183,7 +194,7 @@ server {
 }
 ```
 
-Once Conduit is up: go to Element Web, set homeserver to your domain, register your accounts while `ALLOW_REGISTRATION` is true, then flip it to false and restart the container. Anyone who finds your homeserver URL can register while it's open.
+Once Conduit is up: go to Element Web (the hosted `app.element.io` works; point it at your homeserver URL when logging in), set homeserver to your domain, register your accounts while `ALLOW_REGISTRATION` is true, then flip it to false and restart the container. Anyone who finds your homeserver URL can register while it's open.
 
 ## Service 3: Calibre-Web
 
@@ -250,6 +261,8 @@ certbot --nginx -d chat.your.domain
 certbot --nginx -d books.your.domain
 ```
 
+The certs auto-renew. Credentials live in `pass` on my Mac, encrypted with a GPG key -- no plaintext passwords in config files or notes.
+
 ## Resource Usage
 
 All three services running simultaneously:
@@ -275,3 +288,15 @@ Swap barely touched. Disk at ~6GB of 30GB. Plenty of headroom for adding service
 | CouchDB sync drops randomly | Missing CORS headers | Double-check the `[cors]` section in local.ini |
 
 The whole thing took an afternoon to set up. $22/year for services I fully control and can inspect end to end.
+
+## What's Next
+
+Ideas for the remaining headroom: run Bifrost on the VPS and wire up a blog-writing pipeline, use the unlimited bandwidth for a VPN, or set up a small agent. The RAM budget will tighten, but there's room to experiment.
+
+## References
+
+- LandChad.net -- practical self-hosting guides, covers nginx, certbot, and many services: https://landchad.net
+- Conduit (Matrix homeserver in Rust): https://conduit.rs
+- Obsidian LiveSync plugin: https://github.com/vrtmrz/obsidian-livesync
+- Calibre-Web: https://github.com/janeczku/calibre-web
+- coturn TURN server: https://github.com/coturn/coturn

@@ -1,7 +1,11 @@
+// Old blog URLs (underscored slugs, merged duplicates) -> current slugs.
+const blogRedirects = require("./src/data/blog-redirects.json");
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   async redirects() {
     return [
+      ...blogRedirects.map((r) => ({ ...r, permanent: true })),
       {
         source: "/.well-known/llms.txt",
         destination: "/llms.txt",

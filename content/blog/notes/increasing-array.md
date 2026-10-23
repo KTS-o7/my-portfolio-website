@@ -1,5 +1,5 @@
 +++
-title = 'Increasing Array'
+title = "CSES Increasing Array: Minimum Increments in One Pass"
 date = 2025-09-18T22:37:39+05:30
 draft = false
 math = true

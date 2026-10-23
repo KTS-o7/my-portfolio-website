@@ -1,14 +1,19 @@
 +++
-title = "Paxos"
-date = 2026-04-26T00:00:00+05:30
+title = "Paxos: How Distributed Systems Agree on Anything"
+date = 2026-05-02T00:00:00+05:30
+lastmod = 2026-10-23T00:00:00+05:30
 draft = false
 math = false
 author = "Krishnatejaswi S"
 description = "Paxos is a consensus protocol for getting a distributed system to agree on a single value despite node failures and message delays — the foundation of most replicated state machines."
-tags = ["distributed-systems", "consensus", "paxos"]
+tags = ["distributed-systems", "consensus", "paxos", "replication"]
+series = "consensus"
+series_part = 2
 +++
 
-Before Raft, there was Paxos. For about two decades it was the foundational answer to distributed consensus -- and it was notoriously hard to implement correctly. Lamport published the original paper in 1989, but it was so difficult to parse that he rewrote it as "Paxos Made Simple" in 2001. The simpler version is still genuinely hard.
+Every replicated database, every distributed lock, every leader election comes down to the same underlying problem: how do multiple nodes in an unreliable network agree on a single value, even when some of them crash or messages get delayed?
+
+This is the consensus problem. Before Raft, there was Paxos. For about two decades it was the foundational answer -- and it was notoriously hard to implement correctly. Lamport published the original paper in 1989, but it was so difficult to parse that he rewrote it as "Paxos Made Simple" in 2001. The simpler version is still genuinely hard.
 
 Understanding Paxos is worth doing. It's not just historical -- Chubby, ZooKeeper, and Spanner are built on it or close variants, and many distributed systems interviews probe it. More importantly, every simplification Raft makes is a direct response to a specific pain point in Paxos. Understanding what Paxos gets wrong explains why Raft looks the way it does.
 
@@ -18,7 +23,9 @@ Multiple nodes need to agree on a single value. The network is unreliable: messa
 
 A minority of nodes can fail; the protocol must still make progress. The protocol must also be safe: once a value is chosen, no future round can choose a different value.
 
-This is the consensus problem. Two-Phase Commit solves it only when the coordinator doesn't fail. Paxos solves it even when any minority of nodes can fail, including the "coordinator."
+Two-phase commit solves distributed atomicity but requires the coordinator to stay up. If the coordinator crashes after phase 1, participants are stuck holding locks, unable to proceed. That's not consensus -- that's a single point of failure with extra steps.
+
+Paxos removes that constraint. It guarantees agreement as long as a majority of nodes are up, regardless of which specific nodes fail. Any node can propose a value. No permanent coordinator required.
 
 ## Roles
 

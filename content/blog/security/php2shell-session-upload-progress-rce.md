@@ -203,7 +203,7 @@ Apache 2.4, also a prefix match:
 
 Both rules have gaps. They let `/api/upload/avatar` through, every allowlisted route still reaches the parser, and a proxy doesn't parse multipart the same way PHP does.
 
-Cloudflare pushed [emergency rules](https://developers.cloudflare.com/changelog/post/2026-10-21-emergency-waf-release-cfmr/) on 21 Oct, [Free plan](https://developers.cloudflare.com/changelog/post/2026-10-21-emergency-waf-release-free/) included, and Knecht called them a stopgap. The setup in my [Cloudflare origin certificates post](/blog/infra/reverse_proxy) opens 80 and 443 to everyone, so a request sent straight to the origin skips those rules. Allow only [Cloudflare's IP ranges](https://www.cloudflare.com/ips/) at the origin firewall.
+Cloudflare pushed [emergency rules](https://developers.cloudflare.com/changelog/post/2026-10-21-emergency-waf-release-cfmr/) on 21 Oct, [Free plan](https://developers.cloudflare.com/changelog/post/2026-10-21-emergency-waf-release-free/) included, and Knecht called them a stopgap. The setup in my [Cloudflare origin certificates post](/blog/infra/reverse-proxy) opens 80 and 443 to everyone, so a request sent straight to the origin skips those rules. Allow only [Cloudflare's IP ranges](https://www.cloudflare.com/ips/) at the origin firewall.
 
 ## Checking for compromise
 

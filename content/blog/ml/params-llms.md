@@ -1,5 +1,5 @@
 +++
-title = ' Parameters in LLMs'
+title = "Counting the Parameters in an LLM"
 date = 2025-09-12T17:23:41+05:30
 draft = false
 math = true

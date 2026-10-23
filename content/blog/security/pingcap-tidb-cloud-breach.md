@@ -10,7 +10,7 @@ tags = ["security", "incident", "tidb", "cloud", "secrets"]
 
 FulcrumSec, an extortion group, put PingCAP / TiDB Cloud on its leak site on Oct 19 and claims 10.6 TB across 4,901,203 files. PingCAP posted a [Security Update](https://www.pingcap.com/trust-hub/security/security-update-october-2026/) on its Trust Hub the same day. It confirms an intrusion over the same weeks but doesn't name FulcrumSec, and most of the leak post's big numbers aren't in it. I'm writing this on Oct 21, so parts of it will be out of date soon.
 
-Last year in the [MySQL CAP post](/blog/systems/why_mysql_is_not_CA) I named CockroachDB and TiDB as the usual picks for partition-tolerant systems. Nothing confirmed so far touches the TiDB engine. What got hit is TiDB Cloud, PingCAP's hosted service.
+Last year in the [MySQL CAP post](/blog/systems/why-mysql-is-not-ca) I named CockroachDB and TiDB as the usual picks for partition-tolerant systems. Nothing confirmed so far touches the TiDB engine. What got hit is TiDB Cloud, PingCAP's hosted service.
 
 ## What PingCAP confirmed
 

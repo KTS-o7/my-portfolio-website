@@ -1,5 +1,5 @@
 +++
-title = 'Bit Strings'
+title = "CSES Bit Strings: Counting Binary Strings with 2^n mod p"
 date = 2025-09-19T22:53:15+05:30
 draft = false
 math = true

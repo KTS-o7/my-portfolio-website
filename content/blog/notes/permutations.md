@@ -1,5 +1,5 @@
 +++
-title = 'Permutations'
+title = "CSES Permutations: No Two Neighbours Differ by One"
 date = 2025-09-18T22:49:10+05:30
 draft = false
 math = true

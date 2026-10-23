@@ -1,5 +1,5 @@
 +++
-title = 'Repeatations'
+title = "CSES Repetitions: Longest Run of One Character in O(n)"
 date = 2025-09-18T17:23:25+05:30
 draft = false
 math = true
@@ -8,7 +8,7 @@ description = "CSES repetitions — finding the longest run of a single characte
 tags = ["competitive-programming", "cses", "algorithms", "strings"]
 +++
 
-Link to the problem : [Repeatations](https://cses.fi/problemset/task/1069)
+Link to the problem : [Repetitions](https://cses.fi/problemset/task/1069)
 
 ## Intuition
 This problem wants us to find the longest substring of a string that has only 1 type of character.

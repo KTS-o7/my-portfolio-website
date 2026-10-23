@@ -1,5 +1,5 @@
 +++
-title = 'Two Sets'
+title = "CSES Two Sets: Equal-Sum Partition in O(n)"
 date = 2025-09-19T15:41:11+05:30
 draft = false
 math = true

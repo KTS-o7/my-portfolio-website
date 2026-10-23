@@ -1,5 +1,5 @@
 +++
-title = 'Missing Number'
+title = "CSES Missing Number: Finding the Gap with the Sum Formula"
 date = 2025-09-18T17:17:22+05:30
 draft = false
 math = true

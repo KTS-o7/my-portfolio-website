@@ -6,6 +6,8 @@ math = false
 author = "Krishnatejaswi S"
 description = "Two-phase commit achieves distributed atomicity — all nodes commit or none do. But the coordinator is a single point of failure that can leave participants blocked indefinitely."
 tags = ["distributed-systems", "databases", "transactions", "2pc", "consistency"]
+series = "consensus"
+series_part = 1
 +++
 
 The problem is simple to state: you have a transaction that touches multiple nodes. You want all of them to commit, or none of them to. No partial states, no one node committing while another aborts.

@@ -1,5 +1,5 @@
 +++
-title = 'Weird Algorithm'
+title = "CSES Weird Algorithm: Simulating the Collatz Sequence"
 date = 2025-09-18T17:05:38+05:30
 draft = false
 math = true
