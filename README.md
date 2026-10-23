@@ -77,7 +77,7 @@ Start the server
 
 ## Support
 
-For support, email shentharkrishnatejaswi@gmail.com
+For support, email hi@shenthar.me
 
 ## Acknowledgements
 
