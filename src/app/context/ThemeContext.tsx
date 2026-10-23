@@ -10,11 +10,13 @@ type Theme = "dark" | "light";
 
 interface ThemeContextValue {
   theme: Theme;
+  setTheme: (theme: Theme) => void;
   toggleTheme: () => void;
 }
 
 const ThemeContext = createContext<ThemeContextValue>({
   theme: "light",
+  setTheme: () => {},
   toggleTheme: () => {},
 });
 
@@ -59,18 +61,17 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
     const root = document.documentElement;
     root.classList.remove("dark", "light");
     root.classList.add(theme);
-    root.setAttribute("data-palette", "gruvbox");
   }, [theme]);
 
-  const toggleTheme = () => {
-    const next: Theme = theme === "dark" ? "light" : "dark";
+  const setTheme = (next: Theme) => {
     localStorage.setItem("theme", next);
     // Dispatch a storage event so useSyncExternalStore re-reads the snapshot
     window.dispatchEvent(new Event("storage"));
   };
+  const toggleTheme = () => setTheme(theme === "dark" ? "light" : "dark");
 
   return (
-    <ThemeContext.Provider value={{ theme, toggleTheme }}>
+    <ThemeContext.Provider value={{ theme, setTheme, toggleTheme }}>
       {children}
     </ThemeContext.Provider>
   );

@@ -7,6 +7,16 @@ const nextConfig = {
     return [
       ...blogRedirects.map((r) => ({ ...r, permanent: true })),
       {
+        source: "/publications",
+        destination: "/projects?filter=publication",
+        permanent: true,
+      },
+      {
+        source: "/llm.txt",
+        destination: "/llms.txt",
+        permanent: true,
+      },
+      {
         source: "/.well-known/llms.txt",
         destination: "/llms.txt",
         permanent: true,

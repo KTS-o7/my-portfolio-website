@@ -20,6 +20,7 @@ The whole protocol is on the whiteboard below. Step through it with Next or the 
 
 ```whiteboard
 raft-consensus
+The whole protocol, step by step
 ```
 
 ## The Decomposition

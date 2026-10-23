@@ -1,16 +1,18 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { notFound } from "next/navigation";
-import Navbar from "@/app/components/Navbar";
-import Footer from "@/app/components/Footer";
-import SearchablePosts from "@/app/components/blog/SearchablePosts";
+import Breadcrumb from "@/app/components/site/Breadcrumb";
+import JsonLd from "@/app/components/site/JsonLd";
+import HubPosts from "@/app/components/blog/HubPosts";
 import {
-  formatPostDate,
+  getHub,
   getPostsBySection,
   getSectionLabel,
   getSections,
+  toSummary,
 } from "@/lib/blog";
 import { buildPageMetadata } from "@/lib/metadata";
+import { getSiteUrl } from "@/lib/profile";
+import { breadcrumbSchema, personSchema } from "@/lib/schema";
 
 export const dynamicParams = false;
 
@@ -26,8 +28,9 @@ export async function generateMetadata({
   const { section } = await params;
   const label = getSectionLabel(section);
   return buildPageMetadata({
-    title: `${label} | Blog`,
-    description: `Posts in the ${label} section of the blog.`,
+    title: `${label} — Writing`,
+    description:
+      getHub(section)?.description ?? `Posts in the ${label} section of the blog.`,
     path: `/blog/${section}`,
   });
 }
@@ -41,39 +44,65 @@ export default async function BlogSectionPage({
   const posts = getPostsBySection(section);
   if (posts.length === 0) notFound();
 
-  return (
-    <main
-      id="content"
-      className="flex min-h-screen flex-col bg-background transition-colors duration-300"
-    >
-      <Navbar />
-      <div className="pt-24">
-        <div className="max-w-[1100px] mx-auto px-4 sm:px-6 pt-12 pb-20">
-          <Link
-            href="/blog"
-            className="font-mono text-xs uppercase tracking-widest text-text-tertiary hover:text-text-primary transition-colors link-underline"
-          >
-            ← Blog
-          </Link>
-          <h1 className="mt-5 text-4xl sm:text-5xl font-semibold tracking-tight text-text-primary">
-            {getSectionLabel(section)}
-          </h1>
+  const label = getSectionLabel(section);
+  const hub = getHub(section);
+  const siteUrl = getSiteUrl();
+  const hubUrl = `${siteUrl}/blog/${section}`;
 
-          <SearchablePosts
-            posts={posts.map((post) => ({
-              section: post.section,
-              sectionLabel: getSectionLabel(post.section),
-              slug: post.slug,
-              title: post.title,
-              description: post.description ?? "",
-              tags: post.tags,
-              dateLabel: formatPostDate(post.date),
-            }))}
-            placeholder={`Search ${getSectionLabel(section).toLowerCase()} — try a title, tag, or year…`}
-          />
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "CollectionPage",
+        "@id": `${hubUrl}#hub`,
+        url: hubUrl,
+        name: `${label} — Writing`,
+        description: hub?.description,
+        inLanguage: "en",
+        author: personSchema(siteUrl),
+        mainEntity: {
+          "@type": "ItemList",
+          numberOfItems: posts.length,
+          itemListElement: posts.map((post, i) => ({
+            "@type": "ListItem",
+            position: i + 1,
+            url: `${hubUrl}/${post.slug}`,
+            name: post.title,
+          })),
+        },
+      },
+      breadcrumbSchema([
+        { name: "Writing", url: `${siteUrl}/blog` },
+        { name: label, url: hubUrl },
+      ]),
+    ],
+  };
+
+  return (
+    <div className="pb-24 m:pb-12">
+      <JsonLd data={jsonLd} />
+      <Breadcrumb
+        items={[
+          { label: "Home", href: "/" },
+          { label: "Writing", href: "/blog" },
+          { label },
+        ]}
+      />
+      <section className="mgrid pt-10 m:pt-[22px]">
+        <div className="mspacer" />
+        <div>
+          <h1 className="h-hub">{label}</h1>
+          {hub?.intro && (
+            <p className="mt-4 max-w-[46ch] text-[23px] italic leading-[1.45] m:mt-3 m:text-[19px]">
+              {hub.intro}
+            </p>
+          )}
         </div>
-      </div>
-      <Footer />
-    </main>
+      </section>
+      <HubPosts
+        posts={posts.map(toSummary)}
+        placeholder={`Search this hub — try ${hub?.searchHint ?? "a title or a year"}…`}
+      />
+    </div>
   );
 }

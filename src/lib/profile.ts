@@ -4,6 +4,7 @@ import contactData from "@/data/contact.json";
 import projectsData from "@/data/projects.json";
 import technologiesData from "@/data/technologies.json";
 import workData from "@/data/work.json";
+import { getPostsBySection, getSectionLabel, getSections } from "@/lib/blog";
 
 type ProjectEntry = {
   name: string;
@@ -215,11 +216,11 @@ export const buildLlmProfileText = (profile: ProfileData) => {
         `- Home: ${profile.links.website}/`,
         `- Experience: ${profile.links.website}/experience`,
         `- Featured work: ${profile.links.website}/work/complianceos`,
-        `- Projects: ${profile.links.website}/projects`,
+        `- Projects & publications: ${profile.links.website}/projects`,
         `- About: ${profile.links.website}/about`,
         `- Contact: ${profile.links.website}/contact`,
-        `- Publications: ${profile.links.website}/publications`,
-        `- Blog: ${profile.links.website}/blog`,
+        `- Writing: ${profile.links.website}/blog`,
+        `- Writing feed (RSS): ${profile.links.website}/blog/rss.xml`,
         `- Machine-readable profile: ${profile.links.website}/llms.txt`,
       ].join("\n"),
   );
@@ -263,6 +264,20 @@ export const buildLlmProfileText = (profile: ProfileData) => {
       ]
         .filter(Boolean)
         .join("\n"),
+  );
+
+  const base = profile.links.website;
+  parts.push(
+    "## Writing\n" +
+      getSections()
+        .map(
+          (section) =>
+            `### ${getSectionLabel(section)} — ${base}/blog/${section}\n` +
+            getPostsBySection(section)
+              .map((post) => `- ${post.title}: ${post.description} — ${base}/blog/${section}/${post.slug}`)
+              .join("\n"),
+        )
+        .join("\n\n"),
   );
 
   const lastUpdated = process.env.NEXT_PUBLIC_LLM_PROFILE_LAST_UPDATED;

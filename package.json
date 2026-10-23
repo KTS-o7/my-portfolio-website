@@ -13,19 +13,10 @@
     "lint": "eslint ."
   },
   "dependencies": {
-    "@emailjs/browser": "^4.3.3",
-    "@fortawesome/fontawesome-svg-core": "^7.1.0",
-    "@fortawesome/free-brands-svg-icons": "^7.1.0",
-    "@fortawesome/react-fontawesome": "^3.1.1",
-    "@heroicons/react": "^2.1.1",
     "@vercel/analytics": "^2.0.1",
     "@vercel/speed-insights": "^2.0.0",
     "csv-writer": "^1.6.0",
-    "dompurify": "^3.2.5",
     "dotenv": "^16.4.5",
-    "framer-motion": "^12.23.26",
-    "fuse.js": "^7.5.0",
-    "geist": "^1.7.2",
     "gray-matter": "^4.0.3",
     "heroicons": "^2.1.1",
     "json2csv": "^6.0.0-alpha.2",
@@ -52,7 +43,6 @@
     "unified": "^11.0.5"
   },
   "devDependencies": {
-    "@types/dompurify": "^3.0.5",
     "@types/node": "20.12.5",
     "@types/react": "18.2.74",
     "autoprefixer": "^10.0.1",

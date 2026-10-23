@@ -1,22 +1,15 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import experienceData from "@/data/experience.json";
-import projectsData from "@/data/projects.json";
-import Navbar from "@/app/components/Navbar";
-import Footer from "@/app/components/Footer";
+import { notFound } from "next/navigation";
+import Breadcrumb from "@/app/components/site/Breadcrumb";
+import { buildPageMetadata } from "@/lib/metadata";
+import { experience, getExperience, getWorkForCompany } from "@/lib/portfolio";
 
-type ExperienceEntry = {
-  slug: string;
-  company: { name: string; url?: string };
-  role: string;
-  type?: string;
-  location?: string;
-  timeframe?: string;
-  summary?: string;
-  highlights?: string[];
-  skills?: string[];
-  selectedProjectIds?: number[];
-};
+export const dynamicParams = false;
+
+export function generateStaticParams() {
+  return experience.map((entry) => ({ company: entry.slug }));
+}
 
 export async function generateMetadata({
   params,
@@ -24,28 +17,14 @@ export async function generateMetadata({
   params: Promise<{ company: string }>;
 }): Promise<Metadata> {
   const { company } = await params;
-  const entry = (experienceData.experience as ExperienceEntry[]).find(
-    (item) => item.slug === company,
-  );
-
-  const title = entry
-    ? `${entry.company.name} | Experience`
-    : "Experience";
-  const description =
-    entry?.summary ||
-    "Work experience, outcomes, and supporting projects grouped by company.";
-
-  return {
-    title,
-    description,
-    alternates: { canonical: `/experience/${company}` },
-    openGraph: {
-      title,
-      description,
-      url: `/experience/${company}`,
-      type: "profile",
-    },
-  };
+  const entry = getExperience(company);
+  if (!entry) return {};
+  return buildPageMetadata({
+    title: `${entry.company.name} — Experience`,
+    description: entry.summary ?? `${entry.role} at ${entry.company.name}.`,
+    path: `/experience/${entry.slug}`,
+    type: "profile",
+  });
 }
 
 export default async function CompanyExperiencePage({
@@ -54,172 +33,110 @@ export default async function CompanyExperiencePage({
   params: Promise<{ company: string }>;
 }) {
   const { company } = await params;
-  const entry = (experienceData.experience as ExperienceEntry[]).find(
-    (item) => item.slug === company,
-  );
+  const entry = getExperience(company);
+  if (!entry) notFound();
 
-  if (!entry) {
-    return (
-      <main id="content" className="min-h-screen bg-background">
-        <Navbar />
-        <div className="max-w-[720px] mt-24 mx-auto px-4 sm:px-6 py-12">
-          <h1 className="text-2xl font-semibold tracking-tight text-text-primary">
-            Experience not found
-          </h1>
-          <p className="mt-4 text-text-secondary">
-            This page doesn&apos;t exist. Go back to{" "}
-            <Link href="/experience" className="link-underline text-text-primary">
-              experience
-            </Link>
-            .
-          </p>
-        </div>
-      </main>
-    );
-  }
-
-  const selectedProjects = (entry.selectedProjectIds || [])
-    .map((id) => projectsData.projects.find((p) => p.id === id))
-    .filter(Boolean);
+  const index = experience.indexOf(entry);
+  const newer = experience[index - 1];
+  const older = experience[index + 1];
+  const caseStudy = getWorkForCompany(entry.company.name);
 
   return (
-    <main
-      id="content"
-      className="flex min-h-screen flex-col bg-background transition-colors duration-300"
-    >
-      <Navbar />
-      <div className="max-w-[720px] mt-24 mx-auto px-4 sm:px-6 py-10">
-        <div className="font-mono text-xs uppercase tracking-widest text-text-tertiary">
-          <Link href="/" className="link-underline text-text-primary">
-            Home
-          </Link>{" "}
-          <span className="mx-2">/</span>
-          <Link href="/experience" className="link-underline text-text-primary">
-            Experience
-          </Link>{" "}
-          <span className="mx-2">/</span>
-          <span className="text-text-secondary">{entry.company.name}</span>
-        </div>
+    <div className="pb-24 m:pb-12">
+      <Breadcrumb
+        items={[
+          { label: "Home", href: "/" },
+          { label: "Work", href: "/experience" },
+          { label: "Experience", href: "/experience" },
+          { label: entry.company.name },
+        ]}
+      />
 
-        <header className="mt-6">
-          <span className="font-mono text-xs uppercase tracking-widest text-text-tertiary">{entry.type || "Experience"}</span>
-          <h1 className="mt-5 text-4xl sm:text-5xl font-semibold tracking-tight text-text-primary">
+      <section className="mgrid pt-10 m:pt-5">
+        <div className="mnote pt-4 leading-[1.8] m:leading-relaxed">
+          {entry.type && <span className="mnote-line">{entry.type}</span>}
+          <span className="mnote-line">{entry.timeframe}</span>
+          {entry.location && <span className="mnote-line">{entry.location}</span>}
+        </div>
+        <div className="max-w-[820px]">
+          <h1 className="text-[clamp(52px,7vw,84px)] font-medium leading-[0.98] tracking-[-0.03em] text-ink m:mt-1 m:text-[44px]">
             {entry.company.name}
           </h1>
-          <p className="mt-3 text-text-secondary text-base sm:text-lg leading-relaxed max-w-[72ch]">
-            {entry.role}
-            {entry.timeframe ? ` · ${entry.timeframe}` : ""}
-            {entry.location ? ` · ${entry.location}` : ""}
-          </p>
+          <div className="mt-2.5 font-mono text-sm text-acc">{entry.role}</div>
           {entry.summary && (
-            <p className="mt-5 text-text-secondary leading-relaxed max-w-[80ch]">
-              {entry.summary}
-            </p>
+            <p className="mt-4 text-[24px] italic leading-[1.45] m:text-[19px]">{entry.summary}</p>
           )}
-        </header>
-
-        {Array.isArray(entry.highlights) && entry.highlights.length > 0 && (
-          <section className="mt-10 border-t border-border pt-8">
-            <h2 className="font-mono text-xs uppercase tracking-widest text-text-tertiary">Highlights</h2>
-            <ul className="mt-5 space-y-2 text-text-secondary">
-              {entry.highlights.map((item) => (
-                <li key={item} className="flex gap-3 leading-relaxed">
-                  <span className="mt-2 h-1.5 w-1.5 rounded-full bg-primary flex-shrink-0" />
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ul>
-          </section>
-        )}
-
-        {Array.isArray(entry.skills) && entry.skills.length > 0 && (
-          <section className="mt-10 border-t border-border pt-8">
-            <h2 className="font-mono text-xs uppercase tracking-widest text-text-tertiary">Stack</h2>
-            <div className="mt-5 flex flex-wrap gap-2">
-              {entry.skills.map((skill) => (
-                <span key={skill} className="font-mono text-xs uppercase tracking-widest text-text-tertiary">
-                  {skill}
-                </span>
-              ))}
-            </div>
-          </section>
-        )}
-
-
-        {selectedProjects.length > 0 && (
-          <section className="mt-10 border-t border-border pt-8">
-            <h2 className="font-mono text-xs uppercase tracking-widest text-text-tertiary">Selected projects</h2>
-            <ul className="mt-6 space-y-4">
-              {selectedProjects.map((project) => (
-                <li key={project!.id}>
-                  <div className="border-t border-border pt-5">
-                    <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
-                      <div>
-                        <div className="text-lg font-semibold tracking-tight text-text-primary">
-                          {project!.name}
-                        </div>
-                        <div className="mt-2 text-text-secondary leading-relaxed">
-                          {project!.description}
-                        </div>
-                      </div>
-                      <div className="flex flex-wrap gap-2">
-                        {(project!.tech || []).slice(0, 6).map((t: string) => (
-                          <span key={t} className="font-mono text-xs uppercase tracking-widest text-text-tertiary">
-                            {t}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                    <div className="mt-4 flex flex-wrap gap-3">
-                      {(project!.links?.demo || project!.links?.paper) && (
-                        <a
-                          href={project!.links?.demo || project!.links?.paper}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="link-underline text-text-primary font-mono text-sm"
-                        >
-                          Open ↗
-                        </a>
-                      )}
-                      <a
-                        href={project!.links?.source || project!.link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="link-underline text-text-secondary font-mono text-sm"
-                      >
-                        Source ↗
-                      </a>
-                    </div>
-                  </div>
-                </li>
-              ))}
-            </ul>
-          </section>
-        )}
-
-        <section className="mt-10">
-          <div className="flex flex-wrap gap-3">
-            <Link href="/experience" className="btn">
-              Back to experience
-            </Link>
-            {entry.company?.url && (
-              <a
-                href={entry.company.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn"
-              >
-                Company site
+          <div className="mt-[18px] flex flex-wrap gap-3">
+            {caseStudy && (
+              <Link href={`/work/${caseStudy.slug}`} className="btn-outline">
+                Read the {caseStudy.title} case study →
+              </Link>
+            )}
+            {entry.company.url && (
+              <a href={entry.company.url} target="_blank" rel="noopener noreferrer" className="btn-text">
+                Company site ↗
               </a>
             )}
-            <Link href="/contact" className="btn btn-primary">
-              Contact
-            </Link>
           </div>
-        </section>
-      </div>
+        </div>
+      </section>
 
-      <Footer />
-    </main>
+      {entry.highlights && entry.highlights.length > 0 && (
+        <section className="mgrid pt-12 m:pt-9" aria-label="Highlights">
+          <div className="mnote mnote-sec pt-2.5">§ highlights</div>
+          <ol className="max-w-[820px] m:mt-1">
+            {entry.highlights.map((item, i) => (
+              <li
+                key={item}
+                className="grid grid-cols-[36px_minmax(0,1fr)] border-t border-rule py-3 text-[19px] leading-[1.55] last:border-b m:text-[17px]"
+              >
+                <span className="pt-1.5 font-mono text-[11px] text-acc">{String(i + 1).padStart(2, "0")}</span>
+                <span>{item}</span>
+              </li>
+            ))}
+          </ol>
+        </section>
+      )}
+
+      {entry.skills && entry.skills.length > 0 && (
+        <section className="mgrid pt-10 m:pt-8" aria-label="Stack">
+          <div className="mnote mnote-sec pt-1.5">§ stack</div>
+          <p className="max-w-[820px] font-mono text-[13px] leading-[1.8] text-tx m:mt-1">
+            {entry.skills.join(" · ")}
+          </p>
+        </section>
+      )}
+
+      {(newer || older) && (
+        <nav className="mgrid pt-10 m:pt-8" aria-label="More experience">
+          <div className="mnote mnote-sec pt-3.5">next</div>
+          <div className="grid max-w-[820px] grid-cols-2 border-t-[1.5px] border-rule2 m:mt-1">
+            {newer ? (
+              <Link href={`/experience/${newer.slug}`} className="group flex flex-col gap-1.5 pr-5 pt-3.5">
+                <span className="font-mono text-[11px] text-tx2">← newer</span>
+                <span className="text-[24px] font-medium leading-tight text-ink group-hover:text-acc m:text-[20px]">
+                  {newer.company.name}
+                </span>
+              </Link>
+            ) : (
+              <span />
+            )}
+            {older ? (
+              <Link
+                href={`/experience/${older.slug}`}
+                className="group flex flex-col gap-1.5 border-l border-rule pl-5 pt-3.5 text-right"
+              >
+                <span className="font-mono text-[11px] text-tx2">older →</span>
+                <span className="text-[24px] font-medium leading-tight text-ink group-hover:text-acc m:text-[20px]">
+                  {older.company.name}
+                </span>
+              </Link>
+            ) : (
+              <span className="border-l border-rule" />
+            )}
+          </div>
+        </nav>
+      )}
+    </div>
   );
 }

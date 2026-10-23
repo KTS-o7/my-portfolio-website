@@ -4,8 +4,9 @@ import { useEffect } from "react";
 
 /**
  * Keeps embedded whiteboard iframes (```whiteboard blocks, see lib/blog.ts) in step
- * with the site theme, and sizes each frame from the height the board reports.
- * The frames are sandboxed without same-origin, so postMessage is the only channel.
+ * with the site theme and the notebook skin's pen colour, and sizes each frame from
+ * the height the board reports. The frames are sandboxed without same-origin, so
+ * postMessage is the only channel.
  */
 export default function WhiteboardEnhancer() {
   useEffect(() => {
@@ -18,8 +19,11 @@ export default function WhiteboardEnhancer() {
 
     const theme = () =>
       document.documentElement.classList.contains("dark") ? "dark" : "light";
-    const sendTheme = (frame: HTMLIFrameElement) =>
+    const sendTheme = (frame: HTMLIFrameElement) => {
       frame.contentWindow?.postMessage({ type: "wb-theme", theme: theme() }, "*");
+      const accent = getComputedStyle(frame).getPropertyValue("--acc").trim();
+      frame.contentWindow?.postMessage({ type: "wb-skin", skin: "notebook", accent }, "*");
+    };
 
     const onMessage = (event: MessageEvent) => {
       const frame = frames.find((f) => f.contentWindow === event.source);
@@ -51,14 +55,25 @@ export default function WhiteboardEnhancer() {
     const links = Array.from(
       document.querySelectorAll<HTMLAnchorElement>(".post-content a.whiteboard-open"),
     );
+    // The standalone board can't hear the site toggle, so its link carries the theme.
+    const syncLinks = () =>
+      links.forEach((link) => {
+        const url = new URL(link.href);
+        url.searchParams.set("theme", theme());
+        link.href = url.toString();
+      });
 
     window.addEventListener("message", onMessage);
     links.forEach((link) => link.addEventListener("click", onOpen));
+    syncLinks();
     frames.forEach((frame) => {
       frame.addEventListener("load", onLoad);
       sendTheme(frame);
     });
-    const observer = new MutationObserver(() => frames.forEach(sendTheme));
+    const observer = new MutationObserver(() => {
+      frames.forEach(sendTheme);
+      syncLinks();
+    });
     observer.observe(document.documentElement, {
       attributes: true,
       attributeFilter: ["class"],

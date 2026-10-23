@@ -1,47 +1,62 @@
 import type { Metadata } from "next";
-import Navbar from "@/app/components/Navbar";
-import Footer from "@/app/components/Footer";
-import Experience from "@/app/components/Experience";
-import { LazyMotionWrapper } from "@/app/components/ui/LazyMotionWrapper";
+import Link from "next/link";
+import WorkHead from "@/app/components/work/WorkHead";
+import { buildPageMetadata } from "@/lib/metadata";
+import { experience } from "@/lib/portfolio";
 
-const title = "Experience";
-const description =
-  "Work experience and shipped outcomes — grouped by company, with linked case studies and supporting projects.";
-
-export const metadata: Metadata = {
-  title,
-  description,
-  alternates: { canonical: "/experience" },
-  openGraph: {
-    title,
-    description,
-    url: "/experience",
-    type: "website",
-  },
-};
+export const metadata: Metadata = buildPageMetadata({
+  title: "Experience",
+  description:
+    "Work experience and shipped outcomes — grouped by company, with linked case studies and supporting projects.",
+  path: "/experience",
+});
 
 export default function ExperienceIndexPage() {
   return (
-    <main
-      id="content"
-      className="flex min-h-screen flex-col bg-background transition-colors duration-300"
-    >
-      <Navbar />
-      <div className="pt-24">
-        <div className="max-w-[1100px] mx-auto px-4 sm:px-6 pt-12 pb-4">
-          <span className="font-mono text-xs uppercase tracking-widest text-text-tertiary">Experience</span>
-          <h1 className="mt-5 text-4xl sm:text-5xl font-semibold tracking-tight text-text-primary">
-            Roles &amp; outcomes
-          </h1>
-          <p className="mt-4 text-text-secondary max-w-[72ch] leading-relaxed">
-            Company-by-company: scope, constraints, and shipped results.
-          </p>
-        </div>
-        <LazyMotionWrapper>
-          <Experience showTopBorder={false} showSeeMore={false} />
-        </LazyMotionWrapper>
+    <div className="pb-24 m:pb-12">
+      <WorkHead active="experience" />
+      <div className="mt-7 m:mt-5">
+        {experience.map((entry) => (
+          <article key={entry.slug} className="mgrid border-t border-rule2 py-8 m:py-6">
+            <div className="mnote pt-2.5 leading-[1.8] m:leading-relaxed">
+              <span className="mnote-line">{entry.timeframe}</span>
+              {entry.type && <span className="mnote-line">{entry.type}</span>}
+              {entry.location && <span className="mnote-line">{entry.location}</span>}
+            </div>
+            <div className="min-w-0 max-w-[820px]">
+              <h2 className="text-[clamp(30px,3.4vw,44px)] font-medium leading-[1.05] tracking-[-0.02em] text-ink m:text-[28px]">
+                <Link href={`/experience/${entry.slug}`}>{entry.company.name}</Link>
+              </h2>
+              <div className="mt-1.5 font-mono text-[13px] text-acc">{entry.role}</div>
+              {entry.summary && (
+                <p className="mt-3.5 text-[21px] italic leading-normal text-ink m:text-[18px]">{entry.summary}</p>
+              )}
+              {entry.highlights && entry.highlights.length > 0 && (
+                <ul className="dash-list mt-4">
+                  {entry.highlights.map((item) => (
+                    <li
+                      key={item}
+                      className="border-t border-dotted border-rule2 py-2 text-[17px] leading-[1.55] m:text-base"
+                    >
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              )}
+              {entry.company.url && (
+                <a
+                  href={entry.company.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-3 inline-flex min-h-11 items-center font-mono text-[13px] text-tx2 underline underline-offset-[3px]"
+                >
+                  {entry.company.url.replace(/^https?:\/\/(www\.)?/, "").replace(/\/.*$/, "")} ↗
+                </a>
+              )}
+            </div>
+          </article>
+        ))}
       </div>
-      <Footer />
-    </main>
+    </div>
   );
 }

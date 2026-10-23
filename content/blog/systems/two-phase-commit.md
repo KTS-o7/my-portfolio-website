@@ -18,6 +18,7 @@ The whiteboard below walks through the clean path, the coordinator crash that bl
 
 ```whiteboard
 two-phase-commit
+The clean path, the coordinator crash that blocks it, and what 3PC changes
 ```
 
 ## The Protocol

@@ -1,37 +1,24 @@
 import type { Metadata } from "next";
-import Navbar from "@/app/components/Navbar";
-import Footer from "@/app/components/Footer";
-import Projects from "@/app/components/Projects";
+import { Suspense } from "react";
+import WorkHead from "@/app/components/work/WorkHead";
+import ProjectsBrowser, { ProjectsView } from "@/app/components/work/ProjectsBrowser";
 import { buildPageMetadata } from "@/lib/metadata";
+import { projects } from "@/lib/portfolio";
 
 export const metadata: Metadata = buildPageMetadata({
-  title: "Work & Projects",
+  title: "Projects & publications",
   description:
-    "Projects, publications, and end-to-end work — discovery to deployment.",
+    "Projects and publications by Krishnatejaswi Shenthar: graph-rca, permission-mongo, BetterBingImageDownloader, a Clang complexity plugin, and papers in IJEECS and IEEE Xplore.",
   path: "/projects",
 });
 
 export default function ProjectsPage() {
   return (
-    <main
-      id="content"
-      className="flex min-h-screen flex-col bg-background transition-colors duration-300"
-    >
-      <Navbar />
-      <div className="pt-24">
-        <div className="max-w-[1100px] mx-auto px-4 sm:px-6 pt-12 pb-4">
-          <span className="font-mono text-xs uppercase tracking-widest text-text-tertiary">Work</span>
-          <h1 className="mt-5 text-4xl sm:text-5xl font-semibold tracking-tight text-text-primary">
-            Selected projects
-          </h1>
-          <p className="mt-4 text-text-secondary max-w-[72ch] leading-relaxed">
-            Each project is framed as a short case study: the problem, the
-            approach, and the measurable impact.
-          </p>
-        </div>
-        <Projects showTopBorder={false} />
-      </div>
-      <Footer />
-    </main>
+    <div className="pb-24 m:pb-12">
+      <WorkHead active="projects" />
+      <Suspense fallback={<ProjectsView projects={projects} active="all" />}>
+        <ProjectsBrowser projects={projects} />
+      </Suspense>
+    </div>
   );
 }

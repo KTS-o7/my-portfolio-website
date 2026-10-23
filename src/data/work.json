@@ -29,6 +29,16 @@
         "PostgreSQL",
         "Docker"
       ],
+      "metrics": [
+        { "value": "1,500+", "label": "hours/year saved" },
+        { "value": "$800K+", "label": "ARR growth contributed" },
+        { "value": "1B+", "label": "tokens/month" }
+      ],
+      "relatedPosts": [
+        "infra/kubernetes-oom-memory-leaks",
+        "systems/connection-pool-exhaustion",
+        "infra/cicd-docker-buildx-sha-deploys"
+      ],
       "links": [
         {
           "label": "OnFinance AI company/team page (evidence)",

@@ -1,55 +1,41 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import Script from "next/script";
-import heroData from "@/data/hero.json";
-import workData from "@/data/work.json";
-import Navbar from "@/app/components/Navbar";
-import Footer from "@/app/components/Footer";
+import { notFound } from "next/navigation";
+import Breadcrumb from "@/app/components/site/Breadcrumb";
+import JsonLd from "@/app/components/site/JsonLd";
+import { CtaPair, Metrics } from "@/app/components/site/blocks";
+import { getAllPosts, getSectionLabel } from "@/lib/blog";
+import { buildPageMetadata } from "@/lib/metadata";
+import { experience, getWork, type Metric } from "@/lib/portfolio";
 import { getSiteUrl } from "@/lib/profile";
+import { personSchema } from "@/lib/schema";
 
 const pagePath = "/work/complianceos";
-
-const workItem = workData.work.find((item) => item.slug === "complianceos");
+const workItem = getWork("complianceos");
 
 const title = "ComplianceOS — End-to-end Work";
 const description =
   "Founding-engineer style deep dive: discovery → architecture → development → deployment for ComplianceOS (OnFinance AI), with agentic workflows (LangGraph + LiteLLM) for compliance automation.";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildPageMetadata({
   title,
   description,
-  alternates: { canonical: pagePath },
-  openGraph: {
-    title,
-    description,
-    url: pagePath,
-    type: "article",
-  },
-};
+  path: pagePath,
+  type: "article",
+});
+
+const letter = (i: number) => `(${String.fromCharCode(97 + i)})`;
 
 export default function ComplianceOsPage() {
+  if (!workItem) notFound();
+
   const siteUrl = getSiteUrl();
   const pageUrl = `${siteUrl}${pagePath}`;
-
-  if (!workItem) {
-    return (
-      <main className="min-h-screen bg-background">
-        <Navbar />
-        <div className="max-w-[720px] mt-24 mx-auto px-4 sm:px-6 py-12">
-          <h1 className="text-2xl font-semibold tracking-tight text-text-primary">
-            Work not found
-          </h1>
-          <p className="mt-4 text-text-secondary">
-            This page is missing. Go back{" "}
-            <Link href="/" className="link-underline text-text-primary">
-              home
-            </Link>
-            .
-          </p>
-        </div>
-      </main>
-    );
-  }
+  const role = experience.find((entry) => entry.company.name === workItem.company.name);
+  const posts = getAllPosts();
+  const related = (workItem.relatedPosts ?? [])
+    .map((key) => posts.find((post) => `${post.section}/${post.slug}` === key))
+    .filter((post) => post !== undefined);
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -65,200 +51,133 @@ export default function ComplianceOsPage() {
         name: workItem.title,
         description: workItem.summary.join(" "),
         url: pageUrl,
-        creator: {
-          "@type": "Person",
-          name: heroData.name,
-          url: siteUrl,
-        },
+        creator: personSchema(siteUrl),
         publisher: {
           "@type": "Organization",
           name: workItem.company.name,
           url: "https://www.onfinance.ai",
         },
-        keywords: [
-          "compliance automation",
-          "BFSI",
-          "agentic workflows",
-          "LangGraph",
-          "LiteLLM",
-        ],
+        keywords: ["compliance automation", "BFSI", "agentic workflows", "LangGraph", "LiteLLM"],
         inLanguage: "en",
       },
     ],
   };
 
   return (
-    <main
-      id="content"
-      className="flex min-h-screen flex-col bg-background transition-colors duration-300"
-    >
-      <Script
-        id="complianceos-jsonld"
-        type="application/ld+json"
-        strategy="beforeInteractive"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+    <div className="pb-24 m:pb-12">
+      <JsonLd data={jsonLd} />
+      <Breadcrumb
+        items={[
+          { label: "Home", href: "/" },
+          { label: "Work", href: "/experience" },
+          { label: workItem.title },
+        ]}
       />
-      <Navbar />
-      <div className="max-w-[720px] mt-24 mx-auto px-4 sm:px-6 py-12">
-        <div className="mb-10">
-          <div className="font-mono text-xs uppercase tracking-widest text-text-tertiary">
-            <Link href="/" className="hover:text-primary transition-colors">
-              Home
-            </Link>{" "}
-            <span className="mx-2">/</span>
-            <Link
-              href="/projects"
-              className="hover:text-primary transition-colors"
-            >
-              Work
-            </Link>{" "}
-            <span className="mx-2">/</span>
-            <span className="text-primary">{workItem.title}</span>
-          </div>
 
-          <h1 className="mt-6 text-4xl sm:text-5xl font-semibold tracking-tight text-text-primary">
+      <section className="mgrid pt-10 m:pt-5">
+        <div className="mnote pt-[18px] leading-[1.8] m:leading-relaxed">
+          <span className="mnote-line">{workItem.company.name}</span>
+          {role?.timeframe && <span className="mnote-line">{role.timeframe}</span>}
+          <span className="mnote-line">{workItem.location}</span>
+        </div>
+        <div className="max-w-[820px]">
+          <h1 className="text-[clamp(56px,8vw,96px)] font-medium leading-[0.98] tracking-[-0.03em] text-ink m:mt-1 m:text-[48px]">
             {workItem.title}
           </h1>
-          <p className="mt-4 text-text-secondary text-base sm:text-lg max-w-3xl leading-relaxed">
-            {workItem.subtitle}
-          </p>
+          <p className="mt-4 text-[26px] italic leading-[1.4] m:text-[20px]">{workItem.subtitle}</p>
         </div>
+      </section>
 
-        <section
-          aria-labelledby="key-facts"
-          className="border-t border-border pt-8 mb-10"
-        >
-          <h2 id="key-facts" className="font-mono text-xs uppercase tracking-widest text-text-tertiary">
-            Key facts
-          </h2>
-          <dl className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
-              <dt className="font-mono text-xs uppercase tracking-widest text-text-tertiary">
-                Role
-              </dt>
-              <dd className="mt-2 text-text-primary">{workItem.role}</dd>
-            </div>
-            <div>
-              <dt className="font-mono text-xs uppercase tracking-widest text-text-tertiary">
-                Company
-              </dt>
-              <dd className="mt-2">
-                <a
-                  href={workItem.company.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="link-underline text-text-primary"
-                >
-                  {workItem.company.name}
-                </a>
-              </dd>
-            </div>
-            <div>
-              <dt className="font-mono text-xs uppercase tracking-widest text-text-tertiary">
-                Base
-              </dt>
-              <dd className="mt-2 text-text-primary">{workItem.location}</dd>
-            </div>
-            <div>
-              <dt className="font-mono text-xs uppercase tracking-widest text-text-tertiary">
-                Open_To
-              </dt>
-              <dd className="mt-2 text-text-primary">{workItem.openness}</dd>
-            </div>
-          </dl>
-        </section>
+      <section className="mgrid pt-10 m:pt-6">
+        <div className="mspacer" />
+        <Metrics items={workItem.metrics as Metric[]} className="max-w-[900px]" />
+      </section>
 
-        <section aria-labelledby="summary" className="mb-12">
-          <h2
-            id="summary"
-            className="text-2xl font-semibold tracking-tight text-text-primary"
-          >
+      <section className="mgrid pt-12 m:pt-9" aria-labelledby="summary">
+        <div className="mnote mnote-sec pt-2.5">§ 1</div>
+        <div className="max-w-[720px]">
+          <h2 id="summary" className="h-section">
             Summary
           </h2>
-          <div className="mt-4 space-y-4 text-text-secondary leading-relaxed">
-            {workItem.summary.map((paragraph) => (
-              <p key={paragraph}>{paragraph}</p>
-            ))}
-          </div>
-        </section>
+          {workItem.summary.map((paragraph) => (
+            <p key={paragraph} className="mt-3.5 text-[21px] leading-[1.6] m:text-[18px]">
+              {paragraph}
+            </p>
+          ))}
+        </div>
+      </section>
 
-        <section aria-labelledby="highlights" className="mb-12">
-          <h2
-            id="highlights"
-            className="text-2xl font-semibold tracking-tight text-text-primary"
-          >
+      <section className="mgrid pt-11 m:pt-9" aria-labelledby="highlights">
+        <div className="mnote mnote-sec pt-2.5">§ 2</div>
+        <div className="max-w-[720px]">
+          <h2 id="highlights" className="h-section">
             Highlights
           </h2>
-          <ul className="mt-4 space-y-3 text-text-secondary">
-            {workItem.highlights.map((item) => (
-              <li key={item} className="flex gap-3">
-                <span className="text-primary opacity-60">•</span>
+          <ol className="mt-3.5">
+            {workItem.highlights.map((item, i) => (
+              <li
+                key={item}
+                className="grid grid-cols-[36px_minmax(0,1fr)] border-t border-rule py-3 text-[20px] leading-normal last:border-b m:text-[17px]"
+              >
+                <span className="pt-1.5 font-mono text-[11px] text-acc">{letter(i)}</span>
                 <span>{item}</span>
               </li>
             ))}
-          </ul>
-        </section>
+          </ol>
+        </div>
+      </section>
 
-        <section aria-labelledby="stack" className="mb-12">
-          <h2
-            id="stack"
-            className="text-2xl font-semibold tracking-tight text-text-primary"
-          >
-            Stack
-          </h2>
-          <div className="mt-4 flex flex-wrap gap-2">
-            {workItem.stack.map((item) => (
-              <span key={item} className="font-mono text-xs uppercase tracking-widest text-text-tertiary">
-                {item}
-              </span>
+      <section className="mgrid pt-11 m:pt-9" aria-label="Stack">
+        <div className="mnote mnote-sec pt-1.5">§ 3 stack</div>
+        <ul className="flex max-w-[720px] flex-wrap gap-2 font-mono text-[13px] m:mt-1.5">
+          {workItem.stack.map((item) => (
+            <li key={item} className="border border-rule2 px-2.5 py-1.5 text-ink">
+              {item}
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      {related.length > 0 && (
+        <aside className="mgrid pt-11 m:pt-9" aria-label="Related writing">
+          <div className="mnote mnote-sec pt-2.5">see also</div>
+          <div className="max-w-[720px] m:mt-1">
+            {related.map((post) => (
+              <Link
+                key={`${post.section}/${post.slug}`}
+                href={`/blog/${post.section}/${post.slug}`}
+                className="group flex items-baseline justify-between gap-5 border-t border-rule py-2.5 last:border-b"
+              >
+                <span className="text-[20px] font-medium leading-snug text-ink group-hover:text-acc m:text-[18px]">
+                  {post.title}
+                </span>
+                <span className="whitespace-nowrap font-mono text-[11px] text-tx2">
+                  {getSectionLabel(post.section)}
+                </span>
+              </Link>
             ))}
           </div>
-        </section>
+        </aside>
+      )}
 
-        <section aria-labelledby="evidence" className="mb-12">
-          <h2
-            id="evidence"
-            className="text-2xl font-semibold tracking-tight text-text-primary"
-          >
-            Evidence
-          </h2>
-          <ul className="mt-4 space-y-3 text-text-secondary">
+      <section className="mgrid pt-11 m:pt-9" aria-label="Notes">
+        <div className="mnote mnote-sec pt-1">notes</div>
+        <div className="max-w-[720px] m:mt-1">
+          <p className="text-[18px] italic leading-[1.55]">{workItem.notes.join(" ")}</p>
+          <div className="mt-3 font-mono text-xs leading-relaxed text-tx2">
+            Evidence:{" "}
             {workItem.links.map((link) => (
-              <li key={link.url}>
-                <a
-                  href={link.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="link-underline text-text-primary"
-                >
-                  {link.label}
-                </a>
-              </li>
+              <a key={link.url} href={link.url} target="_blank" rel="noopener noreferrer" className="link-u text-ink">
+                {link.label.replace(/\s*\(evidence\)\s*$/, "")} ↗
+              </a>
             ))}
-          </ul>
-        </section>
-
-        <section aria-labelledby="notes" className="border-t border-border pt-8">
-          <h2 id="notes" className="font-mono text-xs uppercase tracking-widest text-text-tertiary">
-            Notes
-          </h2>
-          <ul className="mt-4 space-y-3 text-text-secondary text-sm">
-            {workItem.notes.map((note) => (
-              <li key={note} className="flex gap-3">
-                <span className="text-primary opacity-60">•</span>
-                <span>{note}</span>
-              </li>
-            ))}
-          </ul>
-          <div className="mt-8">
-            <Link href="/contact" className="btn btn-primary">
-              Contact
-            </Link>
+            {workItem.openness && <> · {workItem.openness}</>}
           </div>
-        </section>
-      </div>
-
-      <Footer />
-    </main>
+          <div className="cta-row mt-[22px]">
+            <CtaPair />
+          </div>
+        </div>
+      </section>
+    </div>
   );
 }

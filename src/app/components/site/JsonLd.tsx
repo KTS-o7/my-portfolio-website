@@ -1,0 +1,10 @@
+// Structured data as a plain script tag in the page HTML. "<" is escaped so text from
+// posts can never close the script element early.
+export default function JsonLd({ data }: { data: unknown }) {
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(data).replace(/</g, "\\u003c") }}
+    />
+  );
+}
