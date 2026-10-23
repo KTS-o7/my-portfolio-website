@@ -1,4 +1,4 @@
-"""Whiteboard for content/blog/systems/raft_consensus.md.
+"""Whiteboard for content/blog/systems/raft-consensus.md.
 
 Usage: python3 -I whiteboards/raft_consensus.py
 Writes public/whiteboards/raft-consensus.html, using the whiteboard-html skill in .claude/skills/.

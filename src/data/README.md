@@ -1,136 +1,60 @@
-# Portfolio Data Configuration
+# Portfolio data
 
-This directory contains all the configurable data for your portfolio website. Simply edit these JSON files to update your portfolio content without touching any code!
+The pages read their copy from the JSON files in this folder. Edit a file and the site updates on the next build (or immediately in `npm run dev`). Blog posts live in `content/blog/<hub>/<slug>.md`, not here.
 
-## 📁 File Structure
+## Files
 
-### `projects.json`
-Contains all your projects and publications.
+### `hero.json` — home page
 
-**Structure:**
-- `categories`: Array of filter categories (e.g., "All", "Software", "Hardware", "Publication")
-- `projects`: Array of project objects with:
-  - `id`: Unique identifier
-  - `name`: Project name
-  - `description`: Short description
-  - `image`: Path to image (relative to `/public`)
-  - `link`: URL to project/publication
-  - `tag`: Array of categories this project belongs to
+- `name`: shown in the header, footer and page titles
+- `headline`: the home page H1
+- `subhead`: the paragraph under the H1
+- `metrics`: the three big numbers on the home page (`value`, `label`)
+- `shortDescription`, `shortDescriptionLine2`, `roles`: used in metadata, `llms.txt` and JSON-LD
 
-**Example:**
-```json
-{
-  "id": 8,
-  "name": "New Project",
-  "description": "Description of your new project",
-  "image": "/proj/new-project.png",
-  "link": "https://github.com/username/project",
-  "tag": ["All", "Software"]
-}
-```
+### `experience.json` — Work → Experience and `/experience/<slug>`
 
-### `about.json`
-Contains your bio, skills, education, and certifications.
+One entry per role, newest first. Each has `slug`, `company` (`name`, `url`), `role`, `type`, `location`, `timeframe`, `summary`, `highlights` and `skills`. The order sets the "newer / older" links on role pages.
 
-**Structure:**
-- `image`: Path to your profile image
-- `title`: Main title text
-- `description`: Object with `primary` and `secondary` text
-- `skills`: Array of skill names
-- `education`: Array of education objects
-  - `degree`: Degree name
-  - `institution`: School name
-  - `gpa`: GPA value
-  - `period`: Time period (e.g., "2021 - 2025")
-- `specializations`: Array of specialization names
-- `certifications`: Array of certification names
+### `projects.json` — Work → Projects & publications
 
-### `hero.json`
-Contains the hero section content.
+- `projects`: each has `name`, `description`, `impact` (shown on the home page), `tech`, `links` (`demo`, `paper`, `source`) and `tag`
+- A project whose `tag` includes `"Publication"` is filed under Publication; everything else is Software
 
-**Structure:**
-- `image`: Path to hero image
-- `title`: Main headline
-- `name`: Your name
-- `roles`: Array of roles for typing animation
-- `roleAnimationDelay`: Delay in ms between role changes
-- `shortDescription`: Brief description line 1
-- `shortDescriptionLine2`: Brief description line 2
-- `detailedDescription`: Object with:
-  - `intro`: Introduction text
-  - `technologies`: Array of technology names
-  - `webDev`: Web development framework
-  - `languages`: Array of programming languages
-  - `outro`: Closing text
-- `buttons`: Array of button objects
-  - `text`: Button text
-  - `link`: Button URL
-  - `type`: "primary", "secondary", or "tertiary"
-  - `external`: true/false for external links
+### `work.json` — case studies (`/work/<slug>`)
 
-### `contact.json`
-Contains contact information and social media links.
+Each case study has `title`, `subtitle`, `company`, `location`, `summary`, `highlights`, `stack`, `metrics`, `links`, `notes` and `relatedPosts`. `relatedPosts` lists posts as `"<hub>/<slug>"` for the "see also" block. A role in `experience.json` links to the case study whose `company.name` matches.
 
-**Structure:**
-- `email`: Your email address
-- `phone`: Object with `display` and `link` formats
-- `description`: Contact section description
-- `socialMedia`: Array of social media objects
-  - `platform`: Platform name
-  - `url`: Profile URL
-  - `icon`: Icon name ("faGithub" or "faLinkedin")
-- EmailJS is configured via environment variables:
-  - `NEXT_PUBLIC_EMAILJS_SERVICE_ID`
-  - `NEXT_PUBLIC_EMAILJS_TEMPLATE_ID`
-  - `NEXT_PUBLIC_EMAILJS_PUBLIC_KEY`
+### `about.json` — About page
 
-## 🚀 Quick Start
+- `title`: the About H1
+- `lead`: the italic opening line
+- `description.primary`: the main paragraph
+- `location` and `education[0]` (`degreeShort`, `institution`, `years`, `gpa`): the margin notes
+- `skills`: also feeds the Toolbox rows, with `technologies.json`
+- `certifications`: lines starting with "NPTEL" are listed; publications live in `projects.json`
 
-1. **Add a new project:**
-   - Open `projects.json`
-   - Add a new object to the `projects` array
-   - Add your project image to `/public/proj/`
-   - The website will automatically update!
+### `technologies.json` and `about.json` `skills` — Toolbox
 
-2. **Update skills:**
-   - Open `about.json`
-   - Add/remove items from the `skills` array
+The Toolbox groups (Languages, Backend & Data, AI & LLM, Infra, Frontend) are defined in `src/lib/portfolio.ts`. A tool appears when its name is in either list.
 
-3. **Change hero text:**
-   - Open `hero.json`
-   - Edit any text fields or add new roles to the typing animation
+### `contact.json` — Contact page, header menu and footer
 
-4. **Update contact info:**
-   - Open `contact.json`
-   - Update email, phone, or social media links
+`email`, `phone`, `whatsapp`, `bookingUrl`, `resumeUrl`, `availability` and `socialMedia` (GitHub, Twitter, LinkedIn).
 
-## 💡 Tips
+### `hubs.json` — Writing hubs (`/blog/<hub>`)
 
-- All image paths are relative to the `/public` directory
-- After making changes, the dev server will hot-reload automatically
-- Use proper JSON syntax (quotes around strings, commas between items)
-- Keep descriptions concise for better UX
-- Test your changes locally before deploying
+One entry per hub: `intro` (shown under the hub title), `description` (the meta description) and `searchHint` (the search placeholder examples). The intros are drafts; rewrite them in your own words.
 
-## 🎨 Adding New Images
+### `blog-redirects.json` — old blog URLs
 
-1. Place images in the appropriate `/public` subdirectory:
-   - Projects: `/public/proj/`
-   - Publications: `/public/publication/`
-   - Profile: `/public/Images/`
-   - Hero: `/public/`
+Permanent redirects from old post URLs (underscored slugs, merged duplicates) to current ones. `next.config.js` loads it. When you rename or merge a post, add its old URL here so links and search results keep working.
 
-2. Reference them in JSON with the path starting from `/public`:
-   ```json
-   "image": "/proj/my-image.png"
-   ```
+## Blog frontmatter
 
-## 📝 Validation
+Posts use TOML frontmatter (`+++`). Besides `title`, `date`, `description`, `tags` and `draft`:
 
-Make sure your JSON is valid:
-- Use proper quotes around all strings
-- Don't forget commas between array items
-- No trailing commas after the last item
-- Check for matching brackets `{}` and `[]`
+- `lastmod`: the date of the last substantive edit; shows "Updated …" on the post and feeds `dateModified`
+- `series` and `series_part`: posts that read in sequence (for example the consensus posts) list each other first under "see also"
 
-You can use online JSON validators if needed!
+A ```` ```whiteboard ```` fence embeds a board from `public/whiteboards/`. Its first line is the board name; an optional second line is the caption.

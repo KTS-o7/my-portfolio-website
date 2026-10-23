@@ -1,0 +1,35 @@
+{
+  "_note": "Hub intros are drafts summarizing each section's posts. Rewrite them in your own words. `intro` renders under the hub title; `description` is the meta description.",
+  "hubs": [
+    {
+      "section": "systems",
+      "intro": "Consensus, replication, distributed transactions, and the failure-isolation patterns that keep services up.",
+      "description": "Writing on distributed systems: Paxos, Raft, two-phase commit, sagas, CRDTs, vector clocks, consistent hashing, and the failure-isolation patterns that keep services up.",
+      "searchHint": "'paxos', 'saga', '2025'"
+    },
+    {
+      "section": "infra",
+      "intro": "CI/CD, Kubernetes memory, reverse proxies, SSE, and self-hosting on small machines.",
+      "description": "Writing on infrastructure: CI/CD pipelines, Kubernetes OOM hunts, CVE remediation, reverse proxies, server-sent events, and self-hosting on small machines.",
+      "searchHint": "'kubernetes', 'nginx', 'ci'"
+    },
+    {
+      "section": "ml",
+      "intro": "LLM inference, KV caching, parameter counts, backtesting, and the linear algebra underneath.",
+      "description": "Writing on machine learning systems: LLM inference optimization, KV cache and PagedAttention, counting LLM parameters, backtesting, and the linear algebra underneath.",
+      "searchHint": "'kv cache', 'inference', 'eigen'"
+    },
+    {
+      "section": "security",
+      "intro": "Incident write-ups and patch guides: CA keys, PHP RCEs, cloud breaches.",
+      "description": "Security incident write-ups and patch guides: the weak eMudhra CA keys, PHP2Shell, and the TiDB Cloud breach — what happened, who is exposed, and what to fix.",
+      "searchHint": "'php', 'tls', 'breach'"
+    },
+    {
+      "section": "notes",
+      "intro": "Open-source fixes, AI tooling, Git, and CSES problem solutions.",
+      "description": "Engineering notes: open-source fixes, AI agent tooling, Git, self-study plans, and CSES problem solutions.",
+      "searchHint": "'cses', 'git', 'agents'"
+    }
+  ]
+}

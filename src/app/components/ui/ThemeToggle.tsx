@@ -7,19 +7,15 @@ export const ThemeToggle = () => {
 
   return (
     <button
+      type="button"
       onClick={toggleTheme}
-      className="inline-flex items-center justify-center p-2 text-text-tertiary hover:text-text-primary transition-colors mobile-touch-optimized min-w-[44px] min-h-[44px] md:min-w-0 md:min-h-0"
+      className="inline-flex items-center justify-center min-h-8 min-w-8 p-1 text-tx2 hover:text-acc"
       aria-label={
         theme === "dark" ? "Switch to light theme" : "Switch to dark theme"
       }
     >
       {theme === "dark" ? (
-        <svg
-          className="w-5 h-5"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
+        <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
           <path
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -28,12 +24,7 @@ export const ThemeToggle = () => {
           />
         </svg>
       ) : (
-        <svg
-          className="w-5 h-5"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
+        <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
           <path
             strokeLinecap="round"
             strokeLinejoin="round"

@@ -11,17 +11,21 @@ Repo: `~/Documents/side-projects/my-portfolio-website` (Next.js, posts in `conte
 
 1. Build the board to `public/whiteboards/<slug>.html`. The slug is lowercase letters,
    digits and hyphens, usually the post's file name with `_` turned into `-`.
-2. In the post's markdown, add a fenced block where the board should appear:
+2. In the post's markdown, add a fenced block where the board should appear. The first
+   line is the board's slug; the second is a one-sentence caption shown under the board:
 
    ````md
    ```whiteboard
    raft-consensus
+   The whole protocol, step by step
    ```
    ````
 
-   `src/lib/blog.ts` turns it into a sandboxed iframe of `/whiteboards/<slug>.html?embed=1`
-   and fails the build if the file is missing. `WhiteboardEnhancer` keeps the board's theme
-   in sync with the site toggle and sizes the iframe from the board's height messages.
+   `src/lib/blog.ts` turns it into a sandboxed iframe of
+   `/whiteboards/<slug>.html?embed=1&skin=notebook` and fails the build if the file is
+   missing. `WhiteboardEnhancer` keeps the board's theme in sync with the site toggle,
+   sends the site's accent colour (`wb-skin` message), and sizes the iframe from the
+   board's height messages.
 3. Put a sentence before the block that says what the board shows, written in the post's
    own voice (use the human-voice skill for any prose). The board repeats the post's
    argument visually; it should not introduce claims the post doesn't make.
@@ -32,7 +36,11 @@ Embedding rules:
 - The iframe is `sandbox="allow-scripts"` without `allow-same-origin`, so board scripts can't
   touch the site. Don't add `allow-same-origin`.
 - `?embed=1` hides the board's own title and lede, because the post provides them.
-- The embed is exactly the text column's width (672 px). Design cameras and text sizes
+- `?skin=notebook` (or a `{type: "wb-skin", skin: "notebook", accent}` message) switches
+  the board to the site's graph-paper look: Newsreader and IBM Plex Mono, square
+  controls, and no board fill when embedded so the page grid runs through it. Without
+  it the board keeps its default look, so slashdocs and standalone files are unchanged.
+- The embed is exactly the text column's width (700 px). Design cameras and text sizes
   for that (see `story-api.md`), and check the busiest step on the dev server.
 - Phones: a layout board (`layout-api.md`) switches to its portrait phone layout when the
   board is under 520 px wide, so it reads in the post without full screen; the iframe grows

@@ -41,6 +41,9 @@ export function buildPageMetadata({
   type?: "website" | "profile" | "article";
 }): Metadata {
   const url = path.startsWith("http") ? path : `${BASE_URL}${path}`;
+  // A page that sets openGraph replaces the inherited object, image included, so the
+  // site card (app/opengraph-image.tsx) is named here explicitly.
+  const images = [{ url: "/opengraph-image", width: 1200, height: 630, alt: SITE_NAME }];
   return {
     title,
     description,
@@ -54,11 +57,13 @@ export function buildPageMetadata({
       url,
       type,
       siteName: SITE_NAME,
+      images,
     },
     twitter: {
       card: "summary_large_image",
       title,
       description,
+      images,
     },
   };
 }

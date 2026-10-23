@@ -1,0 +1,198 @@
+[
+  {
+    "source": "/blog/infra/cicd_docker_buildx_sha_deploys",
+    "destination": "/blog/infra/cicd-docker-buildx-sha-deploys"
+  },
+  {
+    "source": "/blog/infra/cve_remediation_monorepo",
+    "destination": "/blog/infra/cve-remediation-monorepo"
+  },
+  {
+    "source": "/blog/infra/kubernetes_oom_memory_leaks",
+    "destination": "/blog/infra/kubernetes-oom-memory-leaks"
+  },
+  {
+    "source": "/blog/infra/reverse_proxy",
+    "destination": "/blog/infra/reverse-proxy"
+  },
+  {
+    "source": "/blog/infra/sse_disconnect_handling",
+    "destination": "/blog/infra/sse-disconnect-handling"
+  },
+  {
+    "source": "/blog/infra/three_env_cicd_pipeline",
+    "destination": "/blog/infra/three-env-cicd-pipeline"
+  },
+  {
+    "source": "/blog/infra/vps_self_hosting",
+    "destination": "/blog/infra/vps-self-hosting"
+  },
+  {
+    "source": "/blog/infra/vps_self_hosting_stack",
+    "destination": "/blog/infra/vps-self-hosting"
+  },
+  {
+    "source": "/blog/ml/eigen_vals",
+    "destination": "/blog/ml/eigen-vals"
+  },
+  {
+    "source": "/blog/ml/kv_cache_paged_attention",
+    "destination": "/blog/ml/kv-cache-paged-attention"
+  },
+  {
+    "source": "/blog/ml/llm_inference_optimization",
+    "destination": "/blog/ml/llm-inference-optimization"
+  },
+  {
+    "source": "/blog/ml/matrix_vec_dot",
+    "destination": "/blog/ml/matrix-vec-dot"
+  },
+  {
+    "source": "/blog/ml/params_llms",
+    "destination": "/blog/ml/params-llms"
+  },
+  {
+    "source": "/blog/ml/trustworthy_backtesting",
+    "destination": "/blog/ml/trustworthy-backtesting"
+  },
+  {
+    "source": "/blog/notes/agentbudget_ulimit_for_ai_agents",
+    "destination": "/blog/notes/agentbudget-ulimit-for-ai-agents"
+  },
+  {
+    "source": "/blog/notes/bifrost_parallel_tool_call_fix",
+    "destination": "/blog/notes/bifrost-parallel-tool-call-fix"
+  },
+  {
+    "source": "/blog/notes/bit_strings",
+    "destination": "/blog/notes/bit-strings"
+  },
+  {
+    "source": "/blog/notes/codex_worktrees_adventure",
+    "destination": "/blog/notes/codex-worktrees-adventure"
+  },
+  {
+    "source": "/blog/notes/complexity_ratchets",
+    "destination": "/blog/notes/complexity-ratchets"
+  },
+  {
+    "source": "/blog/notes/downloader_cli_as_library",
+    "destination": "/blog/notes/downloader-cli-as-library"
+  },
+  {
+    "source": "/blog/notes/freeseek_proxy",
+    "destination": "/blog/notes/freeseek-proxy"
+  },
+  {
+    "source": "/blog/notes/gray_code",
+    "destination": "/blog/notes/gray-code"
+  },
+  {
+    "source": "/blog/notes/hermes_local_ai_stack",
+    "destination": "/blog/notes/hermes-local-ai-stack"
+  },
+  {
+    "source": "/blog/notes/increasing_array",
+    "destination": "/blog/notes/increasing-array"
+  },
+  {
+    "source": "/blog/notes/markdown_stuff",
+    "destination": "/blog/notes/markdown-stuff"
+  },
+  {
+    "source": "/blog/notes/missing_number",
+    "destination": "/blog/notes/missing-number"
+  },
+  {
+    "source": "/blog/notes/obsidian_second_brain",
+    "destination": "/blog/notes/obsidian-second-brain"
+  },
+  {
+    "source": "/blog/notes/repeatations",
+    "destination": "/blog/notes/repetitions"
+  },
+  {
+    "source": "/blog/notes/teaching_myself_cs",
+    "destination": "/blog/notes/teaching-myself-cs"
+  },
+  {
+    "source": "/blog/notes/two_sets",
+    "destination": "/blog/notes/two-sets"
+  },
+  {
+    "source": "/blog/notes/weird_algorithm",
+    "destination": "/blog/notes/weird-algorithm"
+  },
+  {
+    "source": "/blog/security/emudhra_weak_intermediate_ca_keys",
+    "destination": "/blog/security/emudhra-weak-intermediate-ca-keys"
+  },
+  {
+    "source": "/blog/security/php2shell_session_upload_progress_rce",
+    "destination": "/blog/security/php2shell-session-upload-progress-rce"
+  },
+  {
+    "source": "/blog/security/pingcap_tidb_cloud_breach",
+    "destination": "/blog/security/pingcap-tidb-cloud-breach"
+  },
+  {
+    "source": "/blog/systems/bulkhead_pattern",
+    "destination": "/blog/systems/bulkhead-pattern"
+  },
+  {
+    "source": "/blog/systems/circuit_breakers_distributed_systems",
+    "destination": "/blog/systems/circuit-breakers-distributed-systems"
+  },
+  {
+    "source": "/blog/systems/connection_pool_exhaustion",
+    "destination": "/blog/systems/connection-pool-exhaustion"
+  },
+  {
+    "source": "/blog/systems/consistent_hashing",
+    "destination": "/blog/systems/consistent-hashing"
+  },
+  {
+    "source": "/blog/systems/multi_paxos",
+    "destination": "/blog/systems/multi-paxos"
+  },
+  {
+    "source": "/blog/systems/paxos",
+    "destination": "/blog/systems/paxos-consensus"
+  },
+  {
+    "source": "/blog/systems/paxos_consensus",
+    "destination": "/blog/systems/paxos-consensus"
+  },
+  {
+    "source": "/blog/systems/raft_consensus",
+    "destination": "/blog/systems/raft-consensus"
+  },
+  {
+    "source": "/blog/systems/raft_log_compaction",
+    "destination": "/blog/systems/raft-log-compaction"
+  },
+  {
+    "source": "/blog/systems/saga_outbox_pattern",
+    "destination": "/blog/systems/saga-outbox-pattern"
+  },
+  {
+    "source": "/blog/systems/saga_pattern",
+    "destination": "/blog/systems/saga-pattern"
+  },
+  {
+    "source": "/blog/systems/spanner_distributed_transactions",
+    "destination": "/blog/systems/spanner-distributed-transactions"
+  },
+  {
+    "source": "/blog/systems/two_phase_commit",
+    "destination": "/blog/systems/two-phase-commit"
+  },
+  {
+    "source": "/blog/systems/vector_clocks",
+    "destination": "/blog/systems/vector-clocks"
+  },
+  {
+    "source": "/blog/systems/why_mysql_is_not_CA",
+    "destination": "/blog/systems/why-mysql-is-not-ca"
+  }
+]

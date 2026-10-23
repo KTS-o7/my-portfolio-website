@@ -4,8 +4,8 @@ import { useEffect } from "react";
 
 /**
  * Enhances rendered markdown code blocks with a copy-to-clipboard button.
- * Mounts once on the blog post page and decorates every <pre> inside
- * .post-content. Server-rendered HTML is untouched.
+ * Mounts once on the blog post page and wraps every <pre> inside .post-content
+ * in a positioned box, so the button stays put while the code scrolls sideways.
  */
 export default function CodeCopyEnhancer() {
   useEffect(() => {
@@ -13,8 +13,12 @@ export default function CodeCopyEnhancer() {
     const cleanups: (() => void)[] = [];
 
     pres.forEach((pre) => {
-      if (pre.querySelector(".copy-code-btn")) return;
-      pre.classList.add("has-copy-btn");
+      if (pre.parentElement?.classList.contains("code-block")) return;
+
+      const wrapper = document.createElement("div");
+      wrapper.className = "code-block";
+      pre.replaceWith(wrapper);
+      wrapper.appendChild(pre);
 
       const btn = document.createElement("button");
       btn.type = "button";
@@ -36,12 +40,12 @@ export default function CodeCopyEnhancer() {
       };
 
       btn.addEventListener("click", onClick);
-      pre.appendChild(btn);
+      wrapper.appendChild(btn);
 
       cleanups.push(() => {
         btn.removeEventListener("click", onClick);
         btn.remove();
-        pre.classList.remove("has-copy-btn");
+        wrapper.replaceWith(pre);
       });
     });
 
