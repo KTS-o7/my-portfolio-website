@@ -41,7 +41,7 @@ An explicit `cam` is `[x, y, width, height]` in world units. Keep it 16:9 (`heig
 Text size is in world units, so it gets smaller as the camera widens. Rendered size is
 text size x (display width / camera width), and it should stay at or above 12 px.
 
-Portfolio blog embeds are the width of the text column, 672 px. Design for that:
+Portfolio blog embeds are the width of the text column, 700 px. Design for that:
 - keep every step's camera at or under about 1450 units wide (the recap can be `FULL`);
 - use 26-30 unit text for boxes and notes, 24 at the smallest;
 - put related things next to each other instead of in separate panels. A Raft board with

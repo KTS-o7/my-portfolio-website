@@ -96,6 +96,51 @@ summary { cursor: pointer; color: var(--soft); }
 .wb-embed main { max-width: none; padding: 0 0 8px; }
 .wb-embed header { display: none; }
 @media (max-width: 640px) { .hint { display: none; } header h1 { font-size: 24px; } }
+
+/* skin=notebook: the graph-paper look of the portfolio redesign. Board labels keep the
+   hand-drawn font; ink, pen colour, grid, controls and captions follow the host page. */
+:root[data-wb-skin="notebook"] {
+  --paper: oklch(0.975 0.01 95); --ink: oklch(0.32 0.1 260); --muted: oklch(0.62 0.03 260);
+  --grid: oklch(0.84 0.05 245 / 0.32);
+  --new: oklch(0.55 0.19 27); --newtext: oklch(0.52 0.19 27); --newfill: oklch(0.95 0.03 40);
+  --oldfill: oklch(0.94 0.015 250); --bad: oklch(0.5 0.15 330); --badfill: oklch(0.95 0.03 330);
+  --hl: oklch(0.9 0.14 95 / .55); --panel: oklch(0.975 0.01 95); --line: oklch(0.32 0.1 260 / 0.22);
+  --soft: oklch(0.45 0.03 260);
+  --serif: "Newsreader", Georgia, serif; --mono: "IBM Plex Mono", ui-monospace, monospace;
+}
+:root[data-wb-skin="notebook"][data-slashdocs-theme="dark"] {
+  --paper: oklch(0.22 0.005 260); --ink: oklch(0.91 0.03 250); --muted: oklch(0.6 0.01 250);
+  --grid: oklch(0.62 0.01 250 / 0.13);
+  --new: oklch(0.72 0.15 30); --newtext: oklch(0.76 0.13 30); --newfill: oklch(0.3 0.05 30);
+  --oldfill: oklch(0.26 0.006 260); --bad: oklch(0.72 0.13 330); --badfill: oklch(0.3 0.05 330);
+  --hl: oklch(0.85 0.14 95 / .22); --panel: oklch(0.22 0.005 260); --line: oklch(0.9 0.02 250 / 0.14);
+  --soft: oklch(0.75 0.01 250);
+}
+/* keep the canvas transparent in dark too: a color-scheme that differs from the host page
+   makes the browser paint an opaque backdrop behind the iframe */
+:root[data-wb-skin="notebook"], :root[data-wb-skin="notebook"][data-slashdocs-theme] { color-scheme: light; }
+:root[data-wb-skin="notebook"] body { font: 18px/1.6 var(--serif); }
+:root[data-wb-skin="notebook"] header h1 { font: 500 34px/1.1 var(--serif); letter-spacing: -0.015em; }
+:root[data-wb-skin="notebook"] .board { border-radius: 0; border-color: var(--line);
+  background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 20px 20px; }
+/* embedded: no board fill, so the host page's grid runs straight through the drawing */
+:root.wb-embed[data-wb-skin="notebook"] .board { border: 0; background: transparent; }
+:root[data-wb-skin="notebook"] .controls { gap: 8px; padding-top: 10px; border-top: 1px solid var(--line); }
+:root[data-wb-skin="notebook"] .controls > button { font: 500 13px var(--mono); border-radius: 0; min-height: 40px;
+  padding: 0 16px; border: 1.5px solid var(--ink); background: transparent; color: var(--ink); }
+:root[data-wb-skin="notebook"] .controls > button.primary { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+:root[data-wb-skin="notebook"] .dots button { width: 10px; height: 10px; min-height: 0; padding: 0; border-radius: 0;
+  border: 1.5px solid var(--muted); background: none; }
+:root[data-wb-skin="notebook"] .dots button.on { background: var(--new); border-color: var(--new); }
+:root[data-wb-skin="notebook"] .dots button.seen { background: var(--muted); }
+:root[data-wb-skin="notebook"] .hint, :root[data-wb-skin="notebook"] summary { font: 12px var(--mono); }
+:root[data-wb-skin="notebook"] .say { border: 0; border-left: 1.5px solid var(--new); border-radius: 0;
+  background: transparent; padding: 4px 0 4px 16px; min-height: 130px; }
+:root[data-wb-skin="notebook"] .say h3, :root[data-wb-skin="notebook"] #script h3 { font: 500 24px/1.2 var(--serif); color: var(--ink); }
+:root[data-wb-skin="notebook"] .say .n { font: 500 12px var(--mono); }
+:root[data-wb-skin="notebook"] .say .refs, :root[data-wb-skin="notebook"] #script .refs { font: 12px var(--mono); color: var(--new); }
+:root[data-wb-skin="notebook"] code { border-radius: 0; }
 </style>
 </head>
 <body>
@@ -154,9 +199,33 @@ var rough=function(){"use strict";function t(t,e,s){if(t&&t.length){const[n,o]=e
   if (params.has("embed")) root.classList.add("wb-embed");
   const setTheme = (t) => { if (t === "dark" || t === "light") root.setAttribute("data-slashdocs-theme", t); };
   setTheme(params.get("theme"));
+  // ?skin=notebook (or {type: "wb-skin", skin, accent}) switches to the graph-paper look;
+  // accent, if sent, replaces the pen colour so the board follows the host's accent tweak.
+  let fontsLoaded = false;
+  const setSkin = (s, accent) => {
+    if (s === "notebook") {
+      root.setAttribute("data-wb-skin", "notebook");
+      if (!root.hasAttribute("data-slashdocs-theme")) setTheme("light");
+      if (!fontsLoaded) {
+        fontsLoaded = true;
+        const l = document.createElement("link");
+        l.rel = "stylesheet";
+        l.href = "https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500&family=IBM+Plex+Mono:wght@400;500&display=swap";
+        document.head.appendChild(l);
+      }
+    }
+    if (typeof accent === "string" && accent.length < 120 && !/[;{}<>]/.test(accent)) {
+      root.style.setProperty("--new", accent);
+      root.style.setProperty("--newtext", accent);
+      root.style.setProperty("--newfill", `color-mix(in oklab, ${accent} 14%, var(--paper))`);
+    }
+  };
+  setSkin(params.get("skin"));
   if (window.parent !== window) {
     window.addEventListener("message", (e) => {
-      if (e.source === window.parent && e.data && e.data.type === "wb-theme") setTheme(e.data.theme);
+      if (e.source !== window.parent || !e.data) return;
+      if (e.data.type === "wb-theme") setTheme(e.data.theme);
+      if (e.data.type === "wb-skin") setSkin(e.data.skin, e.data.accent);
     });
     let lastH = 0;
     const report = () => {
